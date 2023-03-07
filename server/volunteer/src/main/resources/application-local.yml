@@ -40,3 +40,8 @@ logging:
 #  secret: ${secret_key}
 #  access-token-expiration-minutes: 1800000
 #  refresh-token-expiration-minutes: 604800000
+payment:
+  cid: TC0ONETIME   #가맹점 임시 코드
+  admin_key: ${ADMIN_KEY} #카카오 어플리케이션 어드민 키
+  host: https://kapi.kakao.com/v1/
+  url: localhost:8080

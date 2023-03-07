@@ -4,3 +4,12 @@ spring:
     url: ${db_url}
     username: ${db_username}
     password: ${db_password}
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+        use_sql_comments: true
