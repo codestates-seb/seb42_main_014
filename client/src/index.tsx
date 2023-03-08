@@ -1,13 +1,14 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
-import Volunteer from "./pages/Volunteer";
-import Donation from "./pages/Donation";
 import About from "./pages/About";
 import MyPage from "./pages/MyPage";
+import Volunteer from "./pages/volunteer/Volunteer";
+import VolunteerPost from "./pages/volunteer/VolunteerPost";
+import DonationPost from "./pages/donation/DonationPost";
+import Donation from "./pages/donation/Donation";
 
 const router = createBrowserRouter([
 	{
@@ -33,6 +34,14 @@ const router = createBrowserRouter([
 			{
 				path: "/mypage",
 				element: <MyPage />,
+			},
+			{
+				path: "/register",
+				element: <VolunteerPost />,
+			},
+			{
+				path: "/sell",
+				element: <DonationPost />,
 			},
 		],
 		errorElement: <div>에러가 발생했어요!</div>,

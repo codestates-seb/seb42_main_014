@@ -1,6 +1,8 @@
-import styled from "styled-components";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DropDown from "../MUI/DropDown";
+import styled from "styled-components";
+import DropDown from "./DropDown";
+import { TbUserCircle } from "react-icons/tb";
 
 export default function Nav() {
 	const StyledNav = styled.nav`
@@ -20,28 +22,44 @@ export default function Nav() {
 		width: 60px;
 		height: 60px;
 	`;
-	const StyledList = styled.li`
+	const StyledNavItemList = styled.li`
 		margin: 20px;
 		:hover {
 			color: #f58686;
 			transition: all 0.3s;
 		}
 	`;
-
+	const StyledDropDownModal = styled.div`
+		height: max-content;
+		position: absolute;
+		top: 62px;
+		width: max-content;
+		right: -38px;
+		color: black;
+		background-color: white;
+		border: 1px solid gray;
+	`;
+	const navigate = useNavigate();
+	const [isOpen, setIsOpen] = useState(false);
 	const navItem = ["Home", "봉사활동", "기부가게", "About"];
 	const navItemRoutingPath = ["/", "/volunteer", "/donation", "/about"];
-	const navigate = useNavigate();
 
 	return (
 		<StyledNav>
 			<StyledLogo src="/images/main-logo.png" alt="main-logo" onClick={() => navigate("/")} />
-			{navItem &&
-				navItem.map((el, idx) => (
-					<StyledList key={idx} onClick={() => navigate(navItemRoutingPath[idx])}>
-						{el}
-					</StyledList>
-				))}
-			<DropDown />
+			{navItem.map((el, idx) => (
+				<StyledNavItemList key={idx} onClick={() => navigate(navItemRoutingPath[idx])}>
+					{el}
+				</StyledNavItemList>
+			))}
+			<div style={{ position: "relative" }}>
+				<TbUserCircle size={40} onClick={() => setIsOpen(!isOpen)} />
+				{isOpen && (
+					<StyledDropDownModal>
+						<DropDown setIsOpen={setIsOpen} isOpen={isOpen} />
+					</StyledDropDownModal>
+				)}
+			</div>
 		</StyledNav>
 	);
 }
