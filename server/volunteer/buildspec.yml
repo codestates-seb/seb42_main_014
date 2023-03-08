@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+  build:
+    commands:
+      - echo Build Starting on `date`
+      - cd seb42_main_014/server/volunteer
+      - chmod +x ./gradlew
+      - ./gradlew build
+  post_build:
+    commands:
+      - echo $(basename ./seb42_main_014/server/volunteer/build/libs/*.jar)
+artifacts:
+  files:
+    - seb42_main_014/server/volunteer/build/libs/*.jar
+    - seb42_main_014/server/volunteer/scripts/**
+    - seb42_main_014/server/volunteer/appspec.yml
+  discard-paths: yes
