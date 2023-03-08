@@ -9,6 +9,7 @@ import Volunteer from "./pages/volunteer/Volunteer";
 import VolunteerPost from "./pages/volunteer/VolunteerPost";
 import DonationPost from "./pages/donation/DonationPost";
 import Donation from "./pages/donation/Donation";
+import Login from "./pages/Login";
 
 const router = createBrowserRouter([
 	{
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
 			{
 				path: "/",
 				element: <Home />,
+			},
+			{
+				path: "/login",
+				element: <Login />,
 			},
 			{
 				path: "/volunteer",
