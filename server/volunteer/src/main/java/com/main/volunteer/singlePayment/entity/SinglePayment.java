@@ -1,7 +1,6 @@
 package com.main.volunteer.singlePayment.entity;
 
 
-import com.main.volunteer.singlePayment.dto.ApproveResponseDto;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
