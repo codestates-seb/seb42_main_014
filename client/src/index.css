@@ -10,6 +10,15 @@
 	box-sizing: border-box;
 	font-family: "IBMPlexSansKR-Regular";
 }
+html,
 body {
+	height: 100%;
 	margin: 0;
+	padding: 0;
 }
+body::-webkit-scrollbar {
+	display: none;
+}
+/* body {
+	margin: 0;
+} */
