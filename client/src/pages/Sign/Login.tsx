@@ -72,7 +72,7 @@ const Flex = styled.div`
 	}
 `;
 
-export default function Home() {
+export default function LoginPage() {
 	return (
 		<Body>
 			<StyledContainer>
