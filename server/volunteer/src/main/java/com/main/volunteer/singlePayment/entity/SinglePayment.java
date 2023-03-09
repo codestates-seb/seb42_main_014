@@ -23,9 +23,11 @@ public class SinglePayment {
     @OneToOne
     @JoinColumn(name = "amount_id")
     private Amount amount;
+
     @OneToOne
     @JoinColumn(name = "card_info_id")
     private CardInfo cardInfo;
+
     private String productName; // 상품명
     private String productCode; // 상품 코드
     private int quantity; // 상품 수량

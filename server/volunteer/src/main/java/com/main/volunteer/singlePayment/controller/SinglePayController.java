@@ -9,6 +9,7 @@ import com.main.volunteer.singlePayment.dto.kakao.ReadyResponseDto;
 import com.main.volunteer.singlePayment.mapper.SinglePaymentMapper;
 import com.main.volunteer.singlePayment.service.SinglePaymentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import java.net.URISyntaxException;
 @RestController
 @RequestMapping("/payment")
 @RequiredArgsConstructor
+@Slf4j
 public class SinglePayController {
     private final SinglePaymentService singlePaymentService;
 
@@ -41,14 +43,16 @@ public class SinglePayController {
     }
 
     // 결제준비 취소
-    @PostMapping("/cancel")
+    @GetMapping("/cancel")
     public void cancelPaymentRequest() {
+        log.info("취소해쪙");
         throw new BusinessException(ExceptionCode.PAY_CANCEL);
     }
 
     // 결제 실패
     @GetMapping("/fail")
     public void failPaymentRequest() {
+        log.info("실패해쪙");
         throw new BusinessException(ExceptionCode.PAY_FAILED);
     }
 }

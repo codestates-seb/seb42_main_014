@@ -32,7 +32,7 @@ public class SinglePaymentService {
 
     private ReadyResponseDto kakaoPayReady;
 
-    private SinglePaymentMapper mapper;
+//    private SinglePaymentMapper mapper;
     private final SinglePaymentRepository singlePaymentRepository;
 
     public ReadyResponseDto kakaoPayReady(PaymentRequestDto paymentRequestDto) {
@@ -80,16 +80,16 @@ public class SinglePaymentService {
         // 외부에 보낼 url
         RestTemplate restTemplate = new RestTemplate();
 
-        ApproveResponseDto approveResponseDto = restTemplate.postForObject(
+        ApproveResponseDto approveResponse = restTemplate.postForObject(
                 host+"/approve",
                 requestEntity,
                 ApproveResponseDto.class);
 
-        log.info("결제 승인입니다"+""+approveResponseDto.toString());
+        log.info("결제 승인입니다"+""+approveResponse.toString());
 
         //결제 데이터 저장
 //        singlePaymentRepository.save(mapper.approveResponseDtoToSinglePayment(approveResponseDto));
-        return approveResponseDto;
+        return approveResponse;
 
     }
 
