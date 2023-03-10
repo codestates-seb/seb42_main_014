@@ -32,12 +32,13 @@ export default function Nav() {
 	const StyledDropDownModal = styled.div`
 		height: max-content;
 		position: absolute;
-		top: 62px;
+		top: 60px;
 		width: max-content;
-		right: -38px;
+		right: -42px;
 		color: black;
 		background-color: white;
 		border: 1px solid gray;
+		z-index: 1;
 	`;
 	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +54,7 @@ export default function Nav() {
 				</StyledNavItemList>
 			))}
 			<div style={{ position: "relative" }}>
-				<TbUserCircle size={40} onClick={() => setIsOpen(!isOpen)} />
+				<TbUserCircle className="icon-hover" size={32} onClick={() => setIsOpen(!isOpen)} />
 				{isOpen && (
 					<StyledDropDownModal>
 						<DropDown setIsOpen={setIsOpen} isOpen={isOpen} />
