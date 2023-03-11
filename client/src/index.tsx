@@ -7,12 +7,13 @@ import About from "./pages/About";
 import MyPage from "./pages/MyPage";
 import Volunteer from "./pages/volunteer/Volunteer";
 import VolunteerPost from "./pages/volunteer/VolunteerPost";
-import DonationPost from "./pages/donation/DonationPost";
-import Donation from "./pages/donation/Donation";
 import Login from "./pages/Sign/Login";
 import SignUp from "./pages/Sign/SignUp";
+
+import Community from "./pages/community/Community";
 import UserEdit from "./pages/Sign/UserEdit";
 import CompanyEdit from "./pages/Sign/CompanyEdit";
+
 
 const router = createBrowserRouter([
 	{
@@ -44,8 +45,8 @@ const router = createBrowserRouter([
 				element: <Volunteer />,
 			},
 			{
-				path: "/donation",
-				element: <Donation />,
+				path: "/community",
+				element: <Community />,
 			},
 			{
 				path: "/about",
@@ -58,10 +59,6 @@ const router = createBrowserRouter([
 			{
 				path: "/register",
 				element: <VolunteerPost />,
-			},
-			{
-				path: "/sell",
-				element: <DonationPost />,
 			},
 		],
 		errorElement: <div>에러가 발생했어요!</div>,

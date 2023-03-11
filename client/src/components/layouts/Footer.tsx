@@ -17,6 +17,7 @@ export default function Footer() {
 		position: fixed;
 		bottom: 0;
 		cursor: pointer;
+		z-index: auto;
 	`;
 	const StyledLogo = styled.img`
 		width: 60px;
@@ -43,7 +44,14 @@ export default function Footer() {
 						{el}
 					</StyledList>
 				))}
-			<BsGithub size={30} />
+			<a
+				target={"_blank"}
+				rel="noreferrer"
+				href={"https://github.com/codestates-seb/seb42_main_014"}
+				style={{ color: "white", marginRight: "20px" }}
+			>
+				<BsGithub className="icon-hover" size={30} />
+			</a>
 		</StyledNav>
 	);
 }
