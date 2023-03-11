@@ -10,4 +10,5 @@ public interface VolunteerMapper{
 
     Volunteer postDtoToVolunteer(VolunteerDto.Post post);
 
+    Volunteer patchDtoToVolunteer(VolunteerDto.Patch patchDto);
 }
