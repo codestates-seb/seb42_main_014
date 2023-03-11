@@ -1,6 +1,7 @@
 package com.main.volunteer.exception;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public enum ExceptionCode {
 
@@ -8,8 +9,12 @@ public enum ExceptionCode {
     BAD_REQUEST(400, "잘못된 요청 입니다."),
     NOT_FOUND(404, "페이지를 찾을 수 없습니다."),
     CONFLICT(409, "충돌이 났습니다."),
+
     // Security
-    UNAUTHORIZED(401, "사용자가 인증되지 않았습니다.");
+    UNAUTHORIZED(401, "사용자가 인증되지 않았습니다."),
+
+    // Group - 600부터
+    FAIL_GROUP_APPLY_LIMIT(600, "현재 등록되어 있는 그룹의 멤버수가 수정하려는 멤버수보다 많습니다.");
 
     @Getter
     private int code;
