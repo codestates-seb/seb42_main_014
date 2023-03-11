@@ -125,10 +125,10 @@ export default function UserEdit() {
 							<label htmlFor="delteImg">이미지 삭제</label>
 						</LabelFlex>
 					</Profile>
-					<Login placeholder="Email"></Login>
-					<Login placeholder="Password"></Login>
-					<Login placeholder="Confirm PW"></Login>
-					<Login placeholder="Name"></Login>
+					<Login placeholder="이메일"></Login>
+					<Login placeholder="패스워드"></Login>
+					<Login placeholder="패스워드 확인"></Login>
+					<Login placeholder="닉네임"></Login>
 
 					<Btn>저장하기</Btn>
 				</EditForm>

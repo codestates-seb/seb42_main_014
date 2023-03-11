@@ -139,19 +139,19 @@ export default function UserEdit() {
 						</LabelFlex>
 					</Profile>
 					<Login>
-						<input placeholder="Email"></input>
+						<input placeholder="이메일"></input>
 					</Login>
 					<Login>
-						<input placeholder="Password"></input>
+						<input placeholder="패스워드"></input>
 					</Login>
 					<Login>
-						<input placeholder="Confirm PW"></input>
+						<input placeholder="패스워드 확인"></input>
 					</Login>
 					<Login title="수정권한이 없습니다. 회사 기본 정보 수정을 원하신다면 문의 부탁드립니다.">
-						Co.Name<span>이곳에 불러옵니다.</span>
+						상호명<span>이곳에 불러옵니다.</span>
 					</Login>
 					<Login title="수정권한이 없습니다. 회사 기본 정보 수정을 원하신다면 문의 부탁드립니다.">
-						Co.Address
+						사업장 주소
 						<span>이곳에 불러옵니다.</span>
 					</Login>
 
