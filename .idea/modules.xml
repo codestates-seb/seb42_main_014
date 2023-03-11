@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/seb42_main_014.iml" filepath="$PROJECT_DIR$/.idea/seb42_main_014.iml" />
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/volunteer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/volunteer.main.iml" />
+=======
+>>>>>>> eea17dc6798bf2044fbc91da4970e60de2d8ab0e
     </modules>
   </component>
 </project>
