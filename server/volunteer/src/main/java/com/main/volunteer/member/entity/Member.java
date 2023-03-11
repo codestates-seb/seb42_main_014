@@ -1,5 +1,9 @@
 package com.main.volunteer.member.entity;
 
+import com.main.volunteer.audit.Auditable;
+import com.main.volunteer.like.entity.Like;
+import com.main.volunteer.point.entity.Point;
+import com.main.volunteer.volunteer.entity.Volunteer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Member {
+public class Member extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +31,11 @@ public class Member {
     @Column(nullable = false, length = 20, unique = true)
     private String memberName;
 
+    private String orgAddress;
+
+    @Column(length = 10)
+    private int orgNumber;
+
     private String profileImage;
 
     @Enumerated(EnumType.STRING)
@@ -34,6 +43,15 @@ public class Member {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+
+    @OneToOne(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private Point point;
+
+  /*  @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    private List<Volunteer> volunteers = new ArrayList<>();
+*/
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    private List<Like> likes = new ArrayList<>();
 
     public enum MemberStatus{
         MEMBER_ACTIVE("활동중"),

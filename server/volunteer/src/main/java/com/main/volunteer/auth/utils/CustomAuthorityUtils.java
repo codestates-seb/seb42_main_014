@@ -12,10 +12,8 @@ import java.util.stream.Collectors;
 public class CustomAuthorityUtils {
 
     private final List<GrantedAuthority> ORG_ROLES = AuthorityUtils.createAuthorityList("ROLE_ORG", "ROLE_USER");
+    private final List<GrantedAuthority> GROUPZANG_ROLES = AuthorityUtils.createAuthorityList("ROLE_GROUPZANG", "ROLE_USER");
     private final List<GrantedAuthority> USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_USER");
-
-    private final List<String> ORG_ROLES_STRING = List.of("ORG", "USER");
-    private final List<String> USER_ROLES_STRING = List.of("USER");
 
     public List<GrantedAuthority> createAuthorities(List<String> roles){
         List<GrantedAuthority> authorities = roles.stream()
@@ -23,6 +21,4 @@ public class CustomAuthorityUtils {
                 .collect(Collectors.toList());
         return authorities;
     }
-
-
 }

@@ -4,6 +4,8 @@ import com.main.volunteer.member.dto.MemberDto;
 import com.main.volunteer.member.entity.Member;
 import com.main.volunteer.member.mapper.MemberMapper;
 import com.main.volunteer.member.service.MemberService;
+import com.main.volunteer.response.ApiResponse;
+import com.main.volunteer.util.UriUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,22 +13,33 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController {
 
+    public static final String DEFAULT_URI = "/members";
     private final MemberService memberService;
     private final MemberMapper mapper;
 
     @PostMapping
     public ResponseEntity postMember(@RequestBody @Valid MemberDto.Post memberPostDto){
 
+        if(memberPostDto.isCheckOrg() == true){
+            memberPostDto.setRoles(List.of("ORG", "USER"));
+        }
+        else{
+            memberPostDto.setRoles(List.of("USER"));
+        }
+
         Member postMember = memberService.createMember(mapper.memberPostDtoToMember(memberPostDto));
 
+        URI uri = UriUtil.createUri(DEFAULT_URI, postMember.getMemberId());
 
-        return new ResponseEntity<>(mapper.memberToMemberResponseDto(postMember), HttpStatus.CREATED);
+        return ResponseEntity.created(uri).body(ApiResponse.created());
     }
 
     @PatchMapping("/{member-id}")

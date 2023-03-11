@@ -6,6 +6,8 @@ import lombok.Getter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemberDto {
 
@@ -24,6 +26,12 @@ public class MemberDto {
         private String memberName;
 
         private boolean checkOrg;
+
+        private List<String> roles;
+
+        public void setRoles(List<String> roles) {
+            this.roles = roles;
+        }
     }
 
     @Getter
@@ -52,7 +60,8 @@ public class MemberDto {
 
         private String memberName;
 
+        private int point;
+
         private Member.MemberStatus memberStatus;
     }
-
 }
