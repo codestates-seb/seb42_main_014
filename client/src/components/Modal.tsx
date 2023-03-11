@@ -4,7 +4,7 @@ import styled from "styled-components";
 interface ModalType {
 	children?: ReactNode;
 	isOpen: boolean;
-	toggle: () => void;
+	toggle: (event: any) => void;
 }
 
 const ModalOverlay = styled.div`
