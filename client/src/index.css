@@ -1,5 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+@font-face {
+	font-family: "IBMPlexSansKR-Regular";
+	src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff")
+		format("woff");
+	font-weight: normal;
+	font-style: normal;
+}
 
 * {
 	box-sizing: border-box;
@@ -16,14 +23,6 @@ a {
 
 body::-webkit-scrollbar {
 	display: none;
-}
-
-@font-face {
-	font-family: "IBMPlexSansKR-Regular";
-	src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff")
-		format("woff");
-	font-weight: normal;
-	font-style: normal;
 }
 
 @keyframes fadeinDown {
@@ -97,6 +96,15 @@ body::-webkit-scrollbar {
 
 @media (max-width: 558px) {
 	.display-none-small {
+		display: none;
+	}
+}
+body::-webkit-scrollbar {
+	display: none;
+}
+
+@media (max-width: 1215px) {
+	.home-hide {
 		display: none;
 	}
 }

@@ -42,8 +42,8 @@ export default function Nav() {
 	`;
 	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
-	const navItem = ["Home", "봉사활동", "기부가게", "About"];
-	const navItemRoutingPath = ["/", "/volunteer", "/donation", "/about"];
+	const navItem = ["Home", "봉사활동", "커뮤니티", "About"];
+	const navItemRoutingPath = ["/", "/volunteer", "/community", "/about"];
 
 	return (
 		<StyledNav>

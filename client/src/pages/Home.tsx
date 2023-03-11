@@ -20,9 +20,13 @@ export default function Home() {
 		justify-content: center;
 	`;
 	const StyledMainImgBgContainer3 = styled.section`
+		display: flex;
 		background-color: #8629fe;
 		width: 100vw;
 		height: 500px;
+		position: relative;
+		justify-content: center;
+		margin-bottom: 80px;
 	`;
 	const StyledEmptyLine = styled.div`
 		width: 100vw;
@@ -69,9 +73,10 @@ export default function Home() {
 	`;
 
 	return (
-		<div>
+		<>
 			<StyledMainImgBgContainer1>
 				<div
+					className="home-hide"
 					style={{
 						marginTop: "20px",
 						animation: "fadeInLeft 2s",
@@ -145,17 +150,64 @@ export default function Home() {
 					</Link>
 				</div>
 				<StyledMainImgContainer2>
-					<StyledImgContainer>
-						<img
-							alt="커뮤니티 사진"
-							src="/images/home/main-img-2.png"
-							style={{ width: "600px", height: "320px", borderRadius: "20px" }}
-						/>
-					</StyledImgContainer>
+					<div className="home-hide">
+						<StyledImgContainer>
+							<img
+								alt="커뮤니티 사진"
+								src="/images/home/main-img-2.png"
+								style={{ width: "600px", height: "320px", borderRadius: "20px" }}
+							/>
+						</StyledImgContainer>
+					</div>
 				</StyledMainImgContainer2>
 			</StyledMainImgBgContainer2>
 			<StyledEmptyLine />
-			<StyledMainImgBgContainer3></StyledMainImgBgContainer3>
-		</div>
+			<StyledMainImgBgContainer3>
+				<div
+					style={{
+						marginTop: "20px",
+						animation: "fadeInLeft 2s",
+						marginRight: "40px",
+						position: "relative",
+						display: "flex",
+						alignItems: "center",
+					}}
+				>
+					<div className="home-hide">
+						<StyledImgContainer>
+							<img
+								alt="강아지 사진"
+								src="/images/home/main-img-3.png"
+								style={{ width: "600px", height: "320px", borderRadius: "20px" }}
+							/>
+							<img
+								style={{ position: "absolute", left: "-60px", bottom: "350px", width: "110px" }}
+								src="/images/home/flame2.png"
+								alt="불꽃아이콘"
+							/>
+						</StyledImgContainer>
+					</div>
+				</div>
+				<div
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						justifyContent: "flex-end",
+						marginBottom: "30px",
+					}}
+				>
+					<StyledTitleFontSpan3>
+						우리는 좀 더 나은 세상을 만들기 위해 모였어요.
+						<br />
+						Helping people makes this world a better place.
+					</StyledTitleFontSpan3>
+					<Link to="/about">
+						<StyledTitleFontDiv2>
+							About Team <FaArrowRight style={{ justifyContent: "end" }} size={50} />
+						</StyledTitleFontDiv2>
+					</Link>
+				</div>
+			</StyledMainImgBgContainer3>
+		</>
 	);
 }

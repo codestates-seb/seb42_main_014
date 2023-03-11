@@ -123,51 +123,52 @@ export default function About() {
 				</div>
 			</StyledAboutImgContainer>
 			<div style={{ marginBottom: "80px" }}>
-				{members.map((el, idx) => {
-					const { name, avatarUrl, position, githubUrl, blogUrl } = el;
-					return (
-						<StyledMemberContainer key={idx}>
-							<StyledMemberImgContainer
-								style={{
-									border: position.includes("FE") ? "4px solid #f36e56" : "4px solid #6166f4",
-								}}
-								src={avatarUrl}
-							/>
-							<div style={{ display: "flex", flexDirection: "column", margin: "30px" }}>
-								<span style={{ marginBottom: "6px", fontSize: "25px" }}>{name}</span>
-								<span style={{ color: position.includes("FE") ? "#ff7259" : "#abaeff" }}>
-									{position}
-								</span>
-								<div style={{ marginTop: "15px" }}>
-									<a
-										target={"_blank"}
-										rel="noreferrer"
-										href={githubUrl}
-										style={{ color: "white", marginRight: "20px" }}
-									>
-										<BsGithub className="icon-hover" size={30} style={{}} />
-									</a>
-									<a
-										target={"_blank"}
-										rel="noreferrer"
-										href={githubUrl}
-										style={{ color: "white", marginRight: "20px" }}
-									>
-										<BsInstagram className="icon-hover" size={30} />
-									</a>
-									<a
-										target={"_blank"}
-										rel="noreferrer"
-										href={blogUrl}
-										style={{ color: "white", marginRight: "20px" }}
-									>
-										<SiVelog className="icon-hover" size={30} />
-									</a>
+				{members &&
+					members.map((el, idx) => {
+						const { name, avatarUrl, position, githubUrl, blogUrl } = el;
+						return (
+							<StyledMemberContainer key={idx}>
+								<StyledMemberImgContainer
+									style={{
+										border: position.includes("FE") ? "4px solid #f36e56" : "4px solid #6166f4",
+									}}
+									src={avatarUrl}
+								/>
+								<div style={{ display: "flex", flexDirection: "column", margin: "30px" }}>
+									<span style={{ marginBottom: "6px", fontSize: "25px" }}>{name}</span>
+									<span style={{ color: position.includes("FE") ? "#ff7259" : "#abaeff" }}>
+										{position}
+									</span>
+									<div style={{ marginTop: "15px" }}>
+										<a
+											target={"_blank"}
+											rel="noreferrer"
+											href={githubUrl}
+											style={{ color: "white", marginRight: "20px" }}
+										>
+											<BsGithub className="icon-hover" size={30} style={{}} />
+										</a>
+										<a
+											target={"_blank"}
+											rel="noreferrer"
+											href={githubUrl}
+											style={{ color: "white", marginRight: "20px" }}
+										>
+											<BsInstagram className="icon-hover" size={30} />
+										</a>
+										<a
+											target={"_blank"}
+											rel="noreferrer"
+											href={blogUrl}
+											style={{ color: "white", marginRight: "20px" }}
+										>
+											<SiVelog className="icon-hover" size={30} />
+										</a>
+									</div>
 								</div>
-							</div>
-						</StyledMemberContainer>
-					);
-				})}
+							</StyledMemberContainer>
+						);
+					})}
 			</div>
 		</div>
 	);
