@@ -21,7 +21,9 @@ public class MemberDto {
         private String password;
 
         @NotBlank
-        private String nickName;
+        private String memberName;
+
+        private boolean checkOrg;
     }
 
     @Getter
@@ -29,7 +31,7 @@ public class MemberDto {
 
         private int memberId;
 
-        private String nickName;
+        private String memberName;
 
         private String password;
 
@@ -48,7 +50,7 @@ public class MemberDto {
 
         private String password;
 
-        private String nickName;
+        private String memberName;
 
         private Member.MemberStatus memberStatus;
     }

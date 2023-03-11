@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 @RestController
@@ -20,15 +21,17 @@ public class MemberController {
     private final MemberMapper mapper;
 
     @PostMapping
-    public ResponseEntity postMember(@RequestBody MemberDto.Post memberPostDto){
+    public ResponseEntity postMember(@RequestBody @Valid MemberDto.Post memberPostDto){
 
         Member postMember = memberService.createMember(mapper.memberPostDtoToMember(memberPostDto));
+
+
         return new ResponseEntity<>(mapper.memberToMemberResponseDto(postMember), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{member-id}")
     public ResponseEntity updateMember(@PathVariable("member-id") @Positive int memberId,
-                                       @RequestBody MemberDto.Patch memberPatchDto){
+                                       @RequestBody @Valid MemberDto.Patch memberPatchDto){
 
         memberPatchDto.setMemberId(memberId);
 

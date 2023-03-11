@@ -1,10 +1,13 @@
 package com.main.volunteer.member.service;
 
+import com.main.volunteer.auth.utils.CustomAuthorityUtils;
 import com.main.volunteer.member.entity.Member;
 import com.main.volunteer.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -12,11 +15,16 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final CustomAuthorityUtils authorityUtils;
 
     public Member createMember(Member member){
 
         verifyEmail(member.getEmail());
-        verifyNickName(member.getNickName());
+        verifyMemberName(member.getMemberName());
+
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encryptedPassword);
 
        return memberRepository.save(member);
     }
@@ -25,9 +33,9 @@ public class MemberService {
 
         Member findMember = verifiedMember(member.getMemberId());
 
-        Optional.ofNullable(member.getNickName())
-                .ifPresent(memberNickName -> findMember.setNickName(memberNickName));
-        verifyNickName(findMember.getNickName());
+        Optional.ofNullable(member.getMemberName())
+                .ifPresent(memberNickName -> findMember.setMemberName(memberNickName));
+        verifyMemberName(findMember.getMemberName());
 
         Optional.ofNullable(member.getPassword())
                 .ifPresent(memberPassword -> findMember.setPassword(memberPassword));
@@ -62,9 +70,9 @@ public class MemberService {
         }
     }
 
-    public void verifyNickName(String nickName){
+    public void verifyMemberName(String memberName){
 
-        Optional<Member> verifiedMember = memberRepository.findByNickName(nickName);
+        Optional<Member> verifiedMember = memberRepository.findByMemberName(memberName);
 
         if(verifiedMember.isPresent()){
             throw new RuntimeException("NICKNAME_EXIST");
