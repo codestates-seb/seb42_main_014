@@ -9,7 +9,11 @@ import Volunteer from "./pages/volunteer/Volunteer";
 import VolunteerPost from "./pages/volunteer/VolunteerPost";
 import Login from "./pages/Sign/Login";
 import SignUp from "./pages/Sign/SignUp";
+
 import Community from "./pages/community/Community";
+import UserEdit from "./pages/Sign/UserEdit";
+import CompanyEdit from "./pages/Sign/CompanyEdit";
+
 
 const router = createBrowserRouter([
 	{
@@ -27,6 +31,14 @@ const router = createBrowserRouter([
 			{
 				path: "/signup",
 				element: <SignUp />,
+			},
+			{
+				path: "/Useredit",
+				element: <UserEdit />,
+			},
+			{
+				path: "/companyedit",
+				element: <CompanyEdit />,
 			},
 			{
 				path: "/volunteer",
