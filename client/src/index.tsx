@@ -11,6 +11,7 @@ import DonationPost from "./pages/donation/DonationPost";
 import Donation from "./pages/donation/Donation";
 import Login from "./pages/Sign/Login";
 import SignUp from "./pages/Sign/SignUp";
+import UserEdit from "./pages/Sign/UserEdit";
 
 const router = createBrowserRouter([
 	{
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
 			{
 				path: "/signup",
 				element: <SignUp />,
+			},
+			{
+				path: "/edit",
+				element: <UserEdit />,
 			},
 			{
 				path: "/volunteer",
