@@ -12,6 +12,7 @@ import Donation from "./pages/donation/Donation";
 import Login from "./pages/Sign/Login";
 import SignUp from "./pages/Sign/SignUp";
 import UserEdit from "./pages/Sign/UserEdit";
+import CompanyEdit from "./pages/Sign/CompanyEdit";
 
 const router = createBrowserRouter([
 	{
@@ -31,8 +32,12 @@ const router = createBrowserRouter([
 				element: <SignUp />,
 			},
 			{
-				path: "/edit",
+				path: "/Useredit",
 				element: <UserEdit />,
+			},
+			{
+				path: "/companyedit",
+				element: <CompanyEdit />,
 			},
 			{
 				path: "/volunteer",
