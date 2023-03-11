@@ -2,26 +2,49 @@ package com.main.volunteer.volunteer.entity;
 
 
 import com.main.volunteer.audit.Auditable;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
+@Getter @Setter
 public class Volunteer extends Auditable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long volunteerId;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
+    private LocalDateTime applyDate;
+
+    @Column(nullable = false)
+    private LocalDateTime volunteerDate;
+
+    @Column(nullable = false)
+    private String place;
+
+    @Column(nullable = false)
     private String content;
 
-    private Integer viewCount;
+    @Column(nullable = false)
+    private Integer applyLimit;
 
-    private LocalDateTime endDate;
+    private Integer likeCount = 0;
+
+    /*
+    봉사를 등록한 organization 의 memberId
+     */
+//    @ManyToOne
+//    @JoinColumn(name = "ORGANIZATION_ID")
+//    private Member member;
+
 
     private VolunteerStatus volunteerStatus;
 
