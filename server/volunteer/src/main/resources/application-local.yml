@@ -20,10 +20,6 @@ spring:
         format_sql: true
         highlight_sql: true
         use_sql_comments: true
-payment:
-  cid: TC0ONETIME   #가맹점 테스트 코드
-  admin_key: 3c725716b1f2e3f653face8dde4fa836  #카카오 어플리케이션 어드민 키
-  host: https://kapi.kakao.com/v1/
 
 #  security:
 #    oauth2:
