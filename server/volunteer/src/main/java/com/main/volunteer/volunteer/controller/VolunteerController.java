@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.net.URI;
 
 @RestController
@@ -28,6 +29,7 @@ public class VolunteerController {
     }
 
 
+    //봉사 기관만 가능
     @PostMapping
     public ResponseEntity<?> postVolunteer(@RequestBody @Valid VolunteerDto.Post postDto){
 
@@ -37,6 +39,15 @@ public class VolunteerController {
 
         URI uri = UriUtil.createUri(DEFAULT_URI, createdVolunteer.getVolunteerId());
         return ResponseEntity.created(uri).body(ApiResponse.created());
+    }
+
+    //봉사 기관만 가능
+    @DeleteMapping("/{volunteer-id}")
+    public ResponseEntity<?> deleteVolunteer(@Positive @PathVariable("volunteer-id") Long volunteerId){
+
+        volunteerService.deleteVolunteer(volunteerId);
+
+        return ResponseEntity.ok().body(ApiResponse.ok());
     }
 
 

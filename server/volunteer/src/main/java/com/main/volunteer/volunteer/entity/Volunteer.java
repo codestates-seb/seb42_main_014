@@ -46,6 +46,7 @@ public class Volunteer extends Auditable {
 //    private Member member;
 
 
+    @Enumerated(EnumType.STRING)
     private VolunteerStatus volunteerStatus;
 
 
