@@ -1,9 +1,11 @@
 import Card from "../../components/Card";
 import { FaEnvira } from "react-icons/fa";
+import SearchBar from "../../components/volunteer/SearchBar";
 
 export default function Volunteer() {
 	return (
 		<div style={{ margin: "50px" }}>
+			<SearchBar placeholder="검색어를 입력해 주세요." width={250} height={45} radius={10} />
 			<Card
 				src="/images/home/main-img-1.png"
 				title="폐가구를 정리해요"
