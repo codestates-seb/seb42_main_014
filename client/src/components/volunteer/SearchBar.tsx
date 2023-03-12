@@ -16,7 +16,6 @@ export default function SearchBar({ placeholder, width, height, radius }: TProps
 		border: 1px solid gray;
 		display: flex;
 		align-items: center;
-		/* justify-content: center; */
 	`;
 
 	const StyledSearchInput = styled.input`

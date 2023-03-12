@@ -5,14 +5,16 @@ interface TProps {
 	title: string;
 	date: string;
 	place: string;
-	person: string;
+	person: string | number;
 	category?: any;
+	width: number;
+	height: number;
 }
 
-export default function Card({ src, title, date, place, person, category }: TProps) {
+export default function Card({ src, title, date, place, person, category, width, height }: TProps) {
 	const StyledCardContainer = styled.div`
-		width: 380px;
-		height: 350px;
+		width: ${width}px;
+		height: ${height}px;
 		background-color: #ffffff;
 		border-radius: 20px;
 		display: flex;
@@ -31,6 +33,10 @@ export default function Card({ src, title, date, place, person, category }: TPro
 		.center {
 			display: flex;
 			justify-content: center;
+			img {
+				width: 350px;
+				border-radius: 10px;
+			}
 		}
 
 		:hover {
@@ -38,10 +44,19 @@ export default function Card({ src, title, date, place, person, category }: TPro
 			transform: scale(1.05);
 		}
 	`;
+
+	const StyledCardPersonDiv = styled.div`
+		font-size: 20px;
+		display: flex;
+		justify-content: flex-end;
+		align-items: flex-end;
+		width: 20%;
+	`;
+
 	return (
 		<StyledCardContainer>
 			<div className="center">
-				<img src={src} alt="카드 이미지" style={{ width: "350px", borderRadius: "10px" }} />
+				<img src={src} alt="카드 이미지" />
 			</div>
 			<div style={{ padding: "20px", display: "flex" }}>
 				<div style={{ width: "80%" }}>
@@ -52,17 +67,7 @@ export default function Card({ src, title, date, place, person, category }: TPro
 						<span>{place}</span>
 					</div>
 				</div>
-				<div
-					style={{
-						fontSize: "20px",
-						display: "flex",
-						justifyContent: "flex-end",
-						alignItems: "flex-end",
-						width: "20%",
-					}}
-				>
-					{person}
-				</div>
+				<StyledCardPersonDiv>{person}</StyledCardPersonDiv>
 			</div>
 		</StyledCardContainer>
 	);

@@ -7,6 +7,8 @@ export default function Volunteer() {
 		<div style={{ margin: "50px" }}>
 			<SearchBar placeholder="검색어를 입력해 주세요." width={250} height={45} radius={10} />
 			<Card
+				width={380}
+				height={350}
 				src="/images/home/main-img-1.png"
 				title="폐가구를 정리해요"
 				date="일시 : 2023년 3월 10일 14~16시(2h)"
