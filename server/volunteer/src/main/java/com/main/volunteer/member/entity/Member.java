@@ -2,6 +2,7 @@ package com.main.volunteer.member.entity;
 
 import com.main.volunteer.audit.Auditable;
 import com.main.volunteer.domain.apply.entity.Apply;
+import com.main.volunteer.domain.membergroup.entity.MemberGroup;
 import com.main.volunteer.like.entity.Like;
 import com.main.volunteer.point.entity.Point;
 import lombok.Getter;
@@ -52,6 +53,9 @@ public class Member extends Auditable {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Like> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member" , cascade = CascadeType.PERSIST)
+    private List<MemberGroup> memberGroups = new ArrayList<>();
 
     public enum MemberStatus{
         MEMBER_ACTIVE("활동중"),

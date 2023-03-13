@@ -1,9 +1,10 @@
-package com.main.volunteer.group.service;
+package com.main.volunteer.domain.group.service;
 
+import com.main.volunteer.domain.group.entity.Group;
+import com.main.volunteer.domain.group.repository.GroupRepository;
 import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
-import com.main.volunteer.group.entity.Group;
-import com.main.volunteer.group.repository.GroupRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,12 +12,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class GroupService {
     private final GroupRepository groupRepository;
-
-    public GroupService(GroupRepository groupRepository) {
-        this.groupRepository = groupRepository;
-    }
 
     // 그룹 생성
     public Group createGroup(Group group) {
@@ -76,9 +74,9 @@ public class GroupService {
     }
 
     // 그룹 존재 검증
-    @Transactional(readOnly = true)
-    private Group verifyExistGroup(Long groupId) {
+   @Transactional(readOnly = true)
+    public Group verifyExistGroup(Long groupId) {
         Optional<Group> optional = groupRepository.findById(groupId);
-        return optional.orElseThrow(() -> new RuntimeException("존재하는 그룹이 없습니다."));
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.GROUP_EXIST));
     }
 }

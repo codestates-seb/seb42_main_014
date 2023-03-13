@@ -1,7 +1,10 @@
-package com.main.volunteer.group.entity;
+package com.main.volunteer.domain.group.entity;
 
 
-import com.main.volunteer.comment.entity.Comment;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.main.volunteer.domain.comment.entity.Comment;
+import com.main.volunteer.domain.membergroup.entity.MemberGroup;
+import com.main.volunteer.domain.tag.entity.Tag;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,13 +29,15 @@ public class Group {
     private String place;
     private String content;
 
-    @OneToMany(mappedBy = "group")
-    List<MemberGroup> memberGroups = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "group" , cascade = CascadeType.PERSIST)
+    private List<MemberGroup> memberGroups = new ArrayList<>();
 
-    /* Tag class 추가 되었을때 주석 삭제*/
-//    @OneToOne(mappedBy = "group")
-//    private Tag tag;
+    @OneToOne
+    @JoinColumn(name = "TAG_ID")
+    private Tag tag;
 
-    @OneToMany(mappedBy = "group")
-    List<Comment> comments = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST)
+    private List<Comment> comments = new ArrayList<>();
 }

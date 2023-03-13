@@ -1,5 +1,6 @@
 package com.main.volunteer.domain.tag.entity;
 
+import com.main.volunteer.domain.group.entity.Group;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,5 +25,7 @@ public class Tag{
 
     private String tagName;
 
+    @OneToOne(mappedBy = "tag")
+    private Group group;
 
 }

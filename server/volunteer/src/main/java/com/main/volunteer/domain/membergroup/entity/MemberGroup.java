@@ -1,5 +1,8 @@
-package com.main.volunteer.group.entity;
+package com.main.volunteer.domain.membergroup.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.main.volunteer.domain.group.entity.Group;
+import com.main.volunteer.member.entity.Member;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -15,8 +18,7 @@ public class MemberGroup {
     @JoinColumn(name = "group_id")
     private Group group;
 
-    /* Member class 추가 되었을때 주석 삭제 */
-//    @ManyToOne
-//    @JoinColumn(name = "MEMBER_ID")
-//    private Member member;
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 }
