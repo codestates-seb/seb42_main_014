@@ -1,5 +1,6 @@
 package com.main.volunteer.domain.comment.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.main.volunteer.audit.Auditable;
 import com.main.volunteer.domain.group.entity.Group;
 import com.main.volunteer.member.entity.Member;
@@ -19,10 +20,12 @@ public class Comment extends Auditable {
     private long commentId;
     private String content;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name= "member_id")
     private Member member;

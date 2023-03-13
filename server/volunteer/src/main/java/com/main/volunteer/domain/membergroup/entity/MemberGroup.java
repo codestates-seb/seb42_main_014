@@ -14,10 +14,12 @@ public class MemberGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memberGroupId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;

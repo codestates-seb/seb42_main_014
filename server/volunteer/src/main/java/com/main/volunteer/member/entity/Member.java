@@ -1,5 +1,6 @@
 package com.main.volunteer.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.main.volunteer.audit.Auditable;
 import com.main.volunteer.domain.apply.entity.Apply;
 import com.main.volunteer.domain.membergroup.entity.MemberGroup;
@@ -42,18 +43,22 @@ public class Member extends Auditable {
     @Enumerated(EnumType.STRING)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
+    @JsonIgnore
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
     @OneToOne(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Point point;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Apply> applyList = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Like> likes = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "member" , cascade = CascadeType.PERSIST)
     private List<MemberGroup> memberGroups = new ArrayList<>();
 

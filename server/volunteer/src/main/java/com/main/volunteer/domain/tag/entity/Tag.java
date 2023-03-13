@@ -1,5 +1,6 @@
 package com.main.volunteer.domain.tag.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.main.volunteer.domain.group.entity.Group;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class Tag{
 
     private String tagName;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "tag")
     private Group group;
 

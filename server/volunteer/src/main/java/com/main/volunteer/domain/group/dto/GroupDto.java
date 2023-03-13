@@ -1,6 +1,7 @@
 package com.main.volunteer.domain.group.dto;
 
 import com.main.volunteer.domain.comment.dto.CommentDto;
+import com.main.volunteer.domain.comment.entity.Comment;
 import com.main.volunteer.domain.tag.entity.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
