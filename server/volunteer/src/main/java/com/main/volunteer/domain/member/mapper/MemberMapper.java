@@ -1,7 +1,7 @@
-package com.main.volunteer.member.mapper;
+package com.main.volunteer.domain.member.mapper;
 
-import com.main.volunteer.member.dto.MemberDto;
-import com.main.volunteer.member.entity.Member;
+import com.main.volunteer.domain.member.dto.MemberDto;
+import com.main.volunteer.domain.member.entity.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

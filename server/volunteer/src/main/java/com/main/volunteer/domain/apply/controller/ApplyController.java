@@ -1,19 +1,15 @@
 package com.main.volunteer.domain.apply.controller;
 
-import com.main.volunteer.domain.apply.dto.ApplyDto;
 import com.main.volunteer.domain.apply.entity.Apply;
-import com.main.volunteer.domain.apply.mapper.ApplyMapper;
 import com.main.volunteer.domain.apply.service.ApplyService;
-import com.main.volunteer.member.entity.Member;
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.net.URI;
 
@@ -30,7 +26,7 @@ public class ApplyController {
 
 
     @PostMapping("/{volunteer-id}")
-    public ResponseEntity<?> postApply(@PathVariable("volunteer-id") Long volunteerId, @PathParam("member-id") int memberId){
+    public ResponseEntity<?> postApply(@PathVariable("volunteer-id") Long volunteerId, @PathParam("member-id") Long memberId){
 
         Member member = new Member(); //jwt 구현후 삭제 예정
         member.setMemberId(memberId); //jwt 구현후 삭제 예정

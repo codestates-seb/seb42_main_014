@@ -1,11 +1,10 @@
 package com.main.volunteer.auth;
 
 import com.main.volunteer.auth.utils.CustomAuthorityUtils;
-import com.main.volunteer.member.entity.Member;
-import com.main.volunteer.member.repository.MemberRepository;
+import com.main.volunteer.domain.member.entity.Member;
+import com.main.volunteer.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,6 +1,6 @@
-package com.main.volunteer.point.entity;
+package com.main.volunteer.domain.point.entity;
 
-import com.main.volunteer.member.entity.Member;
+import com.main.volunteer.domain.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +15,7 @@ public class Point {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int pointId;
+    private Long pointId;
 
     private int pointCount;
 

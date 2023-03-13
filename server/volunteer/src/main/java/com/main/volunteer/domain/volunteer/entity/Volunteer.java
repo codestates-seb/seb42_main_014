@@ -2,9 +2,8 @@ package com.main.volunteer.domain.volunteer.entity;
 
 
 import com.main.volunteer.audit.Auditable;
-import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.tag.entity.Tag;
-import com.main.volunteer.member.entity.Member;
+import com.main.volunteer.domain.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
