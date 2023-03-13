@@ -87,7 +87,7 @@ public class VolunteerDto {
 
         private Integer likeCount;
 
-        private int memberId;
+        private Long memberId;
 
         private Long tagId;
 

@@ -1,12 +1,11 @@
-package com.main.volunteer.member.dto;
+package com.main.volunteer.domain.member.dto;
 
-import com.main.volunteer.member.entity.Member;
+import com.main.volunteer.domain.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MemberDto {

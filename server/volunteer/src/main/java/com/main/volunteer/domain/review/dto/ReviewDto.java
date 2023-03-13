@@ -28,7 +28,7 @@ public class ReviewDto {
 
         private Long reviewId;
         private String content;
-        private int memberId;
+        private Long memberId;
         private Long volunteerId;
     }
 

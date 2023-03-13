@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 
+
 @AllArgsConstructor
 @Getter
 public class ApplyDto {
@@ -14,7 +15,7 @@ public class ApplyDto {
     public static class Response{
         private Long applyId;
         private ApplyStatus applyStatus;
-        private int memberId;
+        private Long memberId;
         private Long volunteerId;
     }
 

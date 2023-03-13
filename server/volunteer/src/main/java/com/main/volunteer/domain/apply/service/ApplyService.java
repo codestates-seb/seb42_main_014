@@ -3,10 +3,10 @@ package com.main.volunteer.domain.apply.service;
 import com.main.volunteer.domain.apply.entity.Apply;
 import com.main.volunteer.domain.apply.entity.ApplyStatus;
 import com.main.volunteer.domain.apply.repository.ApplyRepository;
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
-import com.main.volunteer.member.entity.Member;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -122,6 +122,6 @@ public class ApplyService {
 
     public List<Apply> getApplyList(Member member) {
         Optional<List<Apply>> optional = applyRepository.findByMember(member);
-        optional.orElseThrow(() -> new RuntimeException("신청한 봉사 활동한 내역이 없습니다."));
+        return optional.orElseThrow(() -> new RuntimeException("신청한 봉사 활동한 내역이 없습니다."));
     }
 }

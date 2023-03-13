@@ -1,4 +1,4 @@
-package com.main.volunteer.member.dto;
+package com.main.volunteer.domain.member.dto;
 
 import lombok.Getter;
 

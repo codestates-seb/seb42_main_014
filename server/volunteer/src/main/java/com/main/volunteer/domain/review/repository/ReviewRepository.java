@@ -1,8 +1,8 @@
 package com.main.volunteer.domain.review.repository;
 
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
-import com.main.volunteer.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

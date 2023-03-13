@@ -41,7 +41,7 @@ public interface VolunteerMapper{
                 volunteerStatus = volunteer.getVolunteerStatus().name();
             }
 
-            int memberId = volunteer.getMember().getMemberId();
+            Long memberId = volunteer.getMember().getMemberId();
             Long tagId = volunteer.getTag().getTagId();
 
             VolunteerDto.Response response = new VolunteerDto.Response( volunteerId, title, applyDate, volunteerDate, volunteerTime, place, content, applyLimit, applyCount, likeCount, memberId, tagId, volunteerStatus );

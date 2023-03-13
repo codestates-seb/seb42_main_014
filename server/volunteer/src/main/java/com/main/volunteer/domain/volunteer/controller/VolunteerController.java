@@ -2,7 +2,7 @@ package com.main.volunteer.domain.volunteer.controller;
 
 
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
-import com.main.volunteer.member.entity.Member;
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.domain.tag.entity.Tag;
 import com.main.volunteer.domain.tag.service.TagService;
@@ -40,7 +40,7 @@ public class VolunteerController {
      */
     //    @PreAuthorize("isAuthenticated()")
     @PostMapping
-    public ResponseEntity<?> postVolunteer(@RequestBody @Valid VolunteerDto.Post postDto, @PathParam("member-id") int memberId){
+    public ResponseEntity<?> postVolunteer(@RequestBody @Valid VolunteerDto.Post postDto, @PathParam("member-id") Long memberId){
 
         Tag tag = tagService.getTag(postDto.getTagName());
         Volunteer volunteer = volunteerMapper.postDtoToVolunteer(postDto);

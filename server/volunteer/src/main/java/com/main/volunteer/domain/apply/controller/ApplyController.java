@@ -3,14 +3,16 @@ package com.main.volunteer.domain.apply.controller;
 import com.main.volunteer.domain.apply.entity.Apply;
 import com.main.volunteer.domain.apply.mapper.ApplyMapper;
 import com.main.volunteer.domain.apply.service.ApplyService;
-import com.main.volunteer.member.entity.Member;
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.websocket.server.PathParam;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/apply")
@@ -28,7 +30,7 @@ public class ApplyController {
 
 
     @PostMapping("/{volunteer-id}")
-    public ResponseEntity<?> postApply(@PathVariable("volunteer-id") Long volunteerId, @PathParam("member-id") int memberId){
+    public ResponseEntity<?> postApply(@PathVariable("volunteer-id") Long volunteerId, @PathParam("member-id") Long memberId){
 
         Member member = new Member(); //jwt 구현후 삭제 예정
         member.setMemberId(memberId); //jwt 구현후 삭제 예정
@@ -43,7 +45,7 @@ public class ApplyController {
     }
 
     @PatchMapping("/{volunteer-id}")
-    public ResponseEntity<?> cancelApply(@PathVariable("volunteer-id") Long volunteerId, @PathParam("member-id") int memberId) {
+    public ResponseEntity<?> cancelApply(@PathVariable("volunteer-id") Long volunteerId, @PathParam("member-id") Long memberId) {
 
         Member member = new Member(); //jwt 구현후 삭제 예정
         member.setMemberId(memberId); //jwt 구현후 삭제 예정
@@ -54,11 +56,12 @@ public class ApplyController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getApplyList(@PathParam("member-id") int memberId) {
+    public ResponseEntity<?> getApplyList(@PathParam("member-id") Long memberId) {
         Member member = new Member(); //jwt 구현후 삭제 예정
         member.setMemberId(memberId); //jwt 구현후 삭제 예정
 
-        applyService.getApplyList(member);
+        List<Apply> applyList = applyService.getApplyList(member);
+        return ResponseEntity.ok().body(ApiResponse.ok("data", applyMapper.applyListToResponseList(applyList)));
     }
 
 

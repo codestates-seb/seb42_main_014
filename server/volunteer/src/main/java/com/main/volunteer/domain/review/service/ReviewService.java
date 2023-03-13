@@ -1,11 +1,11 @@
 package com.main.volunteer.domain.review.service;
 
 import com.main.volunteer.domain.apply.service.ApplyService;
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.review.repository.ReviewRepository;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
-import com.main.volunteer.member.entity.Member;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -104,7 +104,7 @@ public class ReviewService {
         return reviewRepository.save(verifiedReview);
     }
 
-    public void deleteReview(Long reviewId, int memberId) {
+    public void deleteReview(Long reviewId, Long memberId) {
         Review verifiedReview = verifyExistReview(reviewId);
         reviewRepository.delete(verifiedReview);
     }

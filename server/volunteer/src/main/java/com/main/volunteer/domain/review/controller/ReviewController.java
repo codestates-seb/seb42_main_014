@@ -1,10 +1,10 @@
 package com.main.volunteer.domain.review.controller;
 
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.review.dto.ReviewDto;
 import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.review.mapper.ReviewMapper;
 import com.main.volunteer.domain.review.service.ReviewService;
-import com.main.volunteer.member.entity.Member;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +32,7 @@ public class ReviewController {
 
 
     @PostMapping("/{volunteer-id}")
-    public ResponseEntity<?> postReview(@RequestBody @Valid ReviewDto.Post postDto, @PathVariable("volunteer-id") Long volunteerId, @PathParam("member-id") int memberId) {
+    public ResponseEntity<?> postReview(@RequestBody @Valid ReviewDto.Post postDto, @PathVariable("volunteer-id") Long volunteerId, @PathParam("member-id") Long memberId) {
 
         Member member = new Member();
         member.setMemberId(memberId);
@@ -51,7 +51,7 @@ public class ReviewController {
     내가 쓴 후기 목록 보기
      */
     @GetMapping("/my")
-    public ResponseEntity<?> getMyReviews(@PathParam("member-id") int memberId) {
+    public ResponseEntity<?> getMyReviews(@PathParam("member-id") Long memberId) {
 
         Member member = new Member();
         member.setMemberId(memberId);
@@ -65,7 +65,7 @@ public class ReviewController {
     특정 봉사활동에서 내가 쓴 후기 보기
      */
     @GetMapping("/{volunteer-id}/my")
-    public ResponseEntity<?> getMyReview(@PathVariable("volunteer-id") Long volunteerId, @PathParam("member-id") int memberId){
+    public ResponseEntity<?> getMyReview(@PathVariable("volunteer-id") Long volunteerId, @PathParam("member-id") Long memberId){
 
         Member member = new Member();
         member.setMemberId(memberId);
@@ -86,7 +86,7 @@ public class ReviewController {
     }
 
     @PatchMapping("/{review-id}")
-    public ResponseEntity<?> patchMyReview(@PathVariable("review-id") Long reviewId, @RequestBody ReviewDto.Patch patchDto, @PathParam("member-id") int memberId) {
+    public ResponseEntity<?> patchMyReview(@PathVariable("review-id") Long reviewId, @RequestBody ReviewDto.Patch patchDto, @PathParam("member-id") Long memberId) {
         Member member = new Member();
         member.setMemberId(memberId);
 
@@ -100,7 +100,7 @@ public class ReviewController {
     }
 
     @DeleteMapping("/{review-id}")
-    public ResponseEntity<?> deleteMyReview(@PathVariable("review-id") Long reviewId, @PathParam("member-id") int memberId) {
+    public ResponseEntity<?> deleteMyReview(@PathVariable("review-id") Long reviewId, @PathParam("member-id") Long memberId) {
         Member member = new Member();
         member.setMemberId(memberId);
 
