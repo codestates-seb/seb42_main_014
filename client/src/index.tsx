@@ -14,7 +14,6 @@ import Community from "./pages/community/Community";
 import UserEdit from "./pages/Sign/UserEdit";
 import CompanyEdit from "./pages/Sign/CompanyEdit";
 
-
 const router = createBrowserRouter([
 	{
 		path: "/",
