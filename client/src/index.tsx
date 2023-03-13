@@ -13,7 +13,7 @@ import SignUp from "./pages/Sign/SignUp";
 import Community from "./pages/community/Community";
 import UserEdit from "./pages/Sign/UserEdit";
 import CompanyEdit from "./pages/Sign/CompanyEdit";
-
+import VolunteerDetail from "./pages/volunteer/VolunteerDetail";
 
 const router = createBrowserRouter([
 	{
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
 				element: <SignUp />,
 			},
 			{
-				path: "/Useredit",
+				path: "/useredit",
 				element: <UserEdit />,
 			},
 			{
@@ -43,6 +43,10 @@ const router = createBrowserRouter([
 			{
 				path: "/volunteer",
 				element: <Volunteer />,
+			},
+			{
+				path: "/volunteer/:id",
+				element: <VolunteerDetail />,
 			},
 			{
 				path: "/community",

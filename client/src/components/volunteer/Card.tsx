@@ -6,17 +6,17 @@ interface TProps {
 	date: string;
 	place: string;
 	person: string | number;
-	category?: any;
-	width: number;
-	height: number;
+	width?: number;
+	height?: number;
+	category?: React.ReactElement<any, any> | undefined;
 }
 
 export default function Card({ src, title, date, place, person, category, width, height }: TProps) {
 	const StyledCardContainer = styled.div`
-		width: ${width}px;
-		height: ${height}px;
+		width: ${width ? width : 360}px;
+		height: ${height ? height : 350}px;
 		background-color: #ffffff;
-		border-radius: 20px;
+		border-radius: 10px;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -34,7 +34,7 @@ export default function Card({ src, title, date, place, person, category, width,
 			display: flex;
 			justify-content: center;
 			img {
-				width: 350px;
+				width: 90%;
 				border-radius: 10px;
 			}
 		}
@@ -62,9 +62,9 @@ export default function Card({ src, title, date, place, person, category, width,
 				<div style={{ width: "80%" }}>
 					<span className="title">{title}</span>
 					<span style={{ justifyContent: "center" }}>{category}</span>
-					<div>{date}</div>
+					<div>{`일시 : ${date}`}</div>
 					<div style={{ display: "flex" }}>
-						<span>{place}</span>
+						<span>{`장소 : ${place}`}</span>
 					</div>
 				</div>
 				<StyledCardPersonDiv>{person}</StyledCardPersonDiv>
