@@ -1,7 +1,7 @@
-package com.main.volunteer.like.entity;
+package com.main.volunteer.domain.like.entity;
 
 import com.main.volunteer.audit.Auditable;
-import com.main.volunteer.member.entity.Member;
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ public class Like extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int likeId;
+    private Long likeId;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")

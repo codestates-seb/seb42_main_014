@@ -1,13 +1,18 @@
-package com.main.volunteer.config;
+package com.main.volunteer.auth.config;
 
 import com.main.volunteer.auth.filter.JwtAuthenticationFilter;
+import com.main.volunteer.auth.filter.JwtVerificationFilter;
+import com.main.volunteer.auth.handler.MemberAuthenticationFailureHandler;
+import com.main.volunteer.auth.handler.MemberAuthenticationSuccessHandler;
 import com.main.volunteer.auth.jwt.JwtTokenizer;
+import com.main.volunteer.auth.utils.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -24,6 +29,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
+    private final CustomAuthorityUtils authorityUtils;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -32,11 +38,16 @@ public class SecurityConfiguration {
                 .and()
                 .csrf().disable()
                 .cors(withDefaults())
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .formLogin().disable()
                 .httpBasic().disable()
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
+                       /*
+                        조건 추가해야함
+                        */
                         .anyRequest().permitAll());
         return http.build();
     }
@@ -65,7 +76,13 @@ public class SecurityConfiguration {
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
 
-            builder.addFilter(jwtAuthenticationFilter);
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
+
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+
+            builder.addFilter(jwtAuthenticationFilter)
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
 }

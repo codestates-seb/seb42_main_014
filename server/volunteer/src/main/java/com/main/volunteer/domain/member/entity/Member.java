@@ -1,9 +1,9 @@
-package com.main.volunteer.member.entity;
+package com.main.volunteer.domain.member.entity;
 
 import com.main.volunteer.audit.Auditable;
 import com.main.volunteer.domain.apply.entity.Apply;
-import com.main.volunteer.like.entity.Like;
-import com.main.volunteer.point.entity.Point;
+import com.main.volunteer.domain.like.entity.Like;
+import com.main.volunteer.domain.point.entity.Point;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +20,7 @@ public class Member extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int memberId;
+    private Long memberId;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -34,7 +34,7 @@ public class Member extends Auditable {
     private String orgAddress;
 
     @Column(length = 10)
-    private int orgNumber;
+    private Long orgNumber;
 
     private String profileImage;
 
