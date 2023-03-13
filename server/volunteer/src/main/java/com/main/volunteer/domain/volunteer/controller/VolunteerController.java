@@ -1,6 +1,7 @@
 package com.main.volunteer.domain.volunteer.controller;
 
 
+import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
 import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.response.ApiResponse;
@@ -10,15 +11,19 @@ import com.main.volunteer.util.UriUtil;
 import com.main.volunteer.domain.volunteer.dto.VolunteerDto;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.mapper.VolunteerMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.util.List;
 
+
+@Slf4j
 @RestController
 @RequestMapping("/volunteers")
 public class VolunteerController {
@@ -38,18 +43,16 @@ public class VolunteerController {
     /*
     봉사 등록 - 봉사 기관만 가능
      */
-    //    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     @PostMapping
-    public ResponseEntity<?> postVolunteer(@RequestBody @Valid VolunteerDto.Post postDto, @PathParam("member-id") Long memberId){
+    public ResponseEntity<?> postVolunteer(@RequestBody @Valid VolunteerDto.Post postDto, @AuthenticationPrincipal CustomUserDetails userDetails){
 
         Tag tag = tagService.getTag(postDto.getTagName());
         Volunteer volunteer = volunteerMapper.postDtoToVolunteer(postDto);
         volunteer.setTag(tag);
 
-
-        Member member = new Member();//jwt 구현후 수정 예정
-        member.setMemberId(memberId);//jwt 구현후 수정 예정
-        volunteer.setMember(member);
+        log.info("userDetails Id : " + userDetails.getMemberId());
+        volunteer.setMember(userDetails);
 
         Volunteer createdVolunteer = volunteerService.createVolunteer(volunteer);
 
@@ -68,6 +71,16 @@ public class VolunteerController {
 
         return ResponseEntity.noContent().build();
     }
+
+    /*
+    기관이 등록한 봉사 목록 조회 - 봉사 기관만 가능
+     */
+    public ResponseEntity<?> getVolunteerListByOrg(@AuthenticationPrincipal CustomUserDetails userDetails){
+
+        List<Volunteer> volunteerList = volunteerService.getVolunteerListByOrg(userDetails);
+
+        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
+    }
     /*
     특정 봉사 조회
      */
@@ -77,6 +90,8 @@ public class VolunteerController {
 
         return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerToResponseDto(volunteer)));
     }
+
+
 
     /*
     봉사 목록 조회 - ALL

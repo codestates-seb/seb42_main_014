@@ -96,7 +96,7 @@ public class ReviewService {
     }
 
     public Review patchReview(Review review) {
-        Review verifiedReview = verifyExistReview(review.getReviewId());
+        Review verifiedReview = verifyExistReview(review.getReviewId(), review.getMember());
 
         Optional.ofNullable(review.getContent())
                 .ifPresent(verifiedReview::setContent);
@@ -104,14 +104,14 @@ public class ReviewService {
         return reviewRepository.save(verifiedReview);
     }
 
-    public void deleteReview(Long reviewId, Long memberId) {
-        Review verifiedReview = verifyExistReview(reviewId);
+    public void deleteReview(Long reviewId, Member member) {
+        Review verifiedReview = verifyExistReview(reviewId, member);
         reviewRepository.delete(verifiedReview);
     }
 
 
-    private Review verifyExistReview(Long reviewId) {
-        Optional<Review> optional = reviewRepository.findById(reviewId);
+    private Review verifyExistReview(Long reviewId, Member member) {
+        Optional<Review> optional = reviewRepository.findByReviewIdAndMember(reviewId, member);
         return optional.orElseThrow(() -> new RuntimeException("해당 봉사 활동에 등록된 후기가 없습니다."));
     }
 }

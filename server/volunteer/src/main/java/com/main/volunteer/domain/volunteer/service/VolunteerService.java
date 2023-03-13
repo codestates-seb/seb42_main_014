@@ -1,5 +1,7 @@
 package com.main.volunteer.domain.volunteer.service;
 
+import com.main.volunteer.auth.CustomUserDetails;
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.tag.entity.Tag;
 import com.main.volunteer.domain.tag.service.TagService;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
@@ -67,7 +69,7 @@ public class VolunteerService {
     /*
     봉사 삭제 로직
      */
-    public Volunteer deleteVolunteer(Long volunteerId) {
+    public void deleteVolunteer(Long volunteerId) {
 
         //봉사 활동 존재 여부 검증
         Volunteer volunteer = verifyExistVolunteer(volunteerId);
@@ -81,7 +83,6 @@ public class VolunteerService {
             해당 봉사를 신청한 사람들에게 이메일 전송
              */
             volunteerRepository.delete(volunteer);
-            return volunteer;
         }
 
 
@@ -96,7 +97,6 @@ public class VolunteerService {
         Volunteer verifyVolunteer = verifyExistVolunteer(volunteer.getVolunteerId());
 
         //update 가능한 봉사인지 검증
-        verifyUpdatableVolunteer(verifyVolunteer);
 
         Optional.ofNullable(volunteer.getTitle())
                 .ifPresent(verifyVolunteer::setTitle);
@@ -107,11 +107,6 @@ public class VolunteerService {
         return volunteerRepository.save(volunteer);
     }
 
-
-
-    private void verifyUpdatableVolunteer(Volunteer volunteer) {
-
-    }
 
     /*
     봉사 활동 신청 시 신청 인원 변경 로직
@@ -165,4 +160,24 @@ public class VolunteerService {
     }
 
 
+    /*
+    특정 봉사를 등록한 기관인지 확인
+     */
+    public Volunteer verifyOwnership(Long volunteerId, Member member) {
+        Volunteer volunteer = verifyExistVolunteer(volunteerId);
+        Member organization = volunteer.getMember();
+        if(!organization.equals(member)){
+            throw new RuntimeException("등록한 봉사 활동의 기관이 아닙니다.");
+        }
+
+        return volunteer;
+    }
+
+    /*
+    봉사 기관이 등록한 봉사 활동 목록 조회
+     */
+    public List<Volunteer> getVolunteerListByOrg(CustomUserDetails userDetails) {
+        Optional<List<Volunteer>> optional = volunteerRepository.findAllByMember(userDetails.getMemberId());
+        return optional.orElseThrow(() -> new RuntimeException("등록한 봉사 활동이 없습니다."));
+    }
 }

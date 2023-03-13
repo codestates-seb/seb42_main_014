@@ -5,6 +5,7 @@ import com.main.volunteer.auth.filter.JwtVerificationFilter;
 import com.main.volunteer.auth.handler.MemberAuthenticationFailureHandler;
 import com.main.volunteer.auth.handler.MemberAuthenticationSuccessHandler;
 import com.main.volunteer.auth.jwt.JwtTokenizer;
+import com.main.volunteer.auth.service.CustomUserDetailsService;
 import com.main.volunteer.auth.utils.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

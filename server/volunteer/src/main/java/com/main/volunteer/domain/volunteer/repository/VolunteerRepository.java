@@ -1,7 +1,6 @@
 package com.main.volunteer.domain.volunteer.repository;
 
-import com.fasterxml.jackson.annotation.OptBoolean;
-import com.main.volunteer.domain.member.entity.Member;
+
 import com.main.volunteer.domain.tag.entity.Tag;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface VolunteerRepository extends JpaRepository<Volunteer, Long> {
 
-    Optional<Volunteer> findByVolunteerIdAndMember(Long volunteerId, Member member);
-
     Optional<List<Volunteer>> findByTag(Tag tag);
+
+    Optional<List<Volunteer>> findAllByMember(Long memberId);
 }

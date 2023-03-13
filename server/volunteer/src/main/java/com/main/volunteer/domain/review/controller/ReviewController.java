@@ -1,5 +1,6 @@
 package com.main.volunteer.domain.review.controller;
 
+import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.review.dto.ReviewDto;
 import com.main.volunteer.domain.review.entity.Review;
@@ -8,7 +9,8 @@ import com.main.volunteer.domain.review.service.ReviewService;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,13 +34,11 @@ public class ReviewController {
 
 
     @PostMapping("/{volunteer-id}")
-    public ResponseEntity<?> postReview(@RequestBody @Valid ReviewDto.Post postDto, @PathVariable("volunteer-id") Long volunteerId, @PathParam("member-id") Long memberId) {
+    public ResponseEntity<?> postReview(@RequestBody @Valid ReviewDto.Post postDto, @PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        Member member = new Member();
-        member.setMemberId(memberId);
 
         Review review = reviewMapper.postDtoToReview(postDto);
-        review.setMember(member);
+        review.setMember(userDetails);
 
         Review createdReview = reviewService.createReview(review, volunteerId);
 
@@ -50,13 +50,11 @@ public class ReviewController {
     /*
     내가 쓴 후기 목록 보기
      */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/my")
-    public ResponseEntity<?> getMyReviews(@PathParam("member-id") Long memberId) {
+    public ResponseEntity<?> getMyReviews(@AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        Member member = new Member();
-        member.setMemberId(memberId);
-
-        List<Review> MyReviewList = reviewService.getMyReviewList(member);
+        List<Review> MyReviewList = reviewService.getMyReviewList(userDetails);
 
         return ResponseEntity.ok().body(ApiResponse.ok("data", reviewMapper.reviewListToResponseList(MyReviewList)));
     }
@@ -64,13 +62,12 @@ public class ReviewController {
     /*
     특정 봉사활동에서 내가 쓴 후기 보기
      */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{volunteer-id}/my")
-    public ResponseEntity<?> getMyReview(@PathVariable("volunteer-id") Long volunteerId, @PathParam("member-id") Long memberId){
+    public ResponseEntity<?> getMyReview(@PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails){
 
-        Member member = new Member();
-        member.setMemberId(memberId);
 
-        Review myReview = reviewService.getMyReview(volunteerId, member);
+        Review myReview = reviewService.getMyReview(volunteerId, userDetails);
 
         return ResponseEntity.ok().body(ApiResponse.ok("data", reviewMapper.reviewToResponse(myReview)));
     }
@@ -85,26 +82,24 @@ public class ReviewController {
         return ResponseEntity.ok().body(ApiResponse.ok("data", reviewMapper.reviewListToResponseList(reviewList)));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PatchMapping("/{review-id}")
-    public ResponseEntity<?> patchMyReview(@PathVariable("review-id") Long reviewId, @RequestBody ReviewDto.Patch patchDto, @PathParam("member-id") Long memberId) {
-        Member member = new Member();
-        member.setMemberId(memberId);
+    public ResponseEntity<?> patchMyReview(@PathVariable("review-id") Long reviewId, @RequestBody ReviewDto.Patch patchDto,  @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         Review review = reviewMapper.patchDtoToReview(patchDto);
         review.setReviewId(reviewId);
-        review.setMember(member);
+        review.setMember(userDetails);
 
         Review patchedMyReview = reviewService.patchReview(review);
 
         return ResponseEntity.ok().body(ApiResponse.ok("data", reviewMapper.reviewToResponse(patchedMyReview)));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{review-id}")
-    public ResponseEntity<?> deleteMyReview(@PathVariable("review-id") Long reviewId, @PathParam("member-id") Long memberId) {
-        Member member = new Member();
-        member.setMemberId(memberId);
+    public ResponseEntity<?> deleteMyReview(@PathVariable("review-id") Long reviewId, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        reviewService.deleteReview(reviewId, memberId);
+        reviewService.deleteReview(reviewId, userDetails);
 
         return ResponseEntity.noContent().build();
     }

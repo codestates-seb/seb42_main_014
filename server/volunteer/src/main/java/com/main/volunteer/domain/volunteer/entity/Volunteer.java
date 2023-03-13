@@ -47,8 +47,6 @@ public class Volunteer extends Auditable {
 
     private Integer likeCount = 0;
 
-
-
     @ManyToOne
     @JoinColumn(name = "ORGANIZATION_ID")
     private Member member;

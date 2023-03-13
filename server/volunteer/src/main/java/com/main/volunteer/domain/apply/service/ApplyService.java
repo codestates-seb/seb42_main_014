@@ -1,5 +1,6 @@
 package com.main.volunteer.domain.apply.service;
 
+import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.apply.entity.Apply;
 import com.main.volunteer.domain.apply.entity.ApplyStatus;
 import com.main.volunteer.domain.apply.repository.ApplyRepository;
@@ -120,8 +121,14 @@ public class ApplyService {
         optional.orElseThrow(() -> new RuntimeException("봉사 활동 한 내역이 없습니다."));
     }
 
-    public List<Apply> getApplyList(Member member) {
+    public List<Apply> getMyApplyList(Member member) {
         Optional<List<Apply>> optional = applyRepository.findByMember(member);
         return optional.orElseThrow(() -> new RuntimeException("신청한 봉사 활동한 내역이 없습니다."));
+    }
+
+    public List<Apply> getApplyListByVolunteer(Long volunteerId, CustomUserDetails userDetails) {
+        Volunteer volunteer = volunteerService.verifyOwnership(volunteerId,userDetails);
+        Optional<List<Apply>> optional = applyRepository.findAllByVolunteer(volunteer);
+        return optional.orElseThrow(() -> new RuntimeException("해당 봉사를 신청한 사람이 없습니다."));
     }
 }
