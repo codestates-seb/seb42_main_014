@@ -1,0 +1,4 @@
+jwt:
+  secret: ${secret_key}
+  access-token-expiration-minutes: 1800000
+  refresh-token-expiration-minutes: 604800000
