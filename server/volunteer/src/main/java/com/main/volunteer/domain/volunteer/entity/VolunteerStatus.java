@@ -1,4 +1,4 @@
-package com.main.volunteer.volunteer.entity;
+package com.main.volunteer.domain.volunteer.entity;
 
 import lombok.Getter;
 

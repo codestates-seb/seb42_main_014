@@ -1,8 +1,8 @@
-package com.main.volunteer.volunteer.mapper;
+package com.main.volunteer.domain.volunteer.mapper;
 
 
-import com.main.volunteer.volunteer.dto.VolunteerDto;
-import com.main.volunteer.volunteer.entity.Volunteer;
+import com.main.volunteer.domain.volunteer.dto.VolunteerDto;
+import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

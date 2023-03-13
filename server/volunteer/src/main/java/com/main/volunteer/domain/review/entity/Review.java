@@ -1,8 +1,9 @@
-package com.main.volunteer.like.entity;
+package com.main.volunteer.domain.review.entity;
 
 import com.main.volunteer.audit.Auditable;
-import com.main.volunteer.member.entity.Member;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
+import com.main.volunteer.member.entity.Member;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,19 +11,19 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
+@Getter @Setter
 @NoArgsConstructor
-@Getter
-@Setter
-@Table(name = "LIKES")
-public class Like extends Auditable {
-
+@AllArgsConstructor
+public class Review extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int likeId;
+    private Long reviewId;
 
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
+    private String content;
+
+//    @OneToOne
+//    @JoinColumn(name = "MEMBER_ID")
+//    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "VOLUNTEER_ID")

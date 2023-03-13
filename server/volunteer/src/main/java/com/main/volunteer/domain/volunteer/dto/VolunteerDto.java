@@ -1,7 +1,7 @@
-package com.main.volunteer.volunteer.dto;
+package com.main.volunteer.domain.volunteer.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.main.volunteer.volunteer.entity.VolunteerStatus;
+import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -21,11 +21,9 @@ public class VolunteerDto {
         @NotBlank(message = "title cannot be empty.")
         private String title;
 
-//        @NotNull(message = "applyDate cannot be empty.")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
         private LocalDateTime applyDate;
 
-//        @NotNull(message = "volunteerDate cannot be empty.")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
         private LocalDateTime volunteerDate;
 
@@ -37,6 +35,10 @@ public class VolunteerDto {
 
         @NotNull(message = "applyLimit cannot be empty.")
         private Integer applyLimit;
+
+        private String tagName;
+
+//        private String volunteerImage;
 
     }
 
@@ -56,6 +58,8 @@ public class VolunteerDto {
         private LocalDateTime endDate;
     }
 
+    @Getter
+    @AllArgsConstructor
     public static class Response {
         private Long volunteerId;
 
