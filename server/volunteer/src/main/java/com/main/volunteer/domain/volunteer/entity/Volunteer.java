@@ -1,13 +1,17 @@
-package com.main.volunteer.volunteer.entity;
+package com.main.volunteer.domain.volunteer.entity;
 
 
 import com.main.volunteer.audit.Auditable;
+import com.main.volunteer.domain.review.entity.Review;
+import com.main.volunteer.domain.tag.entity.Tag;
+import com.main.volunteer.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+
 
 @Entity
 @NoArgsConstructor
@@ -20,6 +24,8 @@ public class Volunteer extends Auditable {
 
     @Column(nullable = false)
     private String title;
+
+//    private String volunteerImage;
 
     @Column(nullable = false)
     private LocalDateTime applyDate;
@@ -38,14 +44,17 @@ public class Volunteer extends Auditable {
 
     private Integer likeCount = 0;
 
-    /*
-    봉사를 등록한 organization 의 memberId
-     */
-//    @ManyToOne
-//    @JoinColumn(name = "ORGANIZATION_ID")
-//    private Member member;
+    private Integer applyCount = 0;
 
+    @ManyToOne
+    @JoinColumn(name = "ORGANIZATION_ID")
+    private Member member;
 
+    @ManyToOne
+    @JoinColumn(name = "TAG_ID")
+    private Tag tag;
+
+    @Enumerated(EnumType.STRING)
     private VolunteerStatus volunteerStatus;
 
 

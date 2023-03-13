@@ -1,9 +1,9 @@
 package com.main.volunteer.member.entity;
 
 import com.main.volunteer.audit.Auditable;
+import com.main.volunteer.domain.apply.entity.Apply;
 import com.main.volunteer.like.entity.Like;
 import com.main.volunteer.point.entity.Point;
-import com.main.volunteer.volunteer.entity.Volunteer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -47,9 +47,9 @@ public class Member extends Auditable {
     @OneToOne(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Point point;
 
-  /*  @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
-    private List<Volunteer> volunteers = new ArrayList<>();
-*/
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    private List<Apply> applyList = new ArrayList<>();
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Like> likes = new ArrayList<>();
 
