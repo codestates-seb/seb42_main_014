@@ -27,6 +27,8 @@ public class VolunteerDto {
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
         private LocalDateTime volunteerDate;
 
+        private Integer volunteerTime;
+
         @NotBlank(message = "place cannot be empty.")
         private String place;
 
@@ -56,6 +58,8 @@ public class VolunteerDto {
         private LocalDateTime volunteerDate;
 
         private LocalDateTime endDate;
+
+        private Integer volunteerTime;
     }
 
     @Getter
@@ -65,9 +69,13 @@ public class VolunteerDto {
 
         private String title;
 
+//        private String volunteerImage;
+
         private LocalDateTime applyDate;
 
         private LocalDateTime volunteerDate;
+
+        private Integer volunteerTime;
 
         private String place;
 
@@ -75,16 +83,14 @@ public class VolunteerDto {
 
         private Integer applyLimit;
 
+        private Integer applyCount;
+
         private Integer likeCount;
 
-    /*
-    봉사를 등록한 organization 의 memberId
-     */
-//    @ManyToOne
-//    @JoinColumn(name = "ORGANIZATION_ID")
-//    private Member member;
+        private int memberId;
 
-        @Enumerated(EnumType.STRING)
-        private VolunteerStatus volunteerStatus;
+        private Long tagId;
+
+        private String volunteerStatus;
     }
 }

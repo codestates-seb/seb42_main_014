@@ -33,6 +33,8 @@ public class Volunteer extends Auditable {
     @Column(nullable = false)
     private LocalDateTime volunteerDate;
 
+    private Integer volunteerTime;
+
     @Column(nullable = false)
     private String place;
 
@@ -42,9 +44,11 @@ public class Volunteer extends Auditable {
     @Column(nullable = false)
     private Integer applyLimit;
 
+    private Integer applyCount = 0;
+
     private Integer likeCount = 0;
 
-    private Integer applyCount = 0;
+
 
     @ManyToOne
     @JoinColumn(name = "ORGANIZATION_ID")

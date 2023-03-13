@@ -21,9 +21,9 @@ public class Review extends Auditable {
 
     private String content;
 
-//    @OneToOne
-//    @JoinColumn(name = "MEMBER_ID")
-//    private Member member;
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "VOLUNTEER_ID")

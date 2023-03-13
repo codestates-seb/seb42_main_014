@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.websocket.server.PathParam;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/volunteers")
@@ -34,7 +35,9 @@ public class VolunteerController {
     }
 
 
-    //봉사 기관만 가능
+    /*
+    봉사 등록 - 봉사 기관만 가능
+     */
     //    @PreAuthorize("isAuthenticated()")
     @PostMapping
     public ResponseEntity<?> postVolunteer(@RequestBody @Valid VolunteerDto.Post postDto, @PathParam("member-id") int memberId){
@@ -51,18 +54,55 @@ public class VolunteerController {
         Volunteer createdVolunteer = volunteerService.createVolunteer(volunteer);
 
         URI uri = UriUtil.createUri(DEFAULT_URI, createdVolunteer.getVolunteerId());
-        return ResponseEntity.created(uri).body(ApiResponse.created());
+        return ResponseEntity.created(uri).body(ApiResponse.created("data", volunteerMapper.volunteerToResponseDto(createdVolunteer)));
     }
 
-    //봉사 기관만 가능
+    /*
+    봉사 삭제 - 봉사 기관만 가능
+     */
     //    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{volunteer-id}")
     public ResponseEntity<?> deleteVolunteer(@Positive @PathVariable("volunteer-id") Long volunteerId){
 
         volunteerService.deleteVolunteer(volunteerId);
 
-        return ResponseEntity.ok().body(ApiResponse.ok());
+        return ResponseEntity.noContent().build();
     }
+    /*
+    특정 봉사 조회
+     */
+    @GetMapping("/{volunteer-id}")
+    public ResponseEntity<?> getVolunteer(@PathVariable("volunteer-id") @Positive Long volunteerId){
+        Volunteer volunteer = volunteerService.getVolunteer(volunteerId);
+
+        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerToResponseDto(volunteer)));
+    }
+
+    /*
+    봉사 목록 조회 - ALL
+     */
+    @GetMapping()
+    public ResponseEntity<?> getVolunteerList(){
+
+        List<Volunteer> volunteerList = volunteerService.getVolunteerList();
+
+        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
+    }
+
+    /*
+    봉사 목록 조회 - TAG 별
+     */
+    @GetMapping("/tags/{tag-id}")
+    public ResponseEntity<?> getVolunteerListByTag(@PathVariable("tag-id") Long tagId){
+
+        List<Volunteer> volunteerList = volunteerService.getVolunteerListByTag(tagId);
+
+        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
+    }
+
+
+
+
 
 
 
