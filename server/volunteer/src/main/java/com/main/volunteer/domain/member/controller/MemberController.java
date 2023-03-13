@@ -1,5 +1,6 @@
 package com.main.volunteer.domain.member.controller;
 
+import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.member.dto.MemberDto;
 import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.mapper.MemberMapper;
@@ -7,8 +8,8 @@ import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,7 +27,9 @@ public class MemberController {
     private final MemberMapper mapper;
 
     @PostMapping
-    public ResponseEntity postMember(@RequestBody @Valid MemberDto.Post memberPostDto){
+    public ResponseEntity postMember(@RequestBody @Valid MemberDto.Post memberPostDto,
+                                     @AuthenticationPrincipal CustomUserDetails customUserDetails){
+
 
         if(memberPostDto.isCheckOrg() == true){
             memberPostDto.setRoles(List.of("ORG", "USER"));
