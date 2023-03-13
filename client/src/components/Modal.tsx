@@ -12,7 +12,6 @@ const ModalOverlay = styled.div`
 	width: 100vw;
 	height: 100vh;
 	position: absolute;
-	background: rgba(0, 0, 0, 0.7);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -20,6 +19,7 @@ const ModalOverlay = styled.div`
 const ModalBox = styled.div`
 	display: block;
 	background: white;
+	border: solid 3px black;
 	width: 25%;
 	min-width: 300px;
 	height: 500px;

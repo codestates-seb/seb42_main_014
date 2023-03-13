@@ -3,19 +3,19 @@ import styled from "styled-components";
 import Modal from "../../components/Modal";
 
 const Body = styled.body`
-	height: 100vh;
 	width: 100%;
 	position: fixed;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
+	justify-content: center;
 	align-items: center;
+	top: 17%;
 `;
 const StyledContainer = styled.div`
 	/* position: absolute; */
 	/* top: 40%;
 	left: 50%;
-	transform: translate(-50%, -50%); */
+
 	/* display: flex;
 	flex-direction: column; */
 `;
@@ -25,7 +25,6 @@ const LoginForm = styled.div`
 	/* justify-content: center; */
 	/* align-items: center; */
 	width: fit-content;
-	height: max-content;
 `;
 const LoginHeader = styled.h1`
 	font-size: 3rem;
@@ -144,12 +143,11 @@ const FlexClo = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height: 100%;
 `;
 const SignUpHeader = styled.div`
 	display: flex;
-	top: 45px;
-	position: absolute;
+	margin: 10px;
+	position: relative;
 	flex-direction: column;
 	align-items: center;
 `;
@@ -187,16 +185,23 @@ export default function SignUp() {
 			</SignUpHeader>
 			<StyledContainer>
 				<LoginForm>
-					<Login placeholder="이메일"></Login>
-					<Login placeholder="패스워드"></Login>
-					<Login placeholder="패스워드 확인"></Login>
-					<Login placeholder={isUser ? "상호명" : "닉네임"}></Login>
 					{isUser ? (
-						<div>
+						<>
+							<Login placeholder="이메일"></Login>
+							<Login placeholder="패스워드"></Login>
+							<Login placeholder="패스워드 확인"></Login>
+							<Login placeholder="상호명"></Login>
 							<Login placeholder="사업장 주소"></Login>
 							<Login placeholder="사업자 등록 번호"></Login>
-						</div>
-					) : null}
+						</>
+					) : (
+						<>
+							<Login placeholder="이메일"></Login>
+							<Login placeholder="패스워드"></Login>
+							<Login placeholder="패스워드 확인"></Login>
+							<Login placeholder="닉네임"></Login>
+						</>
+					)}
 
 					<Flex>
 						<span>약관동의</span>

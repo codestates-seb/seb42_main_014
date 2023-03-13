@@ -42,7 +42,7 @@ const Col = styled.div`
 	flex-direction: column;
 	align-items: center;
 	span {
-		font-size: 20px;
+		font-size: 30px;
 		font-weight: bold;
 	}
 `;
@@ -62,16 +62,9 @@ const All = styled.div`
 	:hover {
 		background-color: #fffffa;
 	}
-	span:first-child {
-		font-size: 30px;
-		font-weight: bold;
-	}
-	span:last-child {
-		line-height: 65px;
-	}
 `;
 
-export default function Category() {
+export default function Kategorie() {
 	return (
 		<Body>
 			<Flex>
