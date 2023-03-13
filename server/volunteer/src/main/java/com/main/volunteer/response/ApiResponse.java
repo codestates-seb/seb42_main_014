@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
+@Getter
 public class ApiResponse<T> {
 
     private final ApiResponseHeader header;
@@ -34,6 +35,7 @@ public class ApiResponse<T> {
     }
 
     public static <T> ApiResponse<T> created() {
+
         return new ApiResponse<>(new ApiResponseHeader(ResponseCode.CREATED.status, ResponseCode.CREATED.message), null);
     }
 
