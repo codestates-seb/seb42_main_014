@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Button from "../../components/Button";
-import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { useState } from "react";
+import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { AiOutlineShareAlt } from "react-icons/ai";
 
 export default function VolunteerInfo() {
