@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 interface TProps {
-	src: string;
-	title: string;
-	date: string;
-	place: string;
-	person: string | number;
+	src?: string;
+	title?: string;
+	date?: string;
+	place?: string;
+	person?: string | number;
 	width?: number;
 	height?: number;
 	category?: React.ReactElement<any, any> | undefined;

@@ -12,9 +12,9 @@ export default function Footer() {
 		list-style: none;
 		font-weight: 700;
 		align-items: center;
+		position: fixed;
 		justify-content: space-evenly;
 		font-size: 16px;
-		position: fixed;
 		bottom: 0;
 		cursor: pointer;
 		z-index: auto;
@@ -34,7 +34,6 @@ export default function Footer() {
 	const navItem = ["개인정보처리방침", "이용약관"];
 	const navItemRoutingPath = ["/", "/"];
 	const navigate = useNavigate();
-
 	return (
 		<StyledNav>
 			<StyledLogo src="/images/main-logo.png" alt="main-logo" onClick={() => navigate("/")} />
