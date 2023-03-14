@@ -27,9 +27,7 @@ public class MemberController {
     private final MemberMapper mapper;
 
     @PostMapping
-    public ResponseEntity postMember(@RequestBody @Valid MemberDto.Post memberPostDto,
-                                     @AuthenticationPrincipal CustomUserDetails customUserDetails){
-
+    public ResponseEntity postMember(@RequestBody @Valid MemberDto.Post memberPostDto){
 
         if(memberPostDto.isCheckOrg() == true){
             memberPostDto.setRoles(List.of("ORG", "USER"));
@@ -62,6 +60,14 @@ public class MemberController {
         Member getMember = memberService.findMember(memberId);
 
         return ResponseEntity.ok().body(ApiResponse.ok("data", getMember));
+    }
+
+    @GetMapping("/{confirm-email}")
+    public String viewConfirmEmail(@Valid @RequestParam String token){
+
+        memberService.confirmEmail(token);
+
+        return "이메일 인증 완료";
     }
 
     @DeleteMapping("/{member-id}")

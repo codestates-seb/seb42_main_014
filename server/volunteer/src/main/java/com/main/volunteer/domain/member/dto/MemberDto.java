@@ -55,6 +55,8 @@ public class MemberDto {
 
         private String email;
 
+        private boolean verifiedEmail;
+
         private String password;
 
         private String memberName;
