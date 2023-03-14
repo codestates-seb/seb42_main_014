@@ -4,7 +4,6 @@ import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.review.repository.ReviewRepository;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
-import com.main.volunteer.member.entity.Member;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

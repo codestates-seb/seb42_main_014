@@ -1,16 +1,14 @@
-package com.main.volunteer.member.service;
+package com.main.volunteer.domain.member.service;
 
-import com.main.volunteer.auth.utils.CustomAuthorityUtils;
 import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
-import com.main.volunteer.member.entity.Member;
-import com.main.volunteer.member.repository.MemberRepository;
-import com.main.volunteer.point.entity.Point;
+import com.main.volunteer.domain.member.entity.Member;
+import com.main.volunteer.domain.member.repository.MemberRepository;
+import com.main.volunteer.domain.point.entity.Point;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,18 +45,18 @@ public class MemberService {
         return memberRepository.save(findMember);
     }
 
-    public Member findMember(int memberId){
+    public Member findMember(long memberId){
 
         return verifiedMember(memberId);
     }
 
-    public void deleteMember(int memberId){
+    public void deleteMember(long memberId){
         Member findMember = verifiedMember(memberId);
         findMember.setMemberStatus(Member.MemberStatus.MEMBER_QUIT);
         memberRepository.save(findMember);
     }
 
-    public Member verifiedMember(int memberId){
+    public Member verifiedMember(long memberId){
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         Member findMember = optionalMember.orElseThrow(()-> new BusinessException(ExceptionCode.MEMBER_NOT_FOUND));
 

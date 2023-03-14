@@ -1,14 +1,15 @@
-package com.main.volunteer.member.controller;
+package com.main.volunteer.domain.member.controller;
 
-import com.main.volunteer.member.dto.MemberDto;
-import com.main.volunteer.member.entity.Member;
-import com.main.volunteer.member.mapper.MemberMapper;
-import com.main.volunteer.member.service.MemberService;
+import com.main.volunteer.auth.CustomUserDetails;
+import com.main.volunteer.domain.member.dto.MemberDto;
+import com.main.volunteer.domain.member.entity.Member;
+import com.main.volunteer.domain.member.mapper.MemberMapper;
+import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,7 +27,9 @@ public class MemberController {
     private final MemberMapper mapper;
 
     @PostMapping
-    public ResponseEntity postMember(@RequestBody @Valid MemberDto.Post memberPostDto){
+    public ResponseEntity postMember(@RequestBody @Valid MemberDto.Post memberPostDto,
+                                     @AuthenticationPrincipal CustomUserDetails customUserDetails){
+
 
         if(memberPostDto.isCheckOrg() == true){
             memberPostDto.setRoles(List.of("ORG", "USER"));
@@ -50,7 +53,7 @@ public class MemberController {
 
         Member updateMember = memberService.updateMember(mapper.memberPatchDtoToMember(memberPatchDto));
 
-        return new ResponseEntity<>(mapper.memberToMemberResponseDto(updateMember), HttpStatus.OK);
+        return ResponseEntity.ok().body(ApiResponse.ok("data", updateMember));
     }
 
     @GetMapping("/{member-id}")
@@ -58,7 +61,7 @@ public class MemberController {
 
         Member getMember = memberService.findMember(memberId);
 
-        return new ResponseEntity<>(mapper.memberToMemberResponseDto(getMember), HttpStatus.OK);
+        return ResponseEntity.ok().body(ApiResponse.ok("data", getMember));
     }
 
     @DeleteMapping("/{member-id}")
@@ -66,6 +69,6 @@ public class MemberController {
 
         memberService.deleteMember(memberId);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok().body(ApiResponse.ok());
     }
 }
