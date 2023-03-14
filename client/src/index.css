@@ -23,6 +23,14 @@ a {
 	color: black;
 }
 
+#chat-channel-button {
+	position: fixed;
+	z-index: 1;
+	bottom: 80px;
+	right: 0;
+	margin: 20px;
+}
+
 body::-webkit-scrollbar {
 	display: none;
 }

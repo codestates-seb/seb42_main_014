@@ -43,6 +43,7 @@ export default function Footer() {
 						{el}
 					</StyledList>
 				))}
+
 			<a
 				target={"_blank"}
 				rel="noreferrer"
