@@ -2,6 +2,7 @@ package com.main.volunteer.domain.volunteer.controller;
 
 
 import com.main.volunteer.auth.CustomUserDetails;
+import com.main.volunteer.domain.apply.entity.Apply;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.domain.tag.entity.Tag;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 
 
 @Slf4j
@@ -85,11 +87,21 @@ public class VolunteerController {
     /*
     봉사 상세 조회
      */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{volunteer-id}")
-    public ResponseEntity<?> getVolunteer(@PathVariable("volunteer-id") @Positive Long volunteerId){
+    public ResponseEntity<?> getVolunteer(@PathVariable("volunteer-id") @Positive Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails){
         Volunteer volunteer = volunteerService.getVolunteer(volunteerId);
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerToResponseDto(volunteer)));
+        boolean applied = false;
+        List<Apply> applyList = volunteer.getApplyList();
+        for (Apply apply : applyList) {
+            if (Objects.equals(userDetails.getMemberId(), apply.getMember().getMemberId())) {
+                applied = true;
+                break;
+            }
+        }
+
+        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerToResponseDto(volunteer), "applied", applied));
     }
 
 

@@ -179,7 +179,6 @@ public class VolunteerService {
      */
     public Volunteer getVolunteer(Long volunteerId) {
         Volunteer volunteer =  verifyExistVolunteer(volunteerId);
-        setVolunteerStatus(volunteer);
 
         return volunteer;
     }

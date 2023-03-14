@@ -40,10 +40,6 @@ public interface ApplyMapper {
             }
         }
 
-
-
-
-
         return new ApplyDto.Response( applyId, applyStatus,memberId, memberEmail, memberName, volunteerId, reviewDone);
     }
 

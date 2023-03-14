@@ -1,8 +1,8 @@
 package com.main.volunteer.domain.volunteer.mapper;
 
 
-import com.main.volunteer.domain.review.dto.ReviewDto;
-import com.main.volunteer.domain.review.entity.Review;
+import com.main.volunteer.domain.apply.entity.Apply;
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.volunteer.dto.VolunteerDto;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import org.mapstruct.Mapper;
@@ -11,6 +11,7 @@ import org.mapstruct.ReportingPolicy;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Mapper(componentModel = "spring" , unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface VolunteerMapper{
@@ -41,8 +42,10 @@ public interface VolunteerMapper{
             Long memberId = volunteer.getMember().getMemberId();
             Long tagId = volunteer.getTag().getTagId();
 
-        return new VolunteerDto.Response( volunteerId, title, applyDate, volunteerDate, volunteerTime, place, content, applyLimit, applyCount, likeCount, memberId, tagId, volunteerStatus );
+        return new VolunteerDto.Response( volunteerId, title, applyDate, volunteerDate, volunteerTime, place, content, applyLimit, applyCount, likeCount, memberId, tagId, volunteerStatus);
     }
 
+
     List<VolunteerDto.Response> volunteerListToResponseList(List<Volunteer> volunteerList);
+
 }

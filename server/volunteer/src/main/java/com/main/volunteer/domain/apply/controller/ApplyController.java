@@ -29,7 +29,9 @@ public class ApplyController {
         this.applyMapper = applyMapper;
     }
 
-
+    /*
+    봉사 신청
+     */
     @PostMapping("/{volunteer-id}")
     public ResponseEntity<?> postApply(@PathVariable("volunteer-id") Long volunteerId,@AuthenticationPrincipal CustomUserDetails userDetails){
 
@@ -43,6 +45,9 @@ public class ApplyController {
         return ResponseEntity.created(uri).body(ApiResponse.ok("data", applyMapper.applyToResponse(createdApply)));
     }
 
+    /*
+    봉사 신청 취소
+     */
     @PreAuthorize("isAuthenticated()")
     @PatchMapping("/{volunteer-id}")
     public ResponseEntity<?> cancelApply(@PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -53,7 +58,7 @@ public class ApplyController {
     }
 
     /*
-    TODO : 일반 사용자가 신청한 봉사 활동 목록
+    일반 사용자가 신청한 봉사 활동 목록
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/member/plan")
@@ -64,7 +69,7 @@ public class ApplyController {
     }
 
     /*
-    TODO : 일반 사용자 봉사 활동 목록
+    일반 사용자 봉사 활동 목록
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/my/history")
