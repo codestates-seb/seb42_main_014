@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b040dc7-42e1-46b3-894c-af07140eac8e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/volunteer/src/main/java/com/main/volunteer/singlePayment/dto/ApproveRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/volunteer/src/main/java/com/main/volunteer/singlePayment/dto/PaymentRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/volunteer/src/main/java/com/main/volunteer/singlePayment/entity/Amount.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/volunteer/src/main/java/com/main/volunteer/singlePayment/entity/CardInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/volunteer/src/main/java/com/main/volunteer/singlePayment/mapper/SinglePaymentMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/volunteer.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/volunteer.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/volunteer/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/volunteer/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/volunteer/src/main/java/com/main/volunteer/singlePayment/controller/SinglePayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/volunteer/src/main/java/com/main/volunteer/singlePayment/entity/controller/SinglePayController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/volunteer/src/main/java/com/main/volunteer/singlePayment/dto/Amount.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/volunteer/src/main/java/com/main/volunteer/singlePayment/dto/ApproveResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/volunteer/src/main/java/com/main/volunteer/singlePayment/dto/ApproveResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/volunteer/src/main/java/com/main/volunteer/singlePayment/entity/SinglePayment.java" beforeDir="false" afterPath="$PROJECT_DIR$/volunteer/src/main/java/com/main/volunteer/singlePayment/entity/SinglePayment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/volunteer/src/main/java/com/main/volunteer/singlePayment/service/SinglePayService.java" beforeDir="false" afterPath="$PROJECT_DIR$/volunteer/src/main/java/com/main/volunteer/singlePayment/service/SinglePayService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,10 +60,11 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "project.structure.last.edited": "Project",
+    "last_opened_file_path": "C:/Users/gudwl/Desktop/project/main_project/seb42_main_014",
+    "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.customizations"
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
 }]]></component>
   <component name="RecentsManager">
