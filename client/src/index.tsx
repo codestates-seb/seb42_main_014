@@ -32,7 +32,7 @@ const router = createBrowserRouter([
 				element: <SignUp />,
 			},
 			{
-				path: "/Useredit",
+				path: "/useredit",
 				element: <UserEdit />,
 			},
 			{

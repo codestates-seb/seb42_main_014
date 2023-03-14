@@ -42,7 +42,7 @@ const Col = styled.div`
 	flex-direction: column;
 	align-items: center;
 	span {
-		font-size: 30px;
+		font-size: 20px;
 		font-weight: bold;
 	}
 `;
@@ -55,12 +55,18 @@ const All = styled.div`
 	width: 90px;
 	height: 90px;
 	line-height: 80px;
-	font-size: 30px;
 	font-weight: bold;
 	display: flex;
 	flex-direction: column;
 	:hover {
 		background-color: #fffffa;
+	}
+	span:first-child {
+		font-size: 30px;
+		font-weight: bold;
+	}
+	span:last-child {
+		line-height: 65px;
 	}
 `;
 
