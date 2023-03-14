@@ -51,7 +51,6 @@ public class VolunteerController {
         Volunteer volunteer = volunteerMapper.postDtoToVolunteer(postDto);
         volunteer.setTag(tag);
 
-        log.info("userDetails Id : " + userDetails.getMemberId());
         volunteer.setMember(userDetails);
 
         Volunteer createdVolunteer = volunteerService.createVolunteer(volunteer);
@@ -63,11 +62,11 @@ public class VolunteerController {
     /*
     봉사 삭제 - 봉사 기관만 가능
      */
-    //    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{volunteer-id}")
-    public ResponseEntity<?> deleteVolunteer(@Positive @PathVariable("volunteer-id") Long volunteerId){
+    public ResponseEntity<?> deleteVolunteer(@Positive @PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails){
 
-        volunteerService.deleteVolunteer(volunteerId);
+        volunteerService.deleteVolunteer(volunteerId, userDetails);
 
         return ResponseEntity.noContent().build();
     }
@@ -75,12 +74,15 @@ public class VolunteerController {
     /*
     기관이 등록한 봉사 목록 조회 - 봉사 기관만 가능
      */
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/organization")
     public ResponseEntity<?> getVolunteerListByOrg(@AuthenticationPrincipal CustomUserDetails userDetails){
 
         List<Volunteer> volunteerList = volunteerService.getVolunteerListByOrg(userDetails);
 
         return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
     }
+
     /*
     특정 봉사 조회
      */
@@ -96,7 +98,7 @@ public class VolunteerController {
     /*
     봉사 목록 조회 - ALL
      */
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<?> getVolunteerList(){
 
         List<Volunteer> volunteerList = volunteerService.getVolunteerList();

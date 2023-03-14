@@ -55,13 +55,24 @@ public class ApplyController {
     }
 
     /*
-    일반 사용자가 신청한 봉사 활동 목록
+    TODO : 일반 사용자가 신청한 봉사 활동 목록
      */
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/my")
-    public ResponseEntity<?> getMyApplyList(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    @GetMapping("/myplan")
+    public ResponseEntity<?> getMyPlanList(@AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        List<Apply> applyList = applyService.getMyApplyList(userDetails);
+        List<Apply> applyList = applyService.getMyPlanList(userDetails);
+        return ResponseEntity.ok().body(ApiResponse.ok("data", applyMapper.applyListToResponseList(applyList)));
+    }
+
+    /*
+    TODO : 일반 사용자 봉사 활동 목록
+     */
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/myhistory")
+    public ResponseEntity<?> getMyHistoryList(@AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        List<Apply> applyList = applyService.getMyHistoryList(userDetails);
         return ResponseEntity.ok().body(ApiResponse.ok("data", applyMapper.applyListToResponseList(applyList)));
     }
 

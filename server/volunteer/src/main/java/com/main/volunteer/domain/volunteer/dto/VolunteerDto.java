@@ -44,24 +44,6 @@ public class VolunteerDto {
 
     }
 
-    @AllArgsConstructor
-    @Getter
-    public static class Patch {
-        private String title;
-
-        private String content;
-
-        private Integer applyLimit;
-
-        private String place;
-
-        private LocalDateTime volunteerDate;
-
-        private LocalDateTime endDate;
-
-        private Integer volunteerTime;
-    }
-
     @Getter
     @AllArgsConstructor
     public static class Response {

@@ -30,9 +30,31 @@ public class ApplyService {
      */
     public Apply createApply(Apply apply, Long volunteerId) {
 
-        verifyCreatableApply(apply, volunteerId);
+        Volunteer volunteer = volunteerService.verifyExistVolunteer(volunteerId);
+        apply.setVolunteer(volunteer);
+
+        //신청 상태 update 후 확인
+        volunteerService.setVolunteerStatus(volunteer);
+        verifyVolunteerStatus(volunteer);
 
         return verifyApplyStatus(apply);
+    }
+
+    /*
+    신청 가능 여부 확인 로직
+     */
+    private void verifyVolunteerStatus(Volunteer volunteer) {
+
+        if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_AFTER){
+            throw new RuntimeException("완료된 봉사입니다.");
+        }else if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_APPLY_AFTER){
+            throw new RuntimeException("모집이 완료된 봉사입니다.");
+        }else if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_APPLY_BEFORE){
+            throw new RuntimeException("신청 기간 전인 봉사입니다.");
+        }else if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_APPLY_LIMIT_OVER){
+            throw new RuntimeException("인원 마감이 된 봉사입니다.");
+        }
+
     }
 
     /*
@@ -42,16 +64,18 @@ public class ApplyService {
         Optional<Apply> optional = applyRepository.findByVolunteerAndMember(apply.getVolunteer(), apply.getMember());
         if(optional.isPresent()){
             Apply existedApply = optional.get();
+            //신청된 경우
             if(existedApply.getApplyStatus() == ApplyStatus.APPLY_COMPLETE) {
                 throw new RuntimeException("이미 신청이 완료된 봉사활동입니다.");
             }
+            //신청/취소한 이력이 있는 경우
             if(existedApply.getApplyStatus() == ApplyStatus.APPLY_CANCEL){
                 existedApply.setApplyStatus(ApplyStatus.APPLY_COMPLETE);
                 applyRepository.save(existedApply);
                 volunteerService.plusApplyCount(existedApply.getVolunteer());
                 return existedApply;
             }
-        }else{
+        }else{ //처음 신청하는 경우
             apply.setApplyStatus(ApplyStatus.APPLY_COMPLETE);
             applyRepository.save(apply);
             volunteerService.plusApplyCount(apply.getVolunteer());
@@ -62,22 +86,7 @@ public class ApplyService {
     }
 
 
-    /*
-    신청 가능 여부 확인 로직
-     */
-    private void verifyCreatableApply(Apply apply, Long volunteerId) {
-        Volunteer volunteer = volunteerService.verifyExistVolunteer(volunteerId);
-        apply.setVolunteer(volunteer);
 
-        if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_APPLY_AFTER){
-            throw new RuntimeException("모집이 종료된 봉사입니다.");
-        }else if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_APPLY_BEFORE){
-            throw new RuntimeException("신청 기간 전인 봉사입니다.");
-        }else if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_APPLY_LIMIT_OVER){
-            throw new RuntimeException("인원 마감이 된 봉사입니다.");
-        }
-
-    }
 
     /*
     봉사 신청 취소 로직
@@ -121,8 +130,15 @@ public class ApplyService {
         optional.orElseThrow(() -> new RuntimeException("봉사 활동 한 내역이 없습니다."));
     }
 
-    public List<Apply> getMyApplyList(Member member) {
+    public List<Apply> getMyPlanList(Member member) {
         Optional<List<Apply>> optional = applyRepository.findByMember(member);
+
+        return optional.orElseThrow(() -> new RuntimeException("신청한 봉사 활동한 내역이 없습니다."));
+    }
+
+    public List<Apply> getMyHistoryList(Member member) {
+        Optional<List<Apply>> optional = applyRepository.findByMember(member);
+
         return optional.orElseThrow(() -> new RuntimeException("신청한 봉사 활동한 내역이 없습니다."));
     }
 

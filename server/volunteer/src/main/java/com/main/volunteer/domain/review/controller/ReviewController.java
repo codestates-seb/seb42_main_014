@@ -33,9 +33,9 @@ public class ReviewController {
     }
 
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/{volunteer-id}")
     public ResponseEntity<?> postReview(@RequestBody @Valid ReviewDto.Post postDto, @PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails) {
-
 
         Review review = reviewMapper.postDtoToReview(postDto);
         review.setMember(userDetails);
@@ -65,7 +65,6 @@ public class ReviewController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{volunteer-id}/my")
     public ResponseEntity<?> getMyReview(@PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails){
-
 
         Review myReview = reviewService.getMyReview(volunteerId, userDetails);
 

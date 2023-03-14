@@ -69,10 +69,13 @@ public class VolunteerService {
     /*
     봉사 삭제 로직
      */
-    public void deleteVolunteer(Long volunteerId) {
+    public void deleteVolunteer(Long volunteerId, Member member) {
 
         //봉사 활동 존재 여부 검증
         Volunteer volunteer = verifyExistVolunteer(volunteerId);
+
+        //특정 봉사 활동을 등록한 기관인지 검증
+        verifyOwnership(volunteerId, member);
 
         //봉사 활동 이후에 삭제 불가능
         if(volunteer.getVolunteerDate().isBefore(LocalDateTime.now())){
@@ -91,20 +94,45 @@ public class VolunteerService {
     /*
     봉사 정보 update
      */
-    public Volunteer updateVolunteer(Volunteer volunteer) {
+//    public Volunteer updateVolunteer() {
+//
+//        List<Volunteer>
+//
+//
+//        //update 가능한 봉사인지 검증
+//
+//        Optional.ofNullable(volunteer.getTitle())
+//                .ifPresent(verifyVolunteer::setTitle);
+//
+//        Optional.ofNullable(volunteer.getContent())
+//                .ifPresent(verifyVolunteer::setContent);
+//
+//        return volunteerRepository.save(volunteer);
+//    }
 
-        //존재한 봉사인지 검증
-        Volunteer verifyVolunteer = verifyExistVolunteer(volunteer.getVolunteerId());
+    public void setVolunteerStatus(Volunteer volunteer){
+        //신청 기간 전
+        if(LocalDateTime.now().isBefore(volunteer.getApplyDate())){
+            volunteer.setVolunteerStatus(VolunteerStatus.VOLUNTEER_APPLY_BEFORE);
+        }
 
-        //update 가능한 봉사인지 검증
+        if(LocalDateTime.now().isAfter(volunteer.getApplyDate()) && LocalDateTime.now().isBefore(volunteer.getVolunteerDate().minusHours(24))){
+            if(volunteer.getApplyCount() >= volunteer.getApplyLimit()){
+                volunteer.setVolunteerStatus(VolunteerStatus.VOLUNTEER_APPLY_LIMIT_OVER);
+            }else {
+                volunteer.setVolunteerStatus(VolunteerStatus.VOLUNTEER_APPLYING);
+            }
+        }
 
-        Optional.ofNullable(volunteer.getTitle())
-                .ifPresent(verifyVolunteer::setTitle);
+        if(LocalDateTime.now().isAfter(volunteer.getVolunteerDate().minusHours(24)) && LocalDateTime.now().isBefore(volunteer.getVolunteerDate())){
+            volunteer.setVolunteerStatus(VolunteerStatus.VOLUNTEER_APPLY_AFTER);
+        }
 
-        Optional.ofNullable(volunteer.getContent())
-                .ifPresent(verifyVolunteer::setContent);
+        if(LocalDateTime.now().isAfter(volunteer.getVolunteerDate())){
+            volunteer.setVolunteerStatus(VolunteerStatus.VOLUNTEER_AFTER);
+        }
 
-        return volunteerRepository.save(volunteer);
+
     }
 
 

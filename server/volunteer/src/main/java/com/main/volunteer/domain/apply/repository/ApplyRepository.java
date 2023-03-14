@@ -15,7 +15,7 @@ public interface ApplyRepository extends JpaRepository<Apply, Long> {
 
     Optional<Apply> findByVolunteerAndMember(Volunteer volunteer, Member member);
 
-    Optional<List<Apply>> findByMember(Member member);
+    Optional<List<Apply>> findByMemberAndAPPLY(Member member);
 
     Optional<List<Apply>> findAllByVolunteer(Volunteer volunteer);
 }
