@@ -6,12 +6,13 @@ import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.volunteer.dto.VolunteerDto;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring" , unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface VolunteerMapper{
 
     Volunteer postDtoToVolunteer(VolunteerDto.Post post);
