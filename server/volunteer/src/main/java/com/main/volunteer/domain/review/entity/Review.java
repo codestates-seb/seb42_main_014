@@ -1,6 +1,7 @@
 package com.main.volunteer.domain.review.entity;
 
 import com.main.volunteer.audit.Auditable;
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,9 +21,9 @@ public class Review extends Auditable {
 
     private String content;
 
-//    @OneToOne
-//    @JoinColumn(name = "MEMBER_ID")
-//    private Member member;
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "VOLUNTEER_ID")

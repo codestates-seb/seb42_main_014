@@ -29,7 +29,7 @@ public class GroupController {
 
     @PostMapping
     public ResponseEntity<?> postGroup(@RequestBody @Valid GroupDto.Post postDto){
-        Tag tag = tagService.getTag(postDto.getTagName());
+        Tag tag = tagService.getTagId(postDto.getTagId());
         Group group = mapper.groupPostDtoToGroup(postDto);
         group.setTag(tag);
         Group createGroup = groupService.createGroup(group);

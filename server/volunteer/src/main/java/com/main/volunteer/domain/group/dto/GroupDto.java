@@ -26,7 +26,7 @@ public class GroupDto {
         private String place;
         @NotBlank(message = "소개글을 입력해주세요.")
         private String content;
-        private String tagName;
+        private Long tagId;
     }
     @Setter
     @Getter
