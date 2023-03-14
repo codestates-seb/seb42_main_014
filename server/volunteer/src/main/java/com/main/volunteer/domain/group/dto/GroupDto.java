@@ -1,7 +1,6 @@
 package com.main.volunteer.domain.group.dto;
 
 import com.main.volunteer.domain.comment.dto.CommentDto;
-import com.main.volunteer.domain.comment.entity.Comment;
 import com.main.volunteer.domain.tag.entity.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +26,7 @@ public class GroupDto {
         @NotBlank(message = "소개글을 입력해주세요.")
         private String content;
         private String tagName;
+        private Long tagId;
     }
     @Setter
     @Getter

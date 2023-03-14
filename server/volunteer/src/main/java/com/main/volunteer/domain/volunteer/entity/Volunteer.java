@@ -2,6 +2,8 @@ package com.main.volunteer.domain.volunteer.entity;
 
 
 import com.main.volunteer.audit.Auditable;
+import com.main.volunteer.domain.apply.entity.Apply;
+import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.tag.entity.Tag;
 import com.main.volunteer.domain.member.entity.Member;
 import lombok.Getter;
@@ -10,6 +12,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -32,6 +36,8 @@ public class Volunteer extends Auditable {
     @Column(nullable = false)
     private LocalDateTime volunteerDate;
 
+    private Integer volunteerTime;
+
     @Column(nullable = false)
     private String place;
 
@@ -41,9 +47,9 @@ public class Volunteer extends Auditable {
     @Column(nullable = false)
     private Integer applyLimit;
 
-    private Integer likeCount = 0;
-
     private Integer applyCount = 0;
+
+    private Integer likeCount = 0;
 
     @ManyToOne
     @JoinColumn(name = "ORGANIZATION_ID")
@@ -55,6 +61,12 @@ public class Volunteer extends Auditable {
 
     @Enumerated(EnumType.STRING)
     private VolunteerStatus volunteerStatus;
+
+    @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
+    private List<Review> reviewList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
+    private List<Apply> applyList = new ArrayList<>();
 
 
 }

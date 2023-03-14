@@ -6,6 +6,7 @@ import com.main.volunteer.domain.apply.entity.Apply;
 import com.main.volunteer.domain.membergroup.entity.MemberGroup;
 import com.main.volunteer.domain.like.entity.Like;
 import com.main.volunteer.domain.point.entity.Point;
+import com.main.volunteer.domain.review.entity.Review;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -57,6 +58,9 @@ public class Member extends Auditable {
     @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Like> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    private List<Review> reviews = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "member" , cascade = CascadeType.PERSIST)
