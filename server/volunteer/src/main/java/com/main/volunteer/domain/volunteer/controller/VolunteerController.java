@@ -3,7 +3,6 @@ package com.main.volunteer.domain.volunteer.controller;
 
 import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
-import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.domain.tag.entity.Tag;
 import com.main.volunteer.domain.tag.service.TagService;
@@ -47,7 +46,7 @@ public class VolunteerController {
     @PostMapping
     public ResponseEntity<?> postVolunteer(@RequestBody @Valid VolunteerDto.Post postDto, @AuthenticationPrincipal CustomUserDetails userDetails){
 
-        Tag tag = tagService.getTag(postDto.getTagName());
+        Tag tag = tagService.getTagId(postDto.getTagId());
         Volunteer volunteer = volunteerMapper.postDtoToVolunteer(postDto);
         volunteer.setTag(tag);
 
@@ -84,7 +83,7 @@ public class VolunteerController {
     }
 
     /*
-    특정 봉사 조회
+    봉사 상세 조회
      */
     @GetMapping("/{volunteer-id}")
     public ResponseEntity<?> getVolunteer(@PathVariable("volunteer-id") @Positive Long volunteerId){
@@ -105,22 +104,5 @@ public class VolunteerController {
 
         return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
     }
-
-    /*
-    봉사 목록 조회 - TAG 별
-     */
-    @GetMapping("/tags/{tag-id}")
-    public ResponseEntity<?> getVolunteerListByTag(@PathVariable("tag-id") Long tagId){
-
-        List<Volunteer> volunteerList = volunteerService.getVolunteerListByTag(tagId);
-
-        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
-    }
-
-
-
-
-
-
 
 }

@@ -5,6 +5,7 @@ import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.review.repository.ReviewRepository;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
+import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,6 @@ public class ReviewService {
     리뷰 등록 로직
      */
     public Review createReview(Review review, Long volunteerId) {
-
 
         Volunteer volunteer = verifyCreatableReview(review, volunteerId);
 
@@ -59,7 +59,7 @@ public class ReviewService {
         review.setVolunteer(volunteer);
 
         //봉사 활동 이후에 작성 가능
-//        if (LocalDateTime.now().isBefore(volunteer.getVolunteerDate())) {
+//        if (!(volunteer.getVolunteerStatus()== VolunteerStatus.VOLUNTEER_AFTER)) {
 //            throw new RuntimeException("봉사 날짜 이후에 리뷰 작성이 가능합니다.");
 //        }
 

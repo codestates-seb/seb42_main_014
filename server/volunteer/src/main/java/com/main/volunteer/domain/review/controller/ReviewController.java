@@ -81,6 +81,9 @@ public class ReviewController {
         return ResponseEntity.ok().body(ApiResponse.ok("data", reviewMapper.reviewListToResponseList(reviewList)));
     }
 
+    /*
+    후기 수정
+     */
     @PreAuthorize("isAuthenticated()")
     @PatchMapping("/{review-id}")
     public ResponseEntity<?> patchMyReview(@PathVariable("review-id") Long reviewId, @RequestBody ReviewDto.Patch patchDto,  @AuthenticationPrincipal CustomUserDetails userDetails) {

@@ -26,7 +26,7 @@ public class Apply extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "VOLUNTEER_ID")
     private Volunteer volunteer;
 

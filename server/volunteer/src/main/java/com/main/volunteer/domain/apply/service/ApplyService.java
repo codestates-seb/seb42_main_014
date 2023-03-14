@@ -8,12 +8,14 @@ import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class ApplyService {
 
@@ -33,8 +35,6 @@ public class ApplyService {
         Volunteer volunteer = volunteerService.verifyExistVolunteer(volunteerId);
         apply.setVolunteer(volunteer);
 
-        //신청 상태 update 후 확인
-        volunteerService.setVolunteerStatus(volunteer);
         verifyVolunteerStatus(volunteer);
 
         return verifyApplyStatus(apply);
@@ -123,27 +123,39 @@ public class ApplyService {
     }
 
     /*
-    특정 사용자 봉사 활동 내역 존재 여부 검증 로직
+    특정 사용자 특정 봉사 활동 내역 존재 여부 검증 로직
      */
     public void verifyMemberVolunteer(Volunteer volunteer, Member member) {
         Optional<Apply> optional = applyRepository.findByVolunteerAndMember(volunteer, member);
         optional.orElseThrow(() -> new RuntimeException("봉사 활동 한 내역이 없습니다."));
     }
 
+    /*
+    특정 사용자 봉사 신청 내역
+     */
     public List<Apply> getMyPlanList(Member member) {
-        Optional<List<Apply>> optional = applyRepository.findByMember(member);
+
+        Optional<List<Apply>> optional = applyRepository.findByMemberAndVolunteer_VolunteerStatusNot(member, VolunteerStatus.VOLUNTEER_AFTER);
 
         return optional.orElseThrow(() -> new RuntimeException("신청한 봉사 활동한 내역이 없습니다."));
     }
 
+    /*
+    특정 사용자 봉사 활동 내역
+     */
     public List<Apply> getMyHistoryList(Member member) {
-        Optional<List<Apply>> optional = applyRepository.findByMember(member);
 
-        return optional.orElseThrow(() -> new RuntimeException("신청한 봉사 활동한 내역이 없습니다."));
+        Optional<List<Apply>> optional = applyRepository.findByMemberAndVolunteer_VolunteerStatus(member, VolunteerStatus.VOLUNTEER_AFTER);
+
+        return optional.orElseThrow(() -> new RuntimeException("봉사 활동한 내역이 없습니다."));
     }
 
-    public List<Apply> getApplyListByVolunteer(Long volunteerId, CustomUserDetails userDetails) {
+    /*
+    특정 기관이 등록한 봉사활동에 신청한 내역
+     */
+    public List<Apply> getApplyListByOrganization(Long volunteerId, CustomUserDetails userDetails) {
         Volunteer volunteer = volunteerService.verifyOwnership(volunteerId,userDetails);
+        log.info("get Volunteer : " + volunteer);
         Optional<List<Apply>> optional = applyRepository.findAllByVolunteer(volunteer);
         return optional.orElseThrow(() -> new RuntimeException("해당 봉사를 신청한 사람이 없습니다."));
     }

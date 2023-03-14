@@ -38,7 +38,7 @@ public class VolunteerDto {
         @NotNull(message = "applyLimit cannot be empty.")
         private Integer applyLimit;
 
-        private String tagName;
+        private Long tagId;
 
 //        private String volunteerImage;
 

@@ -15,8 +15,8 @@ public class TagService {
         this.tagRepository = tagRepository;
     }
 
-    public Tag getTag(String tagName) {
-        Optional<Tag> optional = tagRepository.findByTagName(tagName);
+    public Tag getTagId(Long tagId) {
+        Optional<Tag> optional = tagRepository.findById(tagId);
         return optional.orElseThrow(() -> new RuntimeException("존재하는 태그가 없습니다."));
     }
 

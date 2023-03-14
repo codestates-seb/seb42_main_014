@@ -16,14 +16,10 @@ public interface VolunteerMapper{
 
     Volunteer postDtoToVolunteer(VolunteerDto.Post post);
 
-    Volunteer patchDtoToVolunteer(VolunteerDto.Patch patchDto);
-
     default VolunteerDto.Response volunteerToResponseDto(Volunteer volunteer){
             if ( volunteer == null ) {
                 return null;
             }
-
-
 
             String volunteerStatus = null;
 
@@ -44,9 +40,7 @@ public interface VolunteerMapper{
             Long memberId = volunteer.getMember().getMemberId();
             Long tagId = volunteer.getTag().getTagId();
 
-            VolunteerDto.Response response = new VolunteerDto.Response( volunteerId, title, applyDate, volunteerDate, volunteerTime, place, content, applyLimit, applyCount, likeCount, memberId, tagId, volunteerStatus );
-
-            return response;
+        return new VolunteerDto.Response( volunteerId, title, applyDate, volunteerDate, volunteerTime, place, content, applyLimit, applyCount, likeCount, memberId, tagId, volunteerStatus );
     }
 
     List<VolunteerDto.Response> volunteerListToResponseList(List<Volunteer> volunteerList);

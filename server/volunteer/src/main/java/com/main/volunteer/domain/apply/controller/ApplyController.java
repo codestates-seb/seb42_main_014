@@ -4,7 +4,6 @@ import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.apply.entity.Apply;
 import com.main.volunteer.domain.apply.mapper.ApplyMapper;
 import com.main.volunteer.domain.apply.service.ApplyService;
-import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.util.List;
 
@@ -58,7 +56,7 @@ public class ApplyController {
     TODO : 일반 사용자가 신청한 봉사 활동 목록
      */
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/myplan")
+    @GetMapping("/member/plan")
     public ResponseEntity<?> getMyPlanList(@AuthenticationPrincipal CustomUserDetails userDetails) {
 
         List<Apply> applyList = applyService.getMyPlanList(userDetails);
@@ -69,7 +67,7 @@ public class ApplyController {
     TODO : 일반 사용자 봉사 활동 목록
      */
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/myhistory")
+    @GetMapping("/my/history")
     public ResponseEntity<?> getMyHistoryList(@AuthenticationPrincipal CustomUserDetails userDetails) {
 
         List<Apply> applyList = applyService.getMyHistoryList(userDetails);
@@ -80,9 +78,9 @@ public class ApplyController {
     기관이 등록한 특정 봉사 활동에 대한 신청자 목록
      */
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/{volunteer-id}")
-    public ResponseEntity<?> getApplyListByVolunteer(@PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<Apply> applyList = applyService.getApplyListByVolunteer(volunteerId,userDetails);
+    @GetMapping("/organization/{volunteer-id}")
+    public ResponseEntity<?> getApplyListByOrganization(@PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        List<Apply> applyList = applyService.getApplyListByOrganization(volunteerId,userDetails);
 
         return ResponseEntity.ok().body(ApiResponse.ok("data", applyMapper.applyListToResponseList(applyList)));
     }

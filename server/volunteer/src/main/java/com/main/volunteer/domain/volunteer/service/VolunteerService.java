@@ -7,12 +7,17 @@ import com.main.volunteer.domain.tag.service.TagService;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import com.main.volunteer.domain.volunteer.repository.VolunteerRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class VolunteerService {
 
@@ -110,6 +115,11 @@ public class VolunteerService {
 //        return volunteerRepository.save(volunteer);
 //    }
 
+    public void setVolunteerStatusForList(List<Volunteer> volunteerList){
+
+        volunteerList.forEach(this::setVolunteerStatus);
+    }
+
     public void setVolunteerStatus(Volunteer volunteer){
         //신청 기간 전
         if(LocalDateTime.now().isBefore(volunteer.getApplyDate())){
@@ -132,6 +142,8 @@ public class VolunteerService {
             volunteer.setVolunteerStatus(VolunteerStatus.VOLUNTEER_AFTER);
         }
 
+        volunteerRepository.save(volunteer);
+
 
     }
 
@@ -141,11 +153,13 @@ public class VolunteerService {
      */
     public void plusApplyCount(Volunteer volunteer) {
         volunteer.setApplyCount(volunteer.getApplyCount()+1);
+        setVolunteerStatus(volunteer);
         volunteerRepository.save(volunteer);
     }
 
     public void minusApplyCount(Volunteer volunteer) {
         volunteer.setApplyCount(volunteer.getApplyCount()-1);
+        setVolunteerStatus(volunteer);
         volunteerRepository.save(volunteer);
     }
 
@@ -154,14 +168,20 @@ public class VolunteerService {
      */
     public Volunteer verifyExistVolunteer(Long volunteerId) {
         Optional<Volunteer> optional = volunteerRepository.findById(volunteerId);
-        return optional.orElseThrow(() -> new RuntimeException("존재하는 봉사활동이 없습니다."));
+        Volunteer volunteer = optional.orElseThrow(() -> new RuntimeException("존재하는 봉사활동이 없습니다."));
+
+        setVolunteerStatus(volunteer);
+        return volunteer;
     }
 
     /*
     특정 봉사 활동 조회
      */
     public Volunteer getVolunteer(Long volunteerId) {
-        return verifyExistVolunteer(volunteerId);
+        Volunteer volunteer =  verifyExistVolunteer(volunteerId);
+        setVolunteerStatus(volunteer);
+
+        return volunteer;
     }
 
 
@@ -171,7 +191,10 @@ public class VolunteerService {
      */
     public List<Volunteer> getVolunteerList() {
 
-        return volunteerRepository.findAll();
+        List<Volunteer> volunteerList =  volunteerRepository.findAll();
+        setVolunteerStatusForList(volunteerList);
+
+        return volunteerList;
     }
 
     /*
@@ -192,9 +215,11 @@ public class VolunteerService {
     특정 봉사를 등록한 기관인지 확인
      */
     public Volunteer verifyOwnership(Long volunteerId, Member member) {
+        log.info("userDetails Id" + member.getMemberId());
         Volunteer volunteer = verifyExistVolunteer(volunteerId);
         Member organization = volunteer.getMember();
-        if(!organization.equals(member)){
+        log.info("get Volunteer organizationId : " + organization.getMemberId());
+        if(!Objects.equals(organization.getMemberId(), member.getMemberId())){
             throw new RuntimeException("등록한 봉사 활동의 기관이 아닙니다.");
         }
 
@@ -205,7 +230,10 @@ public class VolunteerService {
     봉사 기관이 등록한 봉사 활동 목록 조회
      */
     public List<Volunteer> getVolunteerListByOrg(CustomUserDetails userDetails) {
-        Optional<List<Volunteer>> optional = volunteerRepository.findAllByMember(userDetails.getMemberId());
-        return optional.orElseThrow(() -> new RuntimeException("등록한 봉사 활동이 없습니다."));
+        Optional<List<Volunteer>> optional = volunteerRepository.findAllByMember(userDetails);
+        List<Volunteer> volunteerList =  optional.orElseThrow(() -> new RuntimeException("등록한 봉사 활동이 없습니다."));
+        setVolunteerStatusForList(volunteerList);
+
+        return volunteerList;
     }
 }
