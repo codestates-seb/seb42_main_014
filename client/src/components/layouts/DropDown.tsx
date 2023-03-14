@@ -43,7 +43,6 @@ export default function DropDown({ setIsOpen, isOpen }: TDropDownProps) {
 						<StyledDropDownMenu onClick={() => navigate("/register")}>
 							봉사활동 등록
 						</StyledDropDownMenu>
-						<StyledDropDownMenu onClick={() => navigate("/sell")}>기부상품 등록</StyledDropDownMenu>
 					</StyledAdminDropDownItems>
 				)}
 			</StyledDropDownContainer>
