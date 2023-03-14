@@ -5,6 +5,7 @@ import com.main.volunteer.domain.apply.entity.Apply;
 import com.main.volunteer.domain.apply.entity.ApplyStatus;
 import com.main.volunteer.domain.apply.repository.ApplyRepository;
 import com.main.volunteer.domain.member.entity.Member;
+import com.main.volunteer.domain.point.service.PointService;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
@@ -20,10 +21,12 @@ import java.util.Optional;
 public class ApplyService {
 
     private final VolunteerService volunteerService;
+    private final PointService pointService;
     private final ApplyRepository applyRepository;
 
-    public ApplyService(VolunteerService volunteerService, ApplyRepository applyRepository) {
+    public ApplyService(VolunteerService volunteerService, PointService pointService, ApplyRepository applyRepository) {
         this.volunteerService = volunteerService;
+        this.pointService = pointService;
         this.applyRepository = applyRepository;
     }
 
@@ -70,18 +73,19 @@ public class ApplyService {
             }
             //신청/취소한 이력이 있는 경우
             if(existedApply.getApplyStatus() == ApplyStatus.APPLY_CANCEL){
-                existedApply.setApplyStatus(ApplyStatus.APPLY_COMPLETE);
-                applyRepository.save(existedApply);
-                volunteerService.plusApplyCount(existedApply.getVolunteer());
-                return existedApply;
+                return saveApply(existedApply);
             }
         }else{ //처음 신청하는 경우
-            apply.setApplyStatus(ApplyStatus.APPLY_COMPLETE);
-            applyRepository.save(apply);
-            volunteerService.plusApplyCount(apply.getVolunteer());
-            return apply;
+            return saveApply(apply);
         }
+        return apply;
+    }
 
+    private Apply saveApply(Apply apply) {
+        apply.setApplyStatus(ApplyStatus.APPLY_COMPLETE);
+        applyRepository.save(apply);
+        volunteerService.plusApplyCount(apply.getVolunteer());
+        pointService.plusPointCount(apply.getMember());
         return apply;
     }
 
@@ -97,6 +101,7 @@ public class ApplyService {
 
         verifiedApply.setApplyStatus(ApplyStatus.APPLY_CANCEL);
         volunteerService.minusApplyCount(verifiedApply.getVolunteer());
+        pointService.minusPointCount(member);
 
         return applyRepository.save(verifiedApply);
     }

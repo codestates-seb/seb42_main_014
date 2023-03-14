@@ -4,6 +4,8 @@ import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.apply.entity.Apply;
 import com.main.volunteer.domain.apply.mapper.ApplyMapper;
 import com.main.volunteer.domain.apply.service.ApplyService;
+import com.main.volunteer.domain.member.entity.Member;
+import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +24,12 @@ public class ApplyController {
     public static final String DEFAULT_URI = "/apply";
 
     private final ApplyService applyService;
+    private final MemberService memberService;
     private final ApplyMapper applyMapper;
 
-    public ApplyController(ApplyService applyService, ApplyMapper applyMapper) {
+    public ApplyController(ApplyService applyService, MemberService memberService, ApplyMapper applyMapper) {
         this.applyService = applyService;
+        this.memberService = memberService;
         this.applyMapper = applyMapper;
     }
 
@@ -36,7 +40,8 @@ public class ApplyController {
     public ResponseEntity<?> postApply(@PathVariable("volunteer-id") Long volunteerId,@AuthenticationPrincipal CustomUserDetails userDetails){
 
         Apply apply = new Apply();
-        apply.setMember(userDetails);
+        Member member = memberService.findMember(userDetails.getMemberId());
+        apply.setMember(member);
 
         Apply createdApply = applyService.createApply(apply, volunteerId);
 
@@ -52,7 +57,8 @@ public class ApplyController {
     @PatchMapping("/{volunteer-id}")
     public ResponseEntity<?> cancelApply(@PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        Apply canceledApply = applyService.cancelApply(volunteerId, userDetails);
+        Member member = memberService.findMember(userDetails.getMemberId());
+        Apply canceledApply = applyService.cancelApply(volunteerId, member);
 
         return ResponseEntity.ok().body(ApiResponse.ok("data", applyMapper.applyToResponse(canceledApply)));
     }
