@@ -2,7 +2,7 @@ package com.main.volunteer.domain.membergroup.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.main.volunteer.domain.group.entity.Group;
-import com.main.volunteer.member.entity.Member;
+import com.main.volunteer.domain.member.entity.Member;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;

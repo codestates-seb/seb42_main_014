@@ -3,9 +3,9 @@ package com.main.volunteer.domain.comment.service;
 import com.main.volunteer.domain.comment.entity.Comment;
 import com.main.volunteer.domain.comment.repository.CommentRepository;
 import com.main.volunteer.domain.group.service.GroupService;
+import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
-import com.main.volunteer.member.service.MemberService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
