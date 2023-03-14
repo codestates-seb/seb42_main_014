@@ -70,7 +70,7 @@ const All = styled.div`
 	}
 `;
 
-export default function Kategorie() {
+export default function Category() {
 	return (
 		<Body>
 			<Flex>

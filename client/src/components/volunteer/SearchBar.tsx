@@ -23,6 +23,7 @@ export default function SearchBar({ placeholder, width, height, radius }: TProps
 		margin: 10px;
 		width: ${width - 15}px;
 		height: ${height - 15}px;
+		outline: none;
 	`;
 
 	return (
