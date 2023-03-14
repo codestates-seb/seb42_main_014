@@ -55,7 +55,6 @@ const All = styled.div`
 	width: 90px;
 	height: 90px;
 	line-height: 80px;
-	font-size: 30px;
 	font-weight: bold;
 	display: flex;
 	flex-direction: column;

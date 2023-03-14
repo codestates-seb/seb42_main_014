@@ -60,7 +60,7 @@ export default function Carousel() {
 		infinite: true,
 		slidesToShow: 1,
 		slidesToScroll: 1,
-		// autoplay: true,
+		autoplay: true,
 		speed: 500,
 		autoplaySpeed: 8000,
 		cssEase: "linear",
