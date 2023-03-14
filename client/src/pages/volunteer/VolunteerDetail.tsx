@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import VolunteerAnswer from "../../components/volunteer/VolunteerAnswer";
+import VolunteerComment from "../../components/volunteer/VolunteerComment";
 import VolunteerInfo from "../../components/volunteer/VolunteerInfo";
 
 export default function VolunteerDetail() {
@@ -8,11 +8,12 @@ export default function VolunteerDetail() {
 		flex-direction: column;
 		align-items: center;
 		margin-bottom: 150px;
+		min-width: 1035px;
 	`;
 	return (
 		<StyledContainerDiv>
 			<VolunteerInfo />
-			<VolunteerAnswer />
+			<VolunteerComment />
 		</StyledContainerDiv>
 	);
 }

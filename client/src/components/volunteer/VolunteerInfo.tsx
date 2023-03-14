@@ -10,6 +10,9 @@ export default function VolunteerInfo() {
 		align-items: center;
 		justify-content: center;
 		margin: 20px;
+		display: flex;
+		flex-direction: column;
+		min-width: 1035px;
 
 		img {
 			border-radius: 10px;
@@ -44,6 +47,7 @@ export default function VolunteerInfo() {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		min-width: 1035px;
 	`;
 
 	const [isLike, setIsLike] = useState(false);
