@@ -5,6 +5,7 @@ import com.main.volunteer.domain.member.dto.MemberDto;
 import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.mapper.MemberMapper;
 import com.main.volunteer.domain.member.service.MemberService;
+import com.main.volunteer.domain.point.entity.Point;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,9 @@ public class MemberController {
         else{
             memberPostDto.setRoles(List.of("USER"));
         }
+
+        Member member = mapper.memberPostDtoToMember(memberPostDto);
+        member.setPoint(new Point());
 
         Member postMember = memberService.createMember(mapper.memberPostDtoToMember(memberPostDto));
 
