@@ -5,10 +5,14 @@ interface TPropsButton {
 	value: string;
 	width: number;
 	height: number;
-	radius: number;
-	textSize: number;
-	bgColor: string | number;
+	radius?: number;
+	textSize?: number;
+	bgColor?: string | number;
 	iconName?: ReactElement<any, any> | undefined;
+	style?: any;
+	onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+	type?: "button" | "submit" | "reset" | undefined;
+	textColor?: string;
 }
 
 export default function Button({
@@ -19,13 +23,16 @@ export default function Button({
 	textSize,
 	bgColor,
 	iconName,
+	style,
+	onClick,
+	type,
+	textColor,
 }: TPropsButton) {
 	const StyledButtonContainer = styled.div`
 		width: ${width}px;
 		height: ${height}px;
 		border-radius: ${radius}px;
-		font-size: ${textSize}px;
-		background-color: black;
+		background-color: ${bgColor};
 		color: white;
 		display: flex;
 		align-items: center;
@@ -33,22 +40,22 @@ export default function Button({
 		cursor: pointer;
 
 		button {
+			width: ${width}px;
+			height: ${height}px;
+			font-size: ${textSize}px;
 			background-color: ${bgColor};
+			border-radius: ${radius}px;
 			border: none;
-			color: white;
+			color: ${textColor ? textColor : "white"};
 			cursor: pointer;
-		}
-
-		:hover,
-		button:hover {
-			font-size: ${textSize + 0.2}px;
-			transition: all 0.3s;
 		}
 	`;
 	return (
 		<StyledButtonContainer>
 			{iconName}
-			<button>{value}</button>
+			<button type={type} onClick={onClick} style={style}>
+				{value}
+			</button>
 		</StyledButtonContainer>
 	);
 }
