@@ -57,6 +57,7 @@ const NextTo = styled.div`
 export default function Carousel() {
 	const settings = {
 		dots: true,
+		fade: true,
 		infinite: true,
 		slidesToShow: 1,
 		slidesToScroll: 1,
