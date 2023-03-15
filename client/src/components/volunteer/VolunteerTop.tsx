@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
+import Address from "../Address";
+
 import Dropdown from "./Dropdown";
 
 const Body = styled.div`
@@ -44,7 +46,7 @@ const Right = styled.div`
 	flex-direction: column;
 `;
 
-export default function VolunteerPost() {
+const VolunteerPost: React.FC = () => {
 	const fileInput = useRef<HTMLLabelElement>(null);
 	const onChangeHandler = () => {
 		if (fileInput.current) {
@@ -88,7 +90,6 @@ export default function VolunteerPost() {
 		}
 	`;
 	const [file, setFile] = useState<string>("");
-	// const { name } = useParams<{ name: string }>();
 
 	const post = window.location.pathname;
 
@@ -98,6 +99,7 @@ export default function VolunteerPost() {
 			setFile(URL.createObjectURL(selectedFiles?.[0]));
 		}
 	};
+
 	return (
 		<Body>
 			<Container>
@@ -133,11 +135,19 @@ export default function VolunteerPost() {
 							<input style={{ width: "60px" }} type="number" />
 							시간
 						</Select>
-						<Select>
+						<Select style={{ borderBottom: "1px solid" }}>
 							<span>봉사장소 </span>
-							<input style={{ width: "60px" }} type="text" placeholder="시, 도" />
-							<input style={{ backgroundColor: "#f9f9f9" }} type="text" placeholder="이하 주소" />
+							<Address />
 						</Select>
+						<Select>
+							<span> 상세 주소 </span>
+							<input
+								style={{ backgroundColor: "#f9f9f9" }}
+								type="text"
+								placeholder="상세 주소를 작성해주세요."
+							/>
+						</Select>
+
 						<Select>
 							<span>모집인원 </span>
 							<input style={{ width: "60px" }} type="number" />명
@@ -166,4 +176,6 @@ export default function VolunteerPost() {
 			</Container>
 		</Body>
 	);
-}
+};
+
+export default VolunteerPost;
