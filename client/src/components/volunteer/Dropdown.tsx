@@ -4,15 +4,17 @@ import styled from "styled-components";
 const DropdownContainer = styled.div`
 	position: relative;
 	display: inline-block;
+	width: 100%;
 `;
 
 const DropdownButton = styled.button`
-	background-color: #f1f1f1;
-	border-radius: 10px;
-	color: #262626;
+	background-color: #494949;
+	width: 100%;
+	font-weight: 700;
+	color: #ffffff;
 	padding: 12px;
 	font-size: 16px;
-	border: none;
+	border: 3px solid #ececec;
 	cursor: pointer;
 `;
 
@@ -24,7 +26,7 @@ const DropdownContent = styled.div`
 	background-color: #ffffff;
 	min-width: 160px;
 	overflow: auto;
-	border: 2px solid #ddd;
+	border: 2px solid #eaeaea;
 	border-top: none;
 
 	button {
