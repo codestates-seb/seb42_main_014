@@ -9,7 +9,7 @@ interface TPropsButton {
 	textSize?: number;
 	bgColor?: string | number;
 	iconName?: ReactElement<any, any> | undefined;
-	style?: any;
+	style?: React.CSSProperties | undefined;
 	onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 	type?: "button" | "submit" | "reset" | undefined;
 	textColor?: string;

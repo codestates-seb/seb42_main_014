@@ -10,7 +10,6 @@ const Body = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	/* max-width: 50%; */
 `;
 const Container = styled.div`
 	display: flex;
@@ -100,6 +99,10 @@ const VolunteerPost: React.FC = () => {
 		}
 	};
 
+
+
+	const optionArr = ["어린이", "노인", "장애인", "환경", "사회", "동물"];
+
 	return (
 		<Body>
 			<Container>
@@ -116,7 +119,7 @@ const VolunteerPost: React.FC = () => {
 						</Select>
 						<Select>
 							<span>봉사분야 </span>
-							<Dropdown />
+							<Dropdown placeholder="분야를 선택해주세요" option={optionArr} />
 						</Select>
 						<Select>
 							<span>모집기간 </span>
