@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Category from "../../components/volunteer/Category";
 import CommunityCard from "../../components/community/CommunityCard";
 import Button from "../../components/Button";
+import SvgIcon from "@mui/material/SvgIcon";
+import PetsIcon from "@mui/icons-material/Pets";
 
 export default function Community() {
 	const Container = styled.div`
@@ -66,6 +68,7 @@ export default function Community() {
 					place="서울시 광진구"
 					intro="매주 주말 즐거운 유기견 봉사 함께하실 분!"
 					hashtag="#유기견 #주말봉사"
+					category={<SvgIcon component={PetsIcon} style={{ marginTop: "5px" }} />}
 				/>
 			</Container>
 		</>

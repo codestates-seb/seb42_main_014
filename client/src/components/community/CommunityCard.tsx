@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Button from "../../components/Button";
-import SvgIcon from "@mui/material/SvgIcon";
-import PetsIcon from "@mui/icons-material/Pets";
+import { ReactNode } from "react";
 
 interface TProps {
 	src?: string;
@@ -9,9 +8,10 @@ interface TProps {
 	place?: string;
 	intro?: string;
 	hashtag?: string;
+	category?: ReactNode;
 }
 
-export default function CommunityCard({ src, name, place, intro, hashtag }: TProps) {
+export default function CommunityCard({ src, name, place, intro, hashtag, category }: TProps) {
 	const Container = styled.div`
 		background-color: #ffffff;
 		display: flex;
@@ -71,7 +71,7 @@ export default function CommunityCard({ src, name, place, intro, hashtag }: TPro
 					<span style={{ fontWeight: "bold" }}>{place}</span>
 					<span>{intro}</span>
 					<span>{hashtag}</span>
-					<SvgIcon component={PetsIcon} style={{ marginTop: "5px" }} />
+					<span>{category}</span>
 				</ContentDiv>
 				<ButtonDiv>
 					{/* 함께하기 버튼 */}
