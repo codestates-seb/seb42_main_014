@@ -2,6 +2,7 @@ package com.main.volunteer.domain.volunteer.service;
 
 import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.member.entity.Member;
+import com.main.volunteer.domain.member.repository.MemberRepository;
 import com.main.volunteer.domain.tag.entity.Tag;
 import com.main.volunteer.domain.tag.service.TagService;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
@@ -9,23 +10,23 @@ import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import com.main.volunteer.domain.volunteer.repository.VolunteerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class VolunteerService {
 
     private final VolunteerRepository volunteerRepository;
+    private final MemberRepository memberRepository;
     private final TagService tagService;
 
-    public VolunteerService(VolunteerRepository volunteerRepository, TagService tagService) {
+    public VolunteerService(VolunteerRepository volunteerRepository, MemberRepository memberRepository, TagService tagService) {
         this.volunteerRepository = volunteerRepository;
+        this.memberRepository = memberRepository;
         this.tagService = tagService;
     }
 
@@ -234,5 +235,13 @@ public class VolunteerService {
         setVolunteerStatusForList(volunteerList);
 
         return volunteerList;
+    }
+
+    /*
+    keyword(봉사명,기관명)
+     */
+    public List<Volunteer> searchVolunteerList(String keyword) {
+        Optional<List<Member>> optionalOrganization = memberRepository.findByMemberNameContaining(keyword);
+        Optional<List<Volunteer>> optional = volunteerRepository.findByTit
     }
 }

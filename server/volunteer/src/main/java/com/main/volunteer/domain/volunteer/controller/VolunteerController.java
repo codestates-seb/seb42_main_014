@@ -117,4 +117,17 @@ public class VolunteerController {
         return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
     }
 
+    /*
+    봉사명으로 조회
+     */
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchVolunteer(String keyword){
+
+        List<Volunteer> volunteerList = volunteerService.searchVolunteerList(keyword);
+
+        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
+
+    }
+
 }

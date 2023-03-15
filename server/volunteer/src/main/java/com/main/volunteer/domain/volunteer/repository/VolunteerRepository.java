@@ -17,4 +17,6 @@ public interface VolunteerRepository extends JpaRepository<Volunteer, Long> {
     Optional<List<Volunteer>> findByTag(Tag tag);
 
     Optional<List<Volunteer>> findAllByMember(Member member);
+
+    Optional<List<Volunteer>> findByTitleContaining(String keyword);
 }
