@@ -1,16 +1,51 @@
 package com.main.volunteer.domain.volunteer.mapper;
 
 
+import com.main.volunteer.domain.apply.entity.Apply;
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.volunteer.dto.VolunteerDto;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring")
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
+
+@Mapper(componentModel = "spring" , unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface VolunteerMapper{
 
     Volunteer postDtoToVolunteer(VolunteerDto.Post post);
 
-    Volunteer patchDtoToVolunteer(VolunteerDto.Patch patchDto);
+    default VolunteerDto.Response volunteerToResponseDto(Volunteer volunteer){
+            if ( volunteer == null ) {
+                return null;
+            }
 
-    VolunteerDto.Response volunteerToResponseDto(Volunteer volunteer);
+            String volunteerStatus = null;
+
+            Long volunteerId = volunteer.getVolunteerId();
+            String title = volunteer.getTitle();
+            LocalDateTime applyDate = volunteer.getApplyDate();
+            LocalDateTime volunteerDate = volunteer.getVolunteerDate();
+            Integer volunteerTime = volunteer.getVolunteerTime();
+            String place = volunteer.getPlace();
+            String content = volunteer.getContent();
+            Integer applyLimit = volunteer.getApplyLimit();
+            Integer applyCount = volunteer.getApplyCount();
+            Integer likeCount = volunteer.getLikeCount();
+            if ( volunteer.getVolunteerStatus() != null ) {
+                volunteerStatus = volunteer.getVolunteerStatus().name();
+            }
+
+            Long memberId = volunteer.getMember().getMemberId();
+            Long tagId = volunteer.getTag().getTagId();
+
+        return new VolunteerDto.Response( volunteerId, title, applyDate, volunteerDate, volunteerTime, place, content, applyLimit, applyCount, likeCount, memberId, tagId, volunteerStatus);
+    }
+
+
+    List<VolunteerDto.Response> volunteerListToResponseList(List<Volunteer> volunteerList);
+
 }

@@ -1,6 +1,5 @@
 package com.main.volunteer.domain.member.controller;
 
-import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.member.dto.MemberDto;
 import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.mapper.MemberMapper;
@@ -9,7 +8,6 @@ import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -40,29 +38,21 @@ public class MemberController {
 
         URI uri = UriUtil.createUri(DEFAULT_URI, postMember.getMemberId());
 
-        return ResponseEntity.created(uri).body(ApiResponse.created());
+        return ResponseEntity.created(uri).body(ApiResponse.created("data", mapper.memberToMemberResponseDto(postMember)));
     }
 
     @PatchMapping("/{member-id}")
-    public ResponseEntity updateMember(@PathVariable("member-id") @Positive int memberId,
+    public ResponseEntity updateMember(@PathVariable("member-id") @Positive Long memberId,
                                        @RequestBody @Valid MemberDto.Patch memberPatchDto){
 
         memberPatchDto.setMemberId(memberId);
 
         Member updateMember = memberService.updateMember(mapper.memberPatchDtoToMember(memberPatchDto));
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data", updateMember));
+        return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.memberToMemberResponseDto(updateMember)));
     }
 
-    @GetMapping("/{member-id}")
-    public ResponseEntity getMember(@PathVariable("member-id") @Positive int memberId){
-
-        Member getMember = memberService.findMember(memberId);
-
-        return ResponseEntity.ok().body(ApiResponse.ok("data", getMember));
-    }
-
-    @GetMapping("/{confirm-email}")
+    @GetMapping("/confirm-email")
     public String viewConfirmEmail(@Valid @RequestParam String token){
 
         memberService.confirmEmail(token);
@@ -70,11 +60,19 @@ public class MemberController {
         return "이메일 인증 완료";
     }
 
+    @GetMapping("/{member-id}")
+    public ResponseEntity getMember(@PathVariable("member-id") @Positive int memberId){
+
+        Member member = memberService.findMember(memberId);
+
+        return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.memberToMemberResponseDto(member)));
+    }
+
     @DeleteMapping("/{member-id}")
     public ResponseEntity deleteMember(@PathVariable("member-id") @Positive int memberId){
 
         memberService.deleteMember(memberId);
 
-        return ResponseEntity.ok().body(ApiResponse.ok());
+        return ResponseEntity.noContent().build();
     }
 }

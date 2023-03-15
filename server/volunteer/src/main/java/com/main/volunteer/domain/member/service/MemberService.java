@@ -31,9 +31,11 @@ public class MemberService {
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
 
+        Member savedMember = memberRepository.save(member);
+
         confirmationTokenService.createEmailConfirmationToken(member.getMemberId(), member.getEmail());
 
-       return memberRepository.save(member);
+       return savedMember;
     }
 
     public Member updateMember(Member member){
@@ -82,10 +84,9 @@ public class MemberService {
         Optional<Member> optionalMember = memberRepository.findById(findConfirmationToken.getMemberId());
         Member findMember = optionalMember.orElseThrow(()-> new BusinessException(ExceptionCode.MEMBER_NOT_FOUND));
 
-        findConfirmationToken.useToken();
+        confirmationTokenService.useToken(findConfirmationToken);
         findMember.setVerifiedEmail(true);
         memberRepository.save(findMember);
-
     }
 
     public void verifyMemberName(String memberName){

@@ -5,6 +5,7 @@ import com.main.volunteer.auth.filter.JwtVerificationFilter;
 import com.main.volunteer.auth.handler.MemberAuthenticationFailureHandler;
 import com.main.volunteer.auth.handler.MemberAuthenticationSuccessHandler;
 import com.main.volunteer.auth.jwt.JwtTokenizer;
+import com.main.volunteer.auth.service.CustomOAuth2UserService;
 import com.main.volunteer.auth.service.CustomUserDetailsService;
 import com.main.volunteer.auth.utils.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,9 @@ public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
-
     private final CustomUserDetailsService userDetailsService;
+    private final CustomOAuth2UserService customOAuth2UserService;
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -51,7 +53,10 @@ public class SecurityConfiguration {
                        /*
                         조건 추가해야함
                         */
-                        .anyRequest().permitAll());
+                        .anyRequest().permitAll())
+/*                .oauth2Login()
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)*/;
         return http.build();
     }
 

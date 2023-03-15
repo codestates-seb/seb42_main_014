@@ -1,6 +1,7 @@
 package com.main.volunteer.exception;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public enum ExceptionCode {
 
@@ -11,9 +12,18 @@ public enum ExceptionCode {
     CONFLICT(409, "충돌이 났습니다."),
     MEMBER_EXIST(409, "이미 등록된 회원입니다."),
     NICKNAME_EXIST(409, "이미 등록된 닉네임입니다."),
+
     TOKEN_EXPIRED(409,"만료된 토큰입니다."),
+
     // Security
-    UNAUTHORIZED(401, "사용자가 인증되지 않았습니다.");
+    UNAUTHORIZED(401, "사용자가 인증되지 않았습니다."),
+
+    // Group - 600부터
+    FAIL_GROUP_APPLY_LIMIT(600, "현재 등록되어 있는 그룹의 멤버수가 수정하려는 멤버수보다 많습니다."),
+    GROUP_EXIST(601, "이미 생성된 그룹입니다."),
+
+    // Comment -700 부터
+    COMMENT_EXIST(700, "이미 존재하는 댓글입니다.");
 
     @Getter
     private int code;

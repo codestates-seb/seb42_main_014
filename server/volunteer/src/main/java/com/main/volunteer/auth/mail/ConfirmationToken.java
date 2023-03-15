@@ -1,8 +1,8 @@
 package com.main.volunteer.auth.mail;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
@@ -12,7 +12,8 @@ import javax.persistence.Id;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 public class ConfirmationToken {
 
     @Id
@@ -33,9 +34,5 @@ public class ConfirmationToken {
         confirmationToken.expired = false;
 
         return confirmationToken;
-    }
-
-    public void useToken(){
-        expired = true;
     }
 }
