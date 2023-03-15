@@ -1,5 +1,7 @@
 package com.main.volunteer.domain.member.service;
 
+import com.main.volunteer.auth.mail.ConfirmationToken;
+import com.main.volunteer.auth.mail.ConfirmationTokenService;
 import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
 import com.main.volunteer.domain.member.entity.Member;
@@ -17,6 +19,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ConfirmationTokenService confirmationTokenService;
 
     public Member createMember(Member member){
 
@@ -28,7 +31,11 @@ public class MemberService {
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
 
-       return memberRepository.save(member);
+        Member savedMember = memberRepository.save(member);
+
+        confirmationTokenService.createEmailConfirmationToken(member.getMemberId(), member.getEmail());
+
+       return savedMember;
     }
 
     public Member updateMember(Member member){
@@ -70,6 +77,16 @@ public class MemberService {
         if(verifiedMember.isPresent()){
             throw new BusinessException(ExceptionCode.MEMBER_EXIST);
         }
+    }
+
+    public void confirmEmail(String token){
+        ConfirmationToken findConfirmationToken = confirmationTokenService.findByIdAndExpired(token);
+        Optional<Member> optionalMember = memberRepository.findById(findConfirmationToken.getMemberId());
+        Member findMember = optionalMember.orElseThrow(()-> new BusinessException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        confirmationTokenService.useToken(findConfirmationToken);
+        findMember.setVerifiedEmail(true);
+        memberRepository.save(findMember);
     }
 
     public void verifyMemberName(String memberName){
