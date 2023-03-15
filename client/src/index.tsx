@@ -14,7 +14,7 @@ import Community from "./pages/community/Community";
 import UserEdit from "./pages/Sign/UserEdit";
 import CompanyEdit from "./pages/Sign/CompanyEdit";
 import VolunteerDetail from "./pages/volunteer/VolunteerDetail";
-
+import CommunityPost from "./pages/community/CommunityPost";
 
 const router = createBrowserRouter([
 	{
@@ -52,6 +52,10 @@ const router = createBrowserRouter([
 			{
 				path: "/community",
 				element: <Community />,
+			},
+			{
+				path: "/post",
+				element: <CommunityPost />,
 			},
 			{
 				path: "/about",

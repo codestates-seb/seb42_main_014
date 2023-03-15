@@ -1,12 +1,14 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import Dropdown from "./Dropdown";
+
 const Body = styled.div`
 	margin-top: 20px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
+	/* max-width: 50%; */
 `;
 const Container = styled.div`
 	display: flex;
@@ -27,6 +29,7 @@ const Left = styled.div`
 	border: 3px solid black;
 	width: 500px;
 	height: 400px;
+	margin-bottom: 10px;
 	img {
 		width: 500px;
 		height: 400px;
@@ -57,7 +60,10 @@ export default function VolunteerPost() {
 		margin-bottom: 5px;
 		border-bottom: 3px solid black;
 		height: max-content;
+		width: 100%;
+
 		span {
+			white-space: nowrap;
 			font-weight: 900;
 			margin-right: 15px;
 			font-size: 1.35rem;
@@ -71,12 +77,21 @@ export default function VolunteerPost() {
 		input {
 			border: none;
 			font-size: 1rem;
+			width: 100%;
 			:focus {
 				outline: none;
+			}
+			::-webkit-calendar-picker-indicator {
+				cursor: pointer;
+				font-size: 20px;
 			}
 		}
 	`;
 	const [file, setFile] = useState<string>("");
+	// const { name } = useParams<{ name: string }>();
+
+	const post = window.location.pathname;
+
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files !== null) {
 			const selectedFiles = event.target.files as FileList;
@@ -91,41 +106,63 @@ export default function VolunteerPost() {
 					<img src={file ? file : "https://www.namepros.com/attachments/empty-png.89209/"} alt="" />
 					<label htmlFor="profileImg" ref={fileInput}></label>
 				</Left>
-				<Right>
-					<Select>
-						<span>활동명 </span>
-						<input type="text" />
-					</Select>
-					<Select>
-						<span>봉사분야 </span>
-						<Dropdown />
-					</Select>
-					<Select>
-						<span>모집기간 </span>
-						<input type="date" />
-						<span> 부터 </span>
-						<input type="date" />
-					</Select>
-					<Select>
-						<span>봉사일시 </span>
-						<input type="date" />
-						<span>시간</span>
-						<input style={{ width: "136px" }} type="time" />
-					</Select>
-					<Select>
-						<span>활동시간 </span>
-						<input style={{ width: "60px" }} type="number" />
-						시간
-					</Select>
-					<Select>
-						<span>봉사장소 </span>
-						<input type="text" />
-					</Select>
-					<Select>
-						<span>모집인원 </span>
-						<input style={{ width: "60px" }} type="number" />명
-					</Select>
-				</Right>
+				{post !== "/post" ? (
+					<Right>
+						<Select>
+							<span>활동명 </span>
+							<input type="text" />
+						</Select>
+						<Select>
+							<span>봉사분야 </span>
+							<Dropdown />
+						</Select>
+						<Select>
+							<span>모집기간 </span>
+							<input type="date" />
+							<span> 부터 </span>
+							<input type="date" />
+						</Select>
+						<Select>
+							<span>봉사일시 </span>
+							<input type="date" />
+							<span>시간</span>
+							<input type="time" />
+						</Select>
+						<Select>
+							<span>활동시간 </span>
+							<input style={{ width: "60px" }} type="number" />
+							시간
+						</Select>
+						<Select>
+							<span>봉사장소 </span>
+							<input style={{ width: "60px" }} type="text" placeholder="시, 도" />
+							<input style={{ backgroundColor: "#f9f9f9" }} type="text" placeholder="이하 주소" />
+						</Select>
+						<Select>
+							<span>모집인원 </span>
+							<input style={{ width: "60px" }} type="number" />명
+						</Select>
+					</Right>
+				) : (
+					<Right>
+						<Select>
+							<span>그룹명 </span>
+							<input type="text" />
+						</Select>
+						<Select>
+							<span>봉사분야 </span>
+							<Dropdown />
+						</Select>
+						<Select>
+							<span>활동 지역</span>
+							<input type="text" />
+						</Select>
+						<Select>
+							<span>최대 인원 </span>
+							<input style={{ width: "60px" }} type="number" />명
+						</Select>
+					</Right>
+				)}
 			</Container>
 		</Body>
 	);

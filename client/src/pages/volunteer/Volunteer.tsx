@@ -3,14 +3,24 @@ import Carousel from "../../components/Carousel";
 import Card from "../../components/volunteer/Card";
 import Category from "../../components/volunteer/Category";
 import SearchBar from "../../components/volunteer/SearchBar";
+import styled from "styled-components";
+
+const Bar = styled.div`
+	display: flex;
+	border-bottom: 2px solid black;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+`;
 
 export default function Volunteer() {
 	return (
 		<>
-			<SearchBar placeholder="검색어를 입력해 주세요." width={250} height={45} radius={10} />
 			<Carousel />
 			<Category />
 			<div style={{ margin: "50px" }}>
+				<Bar>
+					<SearchBar placeholder="검색어를 입력해 주세요." width={250} height={45} radius={10} />
+				</Bar>
 				<Card
 					width={380}
 					height={350}
