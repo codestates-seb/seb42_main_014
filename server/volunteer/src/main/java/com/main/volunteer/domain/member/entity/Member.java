@@ -29,6 +29,8 @@ public class Member extends Auditable {
     @Column(nullable = false, unique = true)
     private String email;
 
+    private boolean verifiedEmail = false;
+
     @Column(nullable = false)
     private String password;
 
