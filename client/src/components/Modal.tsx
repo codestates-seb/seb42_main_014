@@ -25,7 +25,6 @@ const ModalBox = styled.div`
 	height: 500px;
 	padding: 1.5rem;
 	border-radius: 1rem;
-	margin-bottom: 10%;
 	text-align: center;
 `;
 
