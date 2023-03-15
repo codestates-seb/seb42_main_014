@@ -9,12 +9,12 @@ import Volunteer from "./pages/volunteer/Volunteer";
 import VolunteerPost from "./pages/volunteer/VolunteerPost";
 import Login from "./pages/Sign/Login";
 import SignUp from "./pages/Sign/SignUp";
-
 import Community from "./pages/community/Community";
 import UserEdit from "./pages/Sign/UserEdit";
 import CompanyEdit from "./pages/Sign/CompanyEdit";
 import VolunteerDetail from "./pages/volunteer/VolunteerDetail";
 import CommunityPost from "./pages/community/CommunityPost";
+import GroupDetail from "./pages/community/GroupDetail";
 
 const router = createBrowserRouter([
 	{
@@ -56,7 +56,12 @@ const router = createBrowserRouter([
 			{
 				path: "/post",
 				element: <CommunityPost />,
-			},
+        },
+
+				{
+        path: "/community/:id",
+				element: <GroupDetail />,
+        },
 			{
 				path: "/about",
 				element: <About />,

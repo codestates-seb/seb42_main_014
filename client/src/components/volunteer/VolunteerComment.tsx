@@ -3,7 +3,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
 import Button from "../Button";
 
-export default function VolunteerAnswer() {
+export default function VolunteerComment() {
 	const StyledContainerDiv = styled.div`
 		width: 75vw;
 		height: 200px;
@@ -11,6 +11,8 @@ export default function VolunteerAnswer() {
 		display: flex;
 		align-items: center;
 		flex-direction: column;
+		justify-content: center;
+		min-width: 1035px;
 
 		.answer-input-container {
 			display: flex;
@@ -19,6 +21,7 @@ export default function VolunteerAnswer() {
 			height: 60px;
 			border-radius: 20px;
 			justify-content: center;
+			min-width: 900px;
 		}
 		input {
 			width: 60vw;
@@ -27,6 +30,7 @@ export default function VolunteerAnswer() {
 			border-radius: 20px;
 			margin: 20px;
 			padding: 20px;
+			min-width: 700px;
 		}
 
 		.answer-read-container {
@@ -37,6 +41,7 @@ export default function VolunteerAnswer() {
 			border-radius: 20px;
 			padding: 20px;
 			margin: 20px;
+			min-width: 1000px;
 		}
 	`;
 	return (
