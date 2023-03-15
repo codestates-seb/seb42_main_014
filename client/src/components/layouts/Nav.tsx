@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import DropDown from "./DropDown";
+import DropDown from "./NavDropDown";
 import { TbUserCircle } from "react-icons/tb";
 
 export default function Nav() {

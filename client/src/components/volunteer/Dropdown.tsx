@@ -1,50 +1,75 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-const DropdownContainer = styled.div`
-	position: relative;
-	display: inline-block;
-	width: 100%;
-`;
+interface TPropsDropDown {
+	option?: string[];
+	placeholder?: string;
+	style?: React.CSSProperties | undefined;
+	width?: number;
+	radius?: number;
+	height?: number;
+	boxWidth?: number;
+	max_min_width?: number;
+}
 
-const DropdownButton = styled.button`
-	background-color: #494949;
-	width: 100%;
-	font-weight: 700;
-	color: #ffffff;
-	padding: 12px;
-	font-size: 16px;
-	border: 3px solid #ececec;
-	cursor: pointer;
-`;
-
-const DropdownContent = styled.div`
-	position: absolute;
-	top: 100%;
-	left: 0;
-	z-index: 1;
-	background-color: #ffffff;
-	min-width: 160px;
-	overflow: auto;
-	border: 2px solid #eaeaea;
-	border-top: none;
-
-	button {
-		background-color: inherit;
-		color: black;
-		padding: 12px 16px;
-		border: none;
-		cursor: pointer;
+const DropdownMenu = ({
+	option,
+	placeholder,
+	style,
+	width,
+	radius,
+	height,
+	boxWidth,
+	max_min_width,
+}: TPropsDropDown) => {
+	const DropdownContainer = styled.div`
+		position: relative;
+		display: inline-block;
 		width: 100%;
-		text-align: left;
+	`;
 
-		&:hover {
-			background-color: #ddd;
+	const DropdownButton = styled.button`
+		background-color: #494949;
+		width: ${width ? width : 100}%;
+		font-weight: 700;
+		color: #ffffff;
+		padding: 12px;
+		font-size: 16px;
+		border: 3px solid #ececec;
+		cursor: pointer;
+		border-radius: ${radius ? radius : 0}px;
+		height: ${height ? height : null}px;
+		max-width: ${max_min_width}px;
+		min-width: ${max_min_width}px;
+	`;
+
+	const DropdownContent = styled.div`
+		position: absolute;
+		top: 100%;
+		left: 0;
+		z-index: 1;
+		background-color: #ffffff;
+		min-width: 160px;
+		overflow: auto;
+		border: 2px solid #eaeaea;
+		border-top: none;
+		width: ${boxWidth ? boxWidth : null}px;
+
+		button {
+			background-color: inherit;
+			color: black;
+			padding: 12px 16px;
+			border: none;
+			cursor: pointer;
+			width: 100%;
+
+			text-align: left;
+
+			&:hover {
+				background-color: #ddd;
+			}
 		}
-	}
-`;
-
-const DropdownMenu = () => {
+	`;
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedOption, setSelectedOption] = useState("");
 
@@ -59,17 +84,17 @@ const DropdownMenu = () => {
 
 	return (
 		<DropdownContainer>
-			<DropdownButton onClick={toggleDropdown}>
-				{selectedOption || "분야를 선택해주세요"}
-			</DropdownButton>
+			<DropdownButton onClick={toggleDropdown}>{selectedOption || placeholder}</DropdownButton>
 			{isOpen && (
 				<DropdownContent>
-					<button onClick={() => handleOptionClick("어린이")}>어린이</button>
-					<button onClick={() => handleOptionClick("노인")}>노인</button>
-					<button onClick={() => handleOptionClick("장애인")}>장애인</button>
-					<button onClick={() => handleOptionClick("환경")}>환경</button>
-					<button onClick={() => handleOptionClick("사회")}>사회</button>
-					<button onClick={() => handleOptionClick("동물")}>동물</button>
+					{option &&
+						option.map((el: any) => {
+							return (
+								<button style={style} onClick={() => handleOptionClick(el)}>
+									{el}
+								</button>
+							);
+						})}
 				</DropdownContent>
 			)}
 		</DropdownContainer>
