@@ -29,21 +29,21 @@ const ImgDiv = styled.div`
 		width: 64px;
 	}
 `;
-const LikeSpan = styled.span`
-	width: 85px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+// const LikeSpan = styled.span`
+// 	width: 85px;
+// 	display: flex;
+// 	justify-content: space-between;
+// 	align-items: center;
 
-	img {
-		width: 32px;
-		height: 32px;
-	}
+// 	img {
+// 		width: 32px;
+// 		height: 32px;
+// 	}
 
-	span {
-		font-weight: bold;
-	}
-`;
+// 	span {
+// 		font-weight: bold;
+// 	}
+// `;
 
 const InfoDiv = styled.div`
 	justify-content: center;
@@ -64,10 +64,10 @@ export default function Orgcard() {
 					</div>
 					<button>수정하기</button>
 				</ImgDiv>
-				<LikeSpan>
+				{/* <LikeSpan>
 					<img src="/images/mypage/like.png" alt="찜하기" />
 					<span>1,004</span>
-				</LikeSpan>
+				</LikeSpan> */}
 				<InfoDiv>
 					{/* 프로필 정보 */}
 					<div>이름 : 봉사기관</div>
