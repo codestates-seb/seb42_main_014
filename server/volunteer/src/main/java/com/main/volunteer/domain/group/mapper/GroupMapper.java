@@ -17,7 +17,7 @@ public interface GroupMapper {
        long groupId = group.getGroupId();
        String groupName = group.getGroupName();
        String groupImage = group.getGroupImage();
-       long groupLeaderId = group.getGroupLeaderId();
+       long groupLeaderId = group.getGroupZangId();
        int applyLimit = group.getApplyLimit();
        String place = group.getPlace();
        String content = group.getContent();
