@@ -11,15 +11,15 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 import java.util.List;
 
-//public class VolunteerRepositoryImpl extends QuerydslRepositorySupport implements VolunteerRepositoryCustom {
-//
-//    @Autowired
-//    private JPAQueryFactory queryFactory;
-//
-//    public VolunteerRepositoryImpl() {
-//        super(Volunteer.class);
-//    }
-//
+public class VolunteerRepositoryImpl extends QuerydslRepositorySupport implements VolunteerRepositoryCustom {
+
+    @Autowired
+    private JPAQueryFactory queryFactory;
+
+    public VolunteerRepositoryImpl() {
+        super(Volunteer.class);
+    }
+
 //    public List<Volunteer> findBySearchOption(Long tagId, String province, String city){
 //        JPQLQuery<Volunteer> query =  queryFactory.selectFrom(QVolunteer.volunteer)
 //                .where(eqProvince(province), eqCity(city), eqGu(gu), containName(name));
@@ -50,4 +50,4 @@ import java.util.List;
 //
 //
 //    }
-//}
+}
