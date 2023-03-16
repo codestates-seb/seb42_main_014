@@ -1,0 +1,32 @@
+package com.main.volunteer.domain.group.mapper;
+
+import com.main.volunteer.domain.group.dto.GroupDto;
+import com.main.volunteer.domain.group.entity.Group;
+import org.mapstruct.*;
+
+import java.util.List;
+
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface GroupMapper {
+
+    Group groupPostDtoToGroup(GroupDto.Post postDto);
+    Group groupPatchDtoToGroup(GroupDto.Patch patchDto);
+
+   default GroupDto.Response groupToGroupResponseDto(Group group) {
+
+       long groupId = group.getGroupId();
+       String groupName = group.getGroupName();
+       String groupImage = group.getGroupImage();
+       long groupLeaderId = group.getGroupZangId();
+       int applyLimit = group.getApplyLimit();
+       String place = group.getPlace();
+       String content = group.getContent();
+       long tagId = group.getTag().getTagId();
+       String tagName = group.getTag().getTagName();
+
+       return new GroupDto.Response(groupId, groupName, groupImage, groupLeaderId, applyLimit, place, content,tagId,tagName);
+   }
+
+    List<GroupDto.Response> GroupsToGroupResponseDtos(List<Group> groups);
+
+}
