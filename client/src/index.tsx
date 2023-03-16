@@ -15,6 +15,7 @@ import CompanyEdit from "./pages/Sign/CompanyEdit";
 import VolunteerDetail from "./pages/volunteer/VolunteerDetail";
 import CommunityPost from "./pages/community/CommunityPost";
 import GroupDetail from "./pages/community/GroupDetail";
+import ErrorPage from "./pages/ErrorPage";
 
 const router = createBrowserRouter([
 	{
@@ -56,12 +57,12 @@ const router = createBrowserRouter([
 			{
 				path: "/post",
 				element: <CommunityPost />,
-        },
+			},
 
-				{
-        path: "/community/:id",
+			{
+				path: "/community/:id",
 				element: <GroupDetail />,
-        },
+			},
 			{
 				path: "/about",
 				element: <About />,
@@ -75,7 +76,7 @@ const router = createBrowserRouter([
 				element: <VolunteerPost />,
 			},
 		],
-		errorElement: <div>에러가 발생했어요!</div>,
+		errorElement: <ErrorPage />,
 	},
 ]);
 
