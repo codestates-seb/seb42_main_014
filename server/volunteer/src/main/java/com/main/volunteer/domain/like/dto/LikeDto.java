@@ -7,12 +7,10 @@ import lombok.Getter;
 @Getter
 public class LikeDto {
 
-
     @AllArgsConstructor
     @Getter
     public static class Response {
         private Long likeId;
-        private Long memberId;
         private Long volunteerId;
     }
 }

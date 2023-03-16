@@ -14,5 +14,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findByMemberName(String memberName);
 
-    Optional<List<Member>> findByMemberNameContainingAndRolesContains(String key, "ORG");
+    Optional<List<Member>> findByMemberNameContaining(String keyword);
+
 }

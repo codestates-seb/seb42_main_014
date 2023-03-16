@@ -19,29 +19,42 @@ public interface ApplyMapper {
             return null;
         }
 
-
         Member member = apply.getMember();
         Volunteer volunteer = apply.getVolunteer();
 
         Long applyId = apply.getApplyId();
-        ApplyStatus applyStatus = apply.getApplyStatus();
-        Long memberId = member.getMemberId();
-        String memberEmail = member.getEmail();
-        String memberName = member.getMemberName();
         Long volunteerId = volunteer.getVolunteerId();
-
+        ApplyStatus applyStatus = apply.getApplyStatus();
         boolean reviewDone = false;
-
         List<Review> reviewList = volunteer.getReviewList();
         for (Review review : reviewList) {
-            if (Objects.equals(memberId, review.getMember().getMemberId())) {
+            if (Objects.equals(member.getMemberId(), review.getMember().getMemberId())) {
                 reviewDone = true;
                 break;
             }
         }
 
-        return new ApplyDto.Response( applyId, applyStatus,memberId, memberEmail, memberName, volunteerId, reviewDone);
+        return new ApplyDto.Response( applyId, volunteerId, applyStatus,reviewDone );
     }
 
+    default ApplyDto.ResponseToORG applyToResponseToORG(Apply apply){
+        if ( apply == null ) {
+            return null;
+        }
+
+        Member member = apply.getMember();
+        Volunteer volunteer = apply.getVolunteer();
+
+        Long applyId = apply.getApplyId();
+        Long volunteerId = volunteer.getVolunteerId();
+        ApplyStatus applyStatus = apply.getApplyStatus();
+        Long memberId = member.getMemberId();
+        String memberEmail = member.getEmail();
+        String memberName = member.getMemberName();
+
+        return new ApplyDto.ResponseToORG( applyId, volunteerId, applyStatus,memberId, memberEmail, memberName);
+    }
+
+    List<ApplyDto.ResponseToORG> applyListToResponseToORGList(List<Apply> applyList);
     List<ApplyDto.Response> applyListToResponseList(List<Apply> applyList);
 }
