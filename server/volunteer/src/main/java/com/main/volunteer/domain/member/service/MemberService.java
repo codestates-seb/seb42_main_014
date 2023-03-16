@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -96,5 +97,14 @@ public class MemberService {
         if(verifiedMember.isPresent()){
             throw new BusinessException(ExceptionCode.NICKNAME_EXIST);
         }
+    }
+
+
+    public List<Member> findByOrganizationName(String memberName){
+        Optional<List<Member>> optional = memberRepository.findByMemberNameContaining(memberName);
+        List<Member> memberList = optional.orElseThrow(()-> new RuntimeException("등록된 봉사 기관이 없습니다."));
+        memberList.removeIf(member -> !member.getRoles().contains("ORG"));
+
+        return memberList;
     }
 }

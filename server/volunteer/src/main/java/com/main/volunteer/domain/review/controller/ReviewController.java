@@ -1,7 +1,7 @@
 package com.main.volunteer.domain.review.controller;
 
 import com.main.volunteer.auth.CustomUserDetails;
-import com.main.volunteer.domain.member.entity.Member;
+import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.domain.review.dto.ReviewDto;
 import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.review.mapper.ReviewMapper;
@@ -24,11 +24,13 @@ public class ReviewController {
 
     private final ReviewMapper reviewMapper;
     private final ReviewService reviewService;
+    private final MemberService memberService;
 
 
-    public ReviewController(ReviewMapper reviewMapper, ReviewService reviewService) {
+    public ReviewController(ReviewMapper reviewMapper, ReviewService reviewService, MemberService memberService) {
         this.reviewMapper = reviewMapper;
         this.reviewService = reviewService;
+        this.memberService = memberService;
     }
 
     /*
@@ -39,47 +41,13 @@ public class ReviewController {
     public ResponseEntity<?> postReview(@RequestBody @Valid ReviewDto.Post postDto, @PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         Review review = reviewMapper.postDtoToReview(postDto);
-        review.setMember(userDetails);
+        review.setMember(memberService.findMember(userDetails.getMemberId()));
 
         Review createdReview = reviewService.createReview(review, volunteerId);
-
         URI uri = UriUtil.createUri(DEFAULT_URI, createdReview.getReviewId());
+
         return ResponseEntity.created(uri).body(ApiResponse.created("data", reviewMapper.reviewToResponse(createdReview)));
 
-    }
-
-    /*
-    내가 쓴 후기 목록 보기
-     */
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/my")
-    public ResponseEntity<?> getMyReviews(@AuthenticationPrincipal CustomUserDetails userDetails) {
-
-        List<Review> MyReviewList = reviewService.getMyReviewList(userDetails);
-
-        return ResponseEntity.ok().body(ApiResponse.ok("data", reviewMapper.reviewListToResponseList(MyReviewList)));
-    }
-
-    /*
-    특정 봉사활동에서 내가 쓴 후기 보기
-     */
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/{volunteer-id}/my")
-    public ResponseEntity<?> getMyReview(@PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails){
-
-        Review myReview = reviewService.getMyReview(volunteerId, userDetails);
-
-        return ResponseEntity.ok().body(ApiResponse.ok("data", reviewMapper.reviewToResponse(myReview)));
-    }
-
-    /*
-    특정 봉사활동에서 리뷰 목록 가져오기
-     */
-    @GetMapping("/{volunteer-id}")
-    public ResponseEntity<?> getReviews(@PathVariable("volunteer-id") Long volunteerId){
-
-        List<Review> reviewList = reviewService.getReviewList(volunteerId);
-        return ResponseEntity.ok().body(ApiResponse.ok("data", reviewMapper.reviewListToResponseList(reviewList)));
     }
 
     /*
@@ -91,19 +59,58 @@ public class ReviewController {
 
         Review review = reviewMapper.patchDtoToReview(patchDto);
         review.setReviewId(reviewId);
-        review.setMember(userDetails);
+        review.setMember(memberService.findMember(userDetails.getMemberId()));
 
         Review patchedMyReview = reviewService.patchReview(review);
 
         return ResponseEntity.ok().body(ApiResponse.ok("data", reviewMapper.reviewToResponse(patchedMyReview)));
     }
 
+    /*
+    후기 삭제
+     */
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{review-id}")
     public ResponseEntity<?> deleteMyReview(@PathVariable("review-id") Long reviewId, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        reviewService.deleteReview(reviewId, userDetails);
+        reviewService.deleteReview(reviewId, memberService.findMember(userDetails.getMemberId()));
 
         return ResponseEntity.noContent().build();
     }
+
+    /*
+    내가 쓴 후기 목록 조회
+     */
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/my")
+    public ResponseEntity<?> getMyReviews(@AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        List<Review> MyReviewList = reviewService.getMyReviewList(memberService.findMember(userDetails.getMemberId()));
+
+        return ResponseEntity.ok().body(ApiResponse.ok("data", reviewMapper.reviewListToResponseList(MyReviewList)));
+    }
+
+    /*
+    특정 봉사활동에서 내가 쓴 후기 조회
+     */
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{volunteer-id}/my")
+    public ResponseEntity<?> getMyReview(@PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails){
+
+        Review myReview = reviewService.getMyReview(volunteerId, memberService.findMember(userDetails.getMemberId()));
+
+        return ResponseEntity.ok().body(ApiResponse.ok("data", reviewMapper.reviewToResponse(myReview)));
+    }
+
+    /*
+    특정 봉사활동에서 후기 목록 조회
+     */
+    @GetMapping("/{volunteer-id}")
+    public ResponseEntity<?> getReviews(@PathVariable("volunteer-id") Long volunteerId){
+
+        List<Review> reviewList = reviewService.getReviewList(volunteerId);
+
+        return ResponseEntity.ok().body(ApiResponse.ok("data", reviewMapper.reviewListToResponseList(reviewList)));
+    }
+
 }

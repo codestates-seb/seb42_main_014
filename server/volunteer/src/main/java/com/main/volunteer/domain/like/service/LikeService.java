@@ -24,9 +24,9 @@ public class LikeService {
     }
 
     /*
-    봉사 찜하기
+    찜하기 로직
      */
-    public Like createApply(Like like, Long volunteerId) {
+    public Like createLike(Like like, Long volunteerId) {
 
         Volunteer volunteer = volunteerService.verifyExistVolunteer(volunteerId);
         like.setVolunteer(volunteer);
@@ -40,18 +40,8 @@ public class LikeService {
         return verifyLikeStatus(like);
     }
 
-    private Like verifyLikeStatus(Like like) {
-        Optional<Like> optional = likeRepository.findByVolunteerAndMember(like.getVolunteer(), like.getMember());
-
-        if(optional.isPresent()) {
-            throw new RuntimeException("이미 신청이 완료된 봉사활동입니다.");
-        }else{
-            return likeRepository.save(like);
-        }
-    }
-
     /*
-    봉사 찜하기 취소 로직
+    찜하기 취소 로직
      */
     public Like cancelLike(Long volunteerId, Member member) {
 
@@ -60,6 +50,7 @@ public class LikeService {
         Optional<Like> optional = likeRepository.findByVolunteerAndMember(volunteer, member);
         Like like = optional.orElseThrow(() -> new RuntimeException("해당하는 봉사 활동을 찜한 이력이 없습니다."));
 
+        volunteerService.minusLikeCount(like.getVolunteer());
         likeRepository.delete(like);
 
         return like;
@@ -71,6 +62,23 @@ public class LikeService {
     public List<Like> getMyLikeList(Member member) {
 
         Optional<List<Like>> optional = likeRepository.findAllByMember(member);
+
         return optional.orElseThrow(() -> new RuntimeException("찜한 봉사가 없습니다."));
+    }
+
+    // 찜 상태 검증 로직
+    private Like verifyLikeStatus(Like like) {
+
+        Optional<Like> optional = likeRepository.findByVolunteerAndMember(like.getVolunteer(), like.getMember());
+
+        if(optional.isPresent()) {
+
+            throw new RuntimeException("이미 찜한 봉사활동입니다.");
+
+        }else{
+            volunteerService.plusLikeCount(like.getVolunteer());
+
+            return likeRepository.save(like);
+        }
     }
 }
