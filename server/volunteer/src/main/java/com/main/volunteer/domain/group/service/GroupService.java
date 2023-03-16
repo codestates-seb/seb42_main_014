@@ -2,6 +2,8 @@ package com.main.volunteer.domain.group.service;
 
 import com.main.volunteer.domain.group.entity.Group;
 import com.main.volunteer.domain.group.repository.GroupRepository;
+import com.main.volunteer.domain.member.entity.Member;
+import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +17,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GroupService {
     private final GroupRepository groupRepository;
+    private final MemberService memberService;
 
     // 그룹 생성
     public Group createGroup(Group group) {
+        // 그룹장 포인트 15이상인지 확인
+        if(!checkGroupLeaderPoint(group.getGroupZangId())) {
+            throw new BusinessException(ExceptionCode.NOT_GROUP_ZANG);
+        }
         return groupRepository.save(group);
     }
 
@@ -37,7 +44,6 @@ public class GroupService {
 
         Group verifyGroup = verifyExistGroup(group.getGroupId());
 
-        //수정 시 현재 인원 보다 적은지 검증
         if(!verifyUpdatableGroup(verifyGroup, group)){
                 throw new BusinessException(ExceptionCode.FAIL_GROUP_APPLY_LIMIT);
         }
@@ -65,8 +71,9 @@ public class GroupService {
         Group group = verifyExistGroup(groupId);
         groupRepository.delete(group);
     }
+
     private boolean verifyUpdatableGroup(Group verifyGroup, Group group) {
-        //1. applyLimit 변경 시 현재 등록된 멤버 수 확인
+
         if(verifyGroup.getMemberGroups().size() > group.getApplyLimit()){
             return false;
         }
@@ -75,8 +82,16 @@ public class GroupService {
 
     // 그룹 존재 검증
    @Transactional(readOnly = true)
-    public Group verifyExistGroup(Long groupId) {
+    public Group verifyExistGroup(long groupId) {
         Optional<Group> optional = groupRepository.findById(groupId);
         return optional.orElseThrow(() -> new BusinessException(ExceptionCode.GROUP_EXIST));
+    }
+
+    public boolean checkGroupLeaderPoint(long memberId) {
+        Member member = memberService.verifiedMember(memberId);
+        if (member.getPoint().getPointCount() >= 15) {
+            return true;
+        }
+        return false;
     }
 }

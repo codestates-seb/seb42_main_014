@@ -1,7 +1,5 @@
 package com.main.volunteer.domain.group.mapper;
 
-import com.main.volunteer.domain.comment.dto.CommentDto;
-import com.main.volunteer.domain.comment.entity.Comment;
 import com.main.volunteer.domain.group.dto.GroupDto;
 import com.main.volunteer.domain.group.entity.Group;
 import org.mapstruct.*;
@@ -14,15 +12,21 @@ public interface GroupMapper {
     Group groupPostDtoToGroup(GroupDto.Post postDto);
     Group groupPatchDtoToGroup(GroupDto.Patch patchDto);
 
+   default GroupDto.Response groupToGroupResponseDto(Group group) {
 
-    GroupDto.Response GroupToGroupResponseDto(Group group);
+       long groupId = group.getGroupId();
+       String groupName = group.getGroupName();
+       String groupImage = group.getGroupImage();
+       long groupLeaderId = group.getGroupLeaderId();
+       int applyLimit = group.getApplyLimit();
+       String place = group.getPlace();
+       String content = group.getContent();
+       long tagId = group.getTag().getTagId();
+       String tagName = group.getTag().getTagName();
 
-    List<GroupDto.Response> GroupToGroupResponseDtos(List<Group> groups);
+       return new GroupDto.Response(groupId, groupName, groupImage, groupLeaderId, applyLimit, place, content,tagId,tagName);
+   }
 
-    @Mapping(target = "memberId", source = "member.memberId")
-    @Mapping(target = "groupId", source = "group.groupId")
-    CommentDto.Response commentToCommentResponseDto(Comment comment);
-
-    //List<CommentDto.Response> commentsToCommentResponseDtos(List<Comment> comments);
+    List<GroupDto.Response> GroupsToGroupResponseDtos(List<Group> groups);
 
 }
