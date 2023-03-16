@@ -24,7 +24,7 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long groupId;
     private String groupName;
-    private long groupLeaderId;
+    private long groupZangId;
     private String groupImage;
     private int applyLimit;
     private String place;

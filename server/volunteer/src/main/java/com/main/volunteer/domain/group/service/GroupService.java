@@ -22,7 +22,7 @@ public class GroupService {
     // 그룹 생성
     public Group createGroup(Group group) {
         // 그룹장 포인트 15이상인지 확인
-        if(checkGroupLeaderPoint(group.getGroupLeaderId())) {
+        if(checkGroupLeaderPoint(group.getGroupZangId())) {
             throw new BusinessException(ExceptionCode.NOT_GROUP_ZANG);
         }
         return groupRepository.save(group);
