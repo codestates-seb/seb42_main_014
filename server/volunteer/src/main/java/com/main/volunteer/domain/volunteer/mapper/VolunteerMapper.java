@@ -42,8 +42,9 @@ public interface VolunteerMapper{
 
             Long organizationId = volunteer.getMember().getMemberId();
             Long tagId = volunteer.getTag().getTagId();
+            List<Review> reviewList = volunteer.getReviewList();
 
-        return new VolunteerDto.Response( volunteerId, title, applyDate, volunteerDate, volunteerTime, place, content, applyLimit, applyCount, likeCount,organizationId, tagId, volunteerStatus);
+        return new VolunteerDto.Response( volunteerId, title, applyDate, volunteerDate, volunteerTime, place, content, applyLimit, applyCount, likeCount,organizationId, tagId, volunteerStatus, reviewList);
     }
 
 

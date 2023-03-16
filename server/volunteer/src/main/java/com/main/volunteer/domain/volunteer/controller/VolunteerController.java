@@ -4,8 +4,6 @@ package com.main.volunteer.domain.volunteer.controller;
 import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.apply.entity.Apply;
 import com.main.volunteer.domain.member.service.MemberService;
-import com.main.volunteer.domain.review.entity.Review;
-import com.main.volunteer.domain.review.mapper.ReviewMapper;
 import com.main.volunteer.domain.review.service.ReviewService;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
 import com.main.volunteer.response.ApiResponse;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.util.List;
 import java.util.Objects;
@@ -36,15 +33,13 @@ public class VolunteerController {
     public static final String DEFAULT_URI = "/volunteers";
 
     private final VolunteerMapper volunteerMapper;
-    private final ReviewMapper reviewMapper;
     private final VolunteerService volunteerService;
     private final ReviewService reviewService;
     private final TagService tagService;
     private final MemberService memberService;
 
-    public VolunteerController(VolunteerMapper volunteerMapper, ReviewMapper reviewMapper, VolunteerService volunteerService, ReviewService reviewService, TagService tagService, MemberService memberService) {
+    public VolunteerController(VolunteerMapper volunteerMapper, VolunteerService volunteerService, ReviewService reviewService, TagService tagService, MemberService memberService) {
         this.volunteerMapper = volunteerMapper;
-        this.reviewMapper = reviewMapper;
         this.volunteerService = volunteerService;
         this.reviewService = reviewService;
         this.tagService = tagService;
@@ -69,6 +64,7 @@ public class VolunteerController {
         Volunteer createdVolunteer = volunteerService.createVolunteer(volunteer);
 
         URI uri = UriUtil.createUri(DEFAULT_URI, createdVolunteer.getVolunteerId());
+
         return ResponseEntity.created(uri).body(ApiResponse.created("data", volunteerMapper.volunteerToResponseDto(createdVolunteer)));
     }
 
@@ -102,6 +98,7 @@ public class VolunteerController {
     @GetMapping("/{volunteer-id}")
     public ResponseEntity<?> getVolunteer(@PathVariable("volunteer-id") @Positive Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails){
         Volunteer volunteer = volunteerService.getVolunteer(volunteerId);
+        volunteer.setReviewList(reviewService.getReviewList(volunteerId));
 
         boolean applied = false;
         List<Apply> applyList = volunteer.getApplyList();
@@ -112,10 +109,7 @@ public class VolunteerController {
             }
         }
 
-        List<Review> reviewList = reviewService.getReviewList(volunteerId);
-
-        return ResponseEntity.ok().body(ApiResponse.ok("volunteer", volunteerMapper.volunteerToResponseDto(volunteer),
-                "reviewList", reviewMapper.reviewListToResponseList(reviewList), "applied", applied));
+        return ResponseEntity.ok().body(ApiResponse.ok("volunteer", volunteerMapper.volunteerToResponseDto(volunteer),"applied", applied));
     }
 
 
