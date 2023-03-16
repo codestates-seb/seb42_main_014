@@ -11,6 +11,7 @@ import com.main.volunteer.util.UriUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,6 +30,7 @@ public class GroupController {
 
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_GROUPZANG')")
     public ResponseEntity<?> postGroup(@RequestBody @Valid GroupDto.Post postDto){
         Tag tag = tagService.getTagId(postDto.getTagId());
         Group group = mapper.groupPostDtoToGroup(postDto);
@@ -55,6 +57,7 @@ public class GroupController {
         return ResponseEntity.ok().body(ApiResponse.ok("data",mapper.GroupsToGroupResponseDtos(groupList)));
     }
     @PatchMapping("/{group-id}")
+    @PreAuthorize("hasRole('ROLE_GROUPZANG')")
     public ResponseEntity<?> updateGroup(@PathVariable("group-id") long groupId, @Valid @RequestBody GroupDto.Patch patchDto) {
 
         Group group = groupService.updateGroup(mapper.groupPatchDtoToGroup(patchDto));

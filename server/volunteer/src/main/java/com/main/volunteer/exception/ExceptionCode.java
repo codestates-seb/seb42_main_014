@@ -26,7 +26,8 @@ public enum ExceptionCode {
     MEMBER_GROUP_NOT_EXIST(651, "가입되어있는 그룹이 없습니다."),
 
     // Comment -700 부터
-    COMMENT_EXIST(700, "이미 존재하는 댓글입니다.");
+    COMMENT_NOT_EXIST(700, "댓글이 존재하지 않습니다."),
+    NOT_GROUP_MEMBER(701, "가입된 그룹이 아닙니다");
 
     @Getter
     private int code;
