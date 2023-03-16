@@ -1,17 +1,14 @@
 package com.main.volunteer.auth.service;
 
 import com.main.volunteer.auth.CustomUserDetails;
-import com.main.volunteer.auth.utils.CustomAuthorityUtils;
 import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
 import java.util.Optional;
 
 @Component
@@ -19,7 +16,6 @@ import java.util.Optional;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
-    private final CustomAuthorityUtils authorityUtils;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

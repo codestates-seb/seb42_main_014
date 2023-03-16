@@ -1,6 +1,5 @@
-package com.main.volunteer.auth;
+package com.main.volunteer.auth.oauth;
 
-import com.main.volunteer.domain.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 
