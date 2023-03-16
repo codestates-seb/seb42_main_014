@@ -38,7 +38,7 @@ public class MemberGroupService {
     }
 
     public List<MemberGroup> findMemberGroupsByMemberId(long memberId) {
-        List<MemberGroup> memberGroups = memberGroupRepository.findListByMemberId(memberId);
+        List<MemberGroup> memberGroups = memberGroupRepository.findByMemberMemberId(memberId);
         if (memberGroups == null || memberGroups.isEmpty()) {
             throw new BusinessException(ExceptionCode.MEMBER_GROUP_NOT_EXIST);
         }

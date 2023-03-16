@@ -19,7 +19,7 @@ public class GroupDto {
         @NotBlank(message = "그룹이름을 입력해주세요.")
         private String groupName;
         private String groupImage;
-        private long groupLeader;
+        private long groupZangId;
         @NotNull(message = "인원을 입력해주세요.")
         private int applyLimit;
         private String place;
@@ -46,7 +46,7 @@ public class GroupDto {
         private long groupId;
         private String groupName;
         private String groupImage;
-        private long groupLeader;
+        private long groupZangId;
         private int applyLimit;
         private String place;
         private String content;

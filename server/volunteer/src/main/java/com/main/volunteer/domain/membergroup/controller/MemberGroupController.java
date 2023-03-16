@@ -23,7 +23,6 @@ public class MemberGroupController {
     private final MemberGroupMapper mapper;
     private final MemberGroupService memberGroupService;
 
-
     @PostMapping("/{group-id}")
     public ResponseEntity<?> createMemberGroup(@PathVariable("group-id") long groupId, long memberId, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
@@ -40,7 +39,6 @@ public class MemberGroupController {
 
         if (userDetails.getMemberId() == memberId) {
             List<MemberGroup> memberGroups = memberGroupService.findMemberGroupsByMemberId(memberId);
-
             return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.memberGroupsToMemberGroupsResponses(memberGroups)));
         }else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
