@@ -34,14 +34,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName,oAuth2User.getAttributes());
 
-//        Member member = saveOrUpdate(attributes);
-     //   httpSession.setAttribute("member", new SessionUser);
+        Member member = saveOrUpdate(attributes);
 
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("USER")),
                 attributes.getAttributes(), attributes.getNameAttributeKey());
     }
 
-//    private Member saveOrUpdate(OAuthAttributes attributes){
-//        Member member = memberRepository.find
-//    }
+    private Member saveOrUpdate(OAuthAttributes attributes){
+        Member member = memberRepository.findByEmail(attributes.getEmail())
+                .map(entity -> entity.update)
+    }
 }
