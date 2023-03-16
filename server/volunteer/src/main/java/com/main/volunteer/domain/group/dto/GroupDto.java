@@ -19,7 +19,7 @@ public class GroupDto {
         @NotBlank(message = "그룹이름을 입력해주세요.")
         private String groupName;
         private String groupImage;
-        private long groupZang;
+        private long groupLeader;
         @NotNull(message = "인원을 입력해주세요.")
         private int applyLimit;
         private String place;
@@ -46,11 +46,11 @@ public class GroupDto {
         private long groupId;
         private String groupName;
         private String groupImage;
-        private long groupZang;
+        private long groupLeader;
         private int applyLimit;
         private String place;
         private String content;
-        private Tag tag;
-        private List<CommentDto.Response> comments;
+        private long tagId;
+        private String tagName;
     }
 }

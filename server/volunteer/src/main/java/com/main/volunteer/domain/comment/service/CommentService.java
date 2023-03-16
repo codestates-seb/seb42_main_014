@@ -6,6 +6,8 @@ import com.main.volunteer.domain.group.service.GroupService;
 import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,17 +15,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CommentService {
 
     private final CommentRepository commentRepository;
     private final MemberService memberService;
     private final GroupService groupService;
 
-    public CommentService(CommentRepository commentRepository, MemberService memberService, GroupService groupService) {
-        this.commentRepository = commentRepository;
-        this.memberService = memberService;
-        this.groupService = groupService;
-    }
 
     public Comment createComment(Comment comment) {
         verifyComment(comment);
