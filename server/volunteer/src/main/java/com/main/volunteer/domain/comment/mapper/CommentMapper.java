@@ -2,8 +2,6 @@ package com.main.volunteer.domain.comment.mapper;
 
 import com.main.volunteer.domain.comment.dto.CommentDto;
 import com.main.volunteer.domain.comment.entity.Comment;
-import com.main.volunteer.domain.group.dto.GroupDto;
-import com.main.volunteer.domain.group.entity.Group;
 import org.mapstruct.*;
 
 import java.util.List;

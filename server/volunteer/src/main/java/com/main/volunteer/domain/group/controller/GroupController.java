@@ -6,10 +6,12 @@ import com.main.volunteer.domain.group.mapper.GroupMapper;
 import com.main.volunteer.domain.group.service.GroupService;
 import com.main.volunteer.domain.tag.entity.Tag;
 import com.main.volunteer.domain.tag.service.TagService;
+import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,15 +30,15 @@ public class GroupController {
 
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_GROUPZANG')")
     public ResponseEntity<?> postGroup(@RequestBody @Valid GroupDto.Post postDto){
         Tag tag = tagService.getTagId(postDto.getTagId());
         Group group = mapper.groupPostDtoToGroup(postDto);
         group.setTag(tag);
         Group createGroup = groupService.createGroup(group);
-        GroupDto.Response response = mapper.GroupToGroupResponseDto(createGroup);
         URI uri = UriUtil.createUri(DEFAULT_URI, group.getGroupId());
 
-        return ResponseEntity.created(uri).body(response);
+        return ResponseEntity.created(uri).body(ApiResponse.created("data", mapper.groupToGroupResponseDto(createGroup)));
     }
 
 
@@ -44,23 +46,23 @@ public class GroupController {
     public ResponseEntity<?> getGroup(@PathVariable("group-id") long groupId) {
 
         Group group = groupService.findGroup(groupId);
-        GroupDto.Response response = mapper.GroupToGroupResponseDto(group);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+        return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.groupToGroupResponseDto(group)));
     }
     @GetMapping
     public ResponseEntity<?> getGroups() {
 
         List<Group> groupList = groupService.findGroups();
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(mapper.GroupToGroupResponseDtos(groupList));
+        return ResponseEntity.ok().body(ApiResponse.ok("data",mapper.GroupsToGroupResponseDtos(groupList)));
     }
     @PatchMapping("/{group-id}")
+    @PreAuthorize("hasRole('ROLE_GROUPZANG')")
     public ResponseEntity<?> updateGroup(@PathVariable("group-id") long groupId, @Valid @RequestBody GroupDto.Patch patchDto) {
 
         Group group = groupService.updateGroup(mapper.groupPatchDtoToGroup(patchDto));
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(group);
+        return ResponseEntity.ok().body(ApiResponse.ok("data" ,mapper.groupToGroupResponseDto(group)));
     }
 
     @DeleteMapping("/{group-id}")

@@ -3,9 +3,9 @@ package com.main.volunteer.domain.member.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.main.volunteer.audit.Auditable;
 import com.main.volunteer.domain.apply.entity.Apply;
-
-import com.main.volunteer.domain.like.entity.Like;
+import com.main.volunteer.domain.group.entity.Group;
 import com.main.volunteer.domain.membergroup.entity.MemberGroup;
+import com.main.volunteer.domain.like.entity.Like;
 import com.main.volunteer.domain.point.entity.Point;
 import com.main.volunteer.domain.review.entity.Review;
 import lombok.Getter;
@@ -70,7 +70,6 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Like> likes = new ArrayList<>();
 
-
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Review> reviews = new ArrayList<>();
 
@@ -78,6 +77,9 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "member" , cascade = CascadeType.PERSIST)
     private List<MemberGroup> memberGroups = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    private List<Group> groups = new ArrayList<>();
 
     public enum MemberStatus{
         MEMBER_ACTIVE("활동중"),
