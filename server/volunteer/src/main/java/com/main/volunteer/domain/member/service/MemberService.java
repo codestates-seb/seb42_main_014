@@ -99,6 +99,15 @@ public class MemberService {
         }
     }
 
+    public boolean checkPassword(Long memberId, String checkPassword){
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        String realPassword = member.getPassword();
+        boolean matches = passwordEncoder.matches(checkPassword, realPassword);
+
+        return matches;
+    }
 
     public List<Member> findByOrganizationName(String memberName){
         Optional<List<Member>> optional = memberRepository.findByMemberNameContaining(memberName);

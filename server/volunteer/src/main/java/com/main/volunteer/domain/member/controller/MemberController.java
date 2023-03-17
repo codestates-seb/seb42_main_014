@@ -65,15 +65,22 @@ public class MemberController {
     }
 
     @GetMapping("/{member-id}")
-    public ResponseEntity getMember(@PathVariable("member-id") @Positive int memberId){
+    public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId){
 
         Member member = memberService.findMember(memberId);
 
         return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.memberToMemberResponseDto(member)));
     }
 
+    @GetMapping("/{member-id}/checkPwd")
+    public boolean checkPassword(@PathVariable("member-id") @Positive long memberId,
+                                 @RequestParam String checkPassword){
+
+        return memberService.checkPassword(memberId, checkPassword);
+    }
+
     @DeleteMapping("/{member-id}")
-    public ResponseEntity deleteMember(@PathVariable("member-id") @Positive int memberId){
+    public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId){
 
         memberService.deleteMember(memberId);
 
