@@ -21,11 +21,20 @@ public class GroupService {
 
     // 그룹 생성
     public Group createGroup(Group group) {
-        // 그룹장 포인트 15이상인지 확인
-        if(!checkGroupLeaderPoint(group.getGroupZangId())) {
-            throw new BusinessException(ExceptionCode.NOT_GROUP_ZANG);
+        try {
+            long groupZangId = group.getGroupZangId();
+            Member groupZang = memberService.verifiedMember(groupZangId);
+            group.setMember(groupZang);
+            group.setGroupZangId(groupZangId);
+
+            // 그룹장 포인트 15이상인지 확인
+            if(!checkGroupLeaderPoint(group.getGroupZangId())) {
+                throw new BusinessException(ExceptionCode.NOT_GROUP_ZANG);
+            }
+            return groupRepository.save(group);
+        }catch (BusinessException e){
+            throw new BusinessException(ExceptionCode.BAD_REQUEST);
         }
-        return groupRepository.save(group);
     }
 
     // 그룹 상세
@@ -85,7 +94,7 @@ public class GroupService {
    @Transactional(readOnly = true)
     public Group verifyExistGroup(long groupId) {
         Optional<Group> optional = groupRepository.findById(groupId);
-        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.GROUP_EXIST));
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.GROUP_NOT_EXIST));
     }
 
     public boolean checkGroupLeaderPoint(long memberId) {

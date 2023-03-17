@@ -20,7 +20,7 @@ public enum ExceptionCode {
 
     // Group - 600부터
     FAIL_GROUP_APPLY_LIMIT(600, "현재 등록되어 있는 그룹의 멤버수가 수정하려는 멤버수보다 많습니다."),
-    GROUP_EXIST(601, "이미 생성된 그룹입니다."),
+    GROUP_NOT_EXIST(601, "그룹이 존재 하지 않습니다."),
     NOT_GROUP_ZANG(602, "그룹장만 그룹을 생성할 수 있습니다."),
 
     // memberGroup은 650 번대부터
@@ -29,7 +29,10 @@ public enum ExceptionCode {
 
     // Comment -700 부터
     COMMENT_NOT_EXIST(700, "댓글이 존재하지 않습니다."),
-    NOT_GROUP_MEMBER(701, "가입된 그룹이 아닙니다");
+    NOT_GROUP_MEMBER(701, "가입된 그룹이 아닙니다."),
+    MEMBER_NOT_SET(702, "멤버가 생성되지 않았습니다."),
+    GROUP_NOT_SET(703, "그룹이 생성 되지 않았습니다."),
+    BOTH_NOT_SET(704,"그룹, 멤버 둘다 생성 되지 않았습니다");
 
     @Getter
     private int code;
@@ -42,5 +45,4 @@ public enum ExceptionCode {
         this.code =code;
         this.message = message;
     }
-
 }

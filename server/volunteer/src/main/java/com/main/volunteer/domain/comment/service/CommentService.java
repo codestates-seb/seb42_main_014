@@ -5,7 +5,6 @@ import com.main.volunteer.domain.comment.entity.Comment;
 import com.main.volunteer.domain.comment.repository.CommentRepository;
 import com.main.volunteer.domain.group.entity.Group;
 import com.main.volunteer.domain.group.service.GroupService;
-import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.domain.membergroup.entity.MemberGroup;
 import com.main.volunteer.exception.BusinessException;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -27,9 +27,13 @@ public class CommentService {
 
 
     public Comment createComment(Comment comment, CustomUserDetails userDetails) {
-        verifyComment(comment);
-        verifyGroupMember(comment.getGroup(), userDetails);
-        return commentRepository.save(comment);
+        try {
+            verifyComment(comment);
+            verifyGroupMember(comment.getGroup(), userDetails);
+            return commentRepository.save(comment);
+        }catch (BusinessException e) {
+            throw new BusinessException(ExceptionCode.BOTH_NOT_SET);
+        }
     }
 
     //댓글 상세
@@ -75,6 +79,12 @@ public class CommentService {
     }
 
     private void verifyComment(Comment comment){
+        if (comment.getMember() == null || comment.getMember().getMemberId() == null) {
+            throw new BusinessException(ExceptionCode.MEMBER_NOT_SET);
+        }
+        if (comment.getGroup() == null || Objects.isNull(comment.getGroup().getGroupId())){
+            throw new BusinessException(ExceptionCode.GROUP_NOT_SET);
+        }
         memberService.verifiedMember(comment.getMember().getMemberId());
         groupService.verifyExistGroup(comment.getGroup().getGroupId());
     }
