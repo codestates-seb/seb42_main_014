@@ -40,11 +40,12 @@ const Body = styled.div`
 `;
 
 export default function VolunteerPost() {
-	const [volunteerData, setVolunteerData] = useState({});
+	// const [volunteerData, setVolunteerData] = useState({});
 
 	return (
 		<Body>
-			<VolunteerTop setVolunteerData={setVolunteerData} volunteerData={volunteerData} />
+			{/* <VolunteerTop setVolunteerData={setVolunteerData} volunteerData={volunteerData} /> */}
+			<VolunteerTop />
 			<Content>
 				<Bar>활동정보</Bar>
 				<TextEdit />

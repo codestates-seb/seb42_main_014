@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Address from "../Address";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import Dropdown from "./Dropdown";
+import { create } from "zustand";
 
 const Body = styled.div`
 	margin-top: 20px;
@@ -20,7 +21,6 @@ const Container = styled.div`
 `;
 const Left = styled.div`
 	box-sizing: content-box;
-
 	cursor: pointer;
 	input {
 		display: none;
@@ -80,14 +80,14 @@ const Select = styled.div`
 	}
 `;
 
-interface IVolunteerProps {
-	setVolunteerData?: React.Dispatch<React.SetStateAction<{}>>;
-	volunteerData?: any;
-}
+// interface IVolunteerProps {
+// 	setVolunteerData?: React.Dispatch<React.SetStateAction<{}>>;
+// 	volunteerData?: any;
+// }
 
-const VolunteerPost = ({ setVolunteerData, volunteerData }: IVolunteerProps) => {
+// const VolunteerPost = ({ setVolunteerData, volunteerData }: IVolunteerProps) => {
+const VolunteerPost = () => {
 	const { register, watch, getValues } = useForm({ mode: "onChange" });
-
 	const fileInput = useRef<HTMLLabelElement>(null);
 	const onChangeHandler = () => {
 		if (fileInput.current) {
@@ -97,7 +97,6 @@ const VolunteerPost = ({ setVolunteerData, volunteerData }: IVolunteerProps) => 
 	const [file, setFile] = useState<string>("");
 	const [selectedOption, setSelectedOption] = useState("");
 	const post = window.location.pathname;
-
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files !== null) {
 			const selectedFiles = event.target.files as FileList;
@@ -107,20 +106,32 @@ const VolunteerPost = ({ setVolunteerData, volunteerData }: IVolunteerProps) => 
 	const optionArr = ["어린이", "노인", "장애인", "환경", "사회", "동물"];
 
 	/** volunteerTop 컴포넌트에 submit 버튼이 없기 때문에,
-	 * 8개의 input 값을 받아오려면 실시간으로 값의 변화를 객체에 할당해야 한다.
+	 * 8개의 input 값을 받아오려면 실시간으로 값의 변화를 객체에 할당해야 함
 	 * 그래서 watch() / getValues() 라는 실시간 변화 값을 알려주는 메서드를 이용해서
-	 * 객체에 담는것까진 성공했다.
+	 * 객체에 담는것까진 성공,
 	 *
 	 * 이제 그 값을 상위 컴포넌트인 VolunteerPost.tsx에 넘겨야 하기 때문에
 	 * 상위 컴포넌트에서 state를 props로 받고
-	 * set 함수를 이용하여 state 값을 변화시키려고 하는 도중 에러가 발생했다.
+	 * set 함수를 이용하여 state 값을 변화시키려고 하니 무한루프가 발생함
+	 * 2023.03.17 zustand 사용해서 전역으로 관리하려고 시도중..
 	 * */
 	const newData = {
 		// volunteerData: getValues(),
-		volunteerData: watch(),
+		volunteerData: getValues(),
 		volunteerCategory: selectedOption,
 	};
 
+	interface IVolunteerData {
+		volunteerData: FieldValues;
+		setVolunteerData: () => void;
+	}
+
+	const volunData = create<IVolunteerData>((set) => ({
+		volunteerData: {},
+		setVolunteerData: () => set({ volunteerData: newData }),
+	}));
+
+	console.log(newData);
 	return (
 		<Body>
 			<Container>
