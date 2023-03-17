@@ -10,6 +10,7 @@ const Body = styled.div`
 	align-items: center;
 	margin-bottom: 100px;
 `;
+
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -74,46 +75,44 @@ const WordDiv = styled.div`
 
 export default function Recommend() {
 	return (
-		<>
-			<Body>
-				<Container>
-					<TitleDiv>
-						{/* 제목 */}
-						<h1>당신의 봉사 유형은 "동물수호가" 입니다.</h1>
-					</TitleDiv>
-					<ContentDiv>
-						{/* 사진과 명언 */}
-						<ImgDiv>
-							{/* 멍멍이 이미지 */}
-							<img
-								src="https://post-phinf.pstatic.net/MjAxNzA2MjlfMjk4/MDAxNDk4Njk4OTYzMTIz.RC7_Z7bSDD0noFihxaBGb5axQwFltnhYJnfXhCOlDu4g.ksRlpD9YhJQAwRFH0iw5qQvuZYkuAFDO5uoDZrHsfhcg.PNG/20170517_130400.png?type=w1200"
-								alt="강아지"
-							/>
-						</ImgDiv>
-						<WordDiv>
-							<span>
-								모든 사람이 강아지만큼 <br />
-								무조건 사랑하는 능력이 있다면 <br />
-								이 세상은 더 좋은 곳이 <br />
-								될 것입니다. <br /> - M. K. Clinton
-							</span>
-						</WordDiv>
-					</ContentDiv>
-					<div>
-						{/* 추천 봉사 리스트 */}
-						<Card
-							width={380}
-							height={350}
-							src="/images/home/main-img-1.png"
-							title="폐가구를 정리해요"
-							date="일시 : 2023년 3월 10일 14~16시(2h)"
-							place="장소 : 서울시 광진구"
-							person="5 / 8"
-							category={<FaEnvira size={24} />}
+		<Body>
+			<Container>
+				<TitleDiv>
+					{/* 제목 */}
+					<h1>당신의 봉사 유형은 "동물수호가" 입니다.</h1>
+				</TitleDiv>
+				<ContentDiv>
+					{/* 사진과 명언 */}
+					<ImgDiv>
+						{/* 멍멍이 이미지 */}
+						<img
+							src="https://post-phinf.pstatic.net/MjAxNzA2MjlfMjk4/MDAxNDk4Njk4OTYzMTIz.RC7_Z7bSDD0noFihxaBGb5axQwFltnhYJnfXhCOlDu4g.ksRlpD9YhJQAwRFH0iw5qQvuZYkuAFDO5uoDZrHsfhcg.PNG/20170517_130400.png?type=w1200"
+							alt="강아지"
 						/>
-					</div>
-				</Container>
-			</Body>
-		</>
+					</ImgDiv>
+					<WordDiv>
+						<span>
+							모든 사람이 강아지만큼 <br />
+							무조건 사랑하는 능력이 있다면 <br />
+							이 세상은 더 좋은 곳이 <br />
+							될 것입니다. <br /> - M. K. Clinton
+						</span>
+					</WordDiv>
+				</ContentDiv>
+				<div>
+					{/* 추천 봉사 리스트 */}
+					<Card
+						width={380}
+						height={350}
+						src="/images/home/main-img-1.png"
+						title="폐가구를 정리해요"
+						date="일시 : 2023년 3월 10일 14~16시(2h)"
+						place="장소 : 서울시 광진구"
+						person="5 / 8"
+						category={<FaEnvira size={24} />}
+					/>
+				</div>
+			</Container>
+		</Body>
 	);
 }
