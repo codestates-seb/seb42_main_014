@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CommentMapper {
-    @Mapping(source = "memberId", target = "member.memberId")
+
     @Mapping(source = "groupId", target = "group.groupId")
     Comment commentPostDtoToComment(CommentDto.Post postDto);
     Comment commentPatchDtoToComment(CommentDto.Patch patchDto);

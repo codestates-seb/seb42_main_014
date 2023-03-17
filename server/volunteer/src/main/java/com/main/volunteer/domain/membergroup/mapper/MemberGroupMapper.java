@@ -3,6 +3,7 @@ package com.main.volunteer.domain.membergroup.mapper;
 import com.main.volunteer.domain.membergroup.dto.MemberGroupDto;
 import com.main.volunteer.domain.membergroup.entity.MemberGroup;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public interface MemberGroupMapper {
 
     public MemberGroup memberGroupDtoToMemberGroup(MemberGroupDto.Post postDto);
 
+    @Mapping(source = "group.groupName", target = "groupName")
     MemberGroupDto.Response memberGroupToMemberGroupResponse(MemberGroup memberGroup);
 
     default public List<MemberGroupDto.Response> memberGroupsToMemberGroupsResponses(List<MemberGroup> memberGroupList){

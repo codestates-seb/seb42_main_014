@@ -7,6 +7,7 @@ import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class GroupService {
     private final GroupRepository groupRepository;
@@ -33,6 +35,7 @@ public class GroupService {
             }
             return groupRepository.save(group);
         }catch (BusinessException e){
+            log.info(e.getMessage());
             throw new BusinessException(ExceptionCode.BAD_REQUEST);
         }
     }
@@ -72,8 +75,7 @@ public class GroupService {
         Optional.ofNullable(group.getApplyLimit())
                 .ifPresent(applyLimit -> verifyGroup.setApplyLimit(applyLimit));
 
-
-        return groupRepository.save(group);
+        return groupRepository.save(verifyGroup);
     }
 
     public void deleteGroup(long groupId) {
@@ -101,8 +103,8 @@ public class GroupService {
         Member member = memberService.verifiedMember(memberId);
 
         if (member.getPoint().getPointCount() >= 15) {
-            member.setRoles(List.of("GROUPZANG"));
-            memberService.updateMember(member);
+            member.setRoles(List.of("GROUPZANG", "USER"));
+
             return true;
         }
         return false;
