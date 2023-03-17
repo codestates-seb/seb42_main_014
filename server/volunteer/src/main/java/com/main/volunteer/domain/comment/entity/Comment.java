@@ -20,12 +20,11 @@ public class Comment extends Auditable {
     private long commentId;
     private String content;
 
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name= "member_id")
     private Member member;

@@ -11,7 +11,7 @@ public interface GroupMapper {
 
     Group groupPostDtoToGroup(GroupDto.Post postDto);
     Group groupPatchDtoToGroup(GroupDto.Patch patchDto);
-
+    @Mapping(source = "member.memberId", target = "groupZangId")
    default GroupDto.Response groupToGroupResponseDto(Group group) {
 
        long groupId = group.getGroupId();
