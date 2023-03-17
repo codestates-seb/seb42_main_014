@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import Modal from "../../components/Modal";
 
@@ -167,6 +168,16 @@ export default function SignUp() {
 	const Company = () => {
 		setisUser(true);
 	};
+
+	interface ILoginUser {
+		email: string;
+		password: string;
+	}
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<ILoginUser>({ mode: "onSubmit" });
 
 	return (
 		<Body>
