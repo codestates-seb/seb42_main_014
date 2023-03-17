@@ -30,6 +30,7 @@ export default function Community() {
 			width: 100%;
 			border-left: 10px solid #383838;
 			padding-left: 10px;
+			// erase before commit
 			font-weight: bold;
 		}
 	`;

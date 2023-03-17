@@ -15,15 +15,17 @@ export default function CommunityCard({ src, name, place, intro, hashtag, catego
 	const Container = styled.div`
 		background-color: #ffffff;
 		display: flex;
-		justify-content: space-between;
 		width: 100%;
-		min-height: 250px;
-		max-height: 350px;
+		justify-content: space-between;
+		min-width: fit-content;
+		height: fit-content;
+		/* min-height: 250px;
+		max-height: 350px; */
 		border-radius: 10px;
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
 		transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 		padding: 20px 40px;
-		margin-bottom: 100px;
+		margin-bottom: 30px;
 		cursor: pointer;
 		img {
 			width: 100%;
@@ -42,7 +44,9 @@ export default function CommunityCard({ src, name, place, intro, hashtag, catego
 	`;
 
 	const ContentDiv = styled.div`
-		width: 100%;
+		white-space: nowrap;
+		height: fit-content;
+
 		display: flex;
 		flex-direction: column;
 		padding: 0px 10px;
@@ -57,10 +61,15 @@ export default function CommunityCard({ src, name, place, intro, hashtag, catego
 		justify-content: right;
 		align-items: flex-end;
 	`;
+	const Flex = styled.div`
+		display: flex;
+
+		align-items: flex-end;
+	`;
 
 	return (
-		<>
-			<Container>
+		<Container>
+			<Flex>
 				<ImgDiv>
 					{/* 그룹 이미지 */}
 					<img src={src} alt="그룹 이미지" />
@@ -73,18 +82,18 @@ export default function CommunityCard({ src, name, place, intro, hashtag, catego
 					<span>{hashtag}</span>
 					<span>{category}</span>
 				</ContentDiv>
-				<ButtonDiv>
-					{/* 함께하기 버튼 */}
-					<Button
-						value="함께하기"
-						width={120}
-						height={40}
-						radius={10}
-						textSize={17}
-						bgColor="black"
-					/>
-				</ButtonDiv>
-			</Container>
-		</>
+			</Flex>
+			<ButtonDiv>
+				{/* 함께하기 버튼 */}
+				<Button
+					value="함께하기"
+					width={120}
+					height={40}
+					radius={10}
+					textSize={17}
+					bgColor="black"
+				/>
+			</ButtonDiv>
+		</Container>
 	);
 }

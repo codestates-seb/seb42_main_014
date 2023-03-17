@@ -35,8 +35,9 @@ export default function DropDown({ setIsOpen, isOpen }: TDropDownProps) {
 		<>
 			<StyledDropDownContainer onClick={handleDropdownClick}>
 				<StyledDropDownMenu onClick={() => navigate("/mypage")}>마이페이지</StyledDropDownMenu>
-				<StyledDropDownMenu onClick={() => navigate("/")}>
-					{isAdmin ? "로그아웃" : "로그인"}
+				<StyledDropDownMenu onClick={() => navigate("/login")}>
+					{/* {isAdmin ? "로그아웃" : "로그인"} */}
+					로그인
 				</StyledDropDownMenu>
 				{isAdmin && (
 					<StyledAdminDropDownItems>

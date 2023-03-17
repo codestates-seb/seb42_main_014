@@ -27,6 +27,9 @@ const Container = styled.div`
 	}
 	margin-top: 150px;
 	margin-bottom: 150px;
+	button {
+		cursor: pointer;
+	}
 `;
 
 const Form = styled.form`
@@ -50,14 +53,14 @@ export default function MyPage() {
 				<h1>MY PAGE</h1>
 				<Form>
 					{/* 개인 회원일 때 */}
-					<Usercard />
+					{/* <Usercard />
 					<UserVolList />
 					<KeepVolList />
-					<GroupList />
+					<GroupList /> */}
 					{/* 기관 회원일 때 */}
-					{/* <OrgCard /> */}
-					{/* <OrgVolList1 /> */}
-					{/* <OrgVolList2 /> */}
+					<OrgCard />
+					<OrgVolList1 />
+					<OrgVolList2 />
 				</Form>
 				<ButtonDiv>
 					<UnregisterButton />
