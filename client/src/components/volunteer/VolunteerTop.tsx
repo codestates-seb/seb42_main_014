@@ -161,7 +161,7 @@ const VolunteerPost: React.FC = () => {
 						</Select>
 						<Select>
 							<span>봉사분야 </span>
-							<Dropdown />
+							<Dropdown placeholder="분야를 선택해주세요" option={optionArr} />
 						</Select>
 						<Select>
 							<span>활동 지역</span>

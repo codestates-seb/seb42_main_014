@@ -46,6 +46,35 @@ const ImgDiv = styled.div`
 // 		font-weight: bold;
 // 	}
 // `;
+const Login = styled.input`
+	align-items: center;
+	width: fit-content;
+	border-style: none;
+	:focus {
+		outline: none;
+	}
+	border-bottom: 3px solid black;
+
+	::placeholder {
+		color: black;
+		font-weight: 900;
+		font-size: 1.15rem;
+	}
+`;
+const Flex = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	width: 100%;
+	align-items: center;
+	button {
+		color: #ffffff;
+		background-color: #000000;
+		border-radius: 30px;
+		padding: 5px;
+		width: 100%;
+	}
+`;
 
 const InfoDiv = styled.div`
 	justify-content: center;
@@ -55,6 +84,10 @@ const InfoDiv = styled.div`
 `;
 
 export default function Orgcard() {
+	const [isOpen, setisOpen] = useState(false);
+	const toggle = () => {
+		setisOpen(!isOpen);
+	};
 	return (
 		<>
 			<Container>
@@ -64,7 +97,9 @@ export default function Orgcard() {
 						{/* 프로필이미지 */}
 						<img src="/images/mypage/user.png" alt="프로필이미지" />
 					</div>
-					<button>수정하기</button>
+					<button type="button" onClick={toggle}>
+						수정하기
+					</button>
 				</ImgDiv>
 				{/* <LikeSpan>
 					<img src="/images/mypage/like.png" alt="찜하기" />
@@ -76,6 +111,17 @@ export default function Orgcard() {
 					<div>이메일 : abcdef@gmail.com</div>
 				</InfoDiv>
 			</Container>
+			<Modal isOpen={isOpen} toggle={toggle}>
+				<h1>패스워드 확인</h1>
+
+				<Login placeholder="패스워드"></Login>
+				<Login placeholder="패스워드 확인"></Login>
+				<Flex>
+					<button type="button" onClick={toggle}>
+						확인
+					</button>
+				</Flex>
+			</Modal>
 		</>
 	);
 }
