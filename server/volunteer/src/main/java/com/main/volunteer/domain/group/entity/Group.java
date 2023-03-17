@@ -44,4 +44,8 @@ public class Group {
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+
+    public Group(long groupId) {
+        this.groupId = groupId;
+    }
 }
