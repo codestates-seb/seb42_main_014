@@ -5,6 +5,8 @@ spring:
   profiles:
     activate:
       on-profile: server
+  config:
+    import: 'aws-parameterstore:'
   datasource:
     url: ${datasource_url}
     username: ${datasource_username}
@@ -58,3 +60,9 @@ jwt:
   secret: ${secret_key}
   access-token-expiration-minutes: 1800000
   refresh-token-expiration-minutes: 604800000
+aws:
+  paramstore:
+    enabled: true
+    prefix: /spring-boot-aws
+    profile-separator: _
+    name: main014
