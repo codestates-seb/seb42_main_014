@@ -4,6 +4,7 @@ import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ConfirmationTokenService {
+
+    @Value("${domain}")
+    private String domain;
 
     private final EmailSenderService emailSenderService;
     private final ConfirmationTokenRepository confirmationTokenRepository;
@@ -25,7 +29,7 @@ public class ConfirmationTokenService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(receiverEmail);
         mailMessage.setSubject("회원가입 이메일 인증");
-        mailMessage.setText("http://localhost:8080/members/confirm-email?token=" + emailConfirmationToken.getId());
+        mailMessage.setText(domain + "/members/confirm-email?token=" + emailConfirmationToken.getId());
         emailSenderService.sendEmail(mailMessage);
     }
 
