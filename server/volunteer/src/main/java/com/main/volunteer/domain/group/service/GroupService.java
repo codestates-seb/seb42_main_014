@@ -25,7 +25,6 @@ public class GroupService {
         if(!checkGroupLeaderPoint(group.getGroupZangId())) {
             throw new BusinessException(ExceptionCode.NOT_GROUP_ZANG);
         }
-//        updateMemberRole(group.getGroupZangId(), "ROLE_GROUPZANG");
         return groupRepository.save(group);
     }
 
@@ -64,6 +63,7 @@ public class GroupService {
         Optional.ofNullable(group.getApplyLimit())
                 .ifPresent(applyLimit -> verifyGroup.setApplyLimit(applyLimit));
 
+
         return groupRepository.save(group);
     }
 
@@ -90,7 +90,10 @@ public class GroupService {
 
     public boolean checkGroupLeaderPoint(long memberId) {
         Member member = memberService.verifiedMember(memberId);
+
         if (member.getPoint().getPointCount() >= 15) {
+            member.setRoles(List.of("GROUPZANG"));
+            memberService.updateMember(member);
             return true;
         }
         return false;
