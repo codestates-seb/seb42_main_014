@@ -28,6 +28,7 @@ export default function Volunteer() {
 			<div style={{ margin: "50px" }}>
 				<Bar>
 					<SearchBar placeholder="검색어를 입력해 주세요." width={250} height={45} radius={10} />
+
 					<DropdownMenu
 						placeholder="필터 조건 선택"
 						option={optionArr}

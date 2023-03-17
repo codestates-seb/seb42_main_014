@@ -48,6 +48,7 @@ const Pre = styled.div`
 
 const NextTo = styled.div`
 	width: 50px;
+
 	height: 50px;
 	position: absolute;
 	right: 2%;
@@ -57,6 +58,7 @@ const NextTo = styled.div`
 export default function Carousel() {
 	const settings = {
 		dots: true,
+		fade: true,
 		infinite: true,
 		slidesToShow: 1,
 		slidesToScroll: 1,

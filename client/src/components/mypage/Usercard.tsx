@@ -1,4 +1,6 @@
+import { useState } from "react";
 import styled from "styled-components";
+import Modal from "../Modal";
 
 const Container = styled.div`
 	background-color: #ffffff;
@@ -29,6 +31,20 @@ const ImgDiv = styled.div`
 		width: 64px;
 	}
 `;
+const Flex = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	width: 100%;
+	align-items: center;
+	button {
+		color: #ffffff;
+		background-color: #000000;
+		border-radius: 30px;
+		padding: 5px;
+		width: 100%;
+	}
+`;
 const MedalSpan = styled.span`
 	position: absolute;
 	width: 90px;
@@ -49,8 +65,27 @@ const InfoDiv = styled.div`
 		font-size: 1.2rem;
 	}
 `;
+const Login = styled.input`
+	align-items: center;
+	width: fit-content;
+	border-style: none;
+	:focus {
+		outline: none;
+	}
+	border-bottom: 3px solid black;
+
+	::placeholder {
+		color: black;
+		font-weight: 900;
+		font-size: 1.15rem;
+	}
+`;
 
 export default function Usercard() {
+	const [isOpen, setisOpen] = useState(false);
+	const toggle = () => {
+		setisOpen(!isOpen);
+	};
 	return (
 		<>
 			<Container>
@@ -60,7 +95,9 @@ export default function Usercard() {
 						{/* 프로필이미지 */}
 						<img src="/images/mypage/user.png" alt="프로필이미지" />
 					</div>
-					<button>수정하기</button>
+					<button type="button" onClick={toggle}>
+						수정하기
+					</button>
 				</ImgDiv>
 				<MedalSpan>
 					<img src="/images/mypage/medal.png" alt="봉사 뱃지" />
@@ -72,6 +109,17 @@ export default function Usercard() {
 					<div>봉사점수 : 1000점</div>
 				</InfoDiv>
 			</Container>
+			<Modal isOpen={isOpen} toggle={toggle}>
+				<h1>패스워드 확인</h1>
+
+				<Login placeholder="패스워드"></Login>
+				<Login placeholder="패스워드 확인"></Login>
+				<Flex>
+					<button type="button" onClick={toggle}>
+						확인
+					</button>
+				</Flex>
+			</Modal>
 		</>
 	);
 }

@@ -27,6 +27,9 @@ const Container = styled.div`
 	}
 	margin-top: 150px;
 	margin-bottom: 150px;
+	button {
+		cursor: pointer;
+	}
 `;
 
 const Form = styled.form`

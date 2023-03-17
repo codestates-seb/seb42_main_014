@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import Address from "../Address";
-
 import Dropdown from "./Dropdown";
 
 const Body = styled.div`
@@ -98,8 +97,6 @@ const VolunteerPost: React.FC = () => {
 			setFile(URL.createObjectURL(selectedFiles?.[0]));
 		}
 	};
-
-
 
 	const optionArr = ["어린이", "노인", "장애인", "환경", "사회", "동물"];
 
