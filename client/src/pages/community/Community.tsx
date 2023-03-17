@@ -5,9 +5,6 @@ import Button from "../../components/Button";
 import SvgIcon from "@mui/material/SvgIcon";
 import PetsIcon from "@mui/icons-material/Pets";
 
-import Test from "../recommend/Test";
-//! erase before commit
-
 export default function Community() {
 	const Container = styled.div`
 		height: 100%;
@@ -44,40 +41,37 @@ export default function Community() {
 		align-items: center;
 	`;
 
-	// return (
-	// 	<>
-	// 		<Category />
-	// 		<Container>
-	// 			<ExplainDiv>
-	// 				{/* 그룹 등록 관련 안내 */}
-	// 				<div>
-	// 					봉사점수 15점 이상부터 그룹장이 될 수 있어요. <br />
-	// 					현재 내 봉사점수는? 3점
-	// 				</div>
-	// 				<ButtonDiv>
-	// 					<Button
-	// 						value="+ 그룹 등록"
-	// 						width={150}
-	// 						height={40}
-	// 						radius={20}
-	// 						textSize={17}
-	// 						bgColor="black"
-	// 						style={{ whiteSpace: "nowrap" }}
-	// 					/>
-	// 				</ButtonDiv>
-	// 			</ExplainDiv>
-	// 			<CommunityCard
-	// 				src="https://img.animalplanet.co.kr/news/2020/05/20/700/i1p635cwwv69537o1q86.jpg"
-	// 				name="유기견 팀"
-	// 				place="서울시 광진구"
-	// 				intro="매주 주말 즐거운 유기견 봉사 함께하실 분!"
-	// 				hashtag="#유기견 #주말봉사"
-	// 				category={<SvgIcon component={PetsIcon} style={{ marginTop: "5px" }} />}
-	// 			/>
-	// 		</Container>
-	// 	</>
-	// );
-
-	return <Test />;
-	//! erase before commit
+	return (
+		<>
+			<Category />
+			<Container>
+				<ExplainDiv>
+					{/* 그룹 등록 관련 안내 */}
+					<div>
+						봉사점수 15점 이상부터 그룹장이 될 수 있어요. <br />
+						현재 내 봉사점수는? 3점
+					</div>
+					<ButtonDiv>
+						<Button
+							value="+ 그룹 등록"
+							width={150}
+							height={40}
+							radius={20}
+							textSize={17}
+							bgColor="black"
+							style={{ whiteSpace: "nowrap" }}
+						/>
+					</ButtonDiv>
+				</ExplainDiv>
+				<CommunityCard
+					src="https://img.animalplanet.co.kr/news/2020/05/20/700/i1p635cwwv69537o1q86.jpg"
+					name="유기견 팀"
+					place="서울시 광진구"
+					intro="매주 주말 즐거운 유기견 봉사 함께하실 분!"
+					hashtag="#유기견 #주말봉사"
+					category={<SvgIcon component={PetsIcon} style={{ marginTop: "5px" }} />}
+				/>
+			</Container>
+		</>
+	);
 }
