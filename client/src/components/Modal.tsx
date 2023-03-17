@@ -17,7 +17,10 @@ const ModalOverlay = styled.div`
 	align-items: center;
 `;
 const ModalBox = styled.div`
-	display: block;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
 	background: white;
 	border: solid 3px black;
 	width: 25%;

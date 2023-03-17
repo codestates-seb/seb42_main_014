@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import Address from "../Address";
-
 import Dropdown from "./Dropdown";
 
 const Body = styled.div`
@@ -99,8 +98,6 @@ const VolunteerPost: React.FC = () => {
 		}
 	};
 
-
-
 	const optionArr = ["어린이", "노인", "장애인", "환경", "사회", "동물"];
 
 	return (
@@ -164,7 +161,7 @@ const VolunteerPost: React.FC = () => {
 						</Select>
 						<Select>
 							<span>봉사분야 </span>
-							<Dropdown />
+							<Dropdown placeholder="분야를 선택해주세요" option={optionArr} />
 						</Select>
 						<Select>
 							<span>활동 지역</span>

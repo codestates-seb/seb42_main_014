@@ -48,6 +48,7 @@ const Pre = styled.div`
 
 const NextTo = styled.div`
 	width: 50px;
+
 	height: 50px;
 	position: absolute;
 	right: 2%;
