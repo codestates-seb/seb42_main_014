@@ -11,20 +11,20 @@ public interface GroupMapper {
 
     Group groupPostDtoToGroup(GroupDto.Post postDto);
     Group groupPatchDtoToGroup(GroupDto.Patch patchDto);
-
+    @Mapping(source = "member.memberId", target = "groupZangId")
    default GroupDto.Response groupToGroupResponseDto(Group group) {
 
        long groupId = group.getGroupId();
        String groupName = group.getGroupName();
        String groupImage = group.getGroupImage();
-       long groupLeaderId = group.getGroupZangId();
+       long groupZangId = group.getGroupZangId();
        int applyLimit = group.getApplyLimit();
        String place = group.getPlace();
        String content = group.getContent();
        long tagId = group.getTag().getTagId();
        String tagName = group.getTag().getTagName();
 
-       return new GroupDto.Response(groupId, groupName, groupImage, groupLeaderId, applyLimit, place, content,tagId,tagName);
+       return new GroupDto.Response(groupId, groupName, groupImage, groupZangId, applyLimit, place, content,tagId,tagName);
    }
 
     List<GroupDto.Response> GroupsToGroupResponseDtos(List<Group> groups);
