@@ -44,7 +44,7 @@ const Right = styled.div`
 	flex-direction: column;
 `;
 
-const VolunteerPost: React.FC = () => {
+const VolunteerPost = () => {
 	const fileInput = useRef<HTMLLabelElement>(null);
 	const onChangeHandler = () => {
 		if (fileInput.current) {

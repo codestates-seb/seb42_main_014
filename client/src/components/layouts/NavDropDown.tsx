@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { myPageGet } from "../../api/mypage/MypageGet";
 
 interface TDropDownProps {
 	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,11 +31,22 @@ export default function DropDown({ setIsOpen, isOpen }: TDropDownProps) {
 		setIsOpen(!isOpen);
 	};
 	const navigate = useNavigate();
+	const [id, setId] = useState("");
+	console.log(id);
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await myPageGet();
+			setId(result.id);
+		};
+		fetchData();
+	}, []);
 
 	return (
 		<>
 			<StyledDropDownContainer onClick={handleDropdownClick}>
-				<StyledDropDownMenu onClick={() => navigate("/mypage")}>마이페이지</StyledDropDownMenu>
+				<StyledDropDownMenu onClick={() => navigate(`/mypage/:${id}`)}>
+					마이페이지
+				</StyledDropDownMenu>
 				<StyledDropDownMenu onClick={() => navigate("/login")}>
 					{/* {isAdmin ? "로그아웃" : "로그인"} */}
 					로그인
