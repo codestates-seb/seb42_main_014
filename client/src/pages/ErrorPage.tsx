@@ -2,30 +2,30 @@ import { useNavigate } from "react-router-dom";
 import PacmanLoader from "react-spinners/PacmanLoader";
 import styled from "styled-components";
 import Button from "../components/Button";
+const StyledErrorContainer = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	width: 100vw;
+	flex-direction: column;
+	div {
+		margin: 20px;
+		text-align: center;
+	}
+	span {
+		font-size: 30px;
+		color: #74ae6b;
+		font-weight: 900;
+	}
+
+	.button-container {
+		display: flex;
+	}
+`;
 
 export default function ErrorPage() {
 	const navigate = useNavigate();
-	const StyledErrorContainer = styled.div`
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: 100vh;
-		width: 100vw;
-		flex-direction: column;
-		div {
-			margin: 20px;
-			text-align: center;
-		}
-		span {
-			font-size: 30px;
-			color: #74ae6b;
-			font-weight: 900;
-		}
-
-		.button-container {
-			display: flex;
-		}
-	`;
 
 	return (
 		<StyledErrorContainer>
