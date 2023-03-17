@@ -1,12 +1,10 @@
 running: server
-domain: http:3.35.252.234:8080
+domain: http://3.35.252.234:8080
 
 spring:
   profiles:
-    activate:
-      on-profile: server
-  config:
-    import: 'aws-parameterstore:'
+    include: common
+    active: dev
   datasource:
     url: ${datasource_url}
     username: ${datasource_username}
@@ -24,7 +22,7 @@ spring:
         registration:
           kakao:
             client-id: ${rest_api_key}
-            redirect-uri: "http://localhost:8080/login/oauth2/code/kakao"
+            redirect-uri: "http://3.35.252.234:8080/login/oauth2/code/kakao"
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             client-name: Kakao
@@ -60,9 +58,3 @@ jwt:
   secret: ${secret_key}
   access-token-expiration-minutes: 1800000
   refresh-token-expiration-minutes: 604800000
-aws:
-  paramstore:
-    enabled: true
-    prefix: /spring-boot-aws
-    profile-separator: _
-    name: main014
