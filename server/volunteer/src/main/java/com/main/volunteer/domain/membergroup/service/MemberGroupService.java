@@ -21,16 +21,15 @@ public class MemberGroupService {
     private final MemberService memberService;
     private final MemberGroupRepository memberGroupRepository;
 
-    public MemberGroup createMemberGroup(long groupId, long memberId) {
+    public MemberGroup createMemberGroup(MemberGroup memberGroup) {
 
-        if(verifyExistMemberGroup(groupId, memberId)){
+        if(verifyExistMemberGroup(memberGroup.getGroupId(), memberGroup.getMemberId())){
             throw new BusinessException(ExceptionCode.MEMBER_GROUP_EXIST);
         }
 
-        Group group = groupService.verifyExistGroup(groupId);
-        Member member = memberService.verifiedMember(memberId);
+        Group group = groupService.verifyExistGroup(memberGroup.getGroupId());
+        Member member = memberService.verifiedMember(memberGroup.getMemberId());
 
-        MemberGroup memberGroup = new MemberGroup();
         memberGroup.setGroup(group);
         memberGroup.setMember(member);
 
@@ -59,4 +58,5 @@ public class MemberGroupService {
 
         return memberGroupRepository.findByMemberAndGroup(member, group).isPresent();
     }
+
 }
