@@ -14,13 +14,22 @@ public class ApplyDto {
 
     @AllArgsConstructor
     @Getter
-    public static class Response{
+    public static class ResponseToORG{
         private Long applyId;
+        private Long volunteerId;
         private ApplyStatus applyStatus;
         private Long memberId;
         private String memberEmail;
         private String memberName;
+
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class Response{
+        private Long applyId;
         private Long volunteerId;
+        private ApplyStatus applyStatus;
         private Boolean reviewDone;
     }
 

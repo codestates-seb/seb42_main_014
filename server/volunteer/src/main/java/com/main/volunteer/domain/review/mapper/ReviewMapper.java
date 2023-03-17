@@ -4,7 +4,6 @@ import com.main.volunteer.domain.review.dto.ReviewDto;
 import com.main.volunteer.domain.review.entity.Review;
 import org.mapstruct.Mapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
@@ -15,9 +14,8 @@ public interface ReviewMapper {
     default ReviewDto.Response reviewToResponse(Review review){
 
         Long volunteerId = review.getVolunteer().getVolunteerId();
-        Long memberId = review.getMember().getMemberId();
 
-        return new ReviewDto.Response(review.getReviewId(), review.getContent(), memberId, volunteerId );
+        return new ReviewDto.Response(review.getReviewId(),volunteerId, review.getContent());
     }
 
    List<ReviewDto.Response> reviewListToResponseList(List<Review> reviewList);

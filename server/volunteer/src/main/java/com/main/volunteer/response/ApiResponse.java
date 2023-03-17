@@ -68,6 +68,12 @@ public class ApiResponse<T> {
         return new ApiResponse<>(new ApiResponseHeader(ResponseCode.OK.status, ResponseCode.OK.message), body);
     }
 
+    public static <T> ApiResponse<T> ok(String key1, T value1, String key2, T value2, String key3, T value3) {
+        Map<String, T> body = new HashMap<>() {{ put(key1, value1); put(key2,value2); put(key3,value3);}};
+
+        return new ApiResponse<>(new ApiResponseHeader(ResponseCode.OK.status, ResponseCode.OK.message), body);
+    }
+
     enum ResponseCode {
         OK(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase()),
         CREATED(HttpStatus.CREATED.value(), HttpStatus.CREATED.getReasonPhrase()),

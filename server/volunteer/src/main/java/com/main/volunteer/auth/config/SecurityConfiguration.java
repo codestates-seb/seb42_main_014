@@ -5,6 +5,7 @@ import com.main.volunteer.auth.filter.JwtVerificationFilter;
 import com.main.volunteer.auth.handler.MemberAuthenticationFailureHandler;
 import com.main.volunteer.auth.handler.MemberAuthenticationSuccessHandler;
 import com.main.volunteer.auth.jwt.JwtTokenizer;
+import com.main.volunteer.auth.oauth.OAuth2MemberSuccessHandler;
 import com.main.volunteer.auth.service.CustomUserDetailsService;
 import com.main.volunteer.auth.utils.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -32,6 +34,7 @@ public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final CustomUserDetailsService userDetailsService;
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -50,7 +53,10 @@ public class SecurityConfiguration {
                        /*
                         조건 추가해야함
                         */
-                        .anyRequest().permitAll());
+                        .anyRequest().permitAll())
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer)));
+;
         return http.build();
     }
 
@@ -85,6 +91,7 @@ public class SecurityConfiguration {
 
             builder.addFilter(jwtAuthenticationFilter)
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
+            builder.addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
         }
     }
 }

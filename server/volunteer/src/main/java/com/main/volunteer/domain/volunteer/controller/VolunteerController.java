@@ -3,6 +3,8 @@ package com.main.volunteer.domain.volunteer.controller;
 
 import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.apply.entity.Apply;
+import com.main.volunteer.domain.member.service.MemberService;
+import com.main.volunteer.domain.review.service.ReviewService;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.domain.tag.entity.Tag;
@@ -32,48 +34,53 @@ public class VolunteerController {
 
     private final VolunteerMapper volunteerMapper;
     private final VolunteerService volunteerService;
+    private final ReviewService reviewService;
     private final TagService tagService;
+    private final MemberService memberService;
 
-    public VolunteerController(VolunteerMapper volunteerMapper, VolunteerService volunteerService, TagService tagService) {
+    public VolunteerController(VolunteerMapper volunteerMapper, VolunteerService volunteerService, ReviewService reviewService, TagService tagService, MemberService memberService) {
         this.volunteerMapper = volunteerMapper;
         this.volunteerService = volunteerService;
+        this.reviewService = reviewService;
         this.tagService = tagService;
+        this.memberService = memberService;
     }
 
 
-    /*
+    /**
     봉사 등록 - 봉사 기관만 가능
      */
     @PreAuthorize("isAuthenticated()")
     @PostMapping
     public ResponseEntity<?> postVolunteer(@RequestBody @Valid VolunteerDto.Post postDto, @AuthenticationPrincipal CustomUserDetails userDetails){
 
-        Tag tag = tagService.getTagId(postDto.getTagId());
-        Volunteer volunteer = volunteerMapper.postDtoToVolunteer(postDto);
-        volunteer.setTag(tag);
 
-        volunteer.setMember(userDetails);
+        Volunteer volunteer = volunteerMapper.postDtoToVolunteer(postDto);
+
+        Tag tag = tagService.getTagId(postDto.getTagId());
+        volunteer.setTag(tag);
+        volunteer.setMember(memberService.findMember(userDetails.getMemberId()));
 
         Volunteer createdVolunteer = volunteerService.createVolunteer(volunteer);
 
         URI uri = UriUtil.createUri(DEFAULT_URI, createdVolunteer.getVolunteerId());
+
         return ResponseEntity.created(uri).body(ApiResponse.created("data", volunteerMapper.volunteerToResponseDto(createdVolunteer)));
     }
 
-    /*
-    봉사 삭제 - 봉사 기관만 가능
+    /**
+    봉사 삭제
      */
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{volunteer-id}")
     public ResponseEntity<?> deleteVolunteer(@Positive @PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails){
 
-        volunteerService.deleteVolunteer(volunteerId, userDetails);
+        volunteerService.deleteVolunteer(volunteerId, memberService.findMember(userDetails.getMemberId()));
 
         return ResponseEntity.noContent().build();
     }
-
-    /*
-    기관이 등록한 봉사 목록 조회 - 봉사 기관만 가능
+    /**
+    기관이 등록한 봉사 목록 조회
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/organization")
@@ -84,13 +91,14 @@ public class VolunteerController {
         return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
     }
 
-    /*
-    봉사 상세 조회
+    /**
+    봉사 상세 조회(리뷰 목록 포함)
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{volunteer-id}")
     public ResponseEntity<?> getVolunteer(@PathVariable("volunteer-id") @Positive Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails){
         Volunteer volunteer = volunteerService.getVolunteer(volunteerId);
+        volunteer.setReviewList(reviewService.getReviewList(volunteerId));
 
         boolean applied = false;
         List<Apply> applyList = volunteer.getApplyList();
@@ -101,12 +109,12 @@ public class VolunteerController {
             }
         }
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerToResponseDto(volunteer), "applied", applied));
+        return ResponseEntity.ok().body(ApiResponse.ok("volunteer", volunteerMapper.volunteerToResponseDto(volunteer),"applied", applied));
     }
 
 
 
-    /*
+    /**
     봉사 목록 조회 - ALL
      */
     @GetMapping
@@ -116,5 +124,28 @@ public class VolunteerController {
 
         return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
     }
+
+//    /**
+//    봉사명으로 조회
+//     */
+//    @GetMapping("/title")
+//    public ResponseEntity<?> searchVolunteerByTitle(@PathParam("title") String keyword){
+//
+//        List<Volunteer> volunteerList = volunteerService.searchByVolunteerTitle(keyword);
+//
+//        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
+//    }
+//
+//    /**
+//    기관명으로 조회
+//     */
+//    @GetMapping("/organizationName")
+//    public ResponseEntity<?> searchVolunteerByOrganization(@PathParam("organization") String keyword){
+//
+//        List<Volunteer> volunteerList = volunteerService.searchByOrganizationName(keyword);
+//
+//        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
+//
+//    }
 
 }

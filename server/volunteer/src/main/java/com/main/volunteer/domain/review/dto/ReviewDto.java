@@ -27,9 +27,9 @@ public class ReviewDto {
     public static class Response {
 
         private Long reviewId;
-        private String content;
-        private Long memberId;
         private Long volunteerId;
+        private String content;
+
     }
 
     @Getter @Setter
@@ -37,6 +37,7 @@ public class ReviewDto {
     @NoArgsConstructor
     public static class Patch{
 
+        @NotBlank
         private String content;
     }
 }

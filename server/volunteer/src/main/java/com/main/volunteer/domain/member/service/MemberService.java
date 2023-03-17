@@ -1,5 +1,7 @@
 package com.main.volunteer.domain.member.service;
 
+import com.main.volunteer.auth.mail.ConfirmationToken;
+import com.main.volunteer.auth.mail.ConfirmationTokenService;
 import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
 import com.main.volunteer.domain.member.entity.Member;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +20,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ConfirmationTokenService confirmationTokenService;
 
     public Member createMember(Member member){
 
@@ -28,7 +32,11 @@ public class MemberService {
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
 
-       return memberRepository.save(member);
+        Member savedMember = memberRepository.save(member);
+
+        confirmationTokenService.createEmailConfirmationToken(member.getMemberId(), member.getEmail());
+
+       return savedMember;
     }
 
     public Member updateMember(Member member){
@@ -72,6 +80,16 @@ public class MemberService {
         }
     }
 
+    public void confirmEmail(String token){
+        ConfirmationToken findConfirmationToken = confirmationTokenService.findByIdAndExpired(token);
+        Optional<Member> optionalMember = memberRepository.findById(findConfirmationToken.getMemberId());
+        Member findMember = optionalMember.orElseThrow(()-> new BusinessException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        confirmationTokenService.useToken(findConfirmationToken);
+        findMember.setVerifiedEmail(true);
+        memberRepository.save(findMember);
+    }
+
     public void verifyMemberName(String memberName){
 
         Optional<Member> verifiedMember = memberRepository.findByMemberName(memberName);
@@ -79,5 +97,14 @@ public class MemberService {
         if(verifiedMember.isPresent()){
             throw new BusinessException(ExceptionCode.NICKNAME_EXIST);
         }
+    }
+
+
+    public List<Member> findByOrganizationName(String memberName){
+        Optional<List<Member>> optional = memberRepository.findByMemberNameContaining(memberName);
+        List<Member> memberList = optional.orElseThrow(()-> new RuntimeException("등록된 봉사 기관이 없습니다."));
+        memberList.removeIf(member -> !member.getRoles().contains("ORG"));
+
+        return memberList;
     }
 }

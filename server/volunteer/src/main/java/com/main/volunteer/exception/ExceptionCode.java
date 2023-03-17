@@ -13,6 +13,8 @@ public enum ExceptionCode {
     MEMBER_EXIST(409, "이미 등록된 회원입니다."),
     NICKNAME_EXIST(409, "이미 등록된 닉네임입니다."),
 
+    TOKEN_EXPIRED(409,"만료된 토큰입니다."),
+
     // Security
     UNAUTHORIZED(401, "사용자가 인증되지 않았습니다."),
 

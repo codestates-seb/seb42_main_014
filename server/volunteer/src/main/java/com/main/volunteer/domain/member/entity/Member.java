@@ -29,6 +29,8 @@ public class Member extends Auditable {
     @Column(nullable = false, unique = true)
     private String email;
 
+    private boolean verifiedEmail = false;
+
     @Column(nullable = false)
     private String password;
 
@@ -49,8 +51,16 @@ public class Member extends Auditable {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
+    @JsonIgnore
     @OneToOne(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Point point;
+
+    public void setPoint(Point point) {
+        this.point = point;
+        if (point.getMember() != this) {
+            point.setMember(this);
+        }
+    }
 
     @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)

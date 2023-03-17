@@ -36,13 +36,13 @@ public class MemberDto {
     @Getter
     public static class Patch{
 
-        private int memberId;
+        private Long memberId;
 
         private String memberName;
 
         private String password;
 
-        public void setMemberId(int memberId) {
+        public void setMemberId(Long memberId) {
             this.memberId = memberId;
         }
     }
@@ -51,9 +51,11 @@ public class MemberDto {
     @AllArgsConstructor
     public static class Response{
 
-        private int memberId;
+        private Long memberId;
 
         private String email;
+
+        private boolean verifiedEmail;
 
         private String password;
 

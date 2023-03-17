@@ -1,6 +1,7 @@
 package com.main.volunteer.domain.volunteer.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
@@ -69,10 +71,14 @@ public class VolunteerDto {
 
         private Integer likeCount;
 
-        private Long memberId;
+        private Long organizationId;
 
         private Long tagId;
 
         private String volunteerStatus;
+
+        private List<Review> reviewList;
     }
+
+
 }

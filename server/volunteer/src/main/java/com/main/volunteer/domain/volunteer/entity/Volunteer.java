@@ -3,6 +3,7 @@ package com.main.volunteer.domain.volunteer.entity;
 
 import com.main.volunteer.audit.Auditable;
 import com.main.volunteer.domain.apply.entity.Apply;
+import com.main.volunteer.domain.like.entity.Like;
 import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.tag.entity.Tag;
 import com.main.volunteer.domain.member.entity.Member;
@@ -67,6 +68,9 @@ public class Volunteer extends Auditable {
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
     private List<Apply> applyList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
+    private List<Like> likeList = new ArrayList<>();
 
 
 }
