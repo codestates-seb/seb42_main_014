@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Modal from "../Modal";
+import { myPageGet } from "../../api/mypage/MypageGet";
 
 const Container = styled.div`
 	background-color: #ffffff;
@@ -77,17 +78,32 @@ const Flex = styled.div`
 `;
 
 const InfoDiv = styled.div`
+	display: flex;
+	flex-direction: column;
 	justify-content: center;
-	& > div {
+	div {
 		font-size: 1.2rem;
 	}
 `;
 
 export default function Orgcard() {
 	const [isOpen, setisOpen] = useState(false);
+	const [email, setEmail] = useState("");
+	const [name, setName] = useState("");
+
 	const toggle = () => {
 		setisOpen(!isOpen);
 	};
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await myPageGet();
+			setEmail(result.email);
+			setName(result.memberName);
+		};
+		fetchData();
+	}, []);
+
 	return (
 		<>
 			<Container>
@@ -105,11 +121,12 @@ export default function Orgcard() {
 					<img src="/images/mypage/like.png" alt="찜하기" />
 					<span>1,004</span>
 				</LikeSpan> */}
-				<InfoDiv>
-					{/* 프로필 정보 */}
-					<div>이름 : 봉사기관</div>
-					<div>이메일 : abcdef@gmail.com</div>
-				</InfoDiv>
+				<div>
+					<InfoDiv>
+						<div>이름:{name}</div>
+						<div>이메일:{email}</div>
+					</InfoDiv>
+				</div>
 			</Container>
 			<Modal isOpen={isOpen} toggle={toggle}>
 				<h1>패스워드 확인</h1>

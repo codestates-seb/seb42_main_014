@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { myPageGet } from "../../api/mypage/MypageGet";
 import Modal from "../Modal";
 
 const Container = styled.div`
@@ -83,8 +84,35 @@ const Login = styled.input`
 
 export default function Usercard() {
 	const [isOpen, setisOpen] = useState(false);
+	const [message, setMessage] = useState("");
+	const [password, isPassword] = useState("");
+	const [userPassword, setUserPassword] = useState("");
+	const [email, setEmail] = useState("");
+	const [name, setName] = useState("");
+	const [point, setPoint] = useState("");
 	const toggle = () => {
 		setisOpen(!isOpen);
+	};
+	const check = () => {
+		if (password === userPassword) {
+			toggle();
+		} else {
+			setMessage("패스워드를 확인해주세요");
+		}
+	};
+	console.log(userPassword);
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await myPageGet();
+			setEmail(result.email);
+			setName(result.memberName);
+			setPoint(result.point);
+			setUserPassword(result.password);
+		};
+		fetchData();
+	}, []);
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		isPassword(event.target.value);
 	};
 	return (
 		<>
@@ -104,18 +132,19 @@ export default function Usercard() {
 				</MedalSpan>
 				<InfoDiv>
 					{/* 프로필 정보 */}
-					<div>이름 : 김코딩</div>
-					<div>이메일 : abcdef@gmail.com</div>
-					<div>봉사점수 : 1000점</div>
+					<div>이름 :{name}</div>
+					<div>이메일 : {email}</div>
+					<div>봉사점수 : {point}</div>
 				</InfoDiv>
 			</Container>
 			<Modal isOpen={isOpen} toggle={toggle}>
 				<h1>패스워드 확인</h1>
 
-				<Login placeholder="패스워드"></Login>
-				<Login placeholder="패스워드 확인"></Login>
+				<Login type="password" onChange={handleInputChange} placeholder="패스워드"></Login>
+
+				{message}
 				<Flex>
-					<button type="button" onClick={toggle}>
+					<button type="button" onClick={check}>
 						확인
 					</button>
 				</Flex>

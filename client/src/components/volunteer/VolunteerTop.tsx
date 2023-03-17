@@ -80,14 +80,17 @@ const Select = styled.div`
 	}
 `;
 
+
+const VolunteerPost = () => {
+
 // interface IVolunteerProps {
 // 	setVolunteerData?: React.Dispatch<React.SetStateAction<{}>>;
 // 	volunteerData?: any;
 // }
-
 // const VolunteerPost = ({ setVolunteerData, volunteerData }: IVolunteerProps) => {
 const VolunteerPost = () => {
 	const { register, watch, getValues } = useForm({ mode: "onChange" });
+
 	const fileInput = useRef<HTMLLabelElement>(null);
 	const onChangeHandler = () => {
 		if (fileInput.current) {

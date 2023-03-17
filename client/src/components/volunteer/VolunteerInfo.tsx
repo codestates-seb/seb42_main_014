@@ -6,7 +6,7 @@ import { AiOutlineShareAlt } from "react-icons/ai";
 
 export default function VolunteerInfo() {
 	const StyledContainerDiv = styled.div`
-		width: 75vw;
+		width: 100%;
 		align-items: center;
 		justify-content: center;
 		margin: 20px;
@@ -40,7 +40,7 @@ export default function VolunteerInfo() {
 		}
 	`;
 	const StyledEmptyLineDiv = styled.div`
-		width: 75vw;
+		width: 100%;
 		background-color: black;
 		height: 50px;
 		color: white;
