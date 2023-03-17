@@ -1,17 +1,26 @@
 import styled from "styled-components";
-import GroupComment from "../../components/community/GroupComment";
+import Comment from "../../components/community/Comment";
 import GroupInfo from "../../components/community/GroupInfo";
 import GroupMember from "../../components/community/GroupMember";
 
 export default function GroupDetail() {
 	const StyledGroupDetailContainer = styled.div`
 		margin-bottom: 100px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
 
 		.layout-child {
 			display: flex;
-			width: 100vw;
-			align-items: center;
-			justify-content: center;
+			flex-direction: row;
+			margin-top: 20px;
+			width: 50%;
+			justify-content: space-between;
+		}
+		.cmt {
+			width: 90%;
+			padding-left: 5%;
 		}
 	`;
 	return (
@@ -19,7 +28,9 @@ export default function GroupDetail() {
 			<GroupInfo />
 			<div className="layout-child">
 				<GroupMember />
-				<GroupComment />
+				<div className="cmt">
+					<Comment />
+				</div>
 			</div>
 		</StyledGroupDetailContainer>
 	);
