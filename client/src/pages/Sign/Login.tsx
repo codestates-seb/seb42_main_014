@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useState } from "react";
 
 const Body = styled.body`
 	height: 100vh;
@@ -80,6 +81,7 @@ const ErrorMsg = styled.div`
 `;
 
 export default function LoginPage() {
+	const [isError, setIsError] = useState(false);
 	interface ILoginUser {
 		email: string;
 		password: string;
@@ -124,6 +126,7 @@ export default function LoginPage() {
 						></Login>
 						{errors.password && <ErrorMsg>{errors.password?.message}</ErrorMsg>}
 						<LoginBtn type="submit">로그인</LoginBtn>
+						{isError && <ErrorMsg>로그인 정보가 잘못되었어요. 다시한번 확인해 주세요!</ErrorMsg>}
 						<Flex>
 							<span>이메일/비밀번호 찾기</span>
 							<Link to="/signup">회원가입</Link>

@@ -1,4 +1,4 @@
-import VolunteerTop from "../../components/volunteer/VolunteerTop";
+import VolunteerTop from "../volunteer/VolunteerPost";
 import styled from "styled-components";
 import TextEdit from "../../components/volunteer/TextEdit";
 
