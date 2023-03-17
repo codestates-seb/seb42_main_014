@@ -92,8 +92,16 @@ querydsl{
 	querydslSourcesDir = querydslDir
 }
 
+
 sourceSets {
-	main.java.srcDir querydslDir
+	main {
+		java {
+			srcDir querydslDir
+		}
+		resources {
+			srcDirs "src/main/resources-env/${profile}"
+		}
+	}
 }
 
 

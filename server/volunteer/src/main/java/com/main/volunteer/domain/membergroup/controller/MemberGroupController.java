@@ -1,6 +1,8 @@
 package com.main.volunteer.domain.membergroup.controller;
 
 import com.main.volunteer.auth.CustomUserDetails;
+import com.main.volunteer.domain.group.entity.Group;
+import com.main.volunteer.domain.membergroup.dto.MemberGroupDto;
 import com.main.volunteer.domain.membergroup.entity.MemberGroup;
 import com.main.volunteer.domain.membergroup.mapper.MemberGroupMapper;
 import com.main.volunteer.domain.membergroup.service.MemberGroupService;
@@ -24,11 +26,13 @@ public class MemberGroupController {
     private final MemberGroupService memberGroupService;
 
     @PostMapping("/{group-id}")
-    public ResponseEntity<?> createMemberGroup(@PathVariable("group-id") long groupId, long memberId, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> createMemberGroup(@PathVariable("group-id") long groupId, @RequestBody MemberGroupDto.Post postDto, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        MemberGroup join = new MemberGroup();
-        join.setMember(userDetails);
-        MemberGroup memberGroup = memberGroupService.createMemberGroup(groupId, memberId);
+        MemberGroup memberGroup = mapper.memberGroupDtoToMemberGroup(postDto);
+        memberGroup.setGroup(new Group(groupId));
+        memberGroup.setMember(userDetails);
+
+        memberGroup = memberGroupService.createMemberGroup(memberGroup);
 
         URI uri = UriUtil.createUri(DEFAULT_URI, memberGroup.getMemberGroupId());
         return ResponseEntity.created(uri).body(ApiResponse.ok("data", mapper.memberGroupToMemberGroupResponse(memberGroup)));

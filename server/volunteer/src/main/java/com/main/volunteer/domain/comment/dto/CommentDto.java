@@ -27,6 +27,7 @@ public class CommentDto {
     @Setter
     @Getter
     public static class Response{
+        private long commentId;
         private long memberId;
         private long groupId;
         private String content;
