@@ -1,5 +1,11 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import styled from "styled-components";
+
+const DropdownContainer = styled.div`
+	position: relative;
+	display: inline-block;
+	width: 100%;
+`;
 
 interface TPropsDropDown {
 	option?: string[];
@@ -10,6 +16,8 @@ interface TPropsDropDown {
 	height?: number;
 	boxWidth?: number;
 	max_min_width?: number;
+	setSelectedOption?: React.Dispatch<React.SetStateAction<string>> | undefined;
+	selectedOption?: string | undefined;
 }
 
 const DropdownMenu = ({
@@ -21,13 +29,9 @@ const DropdownMenu = ({
 	height,
 	boxWidth,
 	max_min_width,
+	setSelectedOption,
+	selectedOption,
 }: TPropsDropDown) => {
-	const DropdownContainer = styled.div`
-		position: relative;
-		display: inline-block;
-		width: 100%;
-	`;
-
 	const DropdownButton = styled.button`
 		background-color: #494949;
 		width: ${width ? width : 100}%;
@@ -71,9 +75,8 @@ const DropdownMenu = ({
 		}
 	`;
 	const [isOpen, setIsOpen] = useState(false);
-	const [selectedOption, setSelectedOption] = useState("");
 
-	const handleOptionClick = (option: string) => {
+	const handleOptionClick = (option: SetStateAction<string>) => {
 		setSelectedOption(option);
 		setIsOpen(false);
 	};
