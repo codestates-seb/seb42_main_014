@@ -25,6 +25,7 @@ public class GroupService {
         if(!checkGroupLeaderPoint(group.getGroupZangId())) {
             throw new BusinessException(ExceptionCode.NOT_GROUP_ZANG);
         }
+//        updateMemberRole(group.getGroupZangId(), "ROLE_GROUPZANG");
         return groupRepository.save(group);
     }
 

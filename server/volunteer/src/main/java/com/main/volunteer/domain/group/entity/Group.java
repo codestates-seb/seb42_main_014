@@ -31,20 +31,16 @@ public class Group {
     private String content;
 
 
-    @JsonIgnore
     @OneToMany(mappedBy = "group" , cascade = CascadeType.PERSIST)
     private List<MemberGroup> memberGroups = new ArrayList<>();
 
-    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "TAG_ID")
     private Tag tag;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST)
     private List<Comment> comments = new ArrayList<>();
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
