@@ -80,9 +80,6 @@ const Select = styled.div`
 	}
 `;
 
-
-const VolunteerPost = () => {
-
 // interface IVolunteerProps {
 // 	setVolunteerData?: React.Dispatch<React.SetStateAction<{}>>;
 // 	volunteerData?: any;
