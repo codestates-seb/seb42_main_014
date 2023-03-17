@@ -1,9 +1,8 @@
 package com.main.volunteer.domain.group.dto;
 
-import com.main.volunteer.domain.comment.dto.CommentDto;
-import com.main.volunteer.domain.tag.entity.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
 import lombok.Setter;
 
 import javax.validation.constraints.*;
@@ -34,7 +33,6 @@ public class GroupDto {
         private long groupId;
         private String groupName;
         private String groupImage;
-        @NotNull(message = "인원을 입력해주세요.")
         private int applyLimit;
         private String place;
         private String content;
