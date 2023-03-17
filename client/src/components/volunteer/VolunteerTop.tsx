@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Address from "../Address";
-
+import { useForm } from "react-hook-form";
 import Dropdown from "./Dropdown";
 
 const Body = styled.div`
@@ -44,52 +44,58 @@ const Right = styled.div`
 	justify-content: center;
 	flex-direction: column;
 `;
+const Select = styled.div`
+	display: flex;
+	align-items: center;
+	padding-bottom: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-bottom: 3px solid black;
+	height: max-content;
+	width: 100%;
 
-const VolunteerPost: React.FC = () => {
+	span {
+		white-space: nowrap;
+		font-weight: 900;
+		margin-right: 15px;
+		font-size: 1.35rem;
+	}
+	span:nth-child(3) {
+		font-weight: 700;
+		margin-right: 15px;
+		margin-left: 15px;
+		font-size: 1.1rem;
+	}
+	input {
+		border: none;
+		font-size: 1rem;
+		width: 100%;
+		:focus {
+			outline: none;
+		}
+		::-webkit-calendar-picker-indicator {
+			cursor: pointer;
+			font-size: 20px;
+		}
+	}
+`;
+
+interface IVolunteerProps {
+	setVolunteerData?: React.Dispatch<React.SetStateAction<{}>>;
+	volunteerData?: any;
+}
+
+const VolunteerPost = ({ setVolunteerData, volunteerData }: IVolunteerProps) => {
+	const { register, watch, getValues } = useForm({ mode: "onChange" });
+
 	const fileInput = useRef<HTMLLabelElement>(null);
 	const onChangeHandler = () => {
 		if (fileInput.current) {
 			fileInput.current.click();
 		}
 	};
-
-	const Select = styled.div`
-		display: flex;
-		align-items: center;
-		padding-bottom: 5px;
-		margin-top: 5px;
-		margin-bottom: 5px;
-		border-bottom: 3px solid black;
-		height: max-content;
-		width: 100%;
-
-		span {
-			white-space: nowrap;
-			font-weight: 900;
-			margin-right: 15px;
-			font-size: 1.35rem;
-		}
-		span:nth-child(3) {
-			font-weight: 700;
-			margin-right: 15px;
-			margin-left: 15px;
-			font-size: 1.1rem;
-		}
-		input {
-			border: none;
-			font-size: 1rem;
-			width: 100%;
-			:focus {
-				outline: none;
-			}
-			::-webkit-calendar-picker-indicator {
-				cursor: pointer;
-				font-size: 20px;
-			}
-		}
-	`;
 	const [file, setFile] = useState<string>("");
-
+	const [selectedOption, setSelectedOption] = useState("");
 	const post = window.location.pathname;
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,53 +104,75 @@ const VolunteerPost: React.FC = () => {
 			setFile(URL.createObjectURL(selectedFiles?.[0]));
 		}
 	};
-
-
-
 	const optionArr = ["어린이", "노인", "장애인", "환경", "사회", "동물"];
+
+	/** volunteerTop 컴포넌트에 submit 버튼이 없기 때문에,
+	 * 8개의 input 값을 받아오려면 실시간으로 값의 변화를 객체에 할당해야 한다.
+	 * 그래서 watch() / getValues() 라는 실시간 변화 값을 알려주는 메서드를 이용해서
+	 * 객체에 담는것까진 성공했다.
+	 *
+	 * 이제 그 값을 상위 컴포넌트인 VolunteerPost.tsx에 넘겨야 하기 때문에
+	 * 상위 컴포넌트에서 state를 props로 받고
+	 * set 함수를 이용하여 state 값을 변화시키려고 하는 도중 에러가 발생했다.
+	 * */
+	const newData = {
+		// volunteerData: getValues(),
+		volunteerData: watch(),
+		volunteerCategory: selectedOption,
+	};
 
 	return (
 		<Body>
 			<Container>
 				<Left onClick={onChangeHandler}>
-					<input id="profileImg" type="file" onChange={handleChange}></input>
+					<input id="profileImg" type="file" onChange={handleChange} />
 					<img src={file ? file : "https://www.namepros.com/attachments/empty-png.89209/"} alt="" />
 					<label htmlFor="profileImg" ref={fileInput}></label>
 				</Left>
 				{post !== "/post" ? (
 					<Right>
 						<Select>
-							<span>활동명 </span>
-							<input type="text" />
+							<span>활동명</span>
+							<input {...register("title", { required: true })} type="text" />
 						</Select>
 						<Select>
-							<span>봉사분야 </span>
-							<Dropdown placeholder="분야를 선택해주세요" option={optionArr} />
+							<span>봉사분야</span>
+							<Dropdown
+								setSelectedOption={setSelectedOption}
+								selectedOption={selectedOption}
+								placeholder="분야를 선택해주세요"
+								option={optionArr}
+							/>
 						</Select>
 						<Select>
-							<span>모집기간 </span>
+							<span>모집기간</span>
 							<input type="date" />
 							<span> 부터 </span>
-							<input type="date" />
+							<input {...register("endDate", { required: true })} type="date" />
 						</Select>
 						<Select>
-							<span>봉사일시 </span>
+							<span>봉사일시</span>
 							<input type="date" />
 							<span>시간</span>
-							<input type="time" />
+							<input {...register("volunteerDate", { required: true })} type="time" />
 						</Select>
 						<Select>
-							<span>활동시간 </span>
-							<input style={{ width: "60px" }} type="number" />
+							<span>활동시간</span>
+							<input
+								{...register("volunteerHour", { required: true })}
+								style={{ width: "60px" }}
+								type="number"
+							/>
 							시간
 						</Select>
-						<Select style={{ borderBottom: "1px solid" }}>
-							<span>봉사장소 </span>
+						<Select style={{ borderBottom: "3px solid black" }}>
+							<span>봉사장소</span>
 							<Address />
 						</Select>
 						<Select>
-							<span> 상세 주소 </span>
+							<span>상세주소</span>
 							<input
+								{...register("placeDetail", { required: true })}
 								style={{ backgroundColor: "#f9f9f9" }}
 								type="text"
 								placeholder="상세 주소를 작성해주세요."
@@ -152,27 +180,43 @@ const VolunteerPost: React.FC = () => {
 						</Select>
 
 						<Select>
-							<span>모집인원 </span>
-							<input style={{ width: "60px" }} type="number" />명
+							<span>모집인원</span>
+							<input
+								{...register("memberCount", { required: true })}
+								style={{ width: "60px" }}
+								type="number"
+							/>
+							명
 						</Select>
 					</Right>
 				) : (
 					<Right>
 						<Select>
 							<span>그룹명 </span>
-							<input type="text" />
+							<input {...register("groupName", { required: true })} type="text" />
 						</Select>
 						<Select>
 							<span>봉사분야 </span>
-							<Dropdown />
+
+							<Dropdown
+								option={optionArr}
+								setSelectedOption={setSelectedOption}
+								selectedOption={selectedOption}
+								placeholder="분야를 선택해주세요"
+							/>
 						</Select>
 						<Select>
 							<span>활동 지역</span>
-							<input type="text" />
+							<input {...register("place", { required: true })} type="text" />
 						</Select>
 						<Select>
 							<span>최대 인원 </span>
-							<input style={{ width: "60px" }} type="number" />명
+							<input
+								{...register("maxMember", { required: true })}
+								style={{ width: "60px" }}
+								type="number"
+							/>
+							명
 						</Select>
 					</Right>
 				)}

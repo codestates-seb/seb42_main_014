@@ -1,6 +1,7 @@
 import VolunteerTop from "../../components/volunteer/VolunteerTop";
 import styled from "styled-components";
 import TextEdit from "../../components/volunteer/TextEdit";
+import { useState } from "react";
 
 const Bar = styled.div`
 	margin-top: 20px;
@@ -14,7 +15,7 @@ const Bar = styled.div`
 	font-size: 20px;
 	font-weight: bold;
 `;
-const Btn = styled.div`
+const Btn = styled.button`
 	cursor: pointer;
 	font-size: 20px;
 	background-color: #a50000;
@@ -39,13 +40,15 @@ const Body = styled.div`
 `;
 
 export default function VolunteerPost() {
+	const [volunteerData, setVolunteerData] = useState({});
+
 	return (
 		<Body>
-			<VolunteerTop />
+			<VolunteerTop setVolunteerData={setVolunteerData} volunteerData={volunteerData} />
 			<Content>
-				<Bar>활 동 정 보</Bar>
+				<Bar>활동정보</Bar>
 				<TextEdit />
-				<Btn>등 록 완 료</Btn>
+				<Btn>등록완료</Btn>
 			</Content>
 		</Body>
 	);
