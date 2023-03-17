@@ -26,7 +26,6 @@ public class Tag{
 
     private String tagName;
 
-    @JsonIgnore
     @OneToOne(mappedBy = "tag")
     private Group group;
 

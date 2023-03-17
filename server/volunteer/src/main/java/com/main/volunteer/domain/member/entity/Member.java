@@ -47,11 +47,10 @@ public class Member extends Auditable {
     @Enumerated(EnumType.STRING)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
-    @JsonIgnore
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-    @JsonIgnore
     @OneToOne(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Point point;
 
@@ -62,22 +61,19 @@ public class Member extends Auditable {
         }
     }
 
-    @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Apply> applyList = new ArrayList<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Like> likes = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Review> reviews = new ArrayList<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "member" , cascade = CascadeType.PERSIST)
     private List<MemberGroup> memberGroups = new ArrayList<>();
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Group> groups = new ArrayList<>();
 
