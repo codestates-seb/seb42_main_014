@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const Body = styled.body`
 	height: 100vh;
@@ -35,7 +37,7 @@ const Login = styled.input`
 		outline: none;
 	}
 	border-bottom: 3px solid black;
-	margin-bottom: 25px;
+	margin-bottom: 15px;
 	::placeholder {
 		color: black;
 		font-weight: 900;
@@ -71,23 +73,65 @@ const Flex = styled.div`
 		text-decoration: none;
 	}
 `;
+const ErrorMsg = styled.div`
+	color: red;
+	margin-bottom: 10px;
+	font-size: 13px;
+`;
 
 export default function LoginPage() {
+	interface ILoginUser {
+		email: string;
+		password: string;
+	}
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<ILoginUser>({ mode: "onSubmit" });
+
+	const LoginUserInfoPost = (loginData: ILoginUser) => {
+		axios
+			.post("http://3.35.252.234:8080/login", {
+				loginData,
+			})
+			.then((res) => console.log(res))
+			.catch((err) => console.log(err));
+	};
+
+	const onSubmit = (data: ILoginUser) => {
+		LoginUserInfoPost(data);
+	};
 	return (
 		<Body>
-			<StyledContainer>
-				<LoginForm>
-					<LoginHeader>Login</LoginHeader>
-					<Login placeholder="Email"></Login>
-					<Login placeholder="Password"></Login>
-					<LoginBtn>로그인</LoginBtn>
-					<Flex>
-						<span>이메일/비밀번호 찾기</span>
-						<Link to="/signup">회원가입</Link>
-					</Flex>
-				</LoginForm>
-				<KakaoBtn src="/images/kakao_login_medium.png" alt="main-logo"></KakaoBtn>
-			</StyledContainer>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<StyledContainer>
+					<LoginForm>
+						<LoginHeader>Login</LoginHeader>
+						<Login
+							{...register("email", {
+								required: "이메일은 필수 입력 사항입니다.",
+							})}
+							placeholder="Email"
+						></Login>
+						{errors.email && <ErrorMsg>{errors.email?.message}</ErrorMsg>}
+						<Login
+							{...register("password", {
+								required: "비밀번호는 필수 입력 사항입니다.",
+							})}
+							placeholder="Password"
+							type={"password"}
+						></Login>
+						{errors.password && <ErrorMsg>{errors.password?.message}</ErrorMsg>}
+						<LoginBtn type="submit">로그인</LoginBtn>
+						<Flex>
+							<span>이메일/비밀번호 찾기</span>
+							<Link to="/signup">회원가입</Link>
+						</Flex>
+					</LoginForm>
+					<KakaoBtn src="/images/kakao_login_medium.png" alt="main-logo" />
+				</StyledContainer>
+			</form>
 		</Body>
 	);
 }
