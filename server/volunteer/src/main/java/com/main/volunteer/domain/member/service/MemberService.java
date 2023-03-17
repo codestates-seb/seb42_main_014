@@ -28,6 +28,8 @@ public class MemberService {
         verifyMemberName(member.getMemberName());
 
         member.setPoint(new Point());
+        //test
+        member.getPoint().setPointCount(17);
 
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
