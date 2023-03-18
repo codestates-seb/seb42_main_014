@@ -37,7 +37,9 @@ public class MemberGroupService {
     }
 
     public List<MemberGroup> findMemberGroupsByMemberId(long memberId) {
-        List<MemberGroup> memberGroups = memberGroupRepository.findByMemberMemberId(memberId);
+
+        Member member = memberService.verifiedMember(memberId);
+        List<MemberGroup> memberGroups = memberGroupRepository.findByMember(member);
         if (memberGroups == null || memberGroups.isEmpty()) {
             throw new BusinessException(ExceptionCode.MEMBER_GROUP_NOT_EXIST);
         }
@@ -59,4 +61,14 @@ public class MemberGroupService {
         return memberGroupRepository.findByMemberAndGroup(member, group).isPresent();
     }
 
+    public List<MemberGroup> findMemberGroupsByGroupId(long groupId) {
+
+        Group group = groupService.verifyExistGroup(groupId);
+
+        List<MemberGroup> memberGroups = memberGroupRepository.findByGroup(group);
+        if (memberGroups == null || memberGroups.isEmpty()) {
+            throw new BusinessException(ExceptionCode.MEMBER_GROUP_NOT_EXIST);
+        }
+        return memberGroups;
+    }
 }

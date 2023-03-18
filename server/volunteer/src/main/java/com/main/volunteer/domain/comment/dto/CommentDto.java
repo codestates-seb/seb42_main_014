@@ -13,7 +13,6 @@ public class CommentDto {
     @Getter
     public static class Post{
         private long groupId;
-        private long memberId;
         private String content;
     }
 

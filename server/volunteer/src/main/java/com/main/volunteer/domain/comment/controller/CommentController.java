@@ -35,7 +35,7 @@ public class CommentController {
 
         Comment comment = mapper.commentPostDtoToComment(postDto);
         comment.setMember(userDetails);
-        Comment postComment = commentService.createComment(comment,userDetails);
+        Comment postComment = commentService.createComment(comment);
 
         URI uri = UriUtil.createUri(DEFAULT_URI, comment.getCommentId());
 
@@ -46,28 +46,27 @@ public class CommentController {
     @GetMapping("/{comment-id}")
     public ResponseEntity<?> getComment(@PathVariable("comment-id") long commentId, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        Comment comment = commentService.findComment(commentId, userDetails);
+        Comment comment = commentService.findComment(commentId);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiResponse.ok("data", mapper.commentToCommentResponseDto(comment)));
     }
 
-    @GetMapping("/{commentId}")
-    public ResponseEntity<?> getComments(@PathVariable("comment-id") long commentId, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    @GetMapping("/group/{group-id}")
+    public ResponseEntity<?> getCommentsByGroupId(@PathVariable("group-id") long groupId, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        Group group = groupService.findGroup(commentId);
-        List<Comment> commentList = commentService.findComments(group, userDetails);
+        Group group = groupService.verifyExistGroup(groupId);
+        List<Comment> commentList = commentService.findCommentsByGroup(group, userDetails);
+
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiResponse.ok("data", mapper.commentsToCommentResponseDtos(commentList)));
     }
 
     @PatchMapping("/{comment-id}")
-    public ResponseEntity<?> updateComment(@PathVariable("comment-id") long commentId,@RequestBody CommentDto.Patch patchDto, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> updateComment(@PathVariable("comment-id") long commentId, @RequestBody CommentDto.Patch patchDto, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         Comment comment = mapper.commentPatchDtoToComment(patchDto);
         comment.setCommentId(commentId);
 
-        Group group = comment.getGroup();
-        commentService.verifyGroupMember(group, userDetails);
-        Comment updatedComment = commentService.updateComment(comment, userDetails);
+        Comment updatedComment = commentService.updateComment(comment);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiResponse.ok("data", mapper.commentToCommentResponseDto(updatedComment)));
     }
@@ -75,9 +74,8 @@ public class CommentController {
     @DeleteMapping("/{comment-id}")
     public ResponseEntity<?> deleteComment(@PathVariable("comment-id") long commentId, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        Comment comment = commentService.findComment(commentId, userDetails);
-        commentService.verifyGroupMember(comment.getGroup(), userDetails);
-        commentService.deleteComment(commentId, userDetails);
+        Comment comment = commentService.findComment(commentId);
+        commentService.deleteComment(commentId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
