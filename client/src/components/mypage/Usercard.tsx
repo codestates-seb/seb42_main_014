@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { myPageGet } from "../../api/mypage/MypageGet";
+import { Check } from "../../api/mypage/PassWordCheck";
 import Modal from "../Modal";
 
 const Container = styled.div`
@@ -86,32 +88,35 @@ export default function Usercard() {
 	const [isOpen, setisOpen] = useState(false);
 	const [message, setMessage] = useState("");
 	const [password, isPassword] = useState("");
-	const [userPassword, setUserPassword] = useState("");
+
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState("");
 	const [point, setPoint] = useState("");
 	const toggle = () => {
 		setisOpen(!isOpen);
 	};
-	const check = () => {
-		if (password === userPassword) {
+	const navigate = useNavigate();
+	const check = async () => {
+		const result = await Check({ password: password });
+		if (result === true) {
 			toggle();
+			navigate("/useredit");
 		} else {
-			setMessage("패스워드를 확인해주세요");
+			setMessage("비밀번호를 확인해주세요.");
 		}
 	};
-	console.log(userPassword);
+
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await myPageGet();
 			setEmail(result.email);
 			setName(result.memberName);
 			setPoint(result.point);
-			setUserPassword(result.password);
 		};
 		fetchData();
 	}, []);
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setMessage("");
 		isPassword(event.target.value);
 	};
 	return (

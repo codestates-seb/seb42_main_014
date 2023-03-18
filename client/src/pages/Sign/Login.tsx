@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Body = styled.body`
 	height: 100vh;
@@ -81,11 +82,22 @@ const ErrorMsg = styled.div`
 `;
 
 export default function LoginPage() {
+	const apiUrl = "http://3.35.252.234:8080/";
+	const navigate = useNavigate();
 	const [isError, setIsError] = useState(false);
+	const [user, setUser] = useState(null); // 유저 정보를 담을 상태 변수
+	console.log(user);
 	interface ILoginUser {
 		email: string;
 		password: string;
 	}
+	useEffect(() => {
+		const storedUser = localStorage.getItem("user");
+		if (storedUser) {
+			setUser(JSON.parse(storedUser));
+		}
+	}, []);
+
 	const {
 		register,
 		handleSubmit,
@@ -94,11 +106,19 @@ export default function LoginPage() {
 
 	const LoginUserInfoPost = (loginData: ILoginUser) => {
 		axios
-			.post("http://3.35.252.234:8080/login", {
-				loginData,
+			.post(apiUrl + "login", loginData, {
+				withCredentials: true,
 			})
-			.then((res) => console.log(res))
-			.catch((err) => console.log(err));
+			.then((res) => {
+				console.log("이것은?", res.headers);
+				const token = res.headers.authorization;
+				const reToken = res.headers.refresh;
+				localStorage.setItem("accessToken", token);
+				localStorage.setItem("refreshToken", reToken);
+				setUser(token);
+				navigate("/");
+			})
+			.catch((err) => console.log("오류!", err));
 	};
 
 	const onSubmit = (data: ILoginUser) => {

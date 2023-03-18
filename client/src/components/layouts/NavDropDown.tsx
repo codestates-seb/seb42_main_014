@@ -9,6 +9,7 @@ interface TDropDownProps {
 }
 
 export default function DropDown({ setIsOpen, isOpen }: TDropDownProps) {
+	const isLogin = localStorage.getItem("accessToken");
 	const [isAdmin, setIsAdmin] = useState(true);
 	const StyledDropDownMenu = styled.span`
 		text-align: center;
@@ -40,18 +41,31 @@ export default function DropDown({ setIsOpen, isOpen }: TDropDownProps) {
 		};
 		fetchData();
 	}, []);
+	const LoginHandler = () => {
+		if (isLogin) {
+			localStorage.removeItem("accessToken");
+			navigate("/");
+		} else {
+			navigate("/login");
+		}
+	};
+	const Mypage = () => {
+		if (isLogin) {
+			navigate(`/mypage/:${id}`);
+		} else {
+			alert("로그인 페이지로 이동합니다. ");
+			navigate("/login");
+		}
+	};
 
 	return (
 		<>
 			<StyledDropDownContainer onClick={handleDropdownClick}>
-				<StyledDropDownMenu onClick={() => navigate(`/mypage/:${id}`)}>
-					마이페이지
+				<StyledDropDownMenu onClick={Mypage}>마이페이지</StyledDropDownMenu>
+				<StyledDropDownMenu onClick={LoginHandler}>
+					{isLogin ? "로그아웃" : "로그인"}
 				</StyledDropDownMenu>
-				<StyledDropDownMenu onClick={() => navigate("/login")}>
-					{/* {isAdmin ? "로그아웃" : "로그인"} */}
-					로그인
-				</StyledDropDownMenu>
-				{isAdmin && (
+				{isLogin && (
 					<StyledAdminDropDownItems>
 						<StyledDropDownMenu onClick={() => navigate("/register")}>
 							봉사활동 등록
