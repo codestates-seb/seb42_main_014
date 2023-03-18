@@ -15,11 +15,6 @@ import java.util.Optional;
 @Repository
 public interface VolunteerRepository extends JpaRepository<Volunteer, Long> , VolunteerRepositoryCustom {
 
-    Optional<List<Volunteer>> findByTag(Tag tag);
-
     Optional<List<Volunteer>> findAllByMember(Member member);
 
-    Optional<List<Volunteer>> findByTitleContaining(String keyword);
-
-    Optional<List<Volunteer>> findByMember(Member member);
 }

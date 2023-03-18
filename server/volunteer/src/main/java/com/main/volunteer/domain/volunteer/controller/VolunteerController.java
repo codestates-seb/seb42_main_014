@@ -125,6 +125,20 @@ public class VolunteerController {
         return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<?> getVolunteerListBySearching(@RequestParam(value = "volunteerName", required = false) String volunteerName,
+                                                         @RequestParam(value = "organizationName", required = false) String organizationName,
+                                                         @RequestParam(value = "tagId", required = false) Long tagId,
+                                                         @RequestParam(value = "province", required = false) String province,
+                                                         @RequestParam(value = "city", required = false) String city,
+                                                         @RequestParam(value = "orderBy", required = false, defaultValue = "volunteerId") String orderCriteria,
+                                                         @RequestParam(value = "sort", required = false, defaultValue = "DESC") String sort){
+
+        List<Volunteer> volunteerList = volunteerService.getVolunteerListBySearching(volunteerName, organizationName, tagId, province, city, orderCriteria, sort);
+
+        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
+    }
+
 //    /**
 //    봉사명으로 조회
 //     */

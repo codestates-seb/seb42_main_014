@@ -2,18 +2,18 @@ package com.main.volunteer.domain.volunteer.service;
 
 import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.member.entity.Member;
-import com.main.volunteer.domain.member.repository.MemberRepository;
 import com.main.volunteer.domain.member.service.MemberService;
-import com.main.volunteer.domain.tag.entity.Tag;
 import com.main.volunteer.domain.tag.service.TagService;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import com.main.volunteer.domain.volunteer.repository.VolunteerRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -74,7 +74,7 @@ public class VolunteerService {
     봉사 기관이 등록한 봉사 활동 목록 조회
      */
     public List<Volunteer> getVolunteerListByOrg(CustomUserDetails userDetails) {
-        return getOptionalList(volunteerRepository.findAllByMember(userDetails));
+        return getOptionalList(volunteerRepository.findAllByMember(memberService.findMember(userDetails.getMemberId())));
     }
 
     /**
@@ -95,6 +95,12 @@ public class VolunteerService {
 
         return volunteerList;
     }
+
+    /**
+     * 봉사 목록 조회 - 필터링 / 검색 구현
+     */
+
+
 
     /**
      * VolunteerList volunteerStatus update
@@ -172,21 +178,6 @@ public class VolunteerService {
     }
 
 
-
-//    /*
-//    봉사 목록 조회 - 태그 필터링
-//     */
-//    public List<Volunteer> getVolunteerListByTag(Long tagId) {
-//        Tag tag = tagService.verifyExistTag(tagId);
-//        Optional<List<Volunteer>> optionalTags = volunteerRepository.findByTag(tag);
-//        if(optionalTags.isPresent()){
-//            return optionalTags.get();
-//        }else{
-//            throw new RuntimeException("해당 태그에 존재하는 봉사활동이 없습니다.");
-//        }
-//    }
-
-
     /**
     특정 봉사를 등록한 기관인지 확인
      */
@@ -254,4 +245,22 @@ public class VolunteerService {
     }
 
 
+    public List<Volunteer> getVolunteerListBySearching(String volunteerName, String organizationName, Long tagId, String province, String city, String orderCriteria, String sort) {
+        Optional<List<Volunteer>> optional = Optional.ofNullable(volunteerRepository.findBySearchOption(volunteerName, organizationName, tagId, province, city));
+        List<Volunteer> volunteerList = getOptionalList(optional);
+
+        volunteerList.sort(Sort.by(Sort.Direction.ASC),Com);
+
+        getPageRequest(orderCriteria);
+
+        return volunteerList;
+    }
+
+    private void getPageRequest(String orderCriteria, String sort) {
+        sort.equals("ASC") ? Sort.by(Sort.Direction.ASC, orderCriteria) : Sort.by("")
+        Pageable pageable = (sort.equals("ASC"))
+                ? PageRequest.of(pageNo, 5, Sort.by(Sort.Direction.ASC), orderCriteria)
+                : PageRequest.of(pageNo, 5, Sort.by(Sort.Direction.DESC), orderCriteria);
+
+    }
 }
