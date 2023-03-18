@@ -5,6 +5,7 @@ import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.apply.entity.Apply;
 import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.domain.review.service.ReviewService;
+import com.main.volunteer.domain.volunteer.entity.Condition;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.domain.tag.entity.Tag;
@@ -14,6 +15,7 @@ import com.main.volunteer.domain.volunteer.dto.VolunteerDto;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.mapper.VolunteerMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -112,54 +114,20 @@ public class VolunteerController {
         return ResponseEntity.ok().body(ApiResponse.ok("volunteer", volunteerMapper.volunteerToResponseDto(volunteer),"applied", applied));
     }
 
-
-
-    /**
-    봉사 목록 조회 - ALL
-     */
     @GetMapping
-    public ResponseEntity<?> getVolunteerList(){
-
-        List<Volunteer> volunteerList = volunteerService.getVolunteerList();
-
-        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
-    }
-
-    @GetMapping("/search")
     public ResponseEntity<?> getVolunteerListBySearching(@RequestParam(value = "volunteerName", required = false) String volunteerName,
                                                          @RequestParam(value = "organizationName", required = false) String organizationName,
                                                          @RequestParam(value = "tagId", required = false) Long tagId,
                                                          @RequestParam(value = "province", required = false) String province,
                                                          @RequestParam(value = "city", required = false) String city,
-                                                         @RequestParam(value = "orderBy", required = false, defaultValue = "volunteerId") String orderCriteria,
-                                                         @RequestParam(value = "sort", required = false, defaultValue = "DESC") String sort){
+                                                         @RequestParam(value = "orderBy", required = false) String orderCriteria,
+                                                         @RequestParam(value = "sort", required = false) String sort,
+                                                         @RequestParam(value = "pageNum")int pageNum){
 
-        List<Volunteer> volunteerList = volunteerService.getVolunteerListBySearching(volunteerName, organizationName, tagId, province, city, orderCriteria, sort);
+        Condition condition = new Condition(volunteerName, organizationName, tagId, province, city, orderCriteria, sort, pageNum);
+        Page<Volunteer> volunteerList = volunteerService.getVolunteerListBySearching(condition);
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
+        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerPageToResponseList(volunteerList), "totalPages", volunteerList.getTotalPages()));
     }
-
-//    /**
-//    봉사명으로 조회
-//     */
-//    @GetMapping("/title")
-//    public ResponseEntity<?> searchVolunteerByTitle(@PathParam("title") String keyword){
-//
-//        List<Volunteer> volunteerList = volunteerService.searchByVolunteerTitle(keyword);
-//
-//        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
-//    }
-//
-//    /**
-//    기관명으로 조회
-//     */
-//    @GetMapping("/organizationName")
-//    public ResponseEntity<?> searchVolunteerByOrganization(@PathParam("organization") String keyword){
-//
-//        List<Volunteer> volunteerList = volunteerService.searchByOrganizationName(keyword);
-//
-//        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
-//
-//    }
 
 }

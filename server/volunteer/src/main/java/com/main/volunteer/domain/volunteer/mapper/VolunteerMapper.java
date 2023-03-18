@@ -8,6 +8,7 @@ import com.main.volunteer.domain.volunteer.dto.VolunteerDto;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.data.domain.Page;
 
 
 import java.time.LocalDateTime;
@@ -49,5 +50,6 @@ public interface VolunteerMapper{
 
 
     List<VolunteerDto.Response> volunteerListToResponseList(List<Volunteer> volunteerList);
+    List<VolunteerDto.Response> volunteerPageToResponseList(Page<Volunteer> volunteerList);
 
 }

@@ -4,10 +4,12 @@ import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.domain.tag.service.TagService;
+import com.main.volunteer.domain.volunteer.entity.Condition;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import com.main.volunteer.domain.volunteer.repository.VolunteerRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -99,6 +101,13 @@ public class VolunteerService {
     /**
      * 봉사 목록 조회 - 필터링 / 검색 구현
      */
+    public Page<Volunteer> getVolunteerListBySearching(Condition condition) {
+
+
+        Optional<Page<Volunteer>> optional = Optional.ofNullable(volunteerRepository.findBySearchOption(condition));
+
+        return optional.orElseThrow(() -> new RuntimeException("해당하는 봉사 활동이 없습니다."));
+    }
 
 
 
@@ -192,30 +201,6 @@ public class VolunteerService {
     }
 
 
-
-//    /*
-//    keyword(봉사명)로 조회
-//     */
-//    public List<Volunteer> searchByVolunteerTitle(String keyword) {
-//        return getOptionalList( volunteerRepository.findByTitleContaining(keyword));
-//    }
-//
-//    /*
-//    keyword(봉사 기관명으로 조회)
-//     */
-//    public List<Volunteer> searchByOrganizationName(String keyword) {
-//
-//        List<Member> memberList = memberService.findByOrganizationName(keyword);
-//
-//        List<Volunteer> volunteerList = new ArrayList<>();
-//        for(Member member : memberList){
-//            Optional<List<Volunteer>> optionalVolunteers = volunteerRepository.findByMember(member);
-//            optionalVolunteers.ifPresent(volunteerList::addAll);
-//        }
-//        setVolunteerStatusForList(volunteerList);
-//        return volunteerList;
-//    }
-
     /**
      봉사 등록 가능 날짜 확인 로직
      */
@@ -244,23 +229,4 @@ public class VolunteerService {
         return volunteerList;
     }
 
-
-    public List<Volunteer> getVolunteerListBySearching(String volunteerName, String organizationName, Long tagId, String province, String city, String orderCriteria, String sort) {
-        Optional<List<Volunteer>> optional = Optional.ofNullable(volunteerRepository.findBySearchOption(volunteerName, organizationName, tagId, province, city));
-        List<Volunteer> volunteerList = getOptionalList(optional);
-
-        volunteerList.sort(Sort.by(Sort.Direction.ASC),Com);
-
-        getPageRequest(orderCriteria);
-
-        return volunteerList;
-    }
-
-    private void getPageRequest(String orderCriteria, String sort) {
-        sort.equals("ASC") ? Sort.by(Sort.Direction.ASC, orderCriteria) : Sort.by("")
-        Pageable pageable = (sort.equals("ASC"))
-                ? PageRequest.of(pageNo, 5, Sort.by(Sort.Direction.ASC), orderCriteria)
-                : PageRequest.of(pageNo, 5, Sort.by(Sort.Direction.DESC), orderCriteria);
-
-    }
 }

@@ -1,11 +1,13 @@
 package com.main.volunteer.domain.volunteer.repository.custom;
 
-import com.main.volunteer.domain.tag.entity.Tag;
+import com.main.volunteer.domain.volunteer.entity.Condition;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 
 public interface VolunteerRepositoryCustom {
-    List<Volunteer> findBySearchOption(String volunteerName, String organizationName, Long tagId, String province, String city);
+
+    Page<Volunteer> findBySearchOption(Condition condition);
 
 }
