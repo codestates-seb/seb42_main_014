@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
 
+    @Mapping(source = "point", target = "point.pointCount")
     Member memberPostDtoToMember(MemberDto.Post memberPostDto);
 
     Member memberPatchDtoToMember(MemberDto.Patch memberPatchDto);
