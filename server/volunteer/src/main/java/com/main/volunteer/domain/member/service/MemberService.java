@@ -6,7 +6,6 @@ import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
 import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.repository.MemberRepository;
-import com.main.volunteer.domain.point.entity.Point;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,8 +25,6 @@ public class MemberService {
 
         verifyEmail(member.getEmail());
         verifyMemberName(member.getMemberName());
-
-        member.setPoint(new Point());
 
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);

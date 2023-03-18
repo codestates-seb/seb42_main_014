@@ -9,13 +9,13 @@ import com.main.volunteer.domain.point.entity.Point;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
 
@@ -24,12 +24,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberController {
 
+    @Value("${mail.address.admin}")
+    private String adminMailAddress;
+
     public static final String DEFAULT_URI = "/members";
     private final MemberService memberService;
     private final MemberMapper mapper;
 
     @PostMapping("/register")
     public ResponseEntity postMember(@RequestBody @Valid MemberDto.Post memberPostDto){
+
+        Member member = mapper.memberPostDtoToMember(memberPostDto);
+        member.setPoint(new Point());
 
         if(memberPostDto.isCheckOrg()){
             memberPostDto.setRoles(List.of("ORG", "USER"));
@@ -38,8 +44,11 @@ public class MemberController {
             memberPostDto.setRoles(List.of("USER"));
         }
 
-        Member member = mapper.memberPostDtoToMember(memberPostDto);
-        member.setPoint(new Point());
+        if(memberPostDto.getEmail().equals(adminMailAddress)){
+            memberPostDto.setRoles(List.of("ADMIN", "GROUPZANG", "ORG", "USER"));
+            memberPostDto.setVerifiedEmail(true);
+            memberPostDto.setPoint(15);
+        }
 
         Member postMember = memberService.createMember(mapper.memberPostDtoToMember(memberPostDto));
 
@@ -85,7 +94,7 @@ public class MemberController {
         return memberService.checkPassword(userDetails.getMemberId(), checkPassword);
     }
 
-    @DeleteMapping("/me/{member-id}")
+    @DeleteMapping("/me")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity deleteMember(@AuthenticationPrincipal CustomUserDetails userDetails){
 

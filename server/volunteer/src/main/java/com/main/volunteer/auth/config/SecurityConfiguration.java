@@ -90,6 +90,7 @@ public class SecurityConfiguration {
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000","http://3.35.252.234:8080"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
         configuration.setAllowCredentials(true);
 
