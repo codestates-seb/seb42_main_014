@@ -11,6 +11,7 @@ import com.main.volunteer.auth.utils.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -50,9 +51,27 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                       /*
-                        조건 추가해야함
-                        */
+                        .antMatchers("/members/register").permitAll()
+                        .antMatchers("/members/me/*").authenticated()
+                        .antMatchers(HttpMethod.POST, "/volunteers").hasRole("ORG")
+                        .antMatchers(HttpMethod.DELETE, "/volunteers/*").hasRole("ORG")
+                        .antMatchers(HttpMethod.GET, "/volunteers").permitAll()
+                        .antMatchers(HttpMethod.GET, "/volunteers/*").permitAll()
+                        .antMatchers("/apply/organization/*").hasRole("ORG")
+                        .antMatchers("/apply/**").authenticated()
+                        .antMatchers("/reviews/**").authenticated()
+                        .antMatchers("/likes/*").authenticated()
+                        .antMatchers(HttpMethod.POST, "/comments").authenticated()
+                        .antMatchers(HttpMethod.PATCH, "/comments/*").authenticated()
+                        .antMatchers(HttpMethod.DELETE, "/comments/*").authenticated()
+                        .antMatchers(HttpMethod.GET, "/comments/**").permitAll()
+                        .antMatchers(HttpMethod.POST, "/groups").hasRole("GROUPZANG")
+                        .antMatchers(HttpMethod.PATCH, "/groups/*").hasRole("GROUPZANG")
+                        .antMatchers(HttpMethod.DELETE, "/groups/*").hasRole("GROUPZANG")
+                        .antMatchers(HttpMethod.GET, "/groups").permitAll()
+                        .antMatchers(HttpMethod.GET, "/groups/*").permitAll()
+                        .antMatchers("/member-groups/*").authenticated()
+                        .antMatchers(HttpMethod.GET,"/member-groups").permitAll()
                         .anyRequest().permitAll())
                 .oauth2Login(oauth2 -> oauth2
                         .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer)));
@@ -71,6 +90,7 @@ public class SecurityConfiguration {
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000","http://3.35.252.234:8080"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
         configuration.setAllowCredentials(true);
 

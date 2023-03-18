@@ -65,14 +65,17 @@ jwt:
   secret: ${secret_key}
   access-token-expiration-minutes: 1800000
   refresh-token-expiration-minutes: 604800000
-#cloud:
-#  aws:
-#    credentials:
-#      accessKey: ${aws_access_key_id}
-#      secretKey: ${aws_secret_access_key}
-#    s3:
-#      bucket: main014-bucket
-#    region:
-#      static: ap-northeast-2
-#    stack:
-#      auto: false
+cloud:
+  aws:
+    credentials:
+      accessKey: ${aws_access_key_id}
+      secretKey: ${aws_secret_access_key}
+    s3:
+      bucket: main014-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+mail:
+  address:
+    admin: admin@gmail.com

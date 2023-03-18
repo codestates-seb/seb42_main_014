@@ -1,6 +1,5 @@
 package com.main.volunteer.domain.member.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.main.volunteer.audit.Auditable;
 import com.main.volunteer.domain.apply.entity.Apply;
 import com.main.volunteer.domain.group.entity.Group;
@@ -41,6 +40,8 @@ public class Member extends Auditable {
 
     @Column(length = 10)
     private Long orgNumber;
+
+    private boolean checkOrg;
 
     private String profileImage;
 
