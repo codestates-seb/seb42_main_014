@@ -12,7 +12,6 @@ public class MemberGroupDto {
     @Getter
     public static class Post{
         private long groupId;
-        private long memberId;
         private Group group;
     }
     @AllArgsConstructor

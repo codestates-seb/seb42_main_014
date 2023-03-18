@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.main.volunteer.domain.comment.entity.Comment;
 import com.main.volunteer.domain.membergroup.entity.MemberGroup;
 import com.main.volunteer.domain.member.entity.Member;
+import com.main.volunteer.domain.point.entity.Point;
 import com.main.volunteer.domain.tag.entity.Tag;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,14 +32,14 @@ public class Group {
     private String content;
 
 
-    @OneToMany(mappedBy = "group" , cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "group" , cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<MemberGroup> memberGroups = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "TAG_ID")
     private Tag tag;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
     @ManyToOne

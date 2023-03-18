@@ -7,6 +7,7 @@ import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class GroupService {
     private final GroupRepository groupRepository;
@@ -21,11 +23,21 @@ public class GroupService {
 
     // 그룹 생성
     public Group createGroup(Group group) {
-        // 그룹장 포인트 15이상인지 확인
-        if(!checkGroupLeaderPoint(group.getGroupZangId())) {
-            throw new BusinessException(ExceptionCode.NOT_GROUP_ZANG);
+        try {
+            long groupZangId = group.getGroupZangId();
+            Member groupZang = memberService.verifiedMember(groupZangId);
+            group.setMember(groupZang);
+            group.setGroupZangId(groupZangId);
+
+            // 그룹장 포인트 15이상인지 확인
+            if(!checkGroupLeaderPoint(group.getGroupZangId())) {
+                throw new BusinessException(ExceptionCode.NOT_GROUP_ZANG);
+            }
+            return groupRepository.save(group);
+        }catch (BusinessException e){
+            log.info(e.getMessage());
+            throw new BusinessException(ExceptionCode.BAD_REQUEST);
         }
-        return groupRepository.save(group);
     }
 
     // 그룹 상세
@@ -63,8 +75,7 @@ public class GroupService {
         Optional.ofNullable(group.getApplyLimit())
                 .ifPresent(applyLimit -> verifyGroup.setApplyLimit(applyLimit));
 
-
-        return groupRepository.save(group);
+        return groupRepository.save(verifyGroup);
     }
 
     public void deleteGroup(long groupId) {
@@ -85,15 +96,15 @@ public class GroupService {
    @Transactional(readOnly = true)
     public Group verifyExistGroup(long groupId) {
         Optional<Group> optional = groupRepository.findById(groupId);
-        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.GROUP_EXIST));
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.GROUP_NOT_EXIST));
     }
 
     public boolean checkGroupLeaderPoint(long memberId) {
         Member member = memberService.verifiedMember(memberId);
 
         if (member.getPoint().getPointCount() >= 15) {
-            member.setRoles(List.of("GROUPZANG"));
-            memberService.updateMember(member);
+            member.setRoles(List.of("GROUPZANG", "USER"));
+
             return true;
         }
         return false;
