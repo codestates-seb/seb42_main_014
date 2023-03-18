@@ -162,7 +162,7 @@ export default function SignUp() {
 		getValues,
 		reset,
 		formState: { errors },
-	} = useForm<ILoginUser>({ mode: "onSubmit" });
+	} = useForm<ILoginUser>({ mode: "onChange" });
 
 	const toggle = () => {
 		setisOpen(!isOpen);
@@ -284,7 +284,6 @@ export default function SignUp() {
 								{errors.memberName && <div>{errors.memberName?.message}</div>}
 							</>
 						)}
-
 						<Flex>
 							<span>약관동의</span>
 							<CheckBox>
@@ -293,7 +292,6 @@ export default function SignUp() {
 							<span>정보 수집 및 이용 동의 (필수)</span>
 							<span onClick={toggle}>내용보기</span>
 						</Flex>
-
 						<Btn>회원가입</Btn>
 					</LoginForm>
 				</StyledContainer>
