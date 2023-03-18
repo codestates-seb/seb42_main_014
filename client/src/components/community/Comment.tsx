@@ -6,7 +6,6 @@ import Button from "../Button";
 
 const StyledContainerDiv = styled.div`
 	display: flex;
-
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
@@ -20,7 +19,6 @@ const StyledContainerDiv = styled.div`
 
 		min-width: 500px;
 	}
-
 	.layout {
 		display: flex;
 		align-items: center;
@@ -35,7 +33,6 @@ const StyledContainerDiv = styled.div`
 		margin: 20px;
 		padding: 20px;
 	}
-
 	.answer-read-container {
 		display: flex;
 		align-items: center;
@@ -48,7 +45,6 @@ const StyledContainerDiv = styled.div`
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.11);
 	}
 `;
-
 const StyledInputContainerDiv = styled.div`
 	display: flex;
 	align-items: center;
@@ -57,7 +53,6 @@ const StyledInputContainerDiv = styled.div`
 	width: 100%;
 	margin: 20px;
 `;
-
 export default function Comment() {
 	return (
 		<div>
@@ -67,7 +62,6 @@ export default function Comment() {
 					<input placeholder="자유롭게 댓글을 남겨보세요!" />
 					<Button value="등록" width={55} height={40} radius={10} textSize={14} bgColor="black" />
 				</StyledInputContainerDiv>
-
 				{comment.map((user) => (
 					<GroupComment key={user.id} user={user} />
 				))}
