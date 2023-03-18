@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import { FaUserCircle } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
+import comment from "../../data/comment.json";
 import Button from "../Button";
+import CommentList from "./CommentList";
 
 export default function VolunteerComment() {
 	const StyledContainerDiv = styled.div`
 		width: 100%;
-		height: 200px;
+		height: auto;
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
 		display: flex;
 		align-items: center;
@@ -66,29 +68,9 @@ export default function VolunteerComment() {
 					/>
 				</div>
 			</Comment>
-			<div className="answer-read-container">
-				<FaUserCircle size={40} />
-				<div
-					style={{
-						display: "flex",
-						flexDirection: "column",
-						marginLeft: "20px",
-						width: "90%",
-					}}
-				>
-					<div style={{ display: "flex", justifyContent: "space-between" }}>
-						<div>
-							<span style={{ marginRight: "10px" }}>장지우</span>
-							<span style={{ color: "gray" }}>2023.03.14</span>
-						</div>
-						<div>
-							<span>수정 |</span>
-							<span> 삭제</span>
-						</div>
-					</div>
-					<span>답글 내용입니다.</span>
-				</div>
-			</div>
+			{comment.map((user) => (
+				<CommentList key={user.id} user={user} />
+			))}
 		</StyledContainerDiv>
 	);
 }

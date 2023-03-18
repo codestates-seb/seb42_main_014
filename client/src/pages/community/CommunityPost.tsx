@@ -44,7 +44,7 @@ export default function VolunteerPost() {
 			<VolunteerTop />
 			<Content>
 				<Bar>그 룹 소 개</Bar>
-				<TextEdit />
+				{/* <TextEdit /> */}
 				<Btn>등 록 완 료</Btn>
 			</Content>
 		</Body>

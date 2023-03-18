@@ -16,11 +16,15 @@ const Container = styled.div`
 	.ql-toolbar.ql-snow {
 	}
 `;
+interface EditProps {
+	onChange: (content: string) => void;
+	value: string;
+}
 
-export default function Edit() {
+export default function Edit({ onChange, value }: EditProps) {
 	return (
 		<Container>
-			<ReactQuill />
+			<ReactQuill onChange={(content: string) => onChange(content)} value={value} />
 		</Container>
 	);
 }

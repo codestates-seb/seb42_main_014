@@ -119,7 +119,9 @@ const VolunteerPost = () => {
 		}
 	};
 	const [file, setFile] = useState<string>("");
+	const [value, setValue] = useState("");
 	const [selectedOption, setSelectedOption] = useState("");
+
 	const post = window.location.pathname;
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files !== null) {
@@ -133,8 +135,13 @@ const VolunteerPost = () => {
 		const volunteerData = {
 			volunData: data,
 			category: selectedOption,
+			text: value,
 		};
 		console.log(volunteerData);
+	};
+
+	const TextChange = (content: string) => {
+		setValue(content);
 	};
 
 	return (
@@ -242,7 +249,7 @@ const VolunteerPost = () => {
 				</Container>
 				<Content>
 					<Bar>활동정보</Bar>
-					<TextEdit />
+					<TextEdit onChange={TextChange} value={value} />
 					<Btn>등록완료</Btn>
 				</Content>
 			</form>
