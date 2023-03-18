@@ -24,12 +24,28 @@ public class MemberDto {
         @NotBlank
         private String memberName;
 
+        private String orgAddress;
+
+        private Long orgNumber;
+
         private boolean checkOrg;
+
+        private boolean verifiedEmail;
 
         private List<String> roles;
 
+        private int point;
+
         public void setRoles(List<String> roles) {
             this.roles = roles;
+        }
+
+        public void setVerifiedEmail(boolean verifiedEmail) {
+            this.verifiedEmail = verifiedEmail;
+        }
+
+        public void setPoint(int point) {
+            this.point = point;
         }
     }
 
@@ -60,6 +76,14 @@ public class MemberDto {
         private String password;
 
         private String memberName;
+
+        private String orgAddress;
+
+        private Long orgNumber;
+
+        private boolean checkOrg;
+
+        private List<String> roles;
 
         private int point;
 
