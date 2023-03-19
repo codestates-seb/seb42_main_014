@@ -40,7 +40,7 @@ public class VolunteerDto {
         @NotNull(message = "applyLimit cannot be empty.")
         private Integer applyLimit;
 
-        private Long tagId;
+        private String tagName;
 
 //        private String volunteerImage;
 
@@ -73,7 +73,7 @@ public class VolunteerDto {
 
         private Long organizationId;
 
-        private Long tagId;
+        private String tagName;
 
         private String volunteerStatus;
 
