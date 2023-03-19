@@ -3,16 +3,14 @@ package com.main.volunteer.domain.volunteer.service;
 import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.service.MemberService;
-import com.main.volunteer.domain.tag.service.TagService;
 import com.main.volunteer.domain.volunteer.entity.Condition;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import com.main.volunteer.domain.volunteer.repository.VolunteerRepository;
+import com.main.volunteer.exception.BusinessException;
+import com.main.volunteer.exception.ExceptionCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,12 +24,12 @@ public class VolunteerService {
 
     private final VolunteerRepository volunteerRepository;
     private final MemberService memberService;
-    private final TagService tagService;
 
-    public VolunteerService(VolunteerRepository volunteerRepository, MemberService memberService, TagService tagService) {
+    private static final Integer TWO_DAYS_OF_HOURS = 48;
+
+    public VolunteerService(VolunteerRepository volunteerRepository, MemberService memberService) {
         this.volunteerRepository = volunteerRepository;
         this.memberService = memberService;
-        this.tagService = tagService;
     }
 
     /*
@@ -62,7 +60,7 @@ public class VolunteerService {
         verifyOwnership(volunteerId, member);
 
         if(volunteer.getVolunteerDate().isBefore(LocalDateTime.now())){
-            throw new RuntimeException("봉사 날짜 이후에는 삭제할 수 없습니다.");
+            throw new BusinessException(ExceptionCode.NOW_AFTER_VOLUNTEER_DATE);
         }else{
             /*
             추후 개발
@@ -88,24 +86,13 @@ public class VolunteerService {
     }
 
     /**
-     봉사 목록 조회 - ALL
-     */
-    public List<Volunteer> getVolunteerList() {
-
-        List<Volunteer> volunteerList =  volunteerRepository.findAll();
-        setVolunteerStatusForList(volunteerList);
-
-        return volunteerList;
-    }
-
-    /**
      * 봉사 목록 조회 - 필터링 / 검색 구현
      */
     public Page<Volunteer> getVolunteerListBySearching(Condition condition) {
 
         Optional<Page<Volunteer>> optional = Optional.ofNullable(volunteerRepository.findBySearchOption(condition));
 
-        return optional.orElseThrow(() -> new RuntimeException("해당하는 봉사 활동이 없습니다."));
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.VOLUNTEER_NOT_EXIST));
     }
 
 
@@ -179,7 +166,7 @@ public class VolunteerService {
      */
     public Volunteer verifyExistVolunteer(Long volunteerId) {
         Optional<Volunteer> optional = volunteerRepository.findById(volunteerId);
-        Volunteer volunteer = optional.orElseThrow(() -> new RuntimeException("존재하는 봉사활동이 없습니다."));
+        Volunteer volunteer = optional.orElseThrow(() -> new BusinessException(ExceptionCode.VOLUNTEER_NOT_EXIST));
 
         setVolunteerStatus(volunteer);
         return volunteer;
@@ -193,7 +180,7 @@ public class VolunteerService {
         Volunteer volunteer = verifyExistVolunteer(volunteerId);
         Member organization = volunteer.getMember();
         if(!Objects.equals(organization.getMemberId(), member.getMemberId())){
-            throw new RuntimeException("등록한 봉사 활동의 기관이 아닙니다.");
+            throw new BusinessException(ExceptionCode.ORGANIZATION_HAVE_NO_OWNERSHIP);
         }
 
         return volunteer;
@@ -206,23 +193,23 @@ public class VolunteerService {
     private void verifyDate(LocalDateTime applyDate, LocalDateTime volunteerDate) {
         LocalDateTime now = LocalDateTime.now();
         if(volunteerDate.isBefore(now)){
-            throw new RuntimeException("봉사 날짜가 현재 날짜보다 이전입니다.");
+            throw new BusinessException(ExceptionCode.VOLUNTEER_DATE_BEFORE_NOW);
         }
         if(volunteerDate.isBefore(applyDate)){
-            throw new RuntimeException("봉사 날짜가 신청 시작 날짜보다 이전입니다.");
+            throw new BusinessException(ExceptionCode.VOLUNTEER_DATE_BEFORE_APPLY_DATE);
         }
 
-        if(applyDate.isAfter(volunteerDate.minusHours(48))){
-            throw new RuntimeException("봉사 날짜 48시간 전까지 봉사 등록이 가능합니다.");
+        if(applyDate.isAfter(volunteerDate.minusHours(TWO_DAYS_OF_HOURS))){
+            throw new BusinessException(ExceptionCode.APPLY_DATE_AFTER_VOLUNTEER_DATE_2_DAYS_BEFORE);
         }
 
-        if(LocalDateTime.now().isAfter(volunteerDate.minusHours(48))){
-            throw new RuntimeException("봉사 날짜 48시간 전까지 봉사 등록이 가능합니다.");
+        if(LocalDateTime.now().isAfter(volunteerDate.minusHours(TWO_DAYS_OF_HOURS))){
+            throw new BusinessException(ExceptionCode.APPLY_DATE_AFTER_VOLUNTEER_DATE_2_DAYS_BEFORE);
         }
     }
 
     private List<Volunteer> getOptionalList(Optional<List<Volunteer>> optional){
-        List<Volunteer> volunteerList =  optional.orElseThrow(() -> new RuntimeException("등록한 봉사 활동이 없습니다."));
+        List<Volunteer> volunteerList =  optional.orElseThrow(() -> new BusinessException(ExceptionCode.VOLUNTEER_NOT_EXIST));
         setVolunteerStatusForList(volunteerList);
 
         return volunteerList;

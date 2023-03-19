@@ -1,6 +1,5 @@
 package com.main.volunteer.domain.apply.service;
 
-import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.apply.entity.Apply;
 import com.main.volunteer.domain.apply.entity.ApplyStatus;
 import com.main.volunteer.domain.apply.repository.ApplyRepository;
@@ -9,6 +8,8 @@ import com.main.volunteer.domain.point.service.PointService;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
+import com.main.volunteer.exception.BusinessException;
+import com.main.volunteer.exception.ExceptionCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class ApplyService {
+
+    private static final Integer ONE_DAYS_OF_HOURS = 24;
 
     private final VolunteerService volunteerService;
     private final PointService pointService;
@@ -66,7 +69,7 @@ public class ApplyService {
 
         Optional<List<Apply>> optional = applyRepository.findByMemberAndVolunteer_VolunteerStatusNot(member, VolunteerStatus.VOLUNTEER_AFTER);
 
-        return optional.orElseThrow(() -> new RuntimeException("신청한 봉사 활동한 내역이 없습니다."));
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.APPLY_NOT_EXIST));
     }
 
     /**
@@ -76,7 +79,7 @@ public class ApplyService {
 
         Optional<List<Apply>> optional = applyRepository.findByMemberAndVolunteer_VolunteerStatus(member, VolunteerStatus.VOLUNTEER_AFTER);
 
-        return optional.orElseThrow(() -> new RuntimeException("봉사 활동한 내역이 없습니다."));
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.APPLY_NOT_EXIST));
     }
 
     /**
@@ -94,7 +97,7 @@ public class ApplyService {
     private void verifyVolunteerStatus(Volunteer volunteer) {
 
         if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_AFTER){
-            throw new RuntimeException("완료된 봉사입니다.");
+//            throw new BusinessException();
         }else if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_APPLY_AFTER){
             throw new RuntimeException("모집이 완료된 봉사입니다.");
         }else if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_APPLY_BEFORE){
@@ -113,7 +116,7 @@ public class ApplyService {
         if(optional.isPresent()){
             Apply existedApply = optional.get();
             if(existedApply.getApplyStatus() == ApplyStatus.APPLY_COMPLETE) {
-                throw new RuntimeException("이미 신청이 완료된 봉사활동입니다.");
+                throw new BusinessException(ExceptionCode.APPLY_ALREADY_COMPLETED);
             }
             if(existedApply.getApplyStatus() == ApplyStatus.APPLY_CANCEL){
                 return saveApply(existedApply);
@@ -139,14 +142,14 @@ public class ApplyService {
         Volunteer volunteer = volunteerService.verifyExistVolunteer(volunteerId);
 
         Optional<Apply> optional = applyRepository.findByVolunteerAndMember(volunteer, member);
-        Apply apply = optional.orElseThrow(() -> new RuntimeException("해당하는 봉사 활동 신청 이력이 없습니다."));
+        Apply apply = optional.orElseThrow(() -> new BusinessException(ExceptionCode.APPLY_NOT_EXIST));
 
         if(apply.getApplyStatus() == ApplyStatus.APPLY_CANCEL){
-            throw new RuntimeException("이미 취소된 봉사입니다.");
+            throw new BusinessException(ExceptionCode.APPLY_ALREADY_CANCLED);
         }
 
-        if(LocalDateTime.now().isAfter(volunteer.getVolunteerDate().minusHours(24))){
-            throw new RuntimeException("봉사 날짜 24시간 전에는 취소할 수 없습니다.");
+        if(LocalDateTime.now().isAfter(volunteer.getVolunteerDate().minusHours(ONE_DAYS_OF_HOURS))){
+            throw new BusinessException(ExceptionCode.NOW_AFTER_VOLUNTEER_DATE_1_DAYS_BEFORE);
         }
 
         return apply;
@@ -158,6 +161,6 @@ public class ApplyService {
      */
     public void verifyMemberVolunteer(Volunteer volunteer, Member member) {
         Optional<Apply> optional = applyRepository.findByVolunteerAndMember(volunteer, member);
-        optional.orElseThrow(() -> new RuntimeException("봉사 활동 한 내역이 없습니다."));
+        optional.orElseThrow(() -> new BusinessException(ExceptionCode.APPLY_NOT_EXIST));
     }
 }

@@ -2,6 +2,7 @@ package com.main.volunteer.exception;
 
 import com.main.volunteer.response.ErrorResponse;
 import lombok.Getter;
+
 @Getter
 public class BusinessException extends RuntimeException{
 

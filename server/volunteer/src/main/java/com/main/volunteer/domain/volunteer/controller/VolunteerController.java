@@ -81,6 +81,7 @@ public class VolunteerController {
 
         return ResponseEntity.noContent().build();
     }
+
     /**
     기관이 등록한 봉사 목록 조회
      */
