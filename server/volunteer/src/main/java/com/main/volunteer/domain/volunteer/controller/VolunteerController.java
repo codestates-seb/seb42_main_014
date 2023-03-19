@@ -59,7 +59,7 @@ public class VolunteerController {
 
         Volunteer volunteer = volunteerMapper.postDtoToVolunteer(postDto);
 
-        Tag tag = tagService.getTagId(postDto.getTagId());
+        Tag tag = tagService.getTagName(postDto.getTagName());
         volunteer.setTag(tag);
         volunteer.setMember(memberService.findMember(userDetails.getMemberId()));
 

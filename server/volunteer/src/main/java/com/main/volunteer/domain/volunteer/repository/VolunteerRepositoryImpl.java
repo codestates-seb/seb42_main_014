@@ -3,13 +3,9 @@ package com.main.volunteer.domain.volunteer.repository;
 import com.main.volunteer.domain.volunteer.entity.Condition;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.repository.custom.VolunteerRepositoryCustom;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.PathBuilder;
-import com.querydsl.jpa.JPQLQuery;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -32,8 +28,8 @@ public class VolunteerRepositoryImpl extends QuerydslRepositorySupport implement
     @Override
     public Page<Volunteer> findBySearchOption(Condition condition) {
 
-
         Pageable pageable = PageRequest.of(condition.getPageNum() - 1, 12);
+
         OrderSpecifier orderSpecifiers = createOrderSpecifier(condition);
 
         List<Volunteer> volunteers = queryFactory

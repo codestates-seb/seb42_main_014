@@ -34,6 +34,8 @@ public enum ExceptionCode {
     GROUP_NOT_SET(703, "그룹이 생성 되지 않았습니다."),
     BOTH_NOT_SET(704,"그룹, 멤버 둘다 생성 되지 않았습니다");
 
+    //
+
     @Getter
     private int code;
 

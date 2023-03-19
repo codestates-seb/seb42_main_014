@@ -1,8 +1,5 @@
 package com.main.volunteer.domain.volunteer.mapper;
 
-
-import com.main.volunteer.domain.apply.entity.Apply;
-import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.volunteer.dto.VolunteerDto;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
@@ -13,7 +10,6 @@ import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Mapper(componentModel = "spring" , unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface VolunteerMapper{
@@ -42,10 +38,10 @@ public interface VolunteerMapper{
             }
 
             Long organizationId = volunteer.getMember().getMemberId();
-            Long tagId = volunteer.getTag().getTagId();
+            String tagName = volunteer.getTag().getTagName();
             List<Review> reviewList = volunteer.getReviewList();
 
-        return new VolunteerDto.Response( volunteerId, title, applyDate, volunteerDate, volunteerTime, place, content, applyLimit, applyCount, likeCount,organizationId, tagId, volunteerStatus, reviewList);
+        return new VolunteerDto.Response( volunteerId, title, applyDate, volunteerDate, volunteerTime, place, content, applyLimit, applyCount, likeCount,organizationId, tagName, volunteerStatus, reviewList);
     }
 
 

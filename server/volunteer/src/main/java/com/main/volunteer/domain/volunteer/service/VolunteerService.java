@@ -103,7 +103,6 @@ public class VolunteerService {
      */
     public Page<Volunteer> getVolunteerListBySearching(Condition condition) {
 
-
         Optional<Page<Volunteer>> optional = Optional.ofNullable(volunteerRepository.findBySearchOption(condition));
 
         return optional.orElseThrow(() -> new RuntimeException("해당하는 봉사 활동이 없습니다."));
