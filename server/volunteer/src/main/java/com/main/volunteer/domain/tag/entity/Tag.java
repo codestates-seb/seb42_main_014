@@ -23,7 +23,7 @@ public class Tag{
 
     private String tagName;
 
-    @OneToOne(mappedBy = "tag")
-    private Group group;
+//    @OneToOne(mappedBy = "tag")
+//    private Group group;
 
 }

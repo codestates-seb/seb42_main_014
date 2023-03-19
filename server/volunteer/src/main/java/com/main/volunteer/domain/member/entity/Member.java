@@ -74,7 +74,6 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "member" , cascade = CascadeType.PERSIST)
     private List<MemberGroup> memberGroups = new ArrayList<>();
 
-
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Group> groups = new ArrayList<>();
 
