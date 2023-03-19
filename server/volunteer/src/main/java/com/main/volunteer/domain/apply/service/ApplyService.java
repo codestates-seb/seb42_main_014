@@ -88,7 +88,7 @@ public class ApplyService {
     public List<Apply> getApplyListByOrganization(Long volunteerId,Member member) {
         Volunteer volunteer = volunteerService.verifyOwnership(volunteerId,member);
         Optional<List<Apply>> optional = applyRepository.findAllByVolunteer(volunteer);
-        return optional.orElseThrow(() -> new RuntimeException("해당 봉사를 신청한 사람이 없습니다."));
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.APPLY_NOT_EXIST));
     }
 
     /**
@@ -97,13 +97,13 @@ public class ApplyService {
     private void verifyVolunteerStatus(Volunteer volunteer) {
 
         if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_AFTER){
-//            throw new BusinessException();
+            throw new BusinessException(ExceptionCode.VOLUNTEER_STATUS_AFTER);
         }else if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_APPLY_AFTER){
-            throw new RuntimeException("모집이 완료된 봉사입니다.");
+            throw new BusinessException(ExceptionCode.VOLUNTEER_STATUS_APPLY_AFTER);
         }else if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_APPLY_BEFORE){
-            throw new RuntimeException("신청 기간 전인 봉사입니다.");
+            throw new BusinessException(ExceptionCode.VOLUNTEER_STATUS_APPLY_BEFORE);
         }else if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_APPLY_LIMIT_OVER){
-            throw new RuntimeException("인원 마감이 된 봉사입니다.");
+            throw new BusinessException(ExceptionCode.VOLUNTEER_DATE_BEFORE_APPLY_DATE);
         }
 
     }
@@ -145,7 +145,7 @@ public class ApplyService {
         Apply apply = optional.orElseThrow(() -> new BusinessException(ExceptionCode.APPLY_NOT_EXIST));
 
         if(apply.getApplyStatus() == ApplyStatus.APPLY_CANCEL){
-            throw new BusinessException(ExceptionCode.APPLY_ALREADY_CANCLED);
+            throw new BusinessException(ExceptionCode.APPLY_ALREADY_CANCELED);
         }
 
         if(LocalDateTime.now().isAfter(volunteer.getVolunteerDate().minusHours(ONE_DAYS_OF_HOURS))){

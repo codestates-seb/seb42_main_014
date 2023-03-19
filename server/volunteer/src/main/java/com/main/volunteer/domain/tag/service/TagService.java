@@ -4,6 +4,7 @@ import com.main.volunteer.domain.tag.repository.TagRepository;
 import com.main.volunteer.domain.tag.entity.Tag;
 import com.main.volunteer.exception.BusinessException;
 
+import com.main.volunteer.exception.ExceptionCode;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

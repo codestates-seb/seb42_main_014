@@ -11,7 +11,7 @@ public class Condition {
 
     String volunteerName;
     String organizationName;
-    Long tagId;
+    String tagName;
     String province;
     String city;
     String orderCriteria;

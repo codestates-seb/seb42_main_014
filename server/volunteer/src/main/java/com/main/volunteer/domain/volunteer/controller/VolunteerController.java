@@ -118,14 +118,14 @@ public class VolunteerController {
     @GetMapping
     public ResponseEntity<?> getVolunteerListBySearching(@RequestParam(value = "volunteerName", required = false) String volunteerName,
                                                          @RequestParam(value = "organizationName", required = false) String organizationName,
-                                                         @RequestParam(value = "tagId", required = false) Long tagId,
+                                                         @RequestParam(value = "tagName", required = false) String tagName,
                                                          @RequestParam(value = "province", required = false) String province,
                                                          @RequestParam(value = "city", required = false) String city,
-                                                         @RequestParam(value = "orderBy", required = false) String orderCriteria,
-                                                         @RequestParam(value = "sort", required = false) String sort,
-                                                         @RequestParam(value = "pageNum")int pageNum){
+                                                         @RequestParam(value = "orderBy", required = false, defaultValue = "volunteerId") String orderCriteria,
+                                                         @RequestParam(value = "sort", required = false, defaultValue = "DESC") String sort,
+                                                         @RequestParam(value = "pageNum", defaultValue = "1")int pageNum){
 
-        Condition condition = new Condition(volunteerName, organizationName, tagId, province, city, orderCriteria, sort, pageNum);
+        Condition condition = new Condition(volunteerName, organizationName, tagName, province, city, orderCriteria, sort, pageNum);
         Page<Volunteer> volunteerList = volunteerService.getVolunteerListBySearching(condition);
 
         return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerPageToResponseList(volunteerList), "totalPages", volunteerList.getTotalPages()));

@@ -48,14 +48,21 @@ public enum ExceptionCode {
     VOLUNTEER_APPLY_LIMIT_OVER(809, "인원이 마감 된 봉사입니다."),
 
 
-
     //REVIEW - 850부터
+    REVIEW_NOT_EXIST(850, "해당 봉사 활동에 등록된 후기가 없습니다."),
+    NOT_AFTER_VOLUNTEER_DATE(851,"봉사 날짜 이후에 리뷰 작성이 가능합니다."),
+    ONCE_REVIEW(852, "활동한 봉사에 대한 리뷰가 이미 작성되었습니다."),
 
     //APPLY - 900부터
-    APPLY_NOT_EXIST(900, "봉사 한 활동 내역이 없습니다."),
+    APPLY_NOT_EXIST(900, "봉사 신청 내역이 없습니다."),
     APPLY_ALREADY_CANCELED(901, "이미 취소된 봉사입니다."),
     NOW_AFTER_VOLUNTEER_DATE_1_DAYS_BEFORE(902, "봉사 날짜 24시간 전에는 취소할 수 없습니다."),
-    APPLY_ALREADY_COMPLETED(903, "이미 신처잉 완료된 봉사활동입니다."),
+    APPLY_ALREADY_COMPLETED(903, "이미 신청이 완료된 봉사입니다."),
+
+
+    //LIKE - 950부터
+    LIKE_NOT_EXIST(950, "봉사 활동을 찜한 이력이 없습니다."),
+    LIKE_ALREADY(951, "이미 찜한 봉사입니다."),
 
 
 

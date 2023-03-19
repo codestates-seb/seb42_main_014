@@ -37,7 +37,7 @@ public class Volunteer extends Auditable {
     @Column(nullable = false)
     private LocalDateTime volunteerDate;
 
-    private Integer volunteerTime;
+    private Integer volunteerTime = 0;
 
     @Column(nullable = false)
     private String place;

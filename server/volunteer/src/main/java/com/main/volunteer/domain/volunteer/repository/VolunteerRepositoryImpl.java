@@ -3,10 +3,12 @@ package com.main.volunteer.domain.volunteer.repository;
 import com.main.volunteer.domain.volunteer.entity.Condition;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.repository.custom.VolunteerRepositoryCustom;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
@@ -16,6 +18,7 @@ import java.util.List;
 
 import static com.main.volunteer.domain.volunteer.entity.QVolunteer.volunteer;
 
+@Slf4j
 public class VolunteerRepositoryImpl extends QuerydslRepositorySupport implements VolunteerRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
@@ -30,37 +33,37 @@ public class VolunteerRepositoryImpl extends QuerydslRepositorySupport implement
 
         Pageable pageable = PageRequest.of(condition.getPageNum() - 1, 12);
 
-        OrderSpecifier orderSpecifiers = createOrderSpecifier(condition);
-
-        List<Volunteer> volunteers = queryFactory
+        QueryResults<Volunteer> volunteers = queryFactory
                 .selectFrom(volunteer)
                 .where(containVolunteerName(condition.getVolunteerName()), containOrganizationName(condition.getOrganizationName()),
-                        eqTagId(condition.getTagId()), eqProvince(condition.getProvince()), eqCity(condition.getCity()))
-                .orderBy(orderSpecifiers)
+                        eqTagName(condition.getTagName()), eqProvince(condition.getProvince()), eqCity(condition.getCity()))
+                .orderBy(createOrderSpecifier(condition))
                 .offset(pageable.getOffset())
-                .limit(pageable.getPageSize()).fetch();
+                .limit(pageable.getPageSize())
+                .fetchResults();
 
-
-
-        return new PageImpl<>(volunteers, pageable,volunteers.size());
+        return new PageImpl<>(volunteers.getResults(), pageable, volunteers.getTotal());
     }
 
-    private OrderSpecifier createOrderSpecifier(Condition condition) {
-
+    private OrderSpecifier<?> createOrderSpecifier(Condition condition) {
 
         String orderCriteria = condition.getOrderCriteria();
         String sort = condition.getSort();
 
+        Order direction =  sort.equals("ASC") ? Order.ASC : Order.DESC;
 
-        if(orderCriteria.equals("volunteerTime")){
-            return sort.equals("ASC") ? new OrderSpecifier(Order.ASC, volunteer.volunteerDate) : new OrderSpecifier(Order.DESC, volunteer.volunteerDate);
-        }else if(orderCriteria.equals("applyLimit")){
-            return sort.equals("ASC") ? new OrderSpecifier(Order.ASC, volunteer.applyLimit) : new OrderSpecifier(Order.DESC, volunteer.applyLimit);
-        }else if(orderCriteria.equals("likeCount")){
-            return sort.equals("ASC") ? new OrderSpecifier(Order.ASC, volunteer.likeCount) : new OrderSpecifier(Order.DESC, volunteer.likeCount);
+        log.info("direction : " + direction);
+
+        switch (orderCriteria) {
+            case "volunteerTime":
+                return new OrderSpecifier<>(direction, volunteer.volunteerTime);
+            case "applyLimit":
+                return new OrderSpecifier<>(direction, volunteer.applyLimit);
+            case "likeCount":
+                return new OrderSpecifier<>(direction, volunteer.likeCount);
         }
 
-        return new OrderSpecifier(Order.DESC, volunteer.volunteerId);
+        return new OrderSpecifier<>(Order.DESC, volunteer.volunteerId);
     }
 
 
@@ -74,9 +77,9 @@ public class VolunteerRepositoryImpl extends QuerydslRepositorySupport implement
         return organizationName == null || organizationName.isEmpty() ? null : volunteer.member.memberName.eq(organizationName);
     }
 
-    private BooleanExpression eqTagId(Long tagId) {
+    private BooleanExpression eqTagName(String tagName) {
 
-        return tagId == null ? null : volunteer.tag.tagId.eq(tagId);
+        return tagName == null || tagName.isEmpty() ? null : volunteer.tag.tagName.eq(tagName);
     }
 
     private BooleanExpression eqProvince(String province) {
