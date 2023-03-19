@@ -7,6 +7,8 @@ import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
+import com.main.volunteer.exception.BusinessException;
+import com.main.volunteer.exception.ExceptionCode;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,9 +34,9 @@ public class LikeService {
         like.setVolunteer(volunteer);
 
         if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_AFTER){
-            throw new RuntimeException("완료된 봉사입니다.");
+            throw new BusinessException(ExceptionCode.VOLUNTEER_STATUS_AFTER);
         }else if(volunteer.getVolunteerStatus() == VolunteerStatus.VOLUNTEER_APPLY_AFTER){
-            throw new RuntimeException("모집이 완료된 봉사입니다.");
+            throw new BusinessException(ExceptionCode.VOLUNTEER_APPLY_LIMIT_OVER);
         }
 
         return verifyLikeStatus(like);
@@ -48,7 +50,7 @@ public class LikeService {
         Volunteer volunteer = volunteerService.verifyExistVolunteer(volunteerId);
 
         Optional<Like> optional = likeRepository.findByVolunteerAndMember(volunteer, member);
-        Like like = optional.orElseThrow(() -> new RuntimeException("해당하는 봉사 활동을 찜한 이력이 없습니다."));
+        Like like = optional.orElseThrow(() -> new BusinessException(ExceptionCode.LIKE_NOT_EXIST));
 
         volunteerService.minusLikeCount(like.getVolunteer());
         likeRepository.delete(like);
@@ -63,7 +65,7 @@ public class LikeService {
 
         Optional<List<Like>> optional = likeRepository.findAllByMember(member);
 
-        return optional.orElseThrow(() -> new RuntimeException("찜한 봉사가 없습니다."));
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.LIKE_NOT_EXIST));
     }
 
     // 찜 상태 검증 로직
@@ -73,7 +75,7 @@ public class LikeService {
 
         if(optional.isPresent()) {
 
-            throw new RuntimeException("이미 찜한 봉사활동입니다.");
+            throw new BusinessException(ExceptionCode.LIKE_ALREADY);
 
         }else{
             volunteerService.plusLikeCount(like.getVolunteer());

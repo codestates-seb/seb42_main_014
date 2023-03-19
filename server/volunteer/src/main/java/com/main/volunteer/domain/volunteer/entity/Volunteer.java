@@ -37,7 +37,7 @@ public class Volunteer extends Auditable {
     @Column(nullable = false)
     private LocalDateTime volunteerDate;
 
-    private Integer volunteerTime;
+    private Integer volunteerTime = 0;
 
     @Column(nullable = false)
     private String place;
@@ -71,6 +71,8 @@ public class Volunteer extends Auditable {
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
     private List<Like> likeList = new ArrayList<>();
+
+
 
 
 }

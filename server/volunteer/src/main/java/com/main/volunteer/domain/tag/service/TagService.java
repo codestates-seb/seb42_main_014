@@ -2,6 +2,9 @@ package com.main.volunteer.domain.tag.service;
 
 import com.main.volunteer.domain.tag.repository.TagRepository;
 import com.main.volunteer.domain.tag.entity.Tag;
+import com.main.volunteer.exception.BusinessException;
+
+import com.main.volunteer.exception.ExceptionCode;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,13 +18,13 @@ public class TagService {
         this.tagRepository = tagRepository;
     }
 
-    public Tag getTagId(Long tagId) {
-        Optional<Tag> optional = tagRepository.findById(tagId);
-        return optional.orElseThrow(() -> new RuntimeException("존재하는 태그가 없습니다."));
+    public Tag getTagName(String tagName) {
+        Optional<Tag> optional = tagRepository.findByTagName(tagName);
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.TAG_NOT_EXIST));
     }
 
     public Tag verifyExistTag(Long tagId) {
         Optional<Tag> optional = tagRepository.findById(tagId);
-        return optional.orElseThrow(() -> new RuntimeException("존재하는 태그가 없습니다."));
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.TAG_NOT_EXIST));
     }
 }
