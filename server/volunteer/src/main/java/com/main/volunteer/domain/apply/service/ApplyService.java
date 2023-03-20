@@ -163,4 +163,5 @@ public class ApplyService {
         Optional<Apply> optional = applyRepository.findByVolunteerAndMember(volunteer, member);
         optional.orElseThrow(() -> new BusinessException(ExceptionCode.APPLY_NOT_EXIST));
     }
+
 }

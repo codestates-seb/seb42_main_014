@@ -115,6 +115,18 @@ public class VolunteerController {
         return ResponseEntity.ok().body(ApiResponse.ok("volunteer", volunteerMapper.volunteerToResponseDto(volunteer),"applied", applied));
     }
 
+    /**
+     *
+     * @param volunteerName
+     * @param organizationName
+     * @param tagName
+     * @param province
+     * @param city
+     * @param orderCriteria
+     * @param sort
+     * @param pageNum
+     * @return
+     */
     @GetMapping
     public ResponseEntity<?> getVolunteerListBySearching(@RequestParam(value = "volunteerName", required = false) String volunteerName,
                                                          @RequestParam(value = "organizationName", required = false) String organizationName,
