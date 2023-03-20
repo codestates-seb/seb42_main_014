@@ -79,7 +79,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("http")
-                .host("localhost")
+                .host("http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com")
                 .path("/receive-token")
                 .queryParam("Authorization", "Bearer_" + accessToken)
                 .build()

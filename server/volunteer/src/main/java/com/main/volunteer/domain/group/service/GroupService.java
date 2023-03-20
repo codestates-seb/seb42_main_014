@@ -8,6 +8,8 @@ import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,8 +49,8 @@ public class GroupService {
     }
 
     // 그룹 목록
-    public List<Group> findGroups(){
-        return groupRepository.findAll();
+    public Page<Group> findGroups(int pageNum){
+        return groupRepository.findAll(PageRequest.of(pageNum , 5));
     }
 
     // 그룹 수정

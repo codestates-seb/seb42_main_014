@@ -2,11 +2,9 @@ package com.main.volunteer.domain.volunteer.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.main.volunteer.domain.review.entity.Review;
-import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -23,12 +21,15 @@ public class VolunteerDto {
         @NotBlank(message = "title cannot be empty.")
         private String title;
 
+        private String volunteerImage;
+
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
         private LocalDateTime applyDate;
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
         private LocalDateTime volunteerDate;
 
+        @NotNull(message = "volunteerTime cannot be empty.")
         private Integer volunteerTime;
 
         @NotBlank(message = "place cannot be empty.")
@@ -40,9 +41,10 @@ public class VolunteerDto {
         @NotNull(message = "applyLimit cannot be empty.")
         private Integer applyLimit;
 
+        @NotBlank
         private String tagName;
 
-//        private String volunteerImage;
+
 
     }
 
@@ -53,7 +55,7 @@ public class VolunteerDto {
 
         private String title;
 
-//        private String volunteerImage;
+        private String volunteerImage;
 
         private LocalDateTime applyDate;
 
