@@ -84,7 +84,7 @@ export default function Category() {
 					<Icon>
 						<SvgIcon component={ChildCareIcon} inheritViewBox fontSize="inherit" />
 					</Icon>
-					<span>아동</span>
+					<span>어린이</span>
 				</Col>
 				<Col>
 					<Icon>

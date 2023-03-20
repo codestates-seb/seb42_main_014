@@ -117,6 +117,7 @@ export default function LoginPage() {
 				localStorage.setItem("refreshToken", reToken);
 				setUser(token);
 				navigate("/");
+				console.log(token);
 			})
 			.catch((err) => console.log("오류!", err));
 	};

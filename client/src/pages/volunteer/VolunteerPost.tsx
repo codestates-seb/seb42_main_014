@@ -111,7 +111,18 @@ const Content = styled.div`
 `;
 
 const VolunteerPost = () => {
-	const { register, handleSubmit } = useForm({ mode: "onChange" });
+	interface IPostData {
+		title?: string;
+		endDate?: string;
+		volunteerDate?: string;
+		volunteerHour?: number;
+		placeDetail?: string;
+		memberCount?: number;
+		place?: string;
+		maxMember?: number;
+		groupName?: string;
+	}
+	const { register, handleSubmit } = useForm<IPostData>({ mode: "onChange" });
 	const fileInput = useRef<HTMLLabelElement>(null);
 	const onChangeHandler = () => {
 		if (fileInput.current) {
@@ -129,12 +140,12 @@ const VolunteerPost = () => {
 	};
 	const optionArr = ["어린이", "노인", "장애인", "환경", "사회", "동물"];
 
-	const onSubmit = (data: any) => {
-		const volunteerData = {
+	const onSubmit = (data: IPostData) => {
+		const postData = {
 			volunData: data,
 			category: selectedOption,
 		};
-		console.log(volunteerData);
+		console.log(postData);
 	};
 
 	return (

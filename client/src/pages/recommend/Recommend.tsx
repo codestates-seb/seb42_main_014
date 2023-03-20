@@ -102,8 +102,6 @@ export default function Recommend() {
 				<div>
 					{/* 추천 봉사 리스트 */}
 					<Card
-						width={380}
-						height={350}
 						src="/images/home/main-img-1.png"
 						title="폐가구를 정리해요"
 						date="일시 : 2023년 3월 10일 14~16시(2h)"
