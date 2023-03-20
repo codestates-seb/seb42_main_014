@@ -2,6 +2,7 @@ package com.main.volunteer.domain.membergroup.controller;
 
 import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.group.service.GroupService;
+import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.domain.membergroup.dto.MemberGroupDto;
 import com.main.volunteer.domain.membergroup.entity.MemberGroup;
 import com.main.volunteer.domain.membergroup.mapper.MemberGroupMapper;
@@ -24,13 +25,14 @@ public class MemberGroupController {
     private final MemberGroupMapper mapper;
     private final MemberGroupService memberGroupService;
     private final GroupService groupService;
+    private final MemberService memberService;
 
     @PostMapping("/{group-id}")
     public ResponseEntity<?> createMemberGroup(@PathVariable("group-id") long groupId, @RequestBody MemberGroupDto.Post postDto, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         MemberGroup memberGroup = mapper.memberGroupDtoToMemberGroup(postDto);
         memberGroup.setGroup(groupService.verifyExistGroup(groupId));
-        memberGroup.setMember(userDetails);
+        memberGroup.setMember(memberService.findMember(userDetails.getMemberId()));
 
         memberGroup = memberGroupService.createMemberGroup(memberGroup);
 
