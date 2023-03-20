@@ -29,7 +29,7 @@ public class Volunteer extends Auditable {
     @Column(nullable = false)
     private String title;
 
-//    private String volunteerImage;
+    private String volunteerImage;
 
     @Column(nullable = false)
     private LocalDateTime applyDate;

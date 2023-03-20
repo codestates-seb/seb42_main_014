@@ -25,6 +25,7 @@ public interface VolunteerMapper{
 
             Long volunteerId = volunteer.getVolunteerId();
             String title = volunteer.getTitle();
+            String volunteerImage = volunteer.getVolunteerImage();
             LocalDateTime applyDate = volunteer.getApplyDate();
             LocalDateTime volunteerDate = volunteer.getVolunteerDate();
             Integer volunteerTime = volunteer.getVolunteerTime();
@@ -41,7 +42,7 @@ public interface VolunteerMapper{
             String tagName = volunteer.getTag().getTagName();
             List<Review> reviewList = volunteer.getReviewList();
 
-        return new VolunteerDto.Response( volunteerId, title, applyDate, volunteerDate, volunteerTime, place, content, applyLimit, applyCount, likeCount,organizationId, tagName, volunteerStatus, reviewList);
+        return new VolunteerDto.Response( volunteerId, title, volunteerImage, applyDate, volunteerDate, volunteerTime, place, content, applyLimit, applyCount, likeCount,organizationId, tagName, volunteerStatus, reviewList);
     }
 
 
