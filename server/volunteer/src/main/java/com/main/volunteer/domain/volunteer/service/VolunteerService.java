@@ -231,8 +231,7 @@ public class VolunteerService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(apply.getMember().getEmail());
         mailMessage.setSubject("[좀나세] 신청하신 봉사 활동이 기관에 의해 취소되었습니다.");
-        mailMessage.setText("안녕하세요 " + apply.getMember().getMemberName() + "봉사자님\n");
-        mailMessage.setText("봉사자님이 신청하신 봉사 활동이 기관에 의해 취소되었음을 알려드립니다.");
+        mailMessage.setText("안녕하세요 " + apply.getMember().getMemberName() + "봉사자님\n봉사자님이 신청하신 봉사 활동이 기관에 의해 취소되었음을 알려드립니다.");
         emailSenderService.sendEmail(mailMessage);
     }
 
