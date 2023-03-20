@@ -19,8 +19,8 @@ export default function UserVolItem1() {
 	return (
 		<>
 			<Container>
-				<div>유기견 산책 시키기</div>
-				<div>일자 : 2023-03-07</div>
+				<div>타이틀</div>
+				<div>일자 : </div>
 				<div>
 					<button>후기작성</button>
 				</div>

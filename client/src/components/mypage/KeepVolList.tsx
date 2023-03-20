@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import KeepVolItem from "./KeepVolItem";
+import { myPageGet } from "../../api/mypage/MypageGet";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
 	background-color: #ffffff;
@@ -19,6 +21,20 @@ const Container = styled.div`
 `;
 
 export default function KeepVolList() {
+	const [likes, setLikes] = useState<any[]>([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const plan = await myPageGet("likes/my");
+			console.log(plan.data);
+			const likes = plan.data;
+			setLikes(likes);
+
+			// setTitle(JSON.stringify(plan.data[0].volunteerName).replace(/"/g, ""));
+			// setName(JSON.stringify(plan.data[0].organizationName).replace(/"/g, ""));
+		};
+		fetchData();
+	}, []);
 	return (
 		<>
 			<Container>
@@ -26,9 +42,18 @@ export default function KeepVolList() {
 					<h2>찜한 봉사 목록</h2>
 					<ol>
 						{/* 찜한 봉사 리스트 */}
-						<li>
+						{likes.length ? (
+							likes.map((like) => (
+								<li key={like.likeId}>
+									<KeepVolItem title={like.volunteerName} name={like.organizationName} />
+								</li>
+							))
+						) : (
+							<p>찜한 게시물이 없습니다.</p>
+						)}
+						{/* <li>
 							<KeepVolItem />
-						</li>
+						</li> */}
 					</ol>
 				</div>
 			</Container>
