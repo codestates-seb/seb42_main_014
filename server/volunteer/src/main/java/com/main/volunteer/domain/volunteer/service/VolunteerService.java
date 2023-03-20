@@ -31,6 +31,7 @@ public class VolunteerService {
     private final EmailSenderService emailSenderService;
 
     private static final Integer TWO_DAYS_OF_HOURS = 48;
+    private static final Integer ONE_DAY_OF_HOURS = 24;
 
     public VolunteerService(VolunteerRepository volunteerRepository, MemberService memberService, EmailSenderService emailSenderService) {
         this.volunteerRepository = volunteerRepository;
@@ -117,6 +118,7 @@ public class VolunteerService {
     /**
      * Volunteer volunteerStatus update
      */
+
     public void setVolunteerStatus(Volunteer volunteer){
         if(LocalDateTime.now().isBefore(volunteer.getApplyDate())){
             volunteer.setVolunteerStatus(VolunteerStatus.VOLUNTEER_APPLY_BEFORE);
