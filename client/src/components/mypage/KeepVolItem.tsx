@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+interface KeepVolItemProps {
+	title: string;
+	name: string;
+}
+
 const Container = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -15,12 +20,12 @@ const Container = styled.div`
 	}
 `;
 
-export default function KeepVolItem() {
+export default function KeepVolItem(props: KeepVolItemProps) {
 	return (
 		<>
 			<Container>
-				<div>유기견 산책 시키기 </div>
-				<div>악어단체</div>
+				<div>{props.title} </div>
+				<div>{props.name}</div>
 			</Container>
 		</>
 	);

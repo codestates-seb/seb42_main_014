@@ -108,10 +108,11 @@ export default function Usercard() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await myPageGet();
-			setEmail(result.email);
-			setName(result.memberName);
-			setPoint(result.point);
+			const result = await myPageGet("members/me");
+			console.log(result);
+			setEmail(result.data.email);
+			setName(result.data.memberName);
+			setPoint(result.data.point);
 		};
 		fetchData();
 	}, []);

@@ -36,8 +36,8 @@ export default function DropDown({ setIsOpen, isOpen }: TDropDownProps) {
 	console.log(id);
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await myPageGet();
-			setId(result.id);
+			const result = await myPageGet("members/me");
+			setId(result.data.id);
 		};
 		fetchData();
 	}, []);
