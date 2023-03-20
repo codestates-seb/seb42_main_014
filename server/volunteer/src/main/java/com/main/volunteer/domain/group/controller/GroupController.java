@@ -32,7 +32,7 @@ public class GroupController {
     @PostMapping
     @PreAuthorize("hasRole('ROLE_GROUPZANG')")
     public ResponseEntity<?> postGroup(@RequestBody @Valid GroupDto.Post postDto){
-        Tag tag = tagService.getTagId(postDto.getTagId());
+        Tag tag = tagService.getTagName(postDto.getTagName());
         Group group = mapper.groupPostDtoToGroup(postDto);
         group.setTag(tag);
         Group createGroup = groupService.createGroup(group);

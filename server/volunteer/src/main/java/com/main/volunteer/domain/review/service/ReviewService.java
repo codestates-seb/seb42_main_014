@@ -5,7 +5,10 @@ import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.review.repository.ReviewRepository;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
+import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
+import com.main.volunteer.exception.BusinessException;
+import com.main.volunteer.exception.ExceptionCode;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -101,10 +104,9 @@ public class ReviewService {
 
         review.setVolunteer(volunteer);
 
-        //봉사 활동 이후에 작성 가능
-//        if (!(volunteer.getVolunteerStatus()== VolunteerStatus.VOLUNTEER_AFTER)) {
-//            throw new RuntimeException("봉사 날짜 이후에 리뷰 작성이 가능합니다.");
-//        }
+        if (!(volunteer.getVolunteerStatus()== VolunteerStatus.VOLUNTEER_AFTER)) {
+            throw new BusinessException(ExceptionCode.NOT_AFTER_VOLUNTEER_DATE);
+        }
 
         return volunteer;
     }
@@ -114,7 +116,7 @@ public class ReviewService {
         Optional<Review> optional = reviewRepository.findByMemberAndVolunteer(member, volunteer);
 
         if (optional.isPresent()) {
-            throw new RuntimeException("활동한 봉사에 대한 리뷰가 이미 작성되었습니다.");
+            throw new BusinessException(ExceptionCode.ONCE_REVIEW);
         }
     }
 
@@ -122,7 +124,7 @@ public class ReviewService {
     private Review verifyExistReview(Long reviewId, Member member) {
         Optional<Review> optional = reviewRepository.findByReviewIdAndMember(reviewId, member);
 
-        return optional.orElseThrow(() -> new RuntimeException("해당 봉사 활동에 등록된 후기가 없습니다."));
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.REVIEW_NOT_EXIST));
     }
 
 }

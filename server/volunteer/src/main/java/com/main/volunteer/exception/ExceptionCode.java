@@ -3,6 +3,7 @@ package com.main.volunteer.exception;
 import lombok.Getter;
 import lombok.Setter;
 
+
 public enum ExceptionCode {
 
     // Resource
@@ -32,13 +33,48 @@ public enum ExceptionCode {
     NOT_GROUP_MEMBER(701, "가입된 그룹이 아닙니다."),
     MEMBER_NOT_SET(702, "멤버가 생성되지 않았습니다."),
     GROUP_NOT_SET(703, "그룹이 생성 되지 않았습니다."),
-    BOTH_NOT_SET(704,"그룹, 멤버 둘다 생성 되지 않았습니다");
+    BOTH_NOT_SET(704,"그룹, 멤버 둘다 생성 되지 않았습니다"),
+
+    // Volunteer - 800 부터
+    VOLUNTEER_NOT_EXIST(800, "등록한 봉사 활동이 없습니다."),
+    ORGANIZATION_HAVE_NO_OWNERSHIP(801, "등록한 봉사 활동의 기관이 아닙니다."),
+    VOLUNTEER_DATE_BEFORE_NOW(802, "봉사 날짜가 현재 날짜보다 이전입니다."),
+    VOLUNTEER_DATE_BEFORE_APPLY_DATE(803, "봉사 날짜가 신청 시작 날짜보다 이전입니다."),
+    APPLY_DATE_AFTER_VOLUNTEER_DATE_2_DAYS_BEFORE(804,"봉사 날짜 48시간 전까지 봉사 등록이 가능합니다."),
+    NOW_AFTER_VOLUNTEER_DATE(805, "봉사 날짜 이후에는 삭제할 수 없습니다."),
+    VOLUNTEER_STATUS_AFTER(806, "완료된 봉사입니다."),
+    VOLUNTEER_STATUS_APPLY_AFTER(807, "모집이 완료된 봉사입니다."),
+    VOLUNTEER_STATUS_APPLY_BEFORE(808, "신청 기간 전인 봉사활동입니다."),
+    VOLUNTEER_APPLY_LIMIT_OVER(809, "인원이 마감 된 봉사입니다."),
+
+
+    //REVIEW - 850부터
+    REVIEW_NOT_EXIST(850, "해당 봉사 활동에 등록된 후기가 없습니다."),
+    NOT_AFTER_VOLUNTEER_DATE(851,"봉사 날짜 이후에 리뷰 작성이 가능합니다."),
+    ONCE_REVIEW(852, "활동한 봉사에 대한 리뷰가 이미 작성되었습니다."),
+
+    //APPLY - 900부터
+    APPLY_NOT_EXIST(900, "봉사 신청 내역이 없습니다."),
+    APPLY_ALREADY_CANCELED(901, "이미 취소된 봉사입니다."),
+    NOW_AFTER_VOLUNTEER_DATE_1_DAYS_BEFORE(902, "봉사 날짜 24시간 전에는 취소할 수 없습니다."),
+    APPLY_ALREADY_COMPLETED(903, "이미 신청이 완료된 봉사입니다."),
+
+
+    //LIKE - 950부터
+    LIKE_NOT_EXIST(950, "봉사 활동을 찜한 이력이 없습니다."),
+    LIKE_ALREADY(951, "이미 찜한 봉사입니다."),
+
+
+
+    //TAG - 1000 부터
+    TAG_NOT_EXIST(1000,"존재하는 태그가 없습니다.");
+
 
     @Getter
-    private int code;
+    private final int code;
 
     @Getter
-    private String message;
+    private final String message;
 
 
     ExceptionCode(int code, String message) {

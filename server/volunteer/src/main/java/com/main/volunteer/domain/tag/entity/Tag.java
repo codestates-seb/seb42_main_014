@@ -1,32 +1,29 @@
 package com.main.volunteer.domain.tag.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.main.volunteer.domain.group.entity.Group;
-import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity
 @NoArgsConstructor
 @Getter @Setter
 public class Tag{
 
-    public Tag(Long tagId, String tagName) {
-        this.tagId = tagId;
+    public Tag(String tagName) {
         this.tagName = tagName;
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tagId;
 
     private String tagName;
 
-    @OneToOne(mappedBy = "tag")
-    private Group group;
+//    @OneToOne(mappedBy = "tag")
+//    private Group group;
 
 }
