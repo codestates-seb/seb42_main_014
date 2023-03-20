@@ -7,6 +7,7 @@ import com.main.volunteer.domain.comment.mapper.CommentMapper;
 import com.main.volunteer.domain.comment.service.CommentService;
 import com.main.volunteer.domain.group.entity.Group;
 import com.main.volunteer.domain.group.service.GroupService;
+import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import lombok.AllArgsConstructor;
@@ -29,12 +30,13 @@ public class CommentController {
     public final CommentMapper mapper;
     private final CommentService commentService;
     private final GroupService groupService;
+    private final MemberService memberService;
 
     @PostMapping
     public ResponseEntity<?> postComment(@RequestBody @Valid CommentDto.Post postDto, @AuthenticationPrincipal CustomUserDetails userDetails){
 
         Comment comment = mapper.commentPostDtoToComment(postDto);
-        comment.setMember(userDetails);
+        comment.setMember(memberService.findMember(userDetails.getMemberId()));
         Comment postComment = commentService.createComment(comment);
 
         URI uri = UriUtil.createUri(DEFAULT_URI, comment.getCommentId());
@@ -44,7 +46,7 @@ public class CommentController {
 
 
     @GetMapping("/{comment-id}")
-    public ResponseEntity<?> getComment(@PathVariable("comment-id") long commentId, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> getComment(@PathVariable("comment-id") long commentId) {
 
         Comment comment = commentService.findComment(commentId);
 
@@ -52,16 +54,16 @@ public class CommentController {
     }
 
     @GetMapping("/group/{group-id}")
-    public ResponseEntity<?> getCommentsByGroupId(@PathVariable("group-id") long groupId, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> getCommentsByGroupId(@PathVariable("group-id") long groupId) {
 
         Group group = groupService.verifyExistGroup(groupId);
-        List<Comment> commentList = commentService.findCommentsByGroup(group, userDetails);
+        List<Comment> commentList = commentService.findCommentsByGroup(group);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiResponse.ok("data", mapper.commentsToCommentResponseDtos(commentList)));
     }
 
     @PatchMapping("/{comment-id}")
-    public ResponseEntity<?> updateComment(@PathVariable("comment-id") long commentId, @RequestBody CommentDto.Patch patchDto, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> updateComment(@PathVariable("comment-id") long commentId, @RequestBody CommentDto.Patch patchDto) {
 
         Comment comment = mapper.commentPatchDtoToComment(patchDto);
         comment.setCommentId(commentId);
@@ -72,7 +74,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{comment-id}")
-    public ResponseEntity<?> deleteComment(@PathVariable("comment-id") long commentId, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> deleteComment(@PathVariable("comment-id") long commentId) {
 
         Comment comment = commentService.findComment(commentId);
         commentService.deleteComment(commentId);

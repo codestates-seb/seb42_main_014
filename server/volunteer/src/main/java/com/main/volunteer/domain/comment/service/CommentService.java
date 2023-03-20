@@ -44,7 +44,7 @@ public class CommentService {
     }
 
     // 댓글 목록
-    public List<Comment> findCommentsByGroup(Group group, CustomUserDetails userDetails){
+    public List<Comment> findCommentsByGroup(Group group){
 
         return commentRepository.findCommentByGroup(group);
     }

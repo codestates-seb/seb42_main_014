@@ -29,7 +29,7 @@ public class Volunteer extends Auditable {
     @Column(nullable = false)
     private String title;
 
-//    private String volunteerImage;
+    private String volunteerImage;
 
     @Column(nullable = false)
     private LocalDateTime applyDate;
@@ -37,7 +37,7 @@ public class Volunteer extends Auditable {
     @Column(nullable = false)
     private LocalDateTime volunteerDate;
 
-    private Integer volunteerTime;
+    private Integer volunteerTime = 0;
 
     @Column(nullable = false)
     private String place;
@@ -66,11 +66,13 @@ public class Volunteer extends Auditable {
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
     private List<Review> reviewList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Apply> applyList = new ArrayList<>();
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
     private List<Like> likeList = new ArrayList<>();
+
+
 
 
 }
