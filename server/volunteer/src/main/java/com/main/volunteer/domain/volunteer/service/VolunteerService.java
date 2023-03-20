@@ -119,12 +119,14 @@ public class VolunteerService {
      * Volunteer volunteerStatus update
      */
 
+
     public void setVolunteerStatus(Volunteer volunteer){
+        log.info("LocalDateTime.now() : " + LocalDateTime.now() );
         if(LocalDateTime.now().isBefore(volunteer.getApplyDate())){
             volunteer.setVolunteerStatus(VolunteerStatus.VOLUNTEER_APPLY_BEFORE);
         }
 
-        if(LocalDateTime.now().isAfter(volunteer.getApplyDate()) && LocalDateTime.now().isBefore(volunteer.getVolunteerDate().minusHours(24))){
+        if(LocalDateTime.now().isAfter(volunteer.getApplyDate()) && LocalDateTime.now().isBefore(volunteer.getVolunteerDate().minusHours(ONE_DAY_OF_HOURS))){
             if(volunteer.getApplyCount() >= volunteer.getApplyLimit()){
                 volunteer.setVolunteerStatus(VolunteerStatus.VOLUNTEER_APPLY_LIMIT_OVER);
             }else {
@@ -132,7 +134,7 @@ public class VolunteerService {
             }
         }
 
-        if(LocalDateTime.now().isAfter(volunteer.getVolunteerDate().minusHours(24)) && LocalDateTime.now().isBefore(volunteer.getVolunteerDate())){
+        if(LocalDateTime.now().isAfter(volunteer.getVolunteerDate().minusHours(ONE_DAY_OF_HOURS)) && LocalDateTime.now().isBefore(volunteer.getVolunteerDate())){
             volunteer.setVolunteerStatus(VolunteerStatus.VOLUNTEER_APPLY_AFTER);
         }
 
