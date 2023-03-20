@@ -66,7 +66,7 @@ public class Volunteer extends Auditable {
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
     private List<Review> reviewList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Apply> applyList = new ArrayList<>();
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
