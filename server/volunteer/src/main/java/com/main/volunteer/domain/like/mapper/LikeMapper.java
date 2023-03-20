@@ -11,9 +11,10 @@ public interface LikeMapper {
     default LikeDto.Response likeToResponse(Like like){
 
         Long likeId = like.getLikeId();
-        Long volunteerId = like.getVolunteer().getVolunteerId();
+        String volunteerName = like.getVolunteer().getTitle();
+        String organizationName = like.getVolunteer().getMember().getMemberName();
 
-        return new LikeDto.Response(likeId, volunteerId);
+        return new LikeDto.Response(likeId, volunteerName, organizationName);
     }
 
     List<LikeDto.Response> likeListToResponseList(List<Like> myLikeList);
