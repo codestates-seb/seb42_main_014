@@ -65,7 +65,7 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.PATCH, "/comments/*").authenticated()
                         .antMatchers(HttpMethod.DELETE, "/comments/*").authenticated()
                         .antMatchers(HttpMethod.GET, "/comments/**").permitAll()
-                        .antMatchers(HttpMethod.POST, "/groups").hasRole("GROUPZANG")
+//                        .antMatchers(HttpMethod.POST, "/groups").hasRole("GROUPZANG")
                         .antMatchers(HttpMethod.PATCH, "/groups/*").hasRole("GROUPZANG")
                         .antMatchers(HttpMethod.DELETE, "/groups/*").hasRole("GROUPZANG")
                         .antMatchers(HttpMethod.GET, "/groups").permitAll()
