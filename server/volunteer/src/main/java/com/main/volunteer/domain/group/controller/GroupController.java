@@ -9,6 +9,7 @@ import com.main.volunteer.domain.tag.service.TagService;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,11 +51,12 @@ public class GroupController {
         return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.groupToGroupResponseDto(group)));
     }
     @GetMapping
-    public ResponseEntity<?> getGroups() {
+    public ResponseEntity<?> getGroups(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum) {
 
-        List<Group> groupList = groupService.findGroups();
+        Page<Group> groupPage = groupService.findGroups(pageNum - 1);
+        List<Group> groupList = groupPage.getContent();
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data",mapper.GroupsToGroupResponseDtos(groupList)));
+        return ResponseEntity.ok().body(ApiResponse.ok("data",mapper.GroupsToGroupResponseDtos(groupList), "totalPages", groupPage.getTotalPages()));
     }
     @PatchMapping("/{group-id}")
     @PreAuthorize("hasRole('ROLE_GROUPZANG')")
