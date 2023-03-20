@@ -2,55 +2,69 @@ import styled from "styled-components";
 import Button from "../../components/Button";
 import { useState } from "react";
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
-import { AiOutlineShareAlt } from "react-icons/ai";
+import { useLocation } from "react-router-dom";
+import { BsLink45Deg } from "react-icons/bs";
+
+const StyledContainerDiv = styled.div`
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+	margin: 20px;
+	display: flex;
+	flex-direction: column;
+	min-width: 1035px;
+
+	img {
+		border-radius: 10px;
+		margin: 20px;
+	}
+
+	div > span {
+		margin-bottom: 20px;
+		font-size: 16px;
+	}
+
+	button {
+		background-color: white;
+		border: 1px solid gray;
+		cursor: pointer;
+	}
+
+	.button-container {
+		display: flex;
+		width: 290px;
+		border: 1px solid gray;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+	}
+`;
+const StyledEmptyLineDiv = styled.div`
+	width: 100%;
+	background-color: black;
+	height: 50px;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: 1035px;
+`;
 
 export default function VolunteerInfo() {
-	const StyledContainerDiv = styled.div`
-		width: 100%;
-		align-items: center;
-		justify-content: center;
-		margin: 20px;
-		display: flex;
-		flex-direction: column;
-		min-width: 1035px;
-
-		img {
-			border-radius: 10px;
-			margin: 20px;
-		}
-
-		div > span {
-			margin-bottom: 20px;
-			font-size: 16px;
-		}
-
-		button {
-			background-color: white;
-			border: 1px solid gray;
-			cursor: pointer;
-		}
-
-		.button-container {
-			display: flex;
-			width: 290px;
-			border: 1px solid gray;
-			align-items: center;
-			justify-content: center;
-			cursor: pointer;
-		}
-	`;
-	const StyledEmptyLineDiv = styled.div`
-		width: 100%;
-		background-color: black;
-		height: 50px;
-		color: white;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		min-width: 1035px;
-	`;
-
 	const [isLike, setIsLike] = useState(false);
+
+	const handleCopyClipBoard = async (text: string) => {
+		try {
+			await navigator.clipboard.writeText(text);
+			alert("클립보드에 링크가 복사되었어요.");
+		} catch (err) {
+			console.log(err);
+			alert("복사에 실패했어요. 잠시 후 다시 시도해 주세요.");
+		}
+	};
+
+	const location = useLocation();
+	const baseUrl = `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com`;
 
 	return (
 		<StyledContainerDiv>
@@ -84,7 +98,10 @@ export default function VolunteerInfo() {
 						<button onClick={() => setIsLike(!isLike)}>
 							{!isLike ? <FcLikePlaceholder size={40} /> : <FcLike size={40} />}
 						</button>
-						<div className="button-container">
+						<div
+							className="button-container"
+							onClick={() => handleCopyClipBoard(`${baseUrl}${location.pathname}`)}
+						>
 							<Button
 								value={"너도 할래?"}
 								width={200}
@@ -93,10 +110,7 @@ export default function VolunteerInfo() {
 								textColor="black"
 								textSize={15}
 							/>
-							<AiOutlineShareAlt
-								size={30}
-								style={{ borderLeft: "1px solid gray", width: "200px" }}
-							/>
+							<BsLink45Deg size={30} style={{ borderLeft: "1px solid gray", width: "200px" }} />
 						</div>
 					</div>
 				</div>

@@ -3,48 +3,56 @@ import { BsGithub, BsInstagram } from "react-icons/bs";
 import { SiVelog } from "react-icons/si";
 
 export default function About() {
+	const github = "https://github.com";
+	const insta = "https://www.instagram.com";
 	const members = [
 		{
 			name: "박주혁",
 			avatarUrl: "/images/about/test.png",
 			position: "FE Developer",
-			githubUrl: "https://github.com/jellyjw",
-			blogUrl: "https://velog.io/@jellyjw",
+			githubUrl: `${github}/`,
+			blogUrl: "",
+			instaUrl: `${insta}/`,
 		},
 		{
 			name: "임성은",
 			avatarUrl: "/images/about/test.png",
 			position: "FE Developer",
-			githubUrl: "https://github.com/jellyjw",
-			blogUrl: "https://velog.io/@jellyjw",
+			githubUrl: `${github}/`,
+			blogUrl: "",
+			instaUrl: `${insta}/`,
 		},
 		{
 			name: "장지우",
 			avatarUrl: "/images/about/test.png",
 			position: "FE Developer",
-			githubUrl: "https://github.com/jellyjw",
+			githubUrl: `${github}/jellyjw`,
 			blogUrl: "https://velog.io/@jellyjw",
+			instaUrl: `${insta}/fallj_`,
 		},
 		{
 			name: "강은서",
 			avatarUrl: "/images/about/test.png",
 			position: "BE Developer",
-			githubUrl: "https://github.com/jellyjw",
-			blogUrl: "https://velog.io/@jellyjw",
+			githubUrl: `${github}/kdmstj`,
+			blogUrl: "https://kangkangsulae.tistory.com/",
+			instaUrl: `${insta}/k_dmstj_`,
 		},
 		{
 			name: "김민소",
 			avatarUrl: "/images/about/test.png",
 			position: "BE Developer",
-			githubUrl: "https://github.com/jellyjw",
-			blogUrl: "https://velog.io/@jellyjw",
+			githubUrl: `${github}/kms310272`,
+			blogUrl: "https://minso-dev.tistory.com/",
+			instaUrl: `${insta}/bella.m.kim/`,
 		},
 		{
 			name: "이우연",
 			avatarUrl: "/images/about/test.png",
 			position: "BE Developer",
-			githubUrl: "https://github.com/jellyjw",
-			blogUrl: "https://velog.io/@jellyjw",
+			githubUrl: `${github}/`,
+			blogUrl: "",
+			instaUrl: `${insta}/`,
 		},
 	];
 	const StyledAboutImgContainer = styled.div`
@@ -125,7 +133,7 @@ export default function About() {
 			<div style={{ marginBottom: "80px" }}>
 				{members &&
 					members.map((el, idx) => {
-						const { name, avatarUrl, position, githubUrl, blogUrl } = el;
+						const { name, avatarUrl, position, githubUrl, blogUrl, instaUrl } = el;
 						return (
 							<StyledMemberContainer key={idx}>
 								<StyledMemberImgContainer
@@ -151,7 +159,7 @@ export default function About() {
 										<a
 											target={"_blank"}
 											rel="noreferrer"
-											href={githubUrl}
+											href={instaUrl}
 											style={{ color: "white", marginRight: "20px" }}
 										>
 											<BsInstagram className="icon-hover" size={30} />
