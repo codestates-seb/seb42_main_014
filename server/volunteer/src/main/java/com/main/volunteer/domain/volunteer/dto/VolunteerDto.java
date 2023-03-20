@@ -81,6 +81,4 @@ public class VolunteerDto {
 
         private List<Review> reviewList;
     }
-
-
 }
