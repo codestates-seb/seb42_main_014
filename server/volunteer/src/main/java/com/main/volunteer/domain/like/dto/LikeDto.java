@@ -1,5 +1,6 @@
 package com.main.volunteer.domain.like.dto;
 
+import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,6 +12,7 @@ public class LikeDto {
     @Getter
     public static class Response {
         private Long likeId;
-        private Long volunteerId;
+        private String volunteerName;
+        private String organizationName;
     }
 }
