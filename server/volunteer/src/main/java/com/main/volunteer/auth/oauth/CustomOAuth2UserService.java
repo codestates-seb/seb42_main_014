@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,8 +34,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName,oAuth2User.getAttributes());
 
-        saveMember(attributes.getEmail(), attributes.getName(), registrationId);
-
+        if(memberRepository.findByEmail(attributes.getEmail()).isEmpty()) {
+            saveMember(attributes.getEmail(), attributes.getName(), registrationId);
+        }
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("USER")),
                 attributes.getAttributes(), attributes.getNameAttributeKey());
     }
