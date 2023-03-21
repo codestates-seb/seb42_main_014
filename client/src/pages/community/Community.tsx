@@ -43,7 +43,7 @@ export default function Community() {
 
 	return (
 		<>
-			<Category />
+			{/* <Category /> */}
 			<Container>
 				<ExplainDiv>
 					{/* 그룹 등록 관련 안내 */}
