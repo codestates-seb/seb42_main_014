@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import ImgUpload from "../../components/ImgUpload";
 import Modal from "../../components/Modal";
+import axios from "axios";
 
 const Body = styled.body`
 	height: 100vh;
@@ -112,6 +113,18 @@ export default function UserEdit() {
 		let clickEmg = event.currentTarget;
 		setisEmage(clickEmg);
 	};
+
+	const apiUrl = "http://3.35.252.234:8080/";
+
+	async function Volpatch(id: string): Promise<void> {
+		const url = `${apiUrl}${id}`;
+		try {
+			const response = await axios.patch(url);
+			console.log(response.data);
+		} catch (error) {
+			console.error(error);
+		}
+	}
 
 	return (
 		<Body>
