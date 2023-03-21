@@ -1,6 +1,5 @@
 package com.main.volunteer.domain.comment.service;
 
-import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.comment.entity.Comment;
 import com.main.volunteer.domain.comment.repository.CommentRepository;
 import com.main.volunteer.domain.group.entity.Group;

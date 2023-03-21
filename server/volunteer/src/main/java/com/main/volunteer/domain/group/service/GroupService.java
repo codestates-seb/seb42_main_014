@@ -4,6 +4,7 @@ import com.main.volunteer.domain.group.entity.Group;
 import com.main.volunteer.domain.group.repository.GroupRepository;
 import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.service.MemberService;
+import com.main.volunteer.domain.membergroup.entity.MemberGroup;
 import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class GroupService {
     private final MemberService memberService;
 
     // 그룹 생성
+
     public Group createGroup(Group group) {
         long groupZangId = group.getGroupZangId();
         Member groupZang = memberService.verifiedMember(groupZangId);
@@ -32,7 +34,11 @@ public class GroupService {
 
         // 그룹장 포인트 15이상인지 확인
         if(!checkGroupLeaderPoint(group.getGroupZangId())) {
-            throw new BusinessException(ExceptionCode.NOT_GROUP_ZANG);
+            throw new BusinessException(ExceptionCode.NOT_ENOUGH_POINT);
+        }
+        else if(groupZang.getRoles().contains("GROUPZANG")){
+            MemberGroup memberGroup = new MemberGroup(group, groupZang);
+            groupZang.getMemberGroups().add(memberGroup);
         }
         return groupRepository.save(group);
 
@@ -50,13 +56,15 @@ public class GroupService {
     }
 
     // 그룹 수정
-    public Group updateGroup(Group group) {
+    public Group updateGroup(Group group, Member member) {
 
-        Group verifyGroup = verifyExistGroup(group.getGroupId());
+        Group verifyGroup = verifyExistGroupAndMember(group.getGroupId(), member);
+        boolean updatable = verifyUpdatableGroup(verifyGroup, group);
 
-        if(!verifyUpdatableGroup(verifyGroup, group)){
-                throw new BusinessException(ExceptionCode.FAIL_GROUP_APPLY_LIMIT);
+        if (!updatable) {
+            throw new BusinessException(ExceptionCode.FAIL_GROUP_APPLY_LIMIT);
         }
+
 
         Optional.ofNullable(group.getGroupImage())
                 .ifPresent(groupImage -> verifyGroup.setGroupImage(groupImage));
@@ -76,18 +84,19 @@ public class GroupService {
         return groupRepository.save(verifyGroup);
     }
 
-    public void deleteGroup(long groupId) {
+    public void deleteGroup(long groupId, Member member) {
 
-        Group group = verifyExistGroup(groupId);
+        Group group = verifyExistGroupAndMember(groupId, member);
+
         groupRepository.delete(group);
     }
 
     private boolean verifyUpdatableGroup(Group verifyGroup, Group group) {
-
-        if(verifyGroup.getMemberGroups().size() > group.getApplyLimit()){
-            return false;
+        int applyLimit = group.getApplyLimit();
+        if (applyLimit < verifyGroup.getMemberGroups().size()) {
+            throw new BusinessException(ExceptionCode.FAIL_GROUP_APPLY_LIMIT);
         }
-        return true;
+        return applyLimit > verifyGroup.getApplyLimit();
     }
 
     // 그룹 존재 검증
@@ -97,12 +106,17 @@ public class GroupService {
         return optional.orElseThrow(() -> new BusinessException(ExceptionCode.GROUP_NOT_EXIST));
     }
 
+    @Transactional(readOnly = true)
+    public Group verifyExistGroupAndMember (long groupId, Member member) {
+        Optional<Group> optional = groupRepository.findByGroupIdAndMember(groupId, member);
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.GROUP_NOT_EXIST));
+    }
+
     public boolean checkGroupLeaderPoint(long memberId) {
         Member member = memberService.verifiedMember(memberId);
-
         if (member.getPoint().getPointCount() >= 15) {
             member.setRoles(List.of("GROUPZANG", "USER"));
-
+            MemberGroup memberGroup = new MemberGroup();
             return true;
         }
         return false;
