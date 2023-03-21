@@ -35,7 +35,7 @@ public class Group {
     @OneToMany(mappedBy = "group" , cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<MemberGroup> memberGroups = new ArrayList<>();
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "TAG_ID")
     private Tag tag;
 
