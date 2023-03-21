@@ -14,6 +14,12 @@ import AccessibleIcon from "@mui/icons-material/Accessible";
 import SvgIcon from "@mui/material/SvgIcon";
 import { useNavigate } from "react-router-dom";
 import Address from "../../components/Address";
+import Paginations from "../../components/Pagination";
+
+interface Props {
+	itemsPerPage: number;
+	endpoint: string;
+}
 
 const Bar = styled.div`
 	display: flex;
@@ -86,6 +92,8 @@ const optionArr = [
 ];
 
 export default function Volunteer() {
+	const [totalPages, setTotalPages] = useState<number>(0);
+	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [selectedArea, setSelectedArea] = useState("");
 	const [selectedSubArea, setSelectedSubArea] = useState("");
 	const [volunData, setVolunData] = useState([]);
@@ -102,28 +110,31 @@ export default function Volunteer() {
 	const handleOptionChange = async (selectedOption: SetStateAction<string | any>) => {
 		setSelectedOption(selectedOption);
 	};
+	const handlePageChange = (pageNumber: number) => {
+		setCurrentPage(pageNumber);
+		console.log(pageNumber);
+	};
 
 	useEffect(() => {
-		let URL =
-			"volunteers?volunteerName&organizationName&tagName&orderBy=volunteerId&sort=DESC&pageNum=1";
+		let URL = `volunteers?volunteerName&organizationName&tagName&orderBy=volunteerId&sort=DESC&pageNum=1`;
 		switch (selectedOption) {
 			case "기본순":
-				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=volunteerId&sort=DESC&pageNum=1`;
+				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=volunteerId&sort=DESC&pageNum=${currentPage}`;
 				break;
 			case "찜 많은순":
-				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=likeCount&sort=DESC&pageNum=1`;
+				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=likeCount&sort=DESC&pageNum=${currentPage}`;
 				break;
 			case "봉사시간 짧은 순":
-				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=volunteerTime&sort=ASC&pageNum=1`;
+				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=volunteerTime&sort=ASC&pageNum=${currentPage}`;
 				break;
 			case "봉사시간 긴 순":
-				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=volunteerTime&sort=DESC&pageNum=1`;
+				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=volunteerTime&sort=DESC&pageNum=${currentPage}`;
 				break;
 			case "모집인원 적은 순":
-				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=applyLimit&sort=ASC&pageNum=1`;
+				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=applyLimit&sort=ASC&pageNum=${currentPage}`;
 				break;
 			case "모집인원 많은 순":
-				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=applyLimit&sort=DESC&pageNum=1`;
+				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=applyLimit&sort=DESC&pageNum=${currentPage}`;
 				break;
 			default:
 				break;
@@ -131,11 +142,15 @@ export default function Volunteer() {
 
 		const getVolunteerData = async () => {
 			const result = await volunteerDataGet(URL);
+			let PageUrl = await volunteerDataGet(
+				`volunteers?volunteerName&organizationName&tagName&orderBy=volunteerId&sort=DESC&pageNum=1`,
+			);
+			setTotalPages(PageUrl.length);
 			setVolunData(result);
 		};
 
 		getVolunteerData();
-	}, [selectedOption, selectedArea, selectedSubArea]);
+	}, [selectedOption, selectedArea, selectedSubArea, currentPage]);
 
 	return (
 		<>
@@ -225,6 +240,11 @@ export default function Volunteer() {
 								);
 							})}
 					</StyledCardContainerDiv>
+					<Paginations
+						totalPages={totalPages}
+						currentPage={currentPage}
+						onPageChange={handlePageChange}
+					/>
 				</div>
 			</StyledContainerDiv>
 		</>
