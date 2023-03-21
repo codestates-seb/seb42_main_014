@@ -110,12 +110,6 @@ export default function Category() {
 					</Icon>
 					<span>환경</span>
 				</Col>
-				<Col>
-					<Icon>
-						<SvgIcon component={BusinessIcon} inheritViewBox fontSize="inherit" />
-					</Icon>
-					<span>사회</span>
-				</Col>
 			</Flex>
 		</Body>
 	);

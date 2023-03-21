@@ -163,7 +163,7 @@ const VolunteerPost = () => {
 		}
 	};
 
-	const optionArr = ["어린이", "노인", "장애인", "환경", "사회", "동물"];
+	const optionArr = ["어린이", "노인", "장애인", "환경", "동물"];
 	const navigate = useNavigate();
 
 	const today = new Date();

@@ -1,3 +1,4 @@
+import axios from "axios";
 import styled from "styled-components";
 import { Volpatch } from "../../api/mypage/VolunteerFatch";
 
@@ -22,20 +23,40 @@ interface ItemProps {
 }
 
 export default function UserVolItem2(props: ItemProps) {
-	const onRemove = async (event: any) => {
-		event.preventDefault();
-		if (window.confirm("이 작업이 수행되면 봉사가 취소됩니다.")) {
-			try {
-				await Volpatch(`apply/3`);
-				console.log("헬로우");
-
-				alert("봉사활동이 취소 되었습니다.");
-			} catch (error) {
-				console.error(error);
-			}
+	const apiUrl = `http://3.35.252.234:8080/apply/`;
+	const id = 18;
+	console.log(apiUrl);
+	const onRemove = async () => {
+		if (window.confirm("이 작업이 수행되면 봉사활동이 취소 됩니다.")) {
+			axios
+				.patch(apiUrl + id, {
+					headers: {
+						Authorization: `${localStorage.getItem("accessToken")}`,
+					},
+				})
+				.then(() => {
+					alert("삭제되었습니다.");
+				})
+				.catch((error) => {
+					console.error(error);
+					alert("삭제에 실패했습니다.");
+				});
 		} else {
-			alert("작업을 취소합니다.");
+			alert("취소합니다.");
 		}
+		// event.preventDefault();
+		// if (window.confirm("이 작업이 수행되면 봉사가 취소됩니다.")) {
+		// 	try {
+		// 		await Volpatch(`apply/3`);
+		// 		console.log("헬로우");
+
+		// 		alert("봉사활동이 취소 되었습니다.");
+		// 	} catch (error) {
+		// 		console.error(error);
+		// 	}
+		// } else {
+		// 	alert("작업을 취소합니다.");
+		// }
 	};
 
 	return (

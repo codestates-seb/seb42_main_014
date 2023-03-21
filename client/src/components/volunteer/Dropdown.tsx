@@ -9,6 +9,7 @@ const DropdownContainer = styled.div`
 
 interface TPropsDropDown {
 	option?: string[];
+	onChange?: any;
 	placeholder?: string;
 	style?: React.CSSProperties | undefined;
 	width?: number;
