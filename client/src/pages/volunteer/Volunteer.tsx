@@ -89,7 +89,7 @@ export default function Volunteer() {
 	const [selectedArea, setSelectedArea] = useState("");
 	const [selectedSubArea, setSelectedSubArea] = useState("");
 	const [volunData, setVolunData] = useState([]);
-	const [selectedOption, setSelectedOption] = useState("");
+	const [selectedOption, setSelectedOption] = useState("기본순");
 	const navigate = useNavigate();
 
 	const handleClick = (id: number) => {
