@@ -23,6 +23,7 @@ const StyledCardContainer = styled.div`
 		justify-content: center;
 		img {
 			width: 90%;
+			height: 200px;
 			border-radius: 10px;
 		}
 	}

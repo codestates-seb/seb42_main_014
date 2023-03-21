@@ -129,7 +129,7 @@ const VolunteerPost = () => {
 			setFile(URL.createObjectURL(selectedFiles?.[0]));
 		}
 	};
-	const optionArr = ["어린이", "노인", "장애인", "환경", "사회", "동물"];
+	const optionArr = ["어린이", "장애인", "노인", "동물", "환경", "사회"];
 
 	const onSubmit = (data: any) => {
 		const volunteerData = {
@@ -137,7 +137,6 @@ const VolunteerPost = () => {
 			category: selectedOption,
 			text: value,
 		};
-		console.log(volunteerData);
 	};
 
 	const TextChange = (content: string) => {
