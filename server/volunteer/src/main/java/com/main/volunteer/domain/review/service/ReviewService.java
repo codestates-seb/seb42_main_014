@@ -70,7 +70,7 @@ public class ReviewService {
 
         Optional<List<Review>> optional = reviewRepository.findAllByMember(member);
 
-        return optional.orElseThrow(() -> new RuntimeException("등록한 후기가 없습니다."));
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.REVIEW_NOT_EXIST));
     }
 
     /*
@@ -81,7 +81,7 @@ public class ReviewService {
 
         Optional<Review> optional = reviewRepository.findByMemberAndVolunteer(member, volunteer);
 
-        return optional.orElseThrow(() -> new RuntimeException("해당 봉사 활동에 등록된 후기가 없습니다."));
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.REVIEW_NOT_EXIST));
     }
 
     /*
@@ -92,7 +92,7 @@ public class ReviewService {
 
         Optional<List<Review>> optional = reviewRepository.findAllByVolunteer(volunteer);
 
-        return optional.orElseThrow(() -> new RuntimeException("해당 봉사 활동에 등록된 후기가 없습니다."));
+        return optional.orElseThrow(() -> new BusinessException(ExceptionCode.REVIEW_NOT_EXIST));
     }
 
     // 리뷰 생성 가능 여부 검증 로직
@@ -104,9 +104,9 @@ public class ReviewService {
 
         review.setVolunteer(volunteer);
 
-        if (!(volunteer.getVolunteerStatus()== VolunteerStatus.VOLUNTEER_AFTER)) {
-            throw new BusinessException(ExceptionCode.NOT_AFTER_VOLUNTEER_DATE);
-        }
+//        if (!(volunteer.getVolunteerStatus()== VolunteerStatus.VOLUNTEER_AFTER)) {
+//            throw new BusinessException(ExceptionCode.NOT_AFTER_VOLUNTEER_DATE);
+//        }
 
         return volunteer;
     }
