@@ -7,7 +7,6 @@ import DropdownMenu from "../../components/volunteer/Dropdown";
 import { useEffect, useState } from "react";
 import { volunteerDataGet } from "../../api/volunteer/volunteerData";
 import ChildCareIcon from "@mui/icons-material/ChildCare";
-import BusinessIcon from "@mui/icons-material/Business";
 import ForestIcon from "@mui/icons-material/Forest";
 import PetsIcon from "@mui/icons-material/Pets";
 import ElderlyIcon from "@mui/icons-material/Elderly";
@@ -102,7 +101,6 @@ export default function Volunteer() {
 									노인: ElderlyIcon,
 									동물: PetsIcon,
 									환경: ForestIcon,
-									사회: BusinessIcon,
 								};
 								return (
 									<Card
@@ -127,8 +125,6 @@ export default function Volunteer() {
 														? categoryItems["동물"]
 														: tagName === "환경"
 														? categoryItems["환경"]
-														: tagName === "사회"
-														? categoryItems["사회"]
 														: null
 												}
 												inheritViewBox

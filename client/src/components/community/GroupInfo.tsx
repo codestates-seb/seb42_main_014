@@ -1,11 +1,10 @@
 import { SvgIcon } from "@mui/material";
-import { FaArrowLeft, FaEnvira } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import { FiMapPin } from "react-icons/fi";
 import { MdGroup, MdOutlinePersonPin } from "react-icons/md";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ChildCareIcon from "@mui/icons-material/ChildCare";
-import BusinessIcon from "@mui/icons-material/Business";
 import ForestIcon from "@mui/icons-material/Forest";
 import PetsIcon from "@mui/icons-material/Pets";
 import ElderlyIcon from "@mui/icons-material/Elderly";
@@ -51,7 +50,6 @@ export default function GroupInfo({ groupData }: any) {
 		노인: ElderlyIcon,
 		동물: PetsIcon,
 		환경: ForestIcon,
-		사회: BusinessIcon,
 	};
 
 	console.log(groupData);
@@ -102,8 +100,6 @@ export default function GroupInfo({ groupData }: any) {
 									? categoryItems["동물"]
 									: tagName === "환경"
 									? categoryItems["환경"]
-									: tagName === "사회"
-									? categoryItems["사회"]
 									: null
 							}
 							inheritViewBox

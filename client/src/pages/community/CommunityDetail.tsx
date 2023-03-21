@@ -25,7 +25,7 @@ const StyledGroupDetailContainer = styled.div`
 	}
 `;
 
-export default function GroupDetail() {
+export default function CommunityDetail() {
 	const [groupData, setGroupData] = useState({});
 
 	useEffect(() => {

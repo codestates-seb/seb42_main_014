@@ -163,7 +163,9 @@ const VolunteerPost = () => {
 		}
 	};
 
-	const optionArr = ["어린이", "노인", "장애인", "환경", "사회", "동물"];
+	console.log(imageUrl);
+
+	const optionArr = ["어린이", "노인", "장애인", "환경", "동물"];
 	const navigate = useNavigate();
 
 	const today = new Date();
@@ -173,7 +175,7 @@ const VolunteerPost = () => {
 		setValue(content);
 	};
 
-	const onVolunteerPostSubmit = (data: IPostData) => {
+	const onSubmit = (data: IPostData) => {
 		const {
 			title,
 			applyDate,
@@ -182,6 +184,8 @@ const VolunteerPost = () => {
 			placeDetail,
 			memberCount,
 			volunteerTime,
+			groupName,
+			applyLimit,
 		} = data;
 		const postVolunteerData = {
 			title,
@@ -194,22 +198,38 @@ const VolunteerPost = () => {
 			applyLimit: Number(memberCount),
 			tagName: selectedOption,
 		};
-		console.log(postVolunteerData);
 
-		if (post !== "/post") {
+		const postGroupData = {
+			groupName,
+			groupImage: imageUrl,
+			applyLimit: Number(applyLimit),
+			place: `${selectedArea} ${selectedSubArea}`,
+			content: value,
+			tagName: selectedOption,
+		};
+
+		if (post === "/register") {
 			try {
 				volunteerDataPost("volunteers", postVolunteerData);
-				// navigate("/volunteer");
+				navigate("/volunteer");
 			} catch (err) {
 				console.log(err);
 				alert("봉사 등록에 실패했어요. 잠시 후 다시 시도해 주세요.");
+			}
+		} else if (post === "/grouppost") {
+			try {
+				volunteerDataPost("groups", postGroupData);
+				navigate("/community");
+			} catch (err) {
+				console.log(err);
+				alert("그룹 등록에 실패했어요. 잠시 후 다시 시도해 주세요.");
 			}
 		}
 	};
 
 	return (
 		<Body>
-			<form onSubmit={handleSubmit(onVolunteerPostSubmit)}>
+			<form onSubmit={handleSubmit(onSubmit)}>
 				<Container>
 					<Left onClick={onChangeHandler}>
 						<input id="profileImg" type="file" onChange={handleChange} />
@@ -219,7 +239,7 @@ const VolunteerPost = () => {
 						/>
 						<label htmlFor="profileImg" ref={fileInput}></label>
 					</Left>
-					{post !== "/post" ? (
+					{post !== "/grouppost" ? (
 						<Right>
 							<Select>
 								<span>활동명</span>
@@ -284,11 +304,11 @@ const VolunteerPost = () => {
 					) : (
 						<Right>
 							<Select>
-								<span>그룹명 </span>
+								<span>그룹명</span>
 								<input {...register("groupName", { required: true })} type="text" />
 							</Select>
 							<Select>
-								<span>봉사분야 </span>
+								<span>봉사분야</span>
 
 								<Dropdown
 									option={optionArr}
@@ -297,12 +317,17 @@ const VolunteerPost = () => {
 									placeholder="분야를 선택해주세요"
 								/>
 							</Select>
-							<Select>
+							<Select style={{ borderBottom: "3px solid black" }}>
 								<span>활동 지역</span>
-								<input {...register("place", { required: true })} type="text" />
+								<Address
+									selectedArea={selectedArea}
+									setSelectedArea={setSelectedArea}
+									selectedSubArea={selectedSubArea}
+									setSelectedSubArea={setSelectedSubArea}
+								/>
 							</Select>
 							<Select>
-								<span>최대 인원 </span>
+								<span>최대 인원</span>
 								<input
 									{...register("applyLimit", { required: true })}
 									style={{ width: "60px" }}

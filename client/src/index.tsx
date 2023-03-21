@@ -13,9 +13,8 @@ import Community from "./pages/community/Community";
 import UserEdit from "./pages/Sign/UserEdit";
 import CompanyEdit from "./pages/Sign/CompanyEdit";
 import VolunteerDetail from "./pages/volunteer/VolunteerDetail";
-import CommunityPost from "./pages/community/CommunityPost";
-import GroupDetail from "./pages/community/GroupDetail";
 import ErrorPage from "./pages/ErrorPage";
+import CommunityDetail from "./pages/community/CommunityDetail";
 
 const router = createBrowserRouter([
 	{
@@ -55,13 +54,13 @@ const router = createBrowserRouter([
 				element: <Community />,
 			},
 			{
-				path: "/post",
-				element: <CommunityPost />,
+				path: "/grouppost",
+				element: <VolunteerPost />,
 			},
 
 			{
 				path: "/community/:id",
-				element: <GroupDetail />,
+				element: <CommunityDetail />,
 			},
 			{
 				path: "/about",
