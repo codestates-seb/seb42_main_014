@@ -1,5 +1,6 @@
 package com.main.volunteer.domain.membergroup.mapper;
 
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.membergroup.dto.MemberGroupDto;
 import com.main.volunteer.domain.membergroup.entity.MemberGroup;
 import org.mapstruct.Mapper;
@@ -8,6 +9,7 @@ import org.mapstruct.ReportingPolicy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring" , unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MemberGroupMapper {
@@ -28,5 +30,10 @@ public interface MemberGroupMapper {
                     .build());
         }
         return responses;
+    }
+    default public List<MemberGroupDto.MemberDetails> membeberListToMeberGroupsMemberDtails(List<Member> memberList){
+        return memberList.stream().map(
+                member -> new MemberGroupDto.MemberDetails(member.getMemberId(), member.getMemberName(), member.getPoint().getPointCount())
+        ).collect(Collectors.toList());
     }
 }

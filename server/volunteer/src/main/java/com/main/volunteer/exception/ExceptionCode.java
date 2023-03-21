@@ -22,11 +22,12 @@ public enum ExceptionCode {
     // Group - 600부터
     FAIL_GROUP_APPLY_LIMIT(600, "현재 등록되어 있는 그룹의 멤버수가 수정하려는 멤버수보다 많습니다."),
     GROUP_NOT_EXIST(601, "그룹이 존재 하지 않습니다."),
-    NOT_GROUP_ZANG(602, "그룹장만 그룹을 생성할 수 있습니다."),
+    NOT_ENOUGH_POINT(602, "포인트가 부족합니다."),
+
 
     // memberGroup은 650 번대부터
     MEMBER_GROUP_EXIST(650, "이미 그룹에 가입되어 있습니다."),
-    MEMBER_GROUP_NOT_EXIST(651, "가입되어있는 그룹이 없습니다."),
+    MEMBER_GROUP_NOT_EXIST(651, "그룹에 가입한 가입자 정보가 없습니다."),
 
     // Comment -700 부터
     COMMENT_NOT_EXIST(700, "댓글이 존재하지 않습니다."),
