@@ -3,6 +3,7 @@ package com.main.volunteer.domain.membergroup.controller;
 import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.group.entity.Group;
 import com.main.volunteer.domain.group.service.GroupService;
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.domain.membergroup.dto.MemberGroupDto;
 import com.main.volunteer.domain.membergroup.entity.MemberGroup;
@@ -12,11 +13,13 @@ import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/member-groups")
@@ -34,7 +37,6 @@ public class MemberGroupController {
         MemberGroup memberGroup = mapper.memberGroupDtoToMemberGroup(postDto);
         memberGroup.setMember(memberService.findMember(userDetails.getMemberId()));
         memberGroup.setGroup(groupService.verifyExistGroup(groupId));
-
         memberGroup = memberGroupService.createMemberGroup(memberGroup);
 
         URI uri = UriUtil.createUri(DEFAULT_URI, memberGroup.getMemberGroupId());
@@ -54,4 +56,14 @@ public class MemberGroupController {
         return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.memberGroupsToMemberGroupsResponses(memberGroups)));
     }
 
+    @GetMapping("/{group-id}/details")
+    public ResponseEntity<?> getMemberGroupDetailsByGroupId(@PathVariable("group-id") long groupId){
+
+        List<MemberGroup> memberGroups = memberGroupService.findMemberGroupsByGroupId(groupId);
+        List<Member> memberList = memberGroups.stream()
+                .map(memberGroup -> memberService.findMember(memberGroup.getMemberId()))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.membeberListToMeberGroupsMemberDtails(memberList)));
+    }
 }

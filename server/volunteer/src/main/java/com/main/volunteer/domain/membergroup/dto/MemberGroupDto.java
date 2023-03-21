@@ -5,6 +5,7 @@ import com.main.volunteer.domain.group.entity.Group;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 public class MemberGroupDto {
 
@@ -26,5 +27,17 @@ public class MemberGroupDto {
         private long groupId;
         @JsonProperty("group_name")
         private String groupName;
+    }
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    @Builder
+    public static class MemberDetails{
+        @JsonProperty("member_id")
+        private long memberId;
+        @JsonProperty("member_name")
+        private String memberName;
+        @JsonProperty("point_count")
+        private int pointCount;
     }
 }
