@@ -4,6 +4,7 @@ import Comment from "../../components/community/Comment";
 import GroupInfo from "../../components/community/GroupInfo";
 import GroupMember from "../../components/community/GroupMember";
 import { myPageGet } from "../../api/mypage/MypageGet";
+import { useLocation } from "react-router-dom";
 
 const StyledGroupDetailContainer = styled.div`
 	margin-bottom: 100px;
@@ -25,12 +26,12 @@ const StyledGroupDetailContainer = styled.div`
 	}
 `;
 
-export default function GroupDetail() {
+export default function CommunityDetail() {
 	const [groupData, setGroupData] = useState({});
-
+	const location = useLocation();
 	useEffect(() => {
 		const getGroupDetailData = async () => {
-			const result = await myPageGet(`groups/${1}`);
+			const result = await myPageGet(`groups/${location.state}`);
 			setGroupData(result.data);
 		};
 		getGroupDetailData();
@@ -40,7 +41,7 @@ export default function GroupDetail() {
 		<StyledGroupDetailContainer>
 			<GroupInfo groupData={groupData} />
 			<div className="layout-child">
-				<GroupMember />
+				<GroupMember groupData={groupData} groupId={location.state} />
 				<div className="cmt">
 					<Comment />
 				</div>

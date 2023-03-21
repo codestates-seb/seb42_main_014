@@ -44,13 +44,20 @@ const StyledMemberContainer = styled.div`
 	animation: fadeInLeft 2s;
 `;
 
-const StyledMemberImgContainer = styled.img`
+const StyledMemberImgContainer = styled.div`
 	width: 180px;
 	height: 180px;
 	border-radius: 50%;
-	border: 4px solid black;
+	/* border: 4px solid black; */
 	background-color: white;
 	margin-left: 100px;
+	overflow: hidden;
+`;
+
+const DeveloperImg = styled.img`
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 `;
 
 export default function About() {
@@ -70,12 +77,12 @@ export default function About() {
 			avatarUrl: "/images/about/test.png",
 			position: "FE Developer",
 			githubUrl: `${github}/`,
-			blogUrl: "",
-			instaUrl: `${insta}/`,
+			blogUrl: "https://velog.io/@se2id",
+			instaUrl: null,
 		},
 		{
 			name: "장지우",
-			avatarUrl: "/images/about/test.png",
+			avatarUrl: "/images/about/장지우.jpeg",
 			position: "FE Developer",
 			githubUrl: `${github}/jellyjw`,
 			blogUrl: "https://velog.io/@jellyjw",
@@ -83,7 +90,7 @@ export default function About() {
 		},
 		{
 			name: "강은서",
-			avatarUrl: "/images/about/test.png",
+			avatarUrl: "/images/about/강은서.jpeg",
 			position: "BE Developer",
 			githubUrl: `${github}/kdmstj`,
 			blogUrl: "https://kangkangsulae.tistory.com/",
@@ -91,7 +98,7 @@ export default function About() {
 		},
 		{
 			name: "김민소",
-			avatarUrl: "/images/about/test.png",
+			avatarUrl: "/images/about/김민소.jpg",
 			position: "BE Developer",
 			githubUrl: `${github}/kms310272`,
 			blogUrl: "https://minso-dev.tistory.com/",
@@ -141,8 +148,9 @@ export default function About() {
 									style={{
 										border: position.includes("FE") ? "4px solid #f36e56" : "4px solid #6166f4",
 									}}
-									src={avatarUrl}
-								/>
+								>
+									<DeveloperImg src={avatarUrl} alt={"개발자 이미지"} />
+								</StyledMemberImgContainer>
 								<div style={{ display: "flex", flexDirection: "column", margin: "30px" }}>
 									<span style={{ marginBottom: "6px", fontSize: "25px" }}>{name}</span>
 									<span style={{ color: position.includes("FE") ? "#ff7259" : "#abaeff" }}>
@@ -161,7 +169,9 @@ export default function About() {
 											target={"_blank"}
 											rel="noreferrer"
 											href={instaUrl}
-											style={{ color: "white", marginRight: "20px" }}
+											style={
+												!instaUrl ? { display: "none" } : { color: "white", marginRight: "20px" }
+											}
 										>
 											<BsInstagram className="icon-hover" size={30} />
 										</a>

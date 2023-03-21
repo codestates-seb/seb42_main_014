@@ -1,11 +1,10 @@
 import { SvgIcon } from "@mui/material";
-import { FaArrowLeft, FaEnvira } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import { FiMapPin } from "react-icons/fi";
 import { MdGroup, MdOutlinePersonPin } from "react-icons/md";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ChildCareIcon from "@mui/icons-material/ChildCare";
-import BusinessIcon from "@mui/icons-material/Business";
 import ForestIcon from "@mui/icons-material/Forest";
 import PetsIcon from "@mui/icons-material/Pets";
 import ElderlyIcon from "@mui/icons-material/Elderly";
@@ -43,18 +42,15 @@ const StyledContainerDiv = styled.div`
 `;
 
 export default function GroupInfo({ groupData }: any) {
-	const { applyLimit, content, groupId, groupImage, groupName, groupZandId, place, tagName } =
-		groupData;
+	const { applyLimit, content, groupImage, groupName, place, tagName } = groupData;
 	const categoryItems = {
 		어린이: ChildCareIcon,
 		장애인: AccessibleIcon,
 		노인: ElderlyIcon,
 		동물: PetsIcon,
 		환경: ForestIcon,
-		사회: BusinessIcon,
 	};
 
-	console.log(groupData);
 	return (
 		<StyledContainerDiv>
 			<Link to={"/community"}>
@@ -66,14 +62,14 @@ export default function GroupInfo({ groupData }: any) {
 				<h1>{groupName}</h1>
 			</section>
 			<section style={{ display: "flex", padding: "20px" }}>
-				<img src="/images/home/main-img-2.png" alt="그룹 사진" />
+				<img src={groupImage} alt="그룹 사진" />
 				<div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
 					<div style={{ marginLeft: "20px" }}>
 						<div className="layout">
 							<MdGroup size={30} />
 							<span>그룹 소개</span>
 						</div>
-						<div>{content}</div>
+						<div dangerouslySetInnerHTML={{ __html: content }}></div>
 					</div>
 					<div style={{ margin: "20px 0px 0px 20px" }}>
 						<div className="layout">
@@ -102,8 +98,6 @@ export default function GroupInfo({ groupData }: any) {
 									? categoryItems["동물"]
 									: tagName === "환경"
 									? categoryItems["환경"]
-									: tagName === "사회"
-									? categoryItems["사회"]
 									: null
 							}
 							inheritViewBox
