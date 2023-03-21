@@ -5,7 +5,6 @@ import ElderlyIcon from "@mui/icons-material/Elderly";
 import AccessibleIcon from "@mui/icons-material/Accessible";
 import SvgIcon from "@mui/material/SvgIcon";
 import styled from "styled-components";
-import { useState } from "react";
 
 interface CategoryProps {
 	onCategoryClick: (category: string) => void;

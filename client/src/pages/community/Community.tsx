@@ -52,6 +52,7 @@ const ButtonDiv = styled.div`
 export default function Community() {
 	const [getCommunityData, setGetCommunityData] = useState([]);
 	const [getMyScore, setGetMyScore] = useState<any>(0);
+	const [selectedCategory, setSelectedCategory] = useState("");
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -63,8 +64,6 @@ export default function Community() {
 			.catch((err) => console.log(err));
 	}, []);
 
-	console.log(getCommunityData);
-	console.log(getMyScore);
 	const { point } = getMyScore;
 
 	const handleGroupClick = (id: number) => {
@@ -84,10 +83,15 @@ export default function Community() {
 			alert(`봉사점수 15점부터 신청 가능합니다!`);
 		}
 	};
+	const handleCategoryClick = (category: string) => {
+		setSelectedCategory(category);
+	};
 
 	return (
 		<>
-			{/* <Category /> */}
+
+			<Category onCategoryClick={handleCategoryClick} />
+
 			<div style={{ marginBottom: "100px" }}>
 				<Container>
 					<ExplainDiv>
@@ -110,7 +114,9 @@ export default function Community() {
 					</ExplainDiv>
 					{getCommunityData &&
 						getCommunityData.map((el) => {
-							const { groupImage, groupName, place, content, tagName, groupId, groupZandId } = el;
+
+							const { groupImage, groupName, place, content, tagName, groupId } = el;
+
 							const categoryItems = {
 								어린이: ChildCareIcon,
 								장애인: AccessibleIcon,
@@ -118,35 +124,68 @@ export default function Community() {
 								동물: PetsIcon,
 								환경: ForestIcon,
 							};
-							return (
-								<CommunityCard
-									key={groupId}
-									src={groupImage}
-									name={groupName}
-									place={place}
-									intro={content}
-									hashtag={`#${tagName}`}
-									category={
-										<SvgIcon
-											component={
-												tagName === "어린이"
-													? categoryItems["어린이"]
-													: tagName === "장애인"
-													? categoryItems["장애인"]
-													: tagName === "노인"
-													? categoryItems["노인"]
-													: tagName === "동물"
-													? categoryItems["동물"]
-													: tagName === "환경"
-													? categoryItems["환경"]
-													: null
-											}
-											inheritViewBox
-										/>
-									}
-									onClick={() => handleGroupClick(groupId)}
-								/>
-							);
+
+							if (tagName === selectedCategory) {
+								return (
+									<CommunityCard
+										key={groupId}
+										src={groupImage}
+										name={groupName}
+										place={place}
+										intro={content}
+										hashtag={`#${tagName}`}
+										category={
+											<SvgIcon
+												component={
+													tagName === "어린이"
+														? categoryItems["어린이"]
+														: tagName === "장애인"
+														? categoryItems["장애인"]
+														: tagName === "노인"
+														? categoryItems["노인"]
+														: tagName === "동물"
+														? categoryItems["동물"]
+														: tagName === "환경"
+														? categoryItems["환경"]
+														: null
+												}
+												inheritViewBox
+											/>
+										}
+										onClick={() => handleGroupClick(groupId)}
+									/>
+								);
+							} else if (selectedCategory === "") {
+								return (
+									<CommunityCard
+										key={groupId}
+										src={groupImage}
+										name={groupName}
+										place={place}
+										intro={content}
+										hashtag={`#${tagName}`}
+										category={
+											<SvgIcon
+												component={
+													tagName === "어린이"
+														? categoryItems["어린이"]
+														: tagName === "장애인"
+														? categoryItems["장애인"]
+														: tagName === "노인"
+														? categoryItems["노인"]
+														: tagName === "동물"
+														? categoryItems["동물"]
+														: tagName === "환경"
+														? categoryItems["환경"]
+														: null
+												}
+												inheritViewBox
+											/>
+										}
+										onClick={() => handleGroupClick(groupId)}
+									/>
+								);
+							}
 						})}
 				</Container>
 			</div>
