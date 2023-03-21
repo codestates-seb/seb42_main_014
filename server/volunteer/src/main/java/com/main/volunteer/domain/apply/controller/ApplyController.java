@@ -8,6 +8,7 @@ import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -67,11 +68,12 @@ public class ApplyController {
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/member/plan")
-    public ResponseEntity<?> getMyPlanList(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> getMyPlanList(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        List<Apply> applyList = applyService.getMyPlanList(memberService.findMember(userDetails.getMemberId()));
+        Page<Apply> applyPage = applyService.getMyPlanList(pageNum -1, memberService.findMember(userDetails.getMemberId()));
+        List<Apply> applyList = applyPage.getContent();
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data", applyMapper.applyListToResponseList(applyList)));
+        return ResponseEntity.ok().body(ApiResponse.ok("data", applyMapper.applyListToResponseList(applyList), "totalPages", applyPage.getTotalPages()));
     }
 
     /**
@@ -79,11 +81,12 @@ public class ApplyController {
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/my/history")
-    public ResponseEntity<?> getMyHistoryList(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> getMyHistoryList(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        List<Apply> applyList = applyService.getMyHistoryList(memberService.findMember(userDetails.getMemberId()));
+        Page<Apply> applyPage = applyService.getMyHistoryList(pageNum -1, memberService.findMember(userDetails.getMemberId()));
+        List<Apply> applyList = applyPage.getContent();
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data", applyMapper.applyListToResponseList(applyList)));
+        return ResponseEntity.ok().body(ApiResponse.ok("data", applyMapper.applyListToResponseList(applyList), "totalPages", applyPage.getTotalPages()));
     }
 
     /**
@@ -91,11 +94,12 @@ public class ApplyController {
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/organization/{volunteer-id}")
-    public ResponseEntity<?> getApplyListByOrganization(@PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> getApplyListByOrganization(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum, @PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        List<Apply> applyList = applyService.getApplyListByOrganization(volunteerId, memberService.findMember(userDetails.getMemberId()));
+        Page<Apply> applyPage = applyService.getApplyListByOrganization(pageNum - 1, volunteerId, memberService.findMember(userDetails.getMemberId()));
+        List<Apply> applyList = applyPage.getContent();
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data", applyMapper.applyListToResponseToORGList(applyList)));
+        return ResponseEntity.ok().body(ApiResponse.ok("data", applyMapper.applyListToResponseToORGList(applyList), "totalPages",applyPage.getTotalPages()));
     }
 
 }

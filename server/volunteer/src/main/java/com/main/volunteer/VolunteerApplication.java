@@ -25,21 +25,21 @@ public class VolunteerApplication {
 		SpringApplication.run(VolunteerApplication.class, args);
 	}
 
-//	@Bean
-//	public CommandLineRunner dataLoader(TagRepository tagRepository) {
-//		return new CommandLineRunner() {
-//			@Override
-//			public void run(String... args) throws Exception {
-//				tagRepository.save(new Tag("어린이"));
-//				tagRepository.save(new Tag("어르신"));
-//				tagRepository.save(new Tag("장애인"));
-//				tagRepository.save(new Tag("동물"));
-//				tagRepository.save(new Tag("환경"));
-//				tagRepository.save(new Tag("사회"));
-//
-//			}
-//		};
-//	}
+	@Bean
+	public CommandLineRunner dataLoader(TagRepository tagRepository) {
+		return new CommandLineRunner() {
+			@Override
+			public void run(String... args) throws Exception {
+				tagRepository.save(new Tag("어린이"));
+				tagRepository.save(new Tag("장애인"));
+				tagRepository.save(new Tag("노인"));
+				tagRepository.save(new Tag("동물"));
+				tagRepository.save(new Tag("환경"));
+				tagRepository.save(new Tag("사회"));
+
+			}
+		};
+	}
 
 
 }
