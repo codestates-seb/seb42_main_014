@@ -2,9 +2,12 @@ package com.main.volunteer.auth.config;
 
 import com.main.volunteer.auth.filter.JwtAuthenticationFilter;
 import com.main.volunteer.auth.filter.JwtVerificationFilter;
+import com.main.volunteer.auth.handler.MemberAccessDeniedHandler;
+import com.main.volunteer.auth.handler.MemberAuthenticationEntryPoint;
 import com.main.volunteer.auth.handler.MemberAuthenticationFailureHandler;
 import com.main.volunteer.auth.handler.MemberAuthenticationSuccessHandler;
 import com.main.volunteer.auth.jwt.JwtTokenizer;
+import com.main.volunteer.auth.oauth.CustomOAuth2UserService;
 import com.main.volunteer.auth.oauth.OAuth2MemberSuccessHandler;
 import com.main.volunteer.auth.service.CustomUserDetailsService;
 import com.main.volunteer.auth.utils.CustomAuthorityUtils;
@@ -35,7 +38,8 @@ public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final CustomUserDetailsService userDetailsService;
-
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2MemberSuccessHandler oAuth2MemberSuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -48,6 +52,10 @@ public class SecurityConfiguration {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
+//                .exceptionHandling()
+//                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
+//                .accessDeniedHandler(new MemberAccessDeniedHandler())
+//                .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
@@ -72,9 +80,11 @@ public class SecurityConfiguration {
                         .antMatchers("/member-groups/*").authenticated()
                         .antMatchers(HttpMethod.GET,"/member-groups").permitAll()
                         .anyRequest().permitAll())
-                .oauth2Login(oauth2 -> oauth2
-                        .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer)));
-;
+                .oauth2Login()
+                .successHandler(oAuth2MemberSuccessHandler)
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService);
+
         return http.build();
     }
 
