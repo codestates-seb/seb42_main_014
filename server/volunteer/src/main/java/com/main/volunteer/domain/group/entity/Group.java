@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "GROUPS")
+@Table(name = "TEAM")
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

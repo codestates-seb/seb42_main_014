@@ -67,7 +67,7 @@ public class ApplyService {
      */
     public List<Apply> getMyPlanList(Member member) {
 
-        Optional<List<Apply>> optional = applyRepository.findByMemberAndVolunteer_VolunteerStatusNot(member, VolunteerStatus.VOLUNTEER_AFTER);
+        Optional<List<Apply>> optional = applyRepository.findByMemberAndVolunteer_VolunteerStatusNotAndApplyStatus(member, VolunteerStatus.VOLUNTEER_AFTER, ApplyStatus.APPLY_COMPLETE);
 
         return optional.orElseThrow(() -> new BusinessException(ExceptionCode.APPLY_NOT_EXIST));
     }
@@ -77,7 +77,7 @@ public class ApplyService {
      */
     public List<Apply> getMyHistoryList(Member member) {
 
-        Optional<List<Apply>> optional = applyRepository.findByMemberAndVolunteer_VolunteerStatus(member, VolunteerStatus.VOLUNTEER_AFTER);
+        Optional<List<Apply>> optional = applyRepository.findByMemberAndVolunteer_VolunteerStatusAndApplyStatus(member, VolunteerStatus.VOLUNTEER_AFTER, ApplyStatus.APPLY_COMPLETE);
 
         return optional.orElseThrow(() -> new BusinessException(ExceptionCode.APPLY_NOT_EXIST));
     }
@@ -87,7 +87,7 @@ public class ApplyService {
      */
     public List<Apply> getApplyListByOrganization(Long volunteerId,Member member) {
         Volunteer volunteer = volunteerService.verifyOwnership(volunteerId,member);
-        Optional<List<Apply>> optional = applyRepository.findAllByVolunteer(volunteer);
+        Optional<List<Apply>> optional = applyRepository.findAllByVolunteerAndApplyStatus(volunteer, ApplyStatus.APPLY_COMPLETE);
         return optional.orElseThrow(() -> new BusinessException(ExceptionCode.APPLY_NOT_EXIST));
     }
 

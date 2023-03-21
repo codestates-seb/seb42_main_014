@@ -21,6 +21,8 @@ public class VolunteerDto {
         @NotBlank(message = "title cannot be empty.")
         private String title;
 
+        private String volunteerImage;
+
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
         private LocalDateTime applyDate;
 
@@ -42,7 +44,7 @@ public class VolunteerDto {
         @NotBlank
         private String tagName;
 
-        private String volunteerImage;
+
 
     }
 
@@ -79,6 +81,4 @@ public class VolunteerDto {
 
         private List<Review> reviewList;
     }
-
-
 }

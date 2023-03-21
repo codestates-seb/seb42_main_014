@@ -9,6 +9,7 @@ import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import org.mapstruct.Mapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +24,9 @@ public interface ApplyMapper {
         Volunteer volunteer = apply.getVolunteer();
 
         Long applyId = apply.getApplyId();
-        Long volunteerId = volunteer.getVolunteerId();
+        String volunteerName = volunteer.getTitle();
+        LocalDateTime volunteerDate = volunteer.getVolunteerDate();
+        LocalDateTime appliedAt = apply.getModifiedAt();
         ApplyStatus applyStatus = apply.getApplyStatus();
         boolean reviewDone = false;
         List<Review> reviewList = volunteer.getReviewList();
@@ -34,7 +37,7 @@ public interface ApplyMapper {
             }
         }
 
-        return new ApplyDto.Response( applyId, volunteerId, applyStatus,reviewDone );
+        return new ApplyDto.Response( applyId, volunteerName, volunteerDate, appliedAt, applyStatus,reviewDone );
     }
 
     default ApplyDto.ResponseToORG applyToResponseToORG(Apply apply){
@@ -46,13 +49,14 @@ public interface ApplyMapper {
         Volunteer volunteer = apply.getVolunteer();
 
         Long applyId = apply.getApplyId();
-        Long volunteerId = volunteer.getVolunteerId();
+        String volunteerName = volunteer.getTitle();
         ApplyStatus applyStatus = apply.getApplyStatus();
         Long memberId = member.getMemberId();
+        String profileImage = member.getProfileImage();
         String memberEmail = member.getEmail();
         String memberName = member.getMemberName();
 
-        return new ApplyDto.ResponseToORG( applyId, volunteerId, applyStatus,memberId, memberEmail, memberName);
+        return new ApplyDto.ResponseToORG( applyId, volunteerName, applyStatus,memberId,profileImage, memberEmail, memberName);
     }
 
     List<ApplyDto.ResponseToORG> applyListToResponseToORGList(List<Apply> applyList);
