@@ -4,6 +4,7 @@ import com.main.volunteer.domain.group.entity.Group;
 import com.main.volunteer.domain.group.repository.GroupRepository;
 import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.service.MemberService;
+import com.main.volunteer.domain.membergroup.entity.MemberGroup;
 import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,10 @@ public class GroupService {
         if(!checkGroupLeaderPoint(group.getGroupZangId())) {
             throw new BusinessException(ExceptionCode.NOT_ENOUGH_POINT);
         }
+        //가입
+        MemberGroup memberGroup = new MemberGroup(group, groupZang);
+        groupZang.getMemberGroups().add(memberGroup);
+
         return groupRepository.save(group);
 
     }
