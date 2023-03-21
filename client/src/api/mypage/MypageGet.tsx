@@ -14,3 +14,12 @@ export const myPageGet = async (params: string) => {
 		console.error(error);
 	}
 };
+
+export const guestGetData = async (params: string) => {
+	try {
+		const response = await axios.get(apiUrl + params);
+		return response.data.body;
+	} catch (error) {
+		console.error(error);
+	}
+};
