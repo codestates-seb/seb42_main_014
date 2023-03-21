@@ -23,15 +23,14 @@ public class MemberGroupService {
 
     public MemberGroup createMemberGroup(MemberGroup memberGroup) {
 
-        if(verifyExistMemberGroup(memberGroup.getGroupId(), memberGroup.getMemberId())){
+        if(verifyExistMemberGroup(memberGroup.getMemberId(), memberGroup.getGroupId())){
             throw new BusinessException(ExceptionCode.MEMBER_GROUP_EXIST);
         }
-
-        Group group = groupService.verifyExistGroup(memberGroup.getGroupId());
         Member member = memberService.verifiedMember(memberGroup.getMemberId());
+        Group group = groupService.verifyExistGroup(memberGroup.getGroupId());
 
-        memberGroup.setGroup(group);
         memberGroup.setMember(member);
+        memberGroup.setGroup(group);
 
         return memberGroupRepository.save(memberGroup);
     }
@@ -45,13 +44,6 @@ public class MemberGroupService {
         }
         return memberGroups;
     }
-
-//    public MemberGroup updateMemberGroup(MemberGroup memberGroup) {
-//
-//    }
-//    public MemberGroup deleteMemberGroup(long groupId, long memberId){
-//
-//    }
 
     private boolean verifyExistMemberGroup(long memberId, long groupId) {
 
