@@ -42,8 +42,7 @@ const StyledContainerDiv = styled.div`
 `;
 
 export default function GroupInfo({ groupData }: any) {
-	const { applyLimit, content, groupId, groupImage, groupName, groupZandId, place, tagName } =
-		groupData;
+	const { applyLimit, content, groupImage, groupName, place, tagName } = groupData;
 	const categoryItems = {
 		어린이: ChildCareIcon,
 		장애인: AccessibleIcon,
@@ -52,7 +51,6 @@ export default function GroupInfo({ groupData }: any) {
 		환경: ForestIcon,
 	};
 
-	console.log(groupData);
 	return (
 		<StyledContainerDiv>
 			<Link to={"/community"}>
@@ -64,14 +62,14 @@ export default function GroupInfo({ groupData }: any) {
 				<h1>{groupName}</h1>
 			</section>
 			<section style={{ display: "flex", padding: "20px" }}>
-				<img src="/images/home/main-img-2.png" alt="그룹 사진" />
+				<img src={groupImage} alt="그룹 사진" />
 				<div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
 					<div style={{ marginLeft: "20px" }}>
 						<div className="layout">
 							<MdGroup size={30} />
 							<span>그룹 소개</span>
 						</div>
-						<div>{content}</div>
+						<div dangerouslySetInnerHTML={{ __html: content }}></div>
 					</div>
 					<div style={{ margin: "20px 0px 0px 20px" }}>
 						<div className="layout">
