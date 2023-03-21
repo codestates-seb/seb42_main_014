@@ -29,12 +29,20 @@ const StyledContainerDiv = styled.div`
 
 const StyledCardContainerDiv = styled.div`
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	row-gap: 30px;
 	place-items: center;
+	grid-template-columns: repeat(4, 400px);
+	row-gap: 30px;
+	justify-content: center;
+	@media (max-width: 1550px) {
+		grid-template-columns: repeat(3, 400px);
+	}
+	@media (max-width: 1150px) {
+		grid-template-columns: repeat(2, 400px);
+	}
+	@media (max-width: 700px) {
+		grid-template-columns: repeat(1, 400px);
+	}
 `;
-
-const optionArr = ["찜 많은순", "봉사시간순", "모집인원순"];
 
 export default function Volunteer() {
 	const [volunData, setVolunData] = useState([]);
@@ -55,7 +63,8 @@ export default function Volunteer() {
 			behavior: "smooth",
 		});
 	};
-
+	const optionArr = ["찜 많은순", "봉사시간순", "모집인원순"];
+	console.log(volunData);
 	return (
 		<>
 			<StyledContainerDiv>
@@ -64,7 +73,6 @@ export default function Volunteer() {
 				<div style={{ margin: "50px" }}>
 					<Bar>
 						<SearchBar placeholder="검색어를 입력해 주세요." width={250} height={45} radius={10} />
-
 						<DropdownMenu
 							placeholder="필터 조건 선택"
 							option={optionArr}
@@ -86,6 +94,7 @@ export default function Volunteer() {
 									volunteerDate,
 									tagName,
 									title,
+									volunteerImage,
 								} = el;
 								const categoryItems = {
 									어린이: ChildCareIcon,
@@ -97,7 +106,10 @@ export default function Volunteer() {
 								};
 								return (
 									<Card
-										src="/images/home/main-img-1.png"
+										src={
+											volunteerImage ||
+											"https://main014-bucket.s3.ap-northeast-2.amazonaws.com/profile/011e2a77-4a54-4377-8679-6c49c4b86e7f%ED%95%9C%EA%B8%80%EC%9D%B4%EB%A6%84%EC%9D%BC%EB%95%90.png"
+										}
 										title={title}
 										date={volunteerDate}
 										place={place}

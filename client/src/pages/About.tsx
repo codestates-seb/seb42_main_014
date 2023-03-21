@@ -2,6 +2,57 @@ import styled from "styled-components";
 import { BsGithub, BsInstagram } from "react-icons/bs";
 import { SiVelog } from "react-icons/si";
 
+const StyledAboutImgContainer = styled.div`
+	background-color: #767ec6;
+	width: 100vw;
+	height: 300px;
+	display: flex;
+	position: relative;
+	align-items: center;
+	justify-content: center;
+`;
+
+const StyledAboutTitleSpan = styled.span`
+	@media (max-width: 558px) {
+		font-size: 50px;
+	}
+	font-size: 60px;
+	font-weight: 900;
+	color: #2b2b2b;
+	font-family: "Rock Salt", cursive;
+	margin: 10px 0px 10px 50px;
+	animation: fadeinDown 2.5s;
+`;
+
+const StyledAboutContentSpan = styled.span`
+	color: #dddddd;
+	font-size: 20px;
+	font-weight: 700;
+	margin-left: 50px;
+	animation: fadeinDown 2.5s;
+`;
+
+const StyledMemberContainer = styled.div`
+	background-color: #383838;
+	height: 250px;
+	width: 100vw;
+	border: solid black 1px;
+	display: flex;
+	align-items: center;
+	color: white;
+	font-size: 18px;
+	animation: fadeInLeft 2s;
+`;
+
+const StyledMemberImgContainer = styled.img`
+	width: 180px;
+	height: 180px;
+	border-radius: 50%;
+	border: 4px solid black;
+	background-color: white;
+	margin-left: 100px;
+`;
+
 export default function About() {
 	const github = "https://github.com";
 	const insta = "https://www.instagram.com";
@@ -55,56 +106,6 @@ export default function About() {
 			instaUrl: `${insta}/`,
 		},
 	];
-	const StyledAboutImgContainer = styled.div`
-		background-color: #767ec6;
-		width: 100vw;
-		height: 300px;
-		display: flex;
-		position: relative;
-		align-items: center;
-		justify-content: center;
-	`;
-
-	const StyledAboutTitleSpan = styled.span`
-		@media (max-width: 558px) {
-			font-size: 50px;
-		}
-		font-size: 60px;
-		font-weight: 900;
-		color: #2b2b2b;
-		font-family: "Rock Salt", cursive;
-		margin: 10px 0px 10px 50px;
-		animation: fadeinDown 2.5s;
-	`;
-
-	const StyledAboutContentSpan = styled.span`
-		color: #dddddd;
-		font-size: 20px;
-		font-weight: 700;
-		margin-left: 50px;
-		animation: fadeinDown 2.5s;
-	`;
-
-	const StyledMemberContainer = styled.div`
-		background-color: #383838;
-		height: 250px;
-		width: 100vw;
-		border: solid black 1px;
-		display: flex;
-		align-items: center;
-		color: white;
-		font-size: 18px;
-		animation: fadeInLeft 2s;
-	`;
-
-	const StyledMemberImgContainer = styled.img`
-		width: 180px;
-		height: 180px;
-		border-radius: 50%;
-		border: 4px solid black;
-		background-color: white;
-		margin-left: 100px;
-	`;
 
 	return (
 		<div style={{ maxWidth: "100%" }}>

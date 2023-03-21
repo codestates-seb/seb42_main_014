@@ -18,6 +18,13 @@ interface IArea {
 	subArea: string[];
 }
 
+interface IProps {
+	selectedArea?: string;
+	setSelectedArea?: React.Dispatch<React.SetStateAction<string>>;
+	selectedSubArea?: string;
+	setSelectedSubArea?: React.Dispatch<React.SetStateAction<string>>;
+}
+
 const areas: IArea[] = [
 	{
 		name: "서울",
@@ -305,10 +312,12 @@ const areas: IArea[] = [
 	},
 ];
 
-const SelectArea = () => {
-	const [selectedArea, setSelectedArea] = useState("");
-	const [selectedSubArea, setSelectedSubArea] = useState("");
-
+const SelectArea = ({
+	selectedArea,
+	setSelectedArea,
+	selectedSubArea,
+	setSelectedSubArea,
+}: IProps) => {
 	const handleAreaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setSelectedArea(e.target.value);
 		setSelectedSubArea("");
