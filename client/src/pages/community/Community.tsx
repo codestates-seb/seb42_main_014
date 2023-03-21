@@ -86,8 +86,10 @@ export default function Community() {
 	};
 
 	return (
+
+		<>
+{/* <Category /> */}
 		<div style={{ marginBottom: "100px" }}>
-			<Category />
 			<Container>
 				<ExplainDiv>
 					<div>

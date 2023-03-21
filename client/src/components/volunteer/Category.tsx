@@ -1,11 +1,15 @@
 import ChildCareIcon from "@mui/icons-material/ChildCare";
-import BusinessIcon from "@mui/icons-material/Business";
 import ForestIcon from "@mui/icons-material/Forest";
 import PetsIcon from "@mui/icons-material/Pets";
 import ElderlyIcon from "@mui/icons-material/Elderly";
 import AccessibleIcon from "@mui/icons-material/Accessible";
 import SvgIcon from "@mui/material/SvgIcon";
 import styled from "styled-components";
+import { useState } from "react";
+
+interface CategoryProps {
+	onCategoryClick: (category: string) => void;
+}
 
 const Body = styled.div`
 	width: 100%;
@@ -70,41 +74,44 @@ const All = styled.div`
 	}
 `;
 
-export default function Category() {
+export default function Category({ onCategoryClick }: CategoryProps) {
+	const handleClick = (category: string) => {
+		onCategoryClick(category);
+	};
 	return (
 		<Body>
 			<Flex>
 				<Col>
-					<All>
+					<All onClick={() => handleClick("")}>
 						<span>ALL</span>
 						<span>전체</span>
 					</All>
 				</Col>
-				<Col>
+				<Col onClick={() => handleClick("어린이")}>
 					<Icon>
 						<SvgIcon component={ChildCareIcon} inheritViewBox fontSize="inherit" />
 					</Icon>
 					<span>어린이</span>
 				</Col>
 				<Col>
-					<Icon>
+					<Icon onClick={() => handleClick("장애인")}>
 						<SvgIcon component={AccessibleIcon} inheritViewBox fontSize="inherit" />
 					</Icon>
 					<span>장애인</span>
 				</Col>
-				<Col>
+				<Col onClick={() => handleClick("노인")}>
 					<Icon>
 						<SvgIcon component={ElderlyIcon} inheritViewBox fontSize="inherit" />
 					</Icon>
 					<span>노인</span>
 				</Col>
-				<Col>
+				<Col onClick={() => handleClick("동물")}>
 					<Icon>
 						<SvgIcon component={PetsIcon} inheritViewBox fontSize="inherit" />
 					</Icon>
 					<span>동물</span>
 				</Col>
-				<Col>
+				<Col onClick={() => handleClick("환경")}>
 					<Icon>
 						<SvgIcon component={ForestIcon} inheritViewBox fontSize="inherit" />
 					</Icon>
