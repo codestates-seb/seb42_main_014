@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { myPageGet } from "../../api/mypage/MypageGet";
 import GroupItem from "./GroupItem";
 
 const Container = styled.div`
@@ -19,6 +21,20 @@ const Container = styled.div`
 `;
 
 export default function GroupList() {
+	const [group, setGroup] = useState<any[]>([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const plan = await myPageGet("member-groups");
+			console.log(plan.data);
+			const data = plan.data;
+			setGroup(data);
+
+			// setTitle(JSON.stringify(plan.data[0].volunteerName).replace(/"/g, ""));
+			// setName(JSON.stringify(plan.data[0].organizationName).replace(/"/g, ""));
+		};
+		fetchData();
+	}, []);
 	return (
 		<>
 			<Container>
@@ -26,9 +42,15 @@ export default function GroupList() {
 					<h2>내가 속한 그룹</h2>
 					<ol>
 						{/* 그룹 리스트 */}
-						<li>
-							<GroupItem />
-						</li>
+						{group.length ? (
+							group.map((g) => (
+								<li key={g.likeId}>
+									<GroupItem title={g.group_name} id={g.group_id} />
+								</li>
+							))
+						) : (
+							<p>속한 그룹이 없습니다.</p>
+						)}
 					</ol>
 				</div>
 			</Container>
