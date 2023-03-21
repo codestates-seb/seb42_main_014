@@ -86,70 +86,70 @@ export default function Community() {
 	};
 
 	return (
-
 		<>
-{/* <Category /> */}
-		<div style={{ marginBottom: "100px" }}>
-			<Container>
-				<ExplainDiv>
-					<div>
-						봉사점수 15점 이상부터 그룹장이 될 수 있어요.
-						<br />
-						현재 내 봉사점수는 <span style={{ color: "red" }}>{point}</span> 점이예요.
-					</div>
-					<ButtonDiv onClick={handleGroupAddClick}>
-						<Button
-							value="+ 그룹 등록"
-							width={150}
-							height={40}
-							radius={20}
-							textSize={17}
-							bgColor="black"
-							style={{ whiteSpace: "nowrap" }}
-						/>
-					</ButtonDiv>
-				</ExplainDiv>
-				{getCommunityData &&
-					getCommunityData.map((el) => {
-						const { groupImage, groupName, place, content, tagName, groupId, groupZandId } = el;
-						const categoryItems = {
-							어린이: ChildCareIcon,
-							장애인: AccessibleIcon,
-							노인: ElderlyIcon,
-							동물: PetsIcon,
-							환경: ForestIcon,
-						};
-						return (
-							<CommunityCard
-								key={groupId}
-								src={groupImage}
-								name={groupName}
-								place={place}
-								intro={content}
-								hashtag={`#${tagName}`}
-								category={
-									<SvgIcon
-										component={
-											tagName === "어린이"
-												? categoryItems["어린이"]
-												: tagName === "장애인"
-												? categoryItems["장애인"]
-												: tagName === "노인"
-												? categoryItems["노인"]
-												: tagName === "동물"
-												? categoryItems["동물"]
-												: tagName === "환경"
-												? categoryItems["환경"]
-												: null
-										}
-										inheritViewBox
-									/>
-								}
-								onClick={() => handleGroupClick(groupId)}
+			{/* <Category /> */}
+			<div style={{ marginBottom: "100px" }}>
+				<Container>
+					<ExplainDiv>
+						<div>
+							봉사점수 15점 이상부터 그룹장이 될 수 있어요.
+							<br />
+							현재 내 봉사점수는 <span style={{ color: "red" }}>{point}</span> 점이예요.
+						</div>
+						<ButtonDiv onClick={handleGroupAddClick}>
+							<Button
+								value="+ 그룹 등록"
+								width={150}
+								height={40}
+								radius={20}
+								textSize={17}
+								bgColor="black"
+								style={{ whiteSpace: "nowrap" }}
 							/>
-						);
-					})}
-			</Container>
-		</div>
+						</ButtonDiv>
+					</ExplainDiv>
+					{getCommunityData &&
+						getCommunityData.map((el) => {
+							const { groupImage, groupName, place, content, tagName, groupId, groupZandId } = el;
+							const categoryItems = {
+								어린이: ChildCareIcon,
+								장애인: AccessibleIcon,
+								노인: ElderlyIcon,
+								동물: PetsIcon,
+								환경: ForestIcon,
+							};
+							return (
+								<CommunityCard
+									key={groupId}
+									src={groupImage}
+									name={groupName}
+									place={place}
+									intro={content}
+									hashtag={`#${tagName}`}
+									category={
+										<SvgIcon
+											component={
+												tagName === "어린이"
+													? categoryItems["어린이"]
+													: tagName === "장애인"
+													? categoryItems["장애인"]
+													: tagName === "노인"
+													? categoryItems["노인"]
+													: tagName === "동물"
+													? categoryItems["동물"]
+													: tagName === "환경"
+													? categoryItems["환경"]
+													: null
+											}
+											inheritViewBox
+										/>
+									}
+									onClick={() => handleGroupClick(groupId)}
+								/>
+							);
+						})}
+				</Container>
+			</div>
+		</>
 	);
 }

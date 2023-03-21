@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import Button from "../../components/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { useLocation } from "react-router-dom";
 import { BsLink45Deg } from "react-icons/bs";
+import { myPageGet } from "../../api/mypage/MypageGet";
 
 const StyledContainerDiv = styled.div`
 	width: 100%;
@@ -51,6 +52,50 @@ const StyledEmptyLineDiv = styled.div`
 `;
 
 export default function VolunteerInfo() {
+	// 제목
+	const [title, setTitle] = useState("");
+
+	// 이미지
+	const [volunteerImage, setVolunteerImage] = useState(null);
+
+	// 모집 시작 날짜
+	const [applyDate, setApplyDate] = useState("");
+
+	// 봉사일
+	const [volunteerDate, setVolunteerDate] = useState("");
+
+	// 봉사 시간
+	const [volunteerTime, setVolunteerTime] = useState(0);
+
+	// 봉사 장소
+	const [place, setPlace] = useState("");
+
+	// 모집 인원
+	const [applyLimit, setApplyLimit] = useState(0);
+
+	// 신청 인원
+	const [applyCount, setApplyCount] = useState(0);
+
+	// 활동 정보
+	const [content, setContent] = useState("");
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await myPageGet("volunteers/2");
+			// console.log(result.volunteer);
+			setTitle(result.volunteer.title);
+			setVolunteerImage(result.volunteer.image);
+			setApplyDate(result.volunteer.applyDate);
+			setVolunteerDate(result.volunteer.volunteerDate);
+			setVolunteerTime(result.volunteer.volunteerTime);
+			setApplyLimit(result.volunteer.applyLimit);
+			setApplyCount(result.volunteer.applyCount);
+			setPlace(result.volunteer.place);
+			setContent(result.volunteer.content);
+		};
+		fetchData();
+	}, []);
+
 	const [isLike, setIsLike] = useState(false);
 
 	const handleCopyClipBoard = async (text: string) => {
@@ -76,17 +121,23 @@ export default function VolunteerInfo() {
 				}}
 			>
 				<img
-					src="/images/home/main-img-1.png"
+					src={volunteerImage}
 					style={{ width: "500px", height: "400px" }}
 					alt="봉사 타이틀 사진"
 				/>
 				<div style={{ display: "flex", flexDirection: "column", marginLeft: "40px" }}>
-					<h2>깨끗한 길거리 다같이 만들어요.</h2>
-					<span>모집 기간 : 2023.03.08 ~ 2023.03.15</span>
-					<span>봉사 장소 : 서울 광화문 광장</span>
-					<span>봉사 시간 : 2시간 ~ 4시간</span>
-					<span>모집 인원 : 1 / 12</span>
+					<h2>{title}</h2>
+					<span>
+						{/* //! 모집 기간을 봉사 당일까지로 표기했음. 수정 필요 */}
+						모집 기간 : {applyDate.slice(0, 10)} ~ {volunteerDate.slice(0, 10)}
+					</span>
+					<span>봉사 장소 : {place}</span>
+					<span>봉사 시간 : {volunteerTime}시간</span>
+					<span>
+						모집 인원 : {applyCount} / {applyLimit}
+					</span>
 					<Button
+						// onClick={() => volunteerDetailPost()}
 						value="나도 할래!"
 						width={350}
 						height={50}
@@ -117,12 +168,7 @@ export default function VolunteerInfo() {
 			</section>
 			<StyledEmptyLineDiv>활동 정보</StyledEmptyLineDiv>
 			<div style={{ height: "400px", margin: "20px" }}>
-				<span style={{ fontSize: "18px" }}>
-					친환경 지구시민의 정식으로 지구시민 의식을 함양하고 오염된 지구의 환경을 살리는 인성회복의
-					홍익정신을 기를 수 있습니다.친환경 지구시민의 정식으로 지구시민 의식을 함양하고 오염된
-					지구의 환경을 살리는 인성회복의 홍익정신을 기를 수 있습니다.친환경 지구시민의 정식으로
-					지구시민 의식을 함양하고 오염된 지구의
-				</span>
+				<span style={{ fontSize: "18px" }}>{content}</span>
 			</div>
 			<StyledEmptyLineDiv>봉사 후기</StyledEmptyLineDiv>
 		</StyledContainerDiv>
