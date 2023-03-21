@@ -6,8 +6,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.ServletException;
@@ -46,6 +44,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         String uri = createURI(accessToken).toString();
         getRedirectStrategy().sendRedirect(request, response, uri);
+        response.setHeader("Authorization",  "Bearer " + accessToken);
     }
 
     private String delegateAccessToken(String username, List<String> authorities) {
@@ -63,24 +62,13 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         return accessToken;
     }
 
-    private String delegateRefreshToken(String username) {
-        String subject = username;
-        Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
-        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-
-        String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
-
-        return refreshToken;
-    }
-
     private URI createURI(String accessToken){
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
 
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("http")
-                .host("http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com")
-                .path("/receive-token")
+                .host("main014-bucket.s3-website.ap-northeast-2.amazonaws.com")
+                .path("/token")
                 .queryParam("Authorization", "Bearer_" + accessToken)
                 .build()
                 .toUri();
