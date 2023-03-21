@@ -1,9 +1,11 @@
 package com.main.volunteer.domain.comment.service;
 
+import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.comment.entity.Comment;
 import com.main.volunteer.domain.comment.repository.CommentRepository;
 import com.main.volunteer.domain.group.entity.Group;
 import com.main.volunteer.domain.group.service.GroupService;
+import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
@@ -49,9 +51,9 @@ public class CommentService {
     }
 
     // 댓글 수정
-    public Comment updateComment(Comment comment) {
+    public Comment updateComment(Comment comment, CustomUserDetails userDetails) {
 
-        Comment verifyComment = verifyExistComment(comment.getCommentId());
+        Comment verifyComment = verifyExistComment(comment.getCommentId(), userDetails);
 
         Optional.ofNullable(comment.getContent())
                 .ifPresent(commentContent -> verifyComment.setContent(commentContent));
@@ -60,15 +62,15 @@ public class CommentService {
     }
 
     // 댓글 삭제
-    public void deleteComment(long commentId) {
-        Comment comment = verifyExistComment(commentId);
+    public void deleteComment(long commentId, CustomUserDetails userDetails) {
+        Comment comment = verifyExistComment(commentId, userDetails);
         commentRepository.delete(comment);
     }
 
     // 댓글 존재 검증
     @Transactional(readOnly = true)
-    private Comment verifyExistComment(Long commentId) {
-        Optional<Comment> optional = commentRepository.findById(commentId);
+    private Comment verifyExistComment(long commentId, CustomUserDetails userDetails) {
+        Optional<Comment> optional = commentRepository.findByCommentIdAndMember(commentId, userDetails);
         return optional.orElseThrow(() -> new BusinessException(ExceptionCode.COMMENT_NOT_EXIST));
     }
 

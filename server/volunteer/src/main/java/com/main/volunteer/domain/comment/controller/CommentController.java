@@ -63,21 +63,18 @@ public class CommentController {
     }
 
     @PatchMapping("/{comment-id}")
-    public ResponseEntity<?> updateComment(@PathVariable("comment-id") long commentId, @RequestBody CommentDto.Patch patchDto) {
+    public ResponseEntity<?> updateComment(@PathVariable("comment-id") long commentId, @RequestBody CommentDto.Patch patchDto, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         Comment comment = mapper.commentPatchDtoToComment(patchDto);
         comment.setCommentId(commentId);
-
-        Comment updatedComment = commentService.updateComment(comment);
+        Comment updatedComment = commentService.updateComment(comment, userDetails);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiResponse.ok("data", mapper.commentToCommentResponseDto(updatedComment)));
     }
 
     @DeleteMapping("/{comment-id}")
-    public ResponseEntity<?> deleteComment(@PathVariable("comment-id") long commentId) {
-
-        Comment comment = commentService.findComment(commentId);
-        commentService.deleteComment(commentId);
+    public ResponseEntity<?> deleteComment(@PathVariable("comment-id") long commentId , @AuthenticationPrincipal CustomUserDetails userDetails) {
+        commentService.deleteComment(commentId, userDetails);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
