@@ -7,6 +7,7 @@ import com.main.volunteer.domain.like.service.LikeService;
 import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.response.ApiResponse;
 import com.main.volunteer.util.UriUtil;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -65,11 +66,12 @@ public class LikeController {
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/my")
-    public ResponseEntity<?> getMyLikeList(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> getMyLikeList(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        List<Like> MyLikeList = likeService.getMyLikeList(memberService.findMember(userDetails.getMemberId()));
+        Page<Like> MyLikePage = likeService.getMyLikeList(pageNum -1, memberService.findMember(userDetails.getMemberId()));
+        List<Like> MyLikeList = MyLikePage.getContent();
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data", likeMapper.likeListToResponseList(MyLikeList)));
+        return ResponseEntity.ok().body(ApiResponse.ok("data", likeMapper.likeListToResponseList(MyLikeList), "totalPages", MyLikePage.getTotalPages()));
     }
 
 }
