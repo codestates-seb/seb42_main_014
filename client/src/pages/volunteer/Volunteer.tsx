@@ -92,6 +92,7 @@ const optionArr = [
 ];
 
 export default function Volunteer() {
+	const [selectedCategory, setSelectedCategory] = useState("");
 	const [totalPages, setTotalPages] = useState<number>(0);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [selectedArea, setSelectedArea] = useState("");
@@ -119,22 +120,22 @@ export default function Volunteer() {
 		let URL = `volunteers?volunteerName&organizationName&tagName&orderBy=volunteerId&sort=DESC&pageNum=1`;
 		switch (selectedOption) {
 			case "기본순":
-				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=volunteerId&sort=DESC&pageNum=${currentPage}`;
+				URL = `volunteers?volunteerName&organizationName&tagName=${selectedCategory}&province=${selectedArea}&city=${selectedSubArea}&orderBy=volunteerId&sort=DESC&pageNum=${currentPage}`;
 				break;
 			case "찜 많은순":
-				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=likeCount&sort=DESC&pageNum=${currentPage}`;
+				URL = `volunteers?volunteerName&organizationName&tagName=${selectedCategory}&province=${selectedArea}&city=${selectedSubArea}&orderBy=likeCount&sort=DESC&pageNum=${currentPage}`;
 				break;
 			case "봉사시간 짧은 순":
-				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=volunteerTime&sort=ASC&pageNum=${currentPage}`;
+				URL = `volunteers?volunteerName&organizationName&tagName=${selectedCategory}&province=${selectedArea}&city=${selectedSubArea}&orderBy=volunteerTime&sort=ASC&pageNum=${currentPage}`;
 				break;
 			case "봉사시간 긴 순":
-				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=volunteerTime&sort=DESC&pageNum=${currentPage}`;
+				URL = `volunteers?volunteerName&organizationName&tagName=${selectedCategory}&province=${selectedArea}&city=${selectedSubArea}&orderBy=volunteerTime&sort=DESC&pageNum=${currentPage}`;
 				break;
 			case "모집인원 적은 순":
-				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=applyLimit&sort=ASC&pageNum=${currentPage}`;
+				URL = `volunteers?volunteerName&organizationName&tagName=${selectedCategory}&province=${selectedArea}&city=${selectedSubArea}&orderBy=applyLimit&sort=ASC&pageNum=${currentPage}`;
 				break;
 			case "모집인원 많은 순":
-				URL = `volunteers?volunteerName&organizationName&tagName&province=${selectedArea}&city=${selectedSubArea}&orderBy=applyLimit&sort=DESC&pageNum=${currentPage}`;
+				URL = `volunteers?volunteerName&organizationName&tagName=${selectedCategory}&province=${selectedArea}&city=${selectedSubArea}&orderBy=applyLimit&sort=DESC&pageNum=${currentPage}`;
 				break;
 			default:
 				break;
@@ -150,13 +151,17 @@ export default function Volunteer() {
 		};
 
 		getVolunteerData();
-	}, [selectedOption, selectedArea, selectedSubArea, currentPage]);
+	}, [selectedOption, selectedArea, selectedSubArea, currentPage, selectedCategory]);
+
+	const handleCategoryClick = (category: string) => {
+		setSelectedCategory(category);
+	};
 
 	return (
 		<>
 			<StyledContainerDiv>
 				<Carousel />
-				<Category />
+				<Category onCategoryClick={handleCategoryClick} />
 				<div style={{ margin: "50px" }}>
 					<Sbar>
 						<Bar>

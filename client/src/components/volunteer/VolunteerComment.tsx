@@ -1,56 +1,68 @@
 import styled from "styled-components";
 import { FaUserCircle } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import comment from "../../data/comment.json";
+// import comment from "../../data/comment.json";
 import Button from "../Button";
 import CommentList from "./CommentList";
+import { myPageGet } from "../../api/mypage/MypageGet";
 
-export default function VolunteerComment() {
-	const StyledContainerDiv = styled.div`
-		width: 100%;
-		height: auto;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
+const StyledContainerDiv = styled.div`
+	width: 100%;
+	height: auto;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	min-width: 1035px;
+	margin-top: 30px;
+
+	.answer-input-container {
 		display: flex;
 		align-items: center;
-		flex-direction: column;
+		width: 100%;
+		height: 60px;
+		border-radius: 20px;
 		justify-content: center;
-		min-width: 1035px;
-		margin-top: 30px;
+		min-width: 900px;
+	}
+	input {
+		width: 100%;
+		height: 40px;
+		border: 2px solid gray;
+		border-radius: 20px;
+		margin: 20px;
+		padding: 20px;
+		min-width: 500px;
+	}
 
-		.answer-input-container {
-			display: flex;
-			align-items: center;
-			width: 100%;
-			height: 60px;
-			border-radius: 20px;
-			justify-content: center;
-			min-width: 900px;
-		}
-		input {
-			width: 100%;
-			height: 40px;
-			border: 2px solid gray;
-			border-radius: 20px;
-			margin: 20px;
-			padding: 20px;
-			min-width: 500px;
-		}
-
-		.answer-read-container {
-			display: flex;
-			align-items: center;
-			border: 1px solid gray;
-			width: 90%;
-			border-radius: 20px;
-			padding: 20px;
-			margin: 20px;
-			min-width: 1000px;
-		}
-	`;
-	const Comment = styled.div`
+	.answer-read-container {
+		display: flex;
+		align-items: center;
+		border: 1px solid gray;
 		width: 90%;
-		margin-top: 15px;
-	`;
+		border-radius: 20px;
+		padding: 20px;
+		margin: 20px;
+		min-width: 1000px;
+	}
+`;
+const Comment = styled.div`
+	width: 90%;
+	margin-top: 15px;
+`;
+export default function VolunteerComment() {
+	const [reviewList, setReviewList] = useState([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await myPageGet("volunteers/2");
+			setReviewList(result.volunteer.reviewList);
+		};
+		fetchData();
+	}, []);
+
 	return (
 		<StyledContainerDiv>
 			<Comment>
@@ -68,7 +80,7 @@ export default function VolunteerComment() {
 					/>
 				</div>
 			</Comment>
-			{comment.map((user) => (
+			{reviewList.map((user) => (
 				<CommentList key={user.id} user={user} />
 			))}
 		</StyledContainerDiv>
