@@ -94,7 +94,7 @@ public class ReviewController {
     특정 봉사활동에서 내가 쓴 후기 조회
      */
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/{volunteer-id}/my")
+    @GetMapping("/my/{volunteer-id}")
     public ResponseEntity<?> getMyReview(@PathVariable("volunteer-id") Long volunteerId, @AuthenticationPrincipal CustomUserDetails userDetails){
 
         Review myReview = reviewService.getMyReview(volunteerId, memberService.findMember(userDetails.getMemberId()));
