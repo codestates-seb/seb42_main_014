@@ -1,5 +1,10 @@
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 
+interface KeepVolItemProps {
+	title: string;
+	id: number;
+}
 const Container = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -15,13 +20,17 @@ const Container = styled.div`
 	}
 `;
 
-export default function GroupItem() {
+export default function GroupItem(props: KeepVolItemProps) {
+	const nav = useNavigate();
+	const clickHandlr = () => {
+		nav(`/community/${props.id}`);
+	};
 	return (
 		<>
 			<Container>
-				<div>레전드 </div>
+				<div>{props.title} </div>
 				<div>
-					<button>내 그룹 가기</button>
+					<button onClick={clickHandlr}>내 그룹 가기</button>
 				</div>
 			</Container>
 		</>
