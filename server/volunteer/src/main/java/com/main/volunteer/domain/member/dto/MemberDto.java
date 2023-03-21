@@ -58,6 +58,8 @@ public class MemberDto {
 
         private String password;
 
+        private String profileImage;
+
         public void setMemberId(Long memberId) {
             this.memberId = memberId;
         }
