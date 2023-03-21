@@ -11,6 +11,8 @@ import com.main.volunteer.domain.volunteer.service.VolunteerService;
 import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -65,9 +67,9 @@ public class ApplyService {
     /**
     특정 사용자 봉사 신청 내역
      */
-    public List<Apply> getMyPlanList(Member member) {
+    public Page<Apply> getMyPlanList(int pageNum, Member member) {
 
-        Optional<List<Apply>> optional = applyRepository.findByMemberAndVolunteer_VolunteerStatusNotAndApplyStatus(member, VolunteerStatus.VOLUNTEER_AFTER, ApplyStatus.APPLY_COMPLETE);
+        Optional<Page<Apply>> optional = applyRepository.findByMemberAndVolunteer_VolunteerStatusNotAndApplyStatus(PageRequest.of(pageNum, 5), member, VolunteerStatus.VOLUNTEER_AFTER, ApplyStatus.APPLY_COMPLETE);
 
         return optional.orElseThrow(() -> new BusinessException(ExceptionCode.APPLY_NOT_EXIST));
     }
@@ -75,9 +77,9 @@ public class ApplyService {
     /**
     특정 사용자 봉사 활동 내역
      */
-    public List<Apply> getMyHistoryList(Member member) {
+    public Page<Apply> getMyHistoryList(int pageNum, Member member) {
 
-        Optional<List<Apply>> optional = applyRepository.findByMemberAndVolunteer_VolunteerStatusAndApplyStatus(member, VolunteerStatus.VOLUNTEER_AFTER, ApplyStatus.APPLY_COMPLETE);
+        Optional<Page<Apply>> optional = applyRepository.findByMemberAndVolunteer_VolunteerStatusAndApplyStatus(PageRequest.of(pageNum, 5), member, VolunteerStatus.VOLUNTEER_AFTER, ApplyStatus.APPLY_COMPLETE);
 
         return optional.orElseThrow(() -> new BusinessException(ExceptionCode.APPLY_NOT_EXIST));
     }
@@ -85,9 +87,9 @@ public class ApplyService {
     /**
     특정 기관이 등록한 봉사활동에 신청한 내역
      */
-    public List<Apply> getApplyListByOrganization(Long volunteerId,Member member) {
+    public Page<Apply> getApplyListByOrganization(int pageNum, Long volunteerId,Member member) {
         Volunteer volunteer = volunteerService.verifyOwnership(volunteerId,member);
-        Optional<List<Apply>> optional = applyRepository.findAllByVolunteerAndApplyStatus(volunteer, ApplyStatus.APPLY_COMPLETE);
+        Optional<Page<Apply>> optional = applyRepository.findAllByVolunteerAndApplyStatus(PageRequest.of(pageNum, 5), volunteer, ApplyStatus.APPLY_COMPLETE);
         return optional.orElseThrow(() -> new BusinessException(ExceptionCode.APPLY_NOT_EXIST));
     }
 

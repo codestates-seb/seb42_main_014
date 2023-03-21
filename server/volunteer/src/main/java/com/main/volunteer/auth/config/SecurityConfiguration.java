@@ -68,6 +68,8 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/volunteers/*").permitAll()
                         .antMatchers("/apply/organization/*").hasRole("ORG")
                         .antMatchers("/apply/**").authenticated()
+                        .antMatchers(HttpMethod.GET, "/reviews/my/**").authenticated()
+                        .antMatchers(HttpMethod.GET,"/reviews/**").permitAll()
                         .antMatchers("/reviews/**").authenticated()
                         .antMatchers("/likes/*").authenticated()
                         .antMatchers(HttpMethod.POST, "/comments").authenticated()
@@ -101,7 +103,7 @@ public class SecurityConfiguration {
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

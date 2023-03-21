@@ -3,7 +3,6 @@ package com.main.volunteer.domain.volunteer.service;
 import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.auth.mail.EmailSenderService;
 import com.main.volunteer.domain.apply.entity.Apply;
-import com.main.volunteer.domain.apply.service.ApplyService;
 import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.domain.volunteer.entity.Condition;
@@ -14,6 +13,7 @@ import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
@@ -83,8 +83,8 @@ public class VolunteerService {
     /**
     봉사 기관이 등록한 봉사 활동 목록 조회
      */
-    public List<Volunteer> getVolunteerListByOrg(CustomUserDetails userDetails) {
-        return getOptionalList(volunteerRepository.findAllByMember(memberService.findMember(userDetails.getMemberId())));
+    public Page<Volunteer> getVolunteerListByOrg(int pageNum , CustomUserDetails userDetails) {
+        return getOptionalPage(volunteerRepository.findAllByMember(PageRequest.of(pageNum, 5), memberService.findMember(userDetails.getMemberId())));
     }
 
     /**
@@ -110,9 +110,9 @@ public class VolunteerService {
     /**
      * VolunteerList volunteerStatus update
      */
-    public void setVolunteerStatusForList(List<Volunteer> volunteerList){
+    public void setVolunteerStatusForPage(Page<Volunteer> volunteerPage){
 
-        volunteerList.forEach(this::setVolunteerStatus);
+        volunteerPage.forEach(this::setVolunteerStatus);
     }
 
     /**
@@ -221,11 +221,11 @@ public class VolunteerService {
         }
     }
 
-    private List<Volunteer> getOptionalList(Optional<List<Volunteer>> optional){
-        List<Volunteer> volunteerList =  optional.orElseThrow(() -> new BusinessException(ExceptionCode.VOLUNTEER_NOT_EXIST));
-        setVolunteerStatusForList(volunteerList);
+    private Page<Volunteer> getOptionalPage(Optional<Page<Volunteer>> optional){
+        Page<Volunteer> volunteerPage =  optional.orElseThrow(() -> new BusinessException(ExceptionCode.VOLUNTEER_NOT_EXIST));
+        setVolunteerStatusForPage(volunteerPage);
 
-        return volunteerList;
+        return volunteerPage;
     }
 
     /**
@@ -238,5 +238,6 @@ public class VolunteerService {
         mailMessage.setText("안녕하세요 " + apply.getMember().getMemberName() + "봉사자님\n봉사자님이 신청하신 봉사 활동이 기관에 의해 취소되었음을 알려드립니다.");
         emailSenderService.sendEmail(mailMessage);
     }
+
 
 }

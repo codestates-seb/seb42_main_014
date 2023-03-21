@@ -63,13 +63,13 @@ public class Volunteer extends Auditable {
     @Enumerated(EnumType.STRING)
     private VolunteerStatus volunteerStatus;
 
-    @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Review> reviewList = new ArrayList<>();
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Apply> applyList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "volunteer", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Like> likeList = new ArrayList<>();
 
 
