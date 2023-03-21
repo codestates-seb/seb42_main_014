@@ -9,6 +9,8 @@ import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
 import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -61,9 +63,9 @@ public class LikeService {
     /*
     내가 찜한 봉사 목록 조회 로직
      */
-    public List<Like> getMyLikeList(Member member) {
+    public Page<Like> getMyLikeList(int pageNum, Member member) {
 
-        Optional<List<Like>> optional = likeRepository.findAllByMember(member);
+        Optional<Page<Like>> optional = likeRepository.findAllByMember(PageRequest.of(pageNum, 5), member);
 
         return optional.orElseThrow(() -> new BusinessException(ExceptionCode.LIKE_NOT_EXIST));
     }

@@ -3,6 +3,7 @@ package com.main.volunteer.domain.volunteer.controller;
 
 import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.apply.entity.Apply;
+import com.main.volunteer.domain.group.entity.Group;
 import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.domain.review.service.ReviewService;
 import com.main.volunteer.domain.volunteer.entity.Condition;
@@ -87,11 +88,12 @@ public class VolunteerController {
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/organization")
-    public ResponseEntity<?> getVolunteerListByOrg(@AuthenticationPrincipal CustomUserDetails userDetails){
+    public ResponseEntity<?> getVolunteerListByOrg(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum, @AuthenticationPrincipal CustomUserDetails userDetails){
 
-        List<Volunteer> volunteerList = volunteerService.getVolunteerListByOrg(userDetails);
+        Page<Volunteer> volunteerPage = volunteerService.getVolunteerListByOrg(pageNum - 1, userDetails);
+        List<Volunteer> volunteerList = volunteerPage.getContent();
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList)));
+        return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerListToResponseList(volunteerList), "totalPages", volunteerPage.getTotalPages()));
     }
 
     /**
@@ -142,5 +144,6 @@ public class VolunteerController {
 
         return ResponseEntity.ok().body(ApiResponse.ok("data", volunteerMapper.volunteerPageToResponseList(volunteerList), "totalPages", volunteerList.getTotalPages()));
     }
+
 
 }
