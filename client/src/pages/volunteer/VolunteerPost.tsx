@@ -162,9 +162,7 @@ const VolunteerPost = () => {
 				.catch((err) => console.log(err));
 		}
 	};
-
 	console.log(imageUrl);
-
 	const optionArr = ["어린이", "노인", "장애인", "환경", "동물"];
 	const navigate = useNavigate();
 
