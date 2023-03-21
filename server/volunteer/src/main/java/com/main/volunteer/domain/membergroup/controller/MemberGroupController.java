@@ -1,6 +1,7 @@
 package com.main.volunteer.domain.membergroup.controller;
 
 import com.main.volunteer.auth.CustomUserDetails;
+import com.main.volunteer.domain.group.entity.Group;
 import com.main.volunteer.domain.group.service.GroupService;
 import com.main.volunteer.domain.member.service.MemberService;
 import com.main.volunteer.domain.membergroup.dto.MemberGroupDto;
@@ -31,8 +32,8 @@ public class MemberGroupController {
     public ResponseEntity<?> createMemberGroup(@PathVariable("group-id") long groupId, @RequestBody MemberGroupDto.Post postDto, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         MemberGroup memberGroup = mapper.memberGroupDtoToMemberGroup(postDto);
-        memberGroup.setGroup(groupService.verifyExistGroup(groupId));
         memberGroup.setMember(memberService.findMember(userDetails.getMemberId()));
+        memberGroup.setGroup(groupService.verifyExistGroup(groupId));
 
         memberGroup = memberGroupService.createMemberGroup(memberGroup);
 
@@ -48,7 +49,7 @@ public class MemberGroupController {
     }
 
     @GetMapping("/{group-id}")
-    public ResponseEntity<?> getMemberGroupsByGroupId(@PathVariable("group-id") long groupId, @AuthenticationPrincipal CustomUserDetails userDetails){
+    public ResponseEntity<?> getMemberGroupsByGroupId(@PathVariable("group-id") long groupId){
         List<MemberGroup> memberGroups = memberGroupService.findMemberGroupsByGroupId(groupId);
         return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.memberGroupsToMemberGroupsResponses(memberGroups)));
     }
