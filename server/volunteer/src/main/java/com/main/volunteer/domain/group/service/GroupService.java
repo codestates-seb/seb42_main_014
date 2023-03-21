@@ -25,6 +25,7 @@ public class GroupService {
     private final MemberService memberService;
 
     // 그룹 생성
+
     public Group createGroup(Group group) {
         long groupZangId = group.getGroupZangId();
         Member groupZang = memberService.verifiedMember(groupZangId);
@@ -35,10 +36,10 @@ public class GroupService {
         if(!checkGroupLeaderPoint(group.getGroupZangId())) {
             throw new BusinessException(ExceptionCode.NOT_ENOUGH_POINT);
         }
-        //가입
-        MemberGroup memberGroup = new MemberGroup(group, groupZang);
-        groupZang.getMemberGroups().add(memberGroup);
-
+        else if(groupZang.getRoles().contains("GROUPZANG")){
+            MemberGroup memberGroup = new MemberGroup(group, groupZang);
+            groupZang.getMemberGroups().add(memberGroup);
+        }
         return groupRepository.save(group);
 
     }
@@ -113,10 +114,9 @@ public class GroupService {
 
     public boolean checkGroupLeaderPoint(long memberId) {
         Member member = memberService.verifiedMember(memberId);
-
         if (member.getPoint().getPointCount() >= 15) {
             member.setRoles(List.of("GROUPZANG", "USER"));
-
+            MemberGroup memberGroup = new MemberGroup();
             return true;
         }
         return false;
