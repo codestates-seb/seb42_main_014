@@ -1,9 +1,12 @@
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Address from "../../components/Address";
 import { useForm } from "react-hook-form";
 import Dropdown from "../../components/volunteer/Dropdown";
 import TextEdit from "../../components/volunteer/TextEdit";
+import { volunteerDataPost } from "../../api/volunteer/volunteerData";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Body = styled.div`
 	margin-top: 20px;
@@ -113,14 +116,15 @@ const Content = styled.div`
 const VolunteerPost = () => {
 	interface IPostData {
 		title?: string;
-		endDate?: string;
+		applyDate?: string;
 		volunteerDate?: string;
 		volunteerHour?: number;
 		placeDetail?: string;
 		memberCount?: number;
 		place?: string;
-		maxMember?: number;
+		applyLimit?: number;
 		groupName?: string;
+		volunteerTime: number;
 	}
 	const { register, handleSubmit } = useForm<IPostData>({ mode: "onChange" });
 	const fileInput = useRef<HTMLLabelElement>(null);
@@ -129,35 +133,83 @@ const VolunteerPost = () => {
 			fileInput.current.click();
 		}
 	};
-	const [file, setFile] = useState<string>("");
+	const [file, setFile] = useState<any>("");
 	const [value, setValue] = useState("");
 	const [selectedOption, setSelectedOption] = useState("");
+	const [selectedArea, setSelectedArea] = useState("");
+	const [selectedSubArea, setSelectedSubArea] = useState("");
+	const [fileSrc, setFileSrc] = useState<any>("");
+	const [imageUrl, setImageUrl] = useState<any>("");
 
 	const post = window.location.pathname;
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files !== null) {
 			const selectedFiles = event.target.files as FileList;
 			setFile(URL.createObjectURL(selectedFiles?.[0]));
+			setFileSrc(selectedFiles[0]);
+
+			const formData = new FormData();
+			formData.append("profile", fileSrc);
+			axios({
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+				url: "http://3.35.252.234:8080/images",
+				method: "POST",
+				data: formData,
+			})
+				.then((res) => setImageUrl(res.data))
+				.catch((err) => console.log(err));
 		}
 	};
-	const optionArr = ["어린이", "노인", "장애인", "환경", "사회", "동물"];
 
-	const onSubmit = (data: IPostData) => {
-		const postData = {
-			volunData: data,
-			category: selectedOption,
-			text: value,
-		};
-		console.log(postData);
-	};
+	const optionArr = ["어린이", "노인", "장애인", "환경", "동물"];
+	const navigate = useNavigate();
+
+	const today = new Date();
+	const hour = `${today.getHours()}:${today.getMinutes()}`;
 
 	const TextChange = (content: string) => {
 		setValue(content);
 	};
 
+	const onVolunteerPostSubmit = (data: IPostData) => {
+		const {
+			title,
+			applyDate,
+			volunteerDate,
+			volunteerHour,
+			placeDetail,
+			memberCount,
+			volunteerTime,
+		} = data;
+		const postVolunteerData = {
+			title,
+			volunteerImage: imageUrl,
+			applyDate: `${applyDate}T${hour}`,
+			volunteerDate: `${volunteerDate}T${volunteerHour}`,
+			volunteerTime: Number(volunteerTime),
+			place: `${selectedArea} ${selectedSubArea} ${placeDetail}`,
+			content: value,
+			applyLimit: Number(memberCount),
+			tagName: selectedOption,
+		};
+		console.log(postVolunteerData);
+
+		if (post !== "/post") {
+			try {
+				volunteerDataPost("volunteers", postVolunteerData);
+				// navigate("/volunteer");
+			} catch (err) {
+				console.log(err);
+				alert("봉사 등록에 실패했어요. 잠시 후 다시 시도해 주세요.");
+			}
+		}
+	};
+
 	return (
 		<Body>
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form onSubmit={handleSubmit(onVolunteerPostSubmit)}>
 				<Container>
 					<Left onClick={onChangeHandler}>
 						<input id="profileImg" type="file" onChange={handleChange} />
@@ -184,20 +236,18 @@ const VolunteerPost = () => {
 							</Select>
 							<Select>
 								<span>모집기간</span>
-								<input type="date" />
-								<span> 부터 </span>
-								<input {...register("endDate", { required: true })} type="date" />
+								<input type="date" {...register("applyDate", { required: true })} />
 							</Select>
 							<Select>
 								<span>봉사일시</span>
-								<input type="date" />
+								<input type="date" {...register("volunteerDate", { required: true })} />
 								<span>시간</span>
-								<input {...register("volunteerDate", { required: true })} type="time" />
+								<input {...register("volunteerHour", { required: true })} type="time" />
 							</Select>
 							<Select>
 								<span>활동시간</span>
 								<input
-									{...register("volunteerHour", { required: true })}
+									{...register("volunteerTime", { required: true })}
 									style={{ width: "60px" }}
 									type="number"
 								/>
@@ -205,7 +255,12 @@ const VolunteerPost = () => {
 							</Select>
 							<Select style={{ borderBottom: "3px solid black" }}>
 								<span>봉사장소</span>
-								<Address />
+								<Address
+									selectedArea={selectedArea}
+									setSelectedArea={setSelectedArea}
+									selectedSubArea={selectedSubArea}
+									setSelectedSubArea={setSelectedSubArea}
+								/>
 							</Select>
 							<Select>
 								<span>상세주소</span>
@@ -249,7 +304,7 @@ const VolunteerPost = () => {
 							<Select>
 								<span>최대 인원 </span>
 								<input
-									{...register("maxMember", { required: true })}
+									{...register("applyLimit", { required: true })}
 									style={{ width: "60px" }}
 									type="number"
 								/>
