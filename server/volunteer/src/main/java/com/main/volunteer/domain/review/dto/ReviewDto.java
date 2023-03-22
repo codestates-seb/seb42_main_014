@@ -28,6 +28,7 @@ public class ReviewDto {
 
         private Long reviewId;
         private Long volunteerId;
+        private String memberName;
         private String content;
 
     }

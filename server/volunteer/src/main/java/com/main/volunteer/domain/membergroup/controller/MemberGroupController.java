@@ -64,6 +64,6 @@ public class MemberGroupController {
                 .map(memberGroup -> memberService.findMember(memberGroup.getMemberId()))
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.membeberListToMeberGroupsMemberDtails(memberList)));
+        return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.memberListToMemberGroupsMemberDetails(memberList)));
     }
 }

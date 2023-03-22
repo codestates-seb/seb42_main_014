@@ -1,5 +1,6 @@
 package com.main.volunteer.domain.point.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.main.volunteer.domain.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class Point {
 
     @OneToOne
     @JoinColumn(name = "MEMBER_ID")
+    @JsonIgnore
     private Member member;
 
     public void setMember(Member member) {
