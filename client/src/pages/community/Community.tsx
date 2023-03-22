@@ -89,7 +89,6 @@ export default function Community() {
 
 	return (
 		<>
-
 			<Category onCategoryClick={handleCategoryClick} />
 
 			<div style={{ marginBottom: "100px" }}>
@@ -114,7 +113,6 @@ export default function Community() {
 					</ExplainDiv>
 					{getCommunityData &&
 						getCommunityData.map((el) => {
-
 							const { groupImage, groupName, place, content, tagName, groupId } = el;
 
 							const categoryItems = {

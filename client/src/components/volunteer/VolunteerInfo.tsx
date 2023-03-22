@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Button from "../../components/Button";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { BsLink45Deg } from "react-icons/bs";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import { volunteerDetailPost } from "../../api/volunteer/volunteerDetailPost";
@@ -122,7 +122,6 @@ export default function VolunteerInfo() {
 		}
 	};
 
-	const location = useLocation();
 	const baseUrl = `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com`;
 
 	return (
@@ -166,7 +165,7 @@ export default function VolunteerInfo() {
 						</button>
 						<div
 							className="button-container"
-							onClick={() => handleCopyClipBoard(`${baseUrl}${location.pathname}`)}
+							// onClick={() => handleCopyClipBoard(`${baseUrl}${location.pathname}`)}
 						>
 							<Button
 								value={"너도 할래?"}
