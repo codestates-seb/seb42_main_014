@@ -9,13 +9,13 @@ phases:
       - echo Build Starting on `date`
       - cd server/volunteer
       - chmod +x ./gradlew
-      - ./gradlew build -Pprofile=dev
+      - ./gradlew build
   post_build:
     commands:
       - echo $(basename ./seb42_main_014/server/volunteer/build/libs/*.jar)
 artifacts:
   files:
-    - seb42_main_014/server/volunteer/build/libs/*.jar
-    - seb42_main_014/server/volunteer/scripts/**
-    - seb42_main_014/server/volunteer/appspec.yml
+    - server/volunteer/build/libs/*.jar
+    - server/volunteer/scripts/**
+    - server/volunteer/appspec.yml
   discard-paths: yes
