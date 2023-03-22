@@ -2,7 +2,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import ImgUpload from "../../components/ImgUpload";
 import Modal from "../../components/Modal";
-import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { userInfoPatch } from "../../api/mypage/VolunteerPatch";
 
 const Body = styled.body`
 	height: 100vh;
@@ -36,9 +38,9 @@ const Login = styled.input`
 		outline: none;
 	}
 	border-bottom: 3px solid black;
-	margin-bottom: 35px;
+	margin-bottom: 20px;
 	::placeholder {
-		color: black;
+		color: #3d3d3d;
 		font-weight: 900;
 		font-size: 1.15rem;
 	}
@@ -101,61 +103,113 @@ const LabelFlex = styled.div`
 	flex-direction: column;
 `;
 
+const ErrorMsg = styled.div`
+	color: red;
+	text-align: center;
+	margin-bottom: 20px;
+`;
+
 export default function UserEdit() {
-	const [imageSrc, setImageSrc] = useState("");
-	console.log(imageSrc);
-
-	const handleImageChange = (src: string) => {
-		setImageSrc(src);
-	};
-
-	const [isOpen, setisOpen] = useState(false);
-	const [isEmage, setisEmage] = useState<boolean | any>(false);
-	const imgSrc = isEmage.src;
+	const [isOpen, setIsOpen] = useState(false);
+	const [isImage, setIsImage] = useState<boolean | any>(false);
+	const [file, setFile] = useState<string>("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+	const imgSrc = isImage.src;
 	const toggle = (event: any) => {
-		setisOpen(!isOpen);
+		setIsOpen(!isOpen);
 		click(event);
 	};
 	const click = (event: { currentTarget: any }) => {
-		let clickEmg = event.currentTarget;
-		setisEmage(clickEmg);
+		let clickImg = event.currentTarget;
+		setIsImage(clickImg);
 	};
-
+	const location = useLocation();
+	const { email, name, orgInfo } = location.state;
 	const apiUrl = "http://3.35.252.234:8080/";
+	const navigate = useNavigate();
 
-	async function Volpatch(id: string): Promise<void> {
-		const url = `${apiUrl}${id}`;
-		try {
-			const response = await axios.patch(url);
-			console.log(response.data);
-		} catch (error) {
-			console.error(error);
-		}
-	}
+	const {
+		register,
+		handleSubmit,
+		getValues,
+		formState: { errors },
+	} = useForm({ mode: "onChange" });
+
+	const pathName = window.location.pathname;
+
+	const submitData = (data: any) => {
+		const newPatchMemberData = {
+			profileImage: file || null,
+			memberName: data.memberName || null,
+			password: data.password || null,
+		};
+		userInfoPatch("members/me", newPatchMemberData);
+		navigate("/mypage");
+	};
 
 	return (
 		<Body>
 			<StyledContainer>
-				<EditForm>
-					<Header>EDIT</Header>
-					<Profile>
-						<ImgUpload modal={toggle} onImageChange={handleImageChange} />
-						<LabelFlex>
-							<label htmlFor="profileImg">이미지 업로드</label>
-							<label htmlFor="delteImg">이미지 삭제</label>
-						</LabelFlex>
-					</Profile>
-					<Login placeholder="이메일"></Login>
-					<Login placeholder="패스워드"></Login>
-					<Login placeholder="패스워드 확인"></Login>
-					<Login placeholder="닉네임"></Login>
-
-					<Btn>저장하기</Btn>
-				</EditForm>
+				<form onSubmit={handleSubmit(submitData)}>
+					<EditForm>
+						<Header>EDIT</Header>
+						<Profile>
+							<ImgUpload
+								modal={toggle}
+								onImageChange={function (src: string): void {
+									throw new Error("Function not implemented.");
+								}}
+							/>
+							<LabelFlex>
+								<label htmlFor="profileImg">이미지 업로드</label>
+								<label htmlFor="deleteImg">이미지 삭제</label>
+							</LabelFlex>
+						</Profile>
+						{/* <Login className="readOnly" placeholder="이메일" value={email} readOnly /> */}
+						<Login
+							placeholder="닉네임"
+							{...register("memberName", {
+								pattern: {
+									value: /^[a-z]{1,8}$/,
+									message: "8자리 영어 소문자로 입력해주세요.",
+								},
+							})}
+							maxLength={8}
+						/>
+						{errors.memberName && <ErrorMsg>영어 소문자만 가능해요.</ErrorMsg>}
+						<Login
+							placeholder="변경 비밀번호"
+							type="password"
+							{...register("password", {
+								pattern: {
+									value: /^(?=.*\d)(?=.*[a-z])(?=.*[!@#$%^&*])(?=.*[a-z]).{8,50}$/,
+									message: "8자리 이상 소문자+숫자+특수문자 조합이예요.",
+								},
+							})}
+							minLength={8}
+							maxLength={50}
+						/>
+						{errors.password && <ErrorMsg>8자리 이상 소문자+숫자+특수문자 조합이예요.</ErrorMsg>}
+						<Login
+							placeholder="변경 비밀번호 확인"
+							type="password"
+							onChange={(e) => setConfirmPassword(e.target.value)}
+						/>
+						{getValues("password") !== confirmPassword && confirmPassword ? (
+							<ErrorMsg>동일한 비밀번호를 입력해주세요.</ErrorMsg>
+						) : null}
+						{pathName === "/companyedit" ? (
+							<EditForm>
+								<ErrorMsg>사업자 관련 정보를 변경하시려면 상담톡으로 문의주세요.</ErrorMsg>
+							</EditForm>
+						) : null}
+						<Btn>저장하기</Btn>
+					</EditForm>
+				</form>
 			</StyledContainer>
 			<ImgView>
 				<Modal isOpen={isOpen} toggle={toggle}>
-					<img src={imgSrc} alt=""></img>
+					<img src={imgSrc} alt="" />
 				</Modal>
 			</ImgView>
 		</Body>

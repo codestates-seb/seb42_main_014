@@ -28,7 +28,7 @@ function UploadFile({ modal, onImageChange }: Iprops) {
 	return (
 		<div>
 			<input id="profileImg" type="file" onChange={handleChange}></input>
-			<input id="delteImg" onClick={onImageRemove}></input>
+			<input id="deleteImg" onClick={onImageRemove}></input>
 			<img
 				src={
 					file

@@ -11,3 +11,11 @@ export async function Volpatch(id: string): Promise<void> {
 		console.error(error);
 	}
 }
+
+export const userInfoPatch = (path: string, patchData: any) => {
+	axios
+		.patch(`${apiUrl}${path}`, patchData, {
+			headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+		})
+		.catch((err) => console.log(err));
+};

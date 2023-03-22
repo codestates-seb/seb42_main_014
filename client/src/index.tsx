@@ -11,7 +11,6 @@ import Login from "./pages/Sign/Login";
 import SignUp from "./pages/Sign/SignUp";
 import Community from "./pages/community/Community";
 import UserEdit from "./pages/Sign/UserEdit";
-import CompanyEdit from "./pages/Sign/CompanyEdit";
 import VolunteerDetail from "./pages/volunteer/VolunteerDetail";
 import ErrorPage from "./pages/ErrorPage";
 import CommunityDetail from "./pages/community/CommunityDetail";
@@ -39,7 +38,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/companyedit",
-				element: <CompanyEdit />,
+				element: <UserEdit />,
 			},
 			{
 				path: "/volunteer",
@@ -67,7 +66,7 @@ const router = createBrowserRouter([
 				element: <About />,
 			},
 			{
-				path: "/mypage/:id",
+				path: "/mypage",
 				element: <MyPage />,
 			},
 			{
