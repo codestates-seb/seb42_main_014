@@ -78,7 +78,5 @@ public class VolunteerDto {
         private String tagName;
 
         private String volunteerStatus;
-
-        private List<Review> reviewList;
     }
 }
