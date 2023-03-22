@@ -113,7 +113,6 @@ export default function Volunteer() {
 	};
 	const handlePageChange = (pageNumber: number) => {
 		setCurrentPage(pageNumber);
-		console.log(pageNumber);
 	};
 
 	useEffect(() => {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import Address from "../../components/Address";
 import { useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import TextEdit from "../../components/volunteer/TextEdit";
 import { volunteerDataPost } from "../../api/volunteer/volunteerData";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { imageUploadPost } from "../../api/imgPost";
 
 const Body = styled.div`
 	margin-top: 20px;
@@ -147,22 +148,11 @@ const VolunteerPost = () => {
 			const selectedFiles = event.target.files as FileList;
 			setFile(URL.createObjectURL(selectedFiles?.[0]));
 			setFileSrc(selectedFiles[0]);
-
-			const formData = new FormData();
-			formData.append("profile", fileSrc);
-			axios({
-				headers: {
-					"Content-Type": "multipart/form-data",
-				},
-				url: "http://3.35.252.234:8080/images",
-				method: "POST",
-				data: formData,
-			})
-				.then((res) => setImageUrl(res.data))
-				.catch((err) => console.log(err));
+			imageUploadPost(fileSrc, setImageUrl);
 		}
 	};
-	console.log(imageUrl);
+	// console.log(imageUrl);
+	console.log(fileSrc);
 	const optionArr = ["어린이", "노인", "장애인", "환경", "동물"];
 	const navigate = useNavigate();
 

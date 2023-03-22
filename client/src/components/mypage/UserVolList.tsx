@@ -62,7 +62,7 @@ export default function UserVolList() {
 								</li>
 							))
 						) : (
-							<p>찜한 게시물이 없습니다.</p>
+							<p>신청한 봉사가 없습니다.</p>
 						)}
 						{/* <li>
 							<UserVolItem2 />

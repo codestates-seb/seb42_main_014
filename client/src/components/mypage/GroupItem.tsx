@@ -23,8 +23,9 @@ const Container = styled.div`
 export default function GroupItem(props: KeepVolItemProps) {
 	const nav = useNavigate();
 	const clickHandlr = () => {
-		nav(`/community/${props.id}`);
+		nav(`/community/${props.id}`, { state: props.id });
 	};
+	console.log(props.id);
 	return (
 		<>
 			<Container>

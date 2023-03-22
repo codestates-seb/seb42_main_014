@@ -1,6 +1,6 @@
 import axios from "axios";
 import styled from "styled-components";
-import { Volpatch } from "../../api/mypage/VolunteerFatch";
+import { Volpatch } from "../../api/mypage/VolunteerPatch";
 
 const Container = styled.div`
 	display: flex;

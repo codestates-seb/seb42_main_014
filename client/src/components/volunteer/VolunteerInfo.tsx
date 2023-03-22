@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Button from "../../components/Button";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { BsLink45Deg } from "react-icons/bs";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import { volunteerDetailPost } from "../../api/volunteer/volunteerDetailPost";
@@ -54,52 +54,32 @@ const StyledEmptyLineDiv = styled.div`
 `;
 
 export default function VolunteerInfo() {
-	// 제목
-	const [title, setTitle] = useState("");
-
-	// 이미지
-	const [volunteerImage, setVolunteerImage] = useState(null);
-
-	// 모집 시작 날짜
-	const [applyDate, setApplyDate] = useState("");
-
-	// 봉사일
-	const [volunteerDate, setVolunteerDate] = useState("");
-
-	// 봉사 시간
-	const [volunteerTime, setVolunteerTime] = useState(0);
-
-	// 봉사 장소
-	const [place, setPlace] = useState("");
-
-	// 모집 인원
-	const [applyLimit, setApplyLimit] = useState(0);
-
-	// 신청 인원
-	const [applyCount, setApplyCount] = useState(0);
-
-	// 활동 정보
-	const [content, setContent] = useState("");
-
-	// uri pathname
+	const [getVolunteerInfoData, setGetVolunteerInfoData] = useState<any>({});
+	const [isLike, setIsLike] = useState(false);
+	const location = useLocation();
 	const params = useParams();
+	const baseUrl = `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com`;
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await myPageGet(`volunteers/${params.id}`);
-			console.log(result);
-			setTitle(result.volunteer.title);
-			setVolunteerImage(result.volunteer.image);
-			setApplyDate(result.volunteer.applyDate);
-			setVolunteerDate(result.volunteer.volunteerDate);
-			setVolunteerTime(result.volunteer.volunteerTime);
-			setApplyLimit(result.volunteer.applyLimit);
-			setApplyCount(result.volunteer.applyCount);
-			setPlace(result.volunteer.place);
-			setContent(result.volunteer.content);
+			await myPageGet(`volunteers/${params.id}`).then((res) =>
+				setGetVolunteerInfoData(res.volunteer),
+			);
 		};
 		fetchData();
 	}, []);
+
+	const {
+		title,
+		volunteerImage,
+		applyDate,
+		volunteerDate,
+		volunteerTime,
+		applyLimit,
+		applyCount,
+		place,
+		content,
+	} = getVolunteerInfoData;
 
 	const handlePost = async () => {
 		const response = await axios.post(`http://3.35.252.234:8080/apply/${params.id}`, {
@@ -107,22 +87,16 @@ export default function VolunteerInfo() {
 				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
 			},
 		});
-		console.log(response.data);
 	};
-
-	const [isLike, setIsLike] = useState(false);
 
 	const handleCopyClipBoard = async (text: string) => {
 		try {
 			await navigator.clipboard.writeText(text);
 			alert("클립보드에 링크가 복사되었어요.");
 		} catch (err) {
-			console.log(err);
 			alert("복사에 실패했어요. 잠시 후 다시 시도해 주세요.");
 		}
 	};
-
-	const baseUrl = `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com`;
 
 	return (
 		<StyledContainerDiv>
@@ -143,7 +117,7 @@ export default function VolunteerInfo() {
 					<span>
 						모집 기간을
 						{/* //! 봉사 당일까지로 표기했음. 수정 필요 */}
-						모집 기간 : {applyDate.slice(0, 10)} ~ {volunteerDate.slice(0, 10)}
+						{/* 모집 기간 : {applyDate.slice(0, 10)} ~ {volunteerDate.slice(0, 10)} */}
 					</span>
 					<span>봉사 장소 : {place}</span>
 					<span>봉사 시간 : {volunteerTime}시간</span>
@@ -165,7 +139,7 @@ export default function VolunteerInfo() {
 						</button>
 						<div
 							className="button-container"
-							// onClick={() => handleCopyClipBoard(`${baseUrl}${location.pathname}`)}
+							onClick={() => handleCopyClipBoard(`${baseUrl}${location.pathname}`)}
 						>
 							<Button
 								value={"너도 할래?"}
@@ -182,7 +156,7 @@ export default function VolunteerInfo() {
 			</section>
 			<StyledEmptyLineDiv>활동 정보</StyledEmptyLineDiv>
 			<div style={{ height: "400px", margin: "20px" }}>
-				<span style={{ fontSize: "18px" }}>{content}</span>
+				<div dangerouslySetInnerHTML={{ __html: content }} style={{ fontSize: "18px" }} />
 			</div>
 			<StyledEmptyLineDiv>봉사 후기</StyledEmptyLineDiv>
 		</StyledContainerDiv>
