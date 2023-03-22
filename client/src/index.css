@@ -1,120 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
-@font-face {
-	font-family: "IBMPlexSansKR-Regular";
-	src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff")
-		format("woff");
-	font-weight: normal;
-	font-style: normal;
-}
-
-* {
-	box-sizing: border-box;
-	font-family: "IBMPlexSansKR-Regular";
-}
 body {
-	margin: 0;
-	overflow-x: hidden;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-	text-decoration: none;
-	border: none;
-	color: black;
-}
-
-#chat-channel-button {
-	position: fixed;
-	z-index: 1;
-	bottom: 80px;
-	right: 0;
-	margin: 20px;
-}
-
-body::-webkit-scrollbar {
-	display: none;
-}
-
-@keyframes fadeinDown {
-	0% {
-		opacity: 0;
-		transform: translate3d(0, -100%, 0);
-	}
-	to {
-		opacity: 1;
-		transform: translateZ(0);
-	}
-}
-
-@keyframes fadeInRight {
-	0% {
-		opacity: 0;
-		transform: translate3d(100%, 0, 0);
-	}
-	to {
-		opacity: 1;
-		transform: translateZ(0);
-	}
-}
-
-@keyframes fadeInLeft {
-	0% {
-		opacity: 0;
-		transform: translate3d(-100%, 0, 0);
-	}
-	to {
-		opacity: 1;
-		transform: translateZ(0);
-	}
-}
-
-@keyframes bounce {
-	0%,
-	100%,
-	20%,
-	53%,
-	80% {
-		transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-		transform: translate3d(0, 0, 0);
-	}
-	40%,
-	43% {
-		transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
-		transform: translate3d(0, -30px, 0);
-	}
-	70% {
-		transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
-		transform: translate3d(0, -15px, 0);
-	}
-	90% {
-		transform: translate3d(0, -4px, 0);
-	}
-}
-
-.icon-hover {
-	transition: all 0.2s linear;
-}
-.icon-hover:hover {
-	transform: scale(1.3);
-}
-
-@media (max-width: 1193px) {
-	.display-none {
-		display: none;
-	}
-}
-
-@media (max-width: 558px) {
-	.display-none-small {
-		display: none;
-	}
-}
-body::-webkit-scrollbar {
-	display: none;
-}
-
-@media (max-width: 1215px) {
-	.home-hide {
-		display: none;
-	}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
