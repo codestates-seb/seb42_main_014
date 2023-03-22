@@ -26,7 +26,6 @@ export default function GroupList() {
 	useEffect(() => {
 		const fetchData = async () => {
 			const plan = await myPageGet("member-groups");
-			console.log(plan.data);
 			const data = plan.data;
 			setGroup(data);
 

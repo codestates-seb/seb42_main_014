@@ -33,7 +33,6 @@ export default function DropDown({ setIsOpen, isOpen }: TDropDownProps) {
 	};
 	const navigate = useNavigate();
 	const [id, setId] = useState("");
-	console.log(id);
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await myPageGet("members/me");

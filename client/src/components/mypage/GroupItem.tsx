@@ -25,7 +25,6 @@ export default function GroupItem(props: KeepVolItemProps) {
 	const clickHandlr = () => {
 		nav(`/community/${props.id}`, { state: props.id });
 	};
-	console.log(props.id);
 	return (
 		<>
 			<Container>

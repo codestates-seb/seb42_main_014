@@ -6,7 +6,6 @@ export async function Volpatch(id: string): Promise<void> {
 	const url = `${apiUrl}${id}`;
 	try {
 		const response = await axios.patch(url);
-		console.log(response.data);
 	} catch (error) {
 		console.error(error);
 	}
