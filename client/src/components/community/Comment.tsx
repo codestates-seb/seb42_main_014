@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import { volunteerCommentPost } from "../../api/volunteer/volunteerData";
+import { CommentDelete } from "../../api/volunteer/volunteerComment";
 
 const StyledContainerDiv = styled.div`
 	display: flex;
@@ -58,6 +59,7 @@ const StyledInputContainerDiv = styled.div`
 `;
 export default function Comment() {
 	const parms = useParams();
+	const [my, setMy] = useState("");
 
 	const [reviewList, setReviewList] = useState([]);
 	const [ment, setMent] = useState("");
@@ -70,8 +72,9 @@ export default function Comment() {
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await myPageGet(`comments/group/${parms.id}`);
-
+			const myCommnet = await myPageGet(`members/me`);
 			setReviewList(result.data);
+			setMy(myCommnet.data.memberId);
 		};
 		fetchData();
 	}, [parms.id]);
@@ -84,6 +87,14 @@ export default function Comment() {
 
 		volunteerCommentPost("comments", data);
 		window.location.reload();
+	};
+	const onRemove = async (commentId: string) => {
+		if (window.confirm("이 댓글을 삭제 하시겠습니까?")) {
+			CommentDelete(`comments/${commentId}`);
+			window.location.reload();
+		} else {
+			alert("취소합니다.");
+		}
 	};
 
 	return (
@@ -103,7 +114,16 @@ export default function Comment() {
 					/>
 				</StyledInputContainerDiv>
 				{reviewList.map((user) => (
-					<GroupComment key={user.id} content={user.content} />
+					<GroupComment
+						key={user.id}
+						id={user.memberId}
+						name={user.memberName}
+						time={user.createdAt}
+						commentId={user.commentId}
+						content={user.content}
+						onClick={() => onRemove(user.commentId)}
+						myId={my}
+					/>
 				))}
 			</StyledContainerDiv>
 		</div>

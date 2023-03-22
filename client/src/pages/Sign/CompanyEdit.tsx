@@ -132,7 +132,12 @@ export default function UserEdit() {
 				<EditForm>
 					<Header>EDIT</Header>
 					<Profile>
-						<ImgUpload modal={toggle} />
+						<ImgUpload
+							modal={toggle}
+							onImageChange={function (src: string): void {
+								throw new Error("Function not implemented.");
+							}}
+						/>
 						<LabelFlex>
 							<label htmlFor="profileImg">이미지 업로드</label>
 							<label htmlFor="delteImg">이미지 삭제</label>

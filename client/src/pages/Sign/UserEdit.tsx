@@ -102,6 +102,13 @@ const LabelFlex = styled.div`
 `;
 
 export default function UserEdit() {
+	const [imageSrc, setImageSrc] = useState("");
+	console.log(imageSrc);
+
+	const handleImageChange = (src: string) => {
+		setImageSrc(src);
+	};
+
 	const [isOpen, setisOpen] = useState(false);
 	const [isEmage, setisEmage] = useState<boolean | any>(false);
 	const imgSrc = isEmage.src;
@@ -132,7 +139,7 @@ export default function UserEdit() {
 				<EditForm>
 					<Header>EDIT</Header>
 					<Profile>
-						<ImgUpload modal={toggle} />
+						<ImgUpload modal={toggle} onImageChange={handleImageChange} />
 						<LabelFlex>
 							<label htmlFor="profileImg">이미지 업로드</label>
 							<label htmlFor="delteImg">이미지 삭제</label>
