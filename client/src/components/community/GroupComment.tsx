@@ -1,14 +1,10 @@
 import { FaUserCircle } from "react-icons/fa";
 
 interface Props {
-	user: {
-		id: number;
-		name: string;
-		ment: string;
-	};
+	content: string;
 }
 
-export default function GroupComment({ user }: Props): JSX.Element {
+export default function GroupComment(user: Props) {
 	return (
 		<section>
 			<div className="answer-read-container">
@@ -23,7 +19,7 @@ export default function GroupComment({ user }: Props): JSX.Element {
 				>
 					<div style={{ display: "flex", justifyContent: "space-between" }}>
 						<div>
-							<span style={{ marginRight: "10px" }}>{user.name}</span>
+							<span style={{ marginRight: "10px" }}></span>
 							<span style={{ color: "gray" }}>2023.03.14</span>
 						</div>
 						<div>
@@ -31,7 +27,7 @@ export default function GroupComment({ user }: Props): JSX.Element {
 							<span> 삭제</span>
 						</div>
 					</div>
-					<span>{user.ment}</span>
+					<span>{user.content}</span>
 				</div>
 			</div>
 		</section>
