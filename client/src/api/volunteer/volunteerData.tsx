@@ -20,7 +20,7 @@ export const volunteerDataPost = (url: string, loginData: any) => {
 	axios
 		.post(`${apiUrl}${url}`, loginData, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+				Authorization: `${localStorage.getItem("accessToken")}`,
 			},
 		})
 		.catch((err) => console.log(err));

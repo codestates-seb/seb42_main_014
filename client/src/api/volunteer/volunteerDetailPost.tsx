@@ -6,7 +6,7 @@ export const volunteerDetailPost = async (params: string) => {
 	try {
 		const response = await axios.post(apiUrl + params, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+				Authorization: `${localStorage.getItem("accessToken")}`,
 			},
 		});
 		return response.data.body;

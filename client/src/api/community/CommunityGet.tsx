@@ -6,7 +6,7 @@ export const CommunityGet = async () => {
 	try {
 		const response = await axios.get(apiUrl + "groups'", {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+				Authorization: ` ${localStorage.getItem("accessToken")}`,
 			},
 		});
 		return response.data.body.data;
