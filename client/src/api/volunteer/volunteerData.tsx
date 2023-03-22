@@ -6,7 +6,7 @@ export const volunteerDataGet = async (params: string) => {
 	try {
 		const response = await axios.get(apiUrl + params, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+				Authorization: `${localStorage.getItem("accessToken")}`,
 			},
 		});
 		console.log(response.data);
@@ -20,7 +20,7 @@ export const volunteerDataPost = (url: string, loginData: any) => {
 	axios
 		.post(`${apiUrl}${url}`, loginData, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+				Authorization: `${localStorage.getItem("accessToken")}`,
 			},
 		})
 		.catch((err) => console.log(err));
@@ -30,7 +30,7 @@ export const volunteerCommentPost = (params: string, Data: any) => {
 	axios
 		.post(apiUrl + params, Data, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+				Authorization: `${localStorage.getItem("accessToken")}`,
 			},
 		})
 		.catch((err) => console.log(err));

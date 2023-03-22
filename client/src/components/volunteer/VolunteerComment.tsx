@@ -55,33 +55,33 @@ const Comment = styled.div`
 	margin-top: 15px;
 `;
 export default function VolunteerComment() {
-	const parms = useParams();
+	const params = useParams();
 
 	const [reviewList, setReviewList] = useState([]);
-	const [ment, setMent] = useState("");
+	const [comment, setComment] = useState("");
 	const [my, setMy] = useState("");
 
-	const handleMent = (e: any) => {
-		setMent(e.target.value);
-		console.log(ment);
+	const handleComment = (e: any) => {
+		setComment(e.target.value);
+		console.log(comment);
 	};
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await myPageGet(`reviews/${parms.id}`);
-			const myCommnet = await myPageGet(`reviews/my/${parms.id}`);
+			const result = await myPageGet(`reviews/${params.id}`);
+			const myComment = await myPageGet(`reviews/my/${params.id}`);
 
 			setReviewList(result.data);
-			setMy(myCommnet.data.reviewId);
+			setMy(myComment.data.reviewId);
 		};
 		fetchData();
-	}, [parms.id]);
+	}, [params.id]);
 
 	const handleCommentPost = () => {
 		const data = {
-			content: ment,
+			content: comment,
 		};
-		volunteerCommentPost(`reviews/${parms.id}`, data);
+		volunteerCommentPost(`reviews/${params.id}`, data);
 		window.location.reload();
 	};
 	const onRemove = async () => {
@@ -97,7 +97,7 @@ export default function VolunteerComment() {
 			<Comment>
 				<div className="answer-input-container">
 					<FaUserCircle size={40} />
-					<input placeholder="봉사 후기를 남겨주세요." value={ment} onChange={handleMent} />
+					<input placeholder="봉사 후기를 남겨주세요." value={comment} onChange={handleComment} />
 					<Button
 						onClick={handleCommentPost}
 						value="등록하기"
