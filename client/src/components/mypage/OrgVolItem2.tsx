@@ -32,7 +32,7 @@ export default function OrgVolItem1(props: ItemProps) {
 			axios
 				.delete(apiUrl, {
 					headers: {
-						Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+						Authorization: `${localStorage.getItem("accessToken")}`,
 					},
 				})
 				.then(() => {

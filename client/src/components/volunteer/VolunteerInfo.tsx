@@ -82,11 +82,28 @@ export default function VolunteerInfo() {
 	} = getVolunteerInfoData;
 
 	const handlePost = async () => {
-		const response = await axios.post(`http://3.35.252.234:8080/apply/${params.id}`, {
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-			},
-		});
+		// const response = await axios.post(`http://3.35.252.234:8080/apply/${params.id}`, {
+		// 	headers: {
+		// 		Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+		// 	},
+		// });
+		// await axios
+		// 	.post(`http://3.35.252.234:8080/apply/13`, {
+		// 		headers: {
+		// 			Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+		// 		},
+		// 	})
+		// 	.then((res) => console.log(res))
+		// 	.catch((err) => console.log(err));
+
+		axios
+			.post("http://3.35.252.234:8080/apply/18", {
+				headers: {
+					Authorization: `${localStorage.getItem("accessToken")}`,
+				},
+			})
+			.then((res) => console.log(res))
+			.catch((err) => console.log(err));
 	};
 
 	const handleCopyClipBoard = async (text: string) => {
