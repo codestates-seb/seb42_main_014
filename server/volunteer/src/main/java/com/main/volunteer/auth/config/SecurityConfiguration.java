@@ -29,8 +29,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfiguration {
@@ -40,6 +38,8 @@ public class SecurityConfiguration {
     private final CustomUserDetailsService userDetailsService;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2MemberSuccessHandler oAuth2MemberSuccessHandler;
+    private final MemberAuthenticationEntryPoint memberAuthenticationEntryPoint;
+    private final MemberAccessDeniedHandler memberAccessDeniedHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -53,10 +53,10 @@ public class SecurityConfiguration {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-//                .exceptionHandling()
-//                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
-//                .accessDeniedHandler(new MemberAccessDeniedHandler())
-//                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(memberAuthenticationEntryPoint)
+                .accessDeniedHandler(memberAccessDeniedHandler)
+                .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
