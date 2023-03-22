@@ -62,6 +62,10 @@ logging:
   level:
     org.hibernate.SQL: trace
     org.hibernate.type.descriptor.sql.BasicBinder: trace
+  com:
+    amazonaws:
+      util:
+        EC2MetadataUtils: error
 jwt:
   secret: ${secret_key}
   access-token-expiration-minutes: 1800000
