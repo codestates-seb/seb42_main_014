@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -30,6 +31,7 @@ public class ReviewDto {
         private Long volunteerId;
         private String memberName;
         private String content;
+        private LocalDateTime modifiedAt;
 
     }
 
