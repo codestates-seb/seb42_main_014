@@ -7,9 +7,9 @@ phases:
   build:
     commands:
       - echo Build Starting on `date`
-      - cd seb42_main_014/server/volunteer
+      - cd server/volunteer
       - chmod +x ./gradlew
-      - ./gradlew build
+      - ./gradlew build -Pprofile=dev
   post_build:
     commands:
       - echo $(basename ./seb42_main_014/server/volunteer/build/libs/*.jar)
