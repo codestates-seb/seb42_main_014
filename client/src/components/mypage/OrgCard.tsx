@@ -94,6 +94,17 @@ export default function Orgcard() {
 	const [password, isPassword] = useState("");
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState("");
+	const [orgInfo, setOrgInfo] = useState("");
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await myPageGet("members/me");
+			setOrgInfo(result.data);
+			setEmail(result.data.email);
+			setName(result.data.memberName);
+		};
+		fetchData();
+	}, []);
 
 	const toggle = () => {
 		setisOpen(!isOpen);
@@ -103,21 +114,16 @@ export default function Orgcard() {
 		const result = await Check({ password: password });
 		if (result === true) {
 			toggle();
-			navigate("/useredit");
+			navigate("/companyedit", {
+				state: {
+					orgInfo,
+				},
+			});
 		} else {
 			setMessage("비밀번호를 확인해주세요.");
 		}
 	};
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const result = await myPageGet("members/me");
-			console.log(result);
-			setEmail(result.data.email);
-			setName(result.data.memberName);
-		};
-		fetchData();
-	}, []);
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setMessage("");
 		isPassword(event.target.value);
@@ -127,19 +133,13 @@ export default function Orgcard() {
 		<>
 			<Container>
 				<ImgDiv>
-					{/* 프로필이미지와 수정버튼 */}
 					<div>
-						{/* 프로필이미지 */}
 						<img src="/images/mypage/user.png" alt="프로필이미지" />
 					</div>
 					<button type="button" onClick={toggle}>
 						수정하기
 					</button>
 				</ImgDiv>
-				{/* <LikeSpan>
-					<img src="/images/mypage/like.png" alt="찜하기" />
-					<span>1,004</span>
-				</LikeSpan> */}
 				<div>
 					<InfoDiv>
 						<div>이름:{name}</div>
@@ -149,11 +149,8 @@ export default function Orgcard() {
 			</Container>
 			<Modal isOpen={isOpen} toggle={toggle}>
 				<h1>패스워드 확인</h1>
-
 				<Login type="password" onChange={handleInputChange} placeholder="패스워드"></Login>
-
 				{message}
-
 				<Flex>
 					<button type="button" onClick={check}>
 						확인

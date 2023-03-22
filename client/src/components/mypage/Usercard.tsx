@@ -61,7 +61,6 @@ const MedalSpan = styled.span`
 		height: 32px;
 	}
 `;
-
 const InfoDiv = styled.div`
 	justify-content: center;
 	& > div {
@@ -85,7 +84,7 @@ const Login = styled.input`
 `;
 
 export default function Usercard() {
-	const [isOpen, setisOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
 	const [message, setMessage] = useState("");
 	const [password, isPassword] = useState("");
 
@@ -93,14 +92,20 @@ export default function Usercard() {
 	const [name, setName] = useState("");
 	const [point, setPoint] = useState("");
 	const toggle = () => {
-		setisOpen(!isOpen);
+		setIsOpen(!isOpen);
 	};
 	const navigate = useNavigate();
 	const check = async () => {
 		const result = await Check({ password: password });
 		if (result === true) {
 			toggle();
-			navigate("/useredit");
+			navigate("/useredit", {
+				state: {
+					password,
+					email,
+					name,
+				},
+			});
 		} else {
 			setMessage("비밀번호를 확인해주세요.");
 		}
@@ -109,17 +114,18 @@ export default function Usercard() {
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await myPageGet("members/me");
-			console.log(result);
 			setEmail(result.data.email);
 			setName(result.data.memberName);
 			setPoint(result.data.point);
 		};
 		fetchData();
 	}, []);
+
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setMessage("");
 		isPassword(event.target.value);
 	};
+
 	return (
 		<>
 			<Container>
@@ -138,7 +144,7 @@ export default function Usercard() {
 				</MedalSpan>
 				<InfoDiv>
 					{/* 프로필 정보 */}
-					<div>이름 :{name}</div>
+					<div>이름 : {name}</div>
 					<div>이메일 : {email}</div>
 					<div>봉사점수 : {point}</div>
 				</InfoDiv>
