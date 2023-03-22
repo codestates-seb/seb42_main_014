@@ -7,6 +7,7 @@ import CommentList from "./CommentList";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import { useParams } from "react-router-dom";
 import { volunteerCommentPost } from "../../api/volunteer/volunteerData";
+import { CommentDelete } from "../../api/volunteer/volunteerComment";
 
 const StyledContainerDiv = styled.div`
 	width: 100%;
@@ -58,6 +59,7 @@ export default function VolunteerComment() {
 
 	const [reviewList, setReviewList] = useState([]);
 	const [ment, setMent] = useState("");
+	const [my, setMy] = useState("");
 
 	const handleMent = (e: any) => {
 		setMent(e.target.value);
@@ -67,8 +69,10 @@ export default function VolunteerComment() {
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await myPageGet(`reviews/${parms.id}`);
+			const myCommnet = await myPageGet(`reviews/my/${parms.id}`);
 
 			setReviewList(result.data);
+			setMy(myCommnet.data.reviewId);
 		};
 		fetchData();
 	}, [parms.id]);
@@ -79,6 +83,13 @@ export default function VolunteerComment() {
 		};
 		volunteerCommentPost(`reviews/${parms.id}`, data);
 		window.location.reload();
+	};
+	const onRemove = async () => {
+		if (window.confirm("이 후기를 삭제 하시겠습니까?")) {
+			CommentDelete(`reviews/${my}`);
+		} else {
+			alert("취소합니다.");
+		}
 	};
 
 	return (
@@ -100,7 +111,18 @@ export default function VolunteerComment() {
 				</div>
 			</Comment>
 			{reviewList.map((user) => (
-				<CommentList key={user.id} content={user.content} />
+				<CommentList
+					key={user.id}
+					id={user.reviewId}
+					time={user.modifiedAt}
+					content={user.content}
+					memberName={user.memberName}
+					onClick={onRemove}
+					myId={my}
+					editComment={function (id: any): void {
+						throw new Error("Function not implemented.");
+					}}
+				/>
 			))}
 		</StyledContainerDiv>
 	);
