@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import Button from "../../components/Button";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { useParams } from "react-router-dom";
 import { BsLink45Deg } from "react-icons/bs";
 import { myPageGet } from "../../api/mypage/MypageGet";
+import { volunteerDetailPost } from "../../api/volunteer/volunteerDetailPost";
+import axios from "axios";
 
 const StyledContainerDiv = styled.div`
 	width: 100%;
@@ -79,10 +81,13 @@ export default function VolunteerInfo() {
 	// 활동 정보
 	const [content, setContent] = useState("");
 
+	// uri pathname
+	const params = useParams();
+
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await myPageGet("volunteers/2");
-			// console.log(result.volunteer);
+			const result = await myPageGet(`volunteers/${params.id}`);
+			console.log(result);
 			setTitle(result.volunteer.title);
 			setVolunteerImage(result.volunteer.image);
 			setApplyDate(result.volunteer.applyDate);
@@ -95,6 +100,15 @@ export default function VolunteerInfo() {
 		};
 		fetchData();
 	}, []);
+
+	const handlePost = async () => {
+		const response = await axios.post(`http://3.35.252.234:8080/apply/${params.id}`, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+			},
+		});
+		console.log(response.data);
+	};
 
 	const [isLike, setIsLike] = useState(false);
 
@@ -127,7 +141,8 @@ export default function VolunteerInfo() {
 				<div style={{ display: "flex", flexDirection: "column", marginLeft: "40px" }}>
 					<h2>{title}</h2>
 					<span>
-						{/* //! 모집 기간을 봉사 당일까지로 표기했음. 수정 필요 */}
+						모집 기간을
+						{/* //! 봉사 당일까지로 표기했음. 수정 필요 */}
 						모집 기간 : {applyDate.slice(0, 10)} ~ {volunteerDate.slice(0, 10)}
 					</span>
 					<span>봉사 장소 : {place}</span>
@@ -136,7 +151,7 @@ export default function VolunteerInfo() {
 						모집 인원 : {applyCount} / {applyLimit}
 					</span>
 					<Button
-						// onClick={() => volunteerDetailPost()}
+						onClick={handlePost}
 						value="나도 할래!"
 						width={350}
 						height={50}
