@@ -19,7 +19,6 @@ public class CommentDto {
     @Setter
     @Getter
     public static class Patch{
-        private long commentId;
         private String content;
     }
 

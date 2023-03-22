@@ -3,8 +3,9 @@ package com.main.volunteer.domain.volunteer.controller;
 
 import com.main.volunteer.auth.CustomUserDetails;
 import com.main.volunteer.domain.apply.entity.Apply;
-import com.main.volunteer.domain.group.entity.Group;
 import com.main.volunteer.domain.member.service.MemberService;
+import com.main.volunteer.domain.review.dto.ReviewDto;
+import com.main.volunteer.domain.review.mapper.ReviewMapper;
 import com.main.volunteer.domain.review.service.ReviewService;
 import com.main.volunteer.domain.volunteer.entity.Condition;
 import com.main.volunteer.domain.volunteer.service.VolunteerService;
@@ -36,13 +37,15 @@ public class VolunteerController {
     public static final String DEFAULT_URI = "/volunteers";
 
     private final VolunteerMapper volunteerMapper;
+    private final ReviewMapper reviewMapper;
     private final VolunteerService volunteerService;
     private final ReviewService reviewService;
     private final TagService tagService;
     private final MemberService memberService;
 
-    public VolunteerController(VolunteerMapper volunteerMapper, VolunteerService volunteerService, ReviewService reviewService, TagService tagService, MemberService memberService) {
+    public VolunteerController(VolunteerMapper volunteerMapper, ReviewMapper reviewMapper, VolunteerService volunteerService, ReviewService reviewService, TagService tagService, MemberService memberService) {
         this.volunteerMapper = volunteerMapper;
+        this.reviewMapper = reviewMapper;
         this.volunteerService = volunteerService;
         this.reviewService = reviewService;
         this.tagService = tagService;
@@ -114,7 +117,9 @@ public class VolunteerController {
             }
         }
 
-        return ResponseEntity.ok().body(ApiResponse.ok("volunteer", volunteerMapper.volunteerToResponseDto(volunteer),"applied", applied));
+        List<ReviewDto.Response> reviewList = reviewMapper.reviewListToResponseList(volunteer.getReviewList());
+
+        return ResponseEntity.ok().body(ApiResponse.ok("volunteer", volunteerMapper.volunteerToResponseDto(volunteer),"reviewList",reviewList, "applied", applied));
     }
 
     /**

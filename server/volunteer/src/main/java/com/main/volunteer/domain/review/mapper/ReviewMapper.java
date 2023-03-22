@@ -15,7 +15,7 @@ public interface ReviewMapper {
 
         Long volunteerId = review.getVolunteer().getVolunteerId();
 
-        return new ReviewDto.Response(review.getReviewId(),volunteerId, review.getContent());
+        return new ReviewDto.Response(review.getReviewId(),volunteerId,review.getMember().getMemberName(), review.getContent(), review.getModifiedAt());
     }
 
    List<ReviewDto.Response> reviewListToResponseList(List<Review> reviewList);

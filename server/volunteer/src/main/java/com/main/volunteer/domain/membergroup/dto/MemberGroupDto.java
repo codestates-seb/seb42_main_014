@@ -17,7 +17,7 @@ public class MemberGroupDto {
     }
     @AllArgsConstructor
     @Getter
-    @Builder
+    @Setter
     public static class Response{
         @JsonProperty("id")
         private long memberGroupId;
@@ -31,7 +31,6 @@ public class MemberGroupDto {
     @AllArgsConstructor
     @Getter
     @Setter
-    @Builder
     public static class MemberDetails{
         @JsonProperty("member_id")
         private long memberId;
