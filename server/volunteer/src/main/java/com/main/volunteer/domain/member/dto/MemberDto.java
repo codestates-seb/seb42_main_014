@@ -79,6 +79,8 @@ public class MemberDto {
 
         private String memberName;
 
+        private String profileImage;
+
         private String orgAddress;
 
         private Long orgNumber;
