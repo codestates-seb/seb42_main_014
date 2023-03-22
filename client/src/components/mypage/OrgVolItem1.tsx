@@ -60,7 +60,6 @@ export default function OrgVolItem1(props: ItemProps) {
 	useEffect(() => {
 		const fetchData = async () => {
 			const org = await myPageGet(`apply/organization/${props.id}`);
-			console.log(org.data);
 
 			const Vol = org.data;
 			setVol(Vol);

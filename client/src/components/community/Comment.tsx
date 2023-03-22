@@ -66,7 +66,6 @@ export default function Comment() {
 
 	const handleMent = (e: any) => {
 		setMent(e.target.value);
-		console.log(ment);
 	};
 
 	useEffect(() => {

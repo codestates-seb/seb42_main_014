@@ -19,12 +19,9 @@ const Comment = styled.div`
 `;
 
 export default function GroupComment(user: Props) {
-	const [ment, setMent] = useState("");
+	const [ment, setMent] = useState(user.content);
 	const [edit, setEdit] = useState(false);
-	const handleMent = (e: any) => {
-		setMent(e.target.value);
-		console.log(ment);
-	};
+
 	const handleEditClick = () => {
 		setEdit(true);
 	};
@@ -71,7 +68,11 @@ export default function GroupComment(user: Props) {
 						) : null}
 					</div>
 					{edit ? (
-						<input value={ment} onChange={handleMent} placeholder="수정글 입력"></input>
+						<input
+							value={ment}
+							onChange={(e) => setMent(e.target.value)}
+							placeholder="수정글 입력"
+						></input>
 					) : (
 						<span>{user.content}</span>
 					)}
