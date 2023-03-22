@@ -41,11 +41,10 @@ public class MemberService {
         Member findMember = verifiedMember(member.getMemberId());
 
         Optional.ofNullable(member.getMemberName())
-                .ifPresent(memberNickName -> findMember.setMemberName(memberNickName));
-        verifyMemberName(findMember.getMemberName());
+                .ifPresent(memberNickName -> findMember.setMemberName(verifyMemberName(memberNickName)));
 
         Optional.ofNullable(member.getPassword())
-                .ifPresent(memberPassword -> findMember.setPassword(memberPassword));
+                .ifPresent(memberPassword -> findMember.setPassword(passwordEncoder.encode(memberPassword)));
 
         return memberRepository.save(findMember);
     }
@@ -87,13 +86,14 @@ public class MemberService {
         memberRepository.save(findMember);
     }
 
-    public void verifyMemberName(String memberName){
+    public String  verifyMemberName(String memberName){
 
         Optional<Member> verifiedMember = memberRepository.findByMemberName(memberName);
 
         if(verifiedMember.isPresent()){
             throw new BusinessException(ExceptionCode.NICKNAME_EXIST);
         }
+        return memberName;
     }
 
     public boolean checkPassword(Long memberId, String checkPassword){
