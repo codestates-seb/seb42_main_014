@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { FaUserCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-// import comment from "../../data/comment.json";
 import Button from "../Button";
 import CommentList from "./CommentList";
 import { myPageGet } from "../../api/mypage/MypageGet";
+import { useParams } from "react-router-dom";
+import { volunteerCommentPost } from "../../api/volunteer/volunteerData";
 
 const StyledContainerDiv = styled.div`
 	width: 100%;
@@ -53,23 +54,41 @@ const Comment = styled.div`
 	margin-top: 15px;
 `;
 export default function VolunteerComment() {
+	const parms = useParams();
+
 	const [reviewList, setReviewList] = useState([]);
+	const [ment, setMent] = useState("");
+
+	const handleMent = (e: any) => {
+		setMent(e.target.value);
+		console.log(ment);
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await myPageGet("volunteers/2");
-			setReviewList(result.volunteer.reviewList);
+			const result = await myPageGet(`reviews/${parms.id}`);
+
+			setReviewList(result.data);
 		};
 		fetchData();
-	}, []);
+	}, [parms.id]);
+
+	const handleCommentPost = () => {
+		const data = {
+			content: ment,
+		};
+		volunteerCommentPost(`reviews/${parms.id}`, data);
+		window.location.reload();
+	};
 
 	return (
 		<StyledContainerDiv>
 			<Comment>
 				<div className="answer-input-container">
 					<FaUserCircle size={40} />
-					<input placeholder="봉사 후기를 남겨주세요." />
+					<input placeholder="봉사 후기를 남겨주세요." value={ment} onChange={handleMent} />
 					<Button
+						onClick={handleCommentPost}
 						value="등록하기"
 						width={90}
 						height={40}
@@ -81,7 +100,7 @@ export default function VolunteerComment() {
 				</div>
 			</Comment>
 			{reviewList.map((user) => (
-				<CommentList key={user.id} user={user} />
+				<CommentList key={user.id} content={user.content} />
 			))}
 		</StyledContainerDiv>
 	);

@@ -9,6 +9,7 @@ export const volunteerDataGet = async (params: string) => {
 				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
 			},
 		});
+		console.log(response.data);
 		return response.data.body.data;
 	} catch (error) {
 		console.error(error);
@@ -18,6 +19,15 @@ export const volunteerDataGet = async (params: string) => {
 export const volunteerDataPost = (url: string, loginData: any) => {
 	axios
 		.post(`${apiUrl}${url}`, loginData, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+			},
+		})
+		.catch((err) => console.log(err));
+};
+export const volunteerCommentPost = (params: string, Data: any) => {
+	axios
+		.post(apiUrl + params, Data, {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
 			},

@@ -29,6 +29,7 @@ const StyledGroupDetailContainer = styled.div`
 export default function CommunityDetail() {
 	const [groupData, setGroupData] = useState({});
 	const location = useLocation();
+
 	useEffect(() => {
 		const getGroupDetailData = async () => {
 			const result = await myPageGet(`groups/${location.state}`);
