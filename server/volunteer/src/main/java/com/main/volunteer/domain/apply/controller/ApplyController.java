@@ -37,6 +37,7 @@ public class ApplyController {
     /**
     봉사 신청
      */
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/{volunteer-id}")
     public ResponseEntity<?> postApply(@PathVariable("volunteer-id") Long volunteerId,@AuthenticationPrincipal CustomUserDetails userDetails){
 
