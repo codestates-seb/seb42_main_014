@@ -30,7 +30,9 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                                         Authentication authentication) throws IOException, ServletException{
 
         var oAuth2User = (OAuth2User)authentication.getPrincipal();
-        String email = String.valueOf(oAuth2User.getAttributes().get("email"));
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+        Map<String, Object> kakao = (Map<String, Object>) attributes.get("kakao_account");
+        String email = kakao.get("email").toString();
         List<String> authorities = List.of("USER");
 
         redirect(request, response, email, authorities);
@@ -44,7 +46,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         String uri = createURI(accessToken).toString();
         getRedirectStrategy().sendRedirect(request, response, uri);
-        response.setHeader("Authorization",  "Bearer " + accessToken);
+        response.setHeader("Authorization",  "Bearer" + accessToken);
     }
 
     private String delegateAccessToken(String username, List<String> authorities) {
@@ -70,7 +72,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                 .host("localhost")
                 .port(3000)
                 .path("/token")
-                .queryParam("Authorization", "Bearer_" + accessToken)
+                .queryParam("Authorization", "Bearer" + accessToken)
                 .build()
                 .toUri();
     }
