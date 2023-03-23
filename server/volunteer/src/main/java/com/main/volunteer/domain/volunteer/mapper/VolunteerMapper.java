@@ -1,6 +1,5 @@
 package com.main.volunteer.domain.volunteer.mapper;
 
-import com.main.volunteer.domain.review.entity.Review;
 import com.main.volunteer.domain.volunteer.dto.VolunteerDto;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
 import org.mapstruct.Mapper;
@@ -38,11 +37,11 @@ public interface VolunteerMapper{
                 volunteerStatus = volunteer.getVolunteerStatus().name();
             }
 
-            Long organizationId = volunteer.getMember().getMemberId();
+            String organizationName = volunteer.getMember().getMemberName();
             String tagName = volunteer.getTag().getTagName();
 
 
-        return new VolunteerDto.Response( volunteerId, title, volunteerImage, applyDate, volunteerDate, volunteerTime, place, content, applyLimit, applyCount, likeCount,organizationId, tagName, volunteerStatus);
+        return new VolunteerDto.Response( volunteerId, title, volunteerImage, applyDate, volunteerDate, volunteerTime, place, content, applyLimit, applyCount, likeCount,organizationName, tagName, volunteerStatus);
     }
 
 
