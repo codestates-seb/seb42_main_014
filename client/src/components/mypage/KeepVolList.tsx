@@ -32,8 +32,10 @@ export default function KeepVolList() {
 
 	useEffect(() => {
 		const fetchData = async () => {
+
 			const plan = await myPageGet(`likes/my?pageNum=${currentPage}`);
 			const page = await myPageGet(`likes/my?pageNum=1`);
+
 
 			const likes = plan.data;
 			setLikes(likes);

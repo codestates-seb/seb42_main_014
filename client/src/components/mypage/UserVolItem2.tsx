@@ -25,7 +25,6 @@ interface ItemProps {
 export default function UserVolItem2(props: ItemProps) {
 	const apiUrl = `http://3.35.252.234:8080/apply/`;
 	const id = 26;
-
 	const onRemove = async () => {
 		if (window.confirm("이 작업이 수행되면 봉사활동이 취소 됩니다.")) {
 			try {
@@ -62,7 +61,9 @@ export default function UserVolItem2(props: ItemProps) {
 				<div>{props.title} </div>
 				<div>일자 : {props.time}</div>
 				<div>
-					<button onClick={onRemove}>봉사취소</button>
+					<button type="button" onClick={onRemove}>
+						봉사취소
+					</button>
 				</div>
 			</Container>
 		</>

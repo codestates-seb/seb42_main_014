@@ -19,13 +19,8 @@ const Comment = styled.div`
 `;
 
 export default function VolunteerComment(user: Iprops) {
-	const [ment, setMent] = useState("");
 	const [edit, setEdit] = useState(false);
-
-	const handleMent = (e: any) => {
-		setMent(e.target.value);
-		console.log(ment);
-	};
+	const [updateComment, setUpdateComment] = useState(user.content);
 
 	const handleEditClick = () => {
 		setEdit(true);
@@ -33,7 +28,7 @@ export default function VolunteerComment(user: Iprops) {
 
 	const handleCommentUpdate = () => {
 		const data = {
-			content: ment,
+			content: updateComment,
 		};
 		CommentEdit(`reviews/${user.myId}`, data);
 		setEdit(false);
@@ -73,7 +68,11 @@ export default function VolunteerComment(user: Iprops) {
 						) : null}
 					</div>
 					{edit ? (
-						<input value={ment} onChange={handleMent} placeholder="수정글 입력"></input>
+						<input
+							value={updateComment}
+							onChange={(e) => setUpdateComment(e.target.value)}
+							placeholder="수정글 입력"
+						></input>
 					) : (
 						<span>{user.content}</span>
 					)}

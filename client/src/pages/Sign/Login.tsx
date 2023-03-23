@@ -86,7 +86,6 @@ export default function LoginPage() {
 	const navigate = useNavigate();
 	const [isError, setIsError] = useState(false);
 	const [user, setUser] = useState(null); // 유저 정보를 담을 상태 변수
-	console.log(user);
 	interface ILoginUser {
 		email: string;
 		password: string;
@@ -110,14 +109,12 @@ export default function LoginPage() {
 				withCredentials: true,
 			})
 			.then((res) => {
-				console.log("이것은?", res.headers);
 				const token = res.headers.authorization;
 				const reToken = res.headers.refresh;
 				localStorage.setItem("accessToken", token);
 				localStorage.setItem("refreshToken", reToken);
 				setUser(token);
 				navigate("/");
-				console.log(token);
 			})
 			.catch((err) => console.log("오류!", err));
 	};

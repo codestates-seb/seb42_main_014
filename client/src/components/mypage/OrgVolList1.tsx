@@ -29,7 +29,6 @@ export default function OrgVolList() {
 	useEffect(() => {
 		const fetchData = async () => {
 			const org = await myPageGet("volunteers/organization");
-			console.log(org.data);
 			const Vol = org.data;
 			setVol(Vol);
 

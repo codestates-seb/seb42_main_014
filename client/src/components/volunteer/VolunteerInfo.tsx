@@ -82,14 +82,16 @@ export default function VolunteerInfo() {
 	} = getVolunteerInfoData;
 
 	const handlePost = async () => {
-		await axios
-			.post(`http://3.35.252.234:8080/apply/${params.id}`, null, {
+		try {
+			await axios.post(`http://3.35.252.234:8080/apply/${params.id}`, null, {
 				headers: {
 					Authorization: `${localStorage.getItem("accessToken")}`,
 				},
-			})
-			.then((res) => console.log(res))
-			.catch((err) => console.log(err));
+			});
+			alert("봉사가 신청되었어요 :)");
+		} catch (err) {
+			alert("이미 신청하셨어요! :(");
+		}
 	};
 
 	const handleCopyClipBoard = async (text: string) => {
@@ -117,11 +119,7 @@ export default function VolunteerInfo() {
 				/>
 				<div style={{ display: "flex", flexDirection: "column", marginLeft: "40px" }}>
 					<h2>{title}</h2>
-					<span>
-						모집 기간을
-						{/* //! 봉사 당일까지로 표기했음. 수정 필요 */}
-						{/* 모집 기간 : {applyDate.slice(0, 10)} ~ {volunteerDate.slice(0, 10)} */}
-					</span>
+					<span>{/* 모집 기간 : {applyDate.slice(0, 10)} ~ {volunteerDate.slice(0, 10)} */}</span>
 					<span>봉사 장소 : {place}</span>
 					<span>봉사 시간 : {volunteerTime}시간</span>
 					<span>

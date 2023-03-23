@@ -150,8 +150,7 @@ const VolunteerPost = () => {
 			imageUploadPost(fileSrc, setImageUrl);
 		}
 	};
-	// console.log(imageUrl);
-	console.log(fileSrc);
+	console.log(imageUrl);
 	const optionArr = ["어린이", "노인", "장애인", "환경", "동물"];
 	const navigate = useNavigate();
 
@@ -198,9 +197,8 @@ const VolunteerPost = () => {
 		if (post === "/register") {
 			try {
 				volunteerDataPost("volunteers", postVolunteerData);
-				// navigate("/volunteer");
+				navigate("/volunteer");
 			} catch (err) {
-				console.log(err);
 				alert("봉사 등록에 실패했어요. 잠시 후 다시 시도해 주세요.");
 			}
 		} else if (post === "/grouppost") {
@@ -208,7 +206,6 @@ const VolunteerPost = () => {
 				volunteerDataPost("groups", postGroupData);
 				navigate("/community");
 			} catch (err) {
-				console.log(err);
 				alert("그룹 등록에 실패했어요. 잠시 후 다시 시도해 주세요.");
 			}
 		}
