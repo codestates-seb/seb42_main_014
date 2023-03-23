@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { KAKAO_AUTH_URL } from "../../data/KakaoLoginData";
 
 const Body = styled.body`
 	height: 100vh;
@@ -122,6 +123,11 @@ export default function LoginPage() {
 	const onSubmit = (data: ILoginUser) => {
 		LoginUserInfoPost(data);
 	};
+
+	const kakaoHandler = () => {
+		return window.location.assign(KAKAO_AUTH_URL);
+	};
+
 	return (
 		<Body>
 			<form onSubmit={handleSubmit(onSubmit)}>
@@ -150,7 +156,9 @@ export default function LoginPage() {
 							<Link to="/signup">회원가입</Link>
 						</Flex>
 					</LoginForm>
-					<KakaoBtn src="/images/kakao_login_medium.png" alt="main-logo" />
+					{/* <a href={KAKAO_AUTH_URL}> */}
+					<KakaoBtn onClick={kakaoHandler} src="/images/kakao_login_medium.png" alt="main-logo" />
+					{/* </a> */}
 				</StyledContainer>
 			</form>
 		</Body>
