@@ -19,7 +19,6 @@ const StyledContainerDiv = styled.div`
 	justify-content: center;
 	min-width: 1035px;
 	margin-top: 30px;
-
 	.answer-input-container {
 		display: flex;
 		align-items: center;
@@ -38,7 +37,6 @@ const StyledContainerDiv = styled.div`
 		padding: 20px;
 		min-width: 500px;
 	}
-
 	.answer-read-container {
 		display: flex;
 		align-items: center;
@@ -54,25 +52,31 @@ const Comment = styled.div`
 	width: 90%;
 	margin-top: 15px;
 `;
-export default function VolunteerComment() {
+export default function VolunteerComment(disabled: any) {
 	const params = useParams();
-
 	const [reviewList, setReviewList] = useState([]);
 	const [comment, setComment] = useState("");
 	const [my, setMy] = useState("");
+	const [ment, setMent] = useState("");
 
 	const handleComment = (e: any) => {
 		setComment(e.target.value);
-		console.log(comment);
 	};
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await myPageGet(`reviews/${params.id}`);
 			const myComment = await myPageGet(`reviews/my/${params.id}`);
-
 			setReviewList(result.data);
 			setMy(myComment.data.reviewId);
+		};
+		fetchData();
+	}, [params.id]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await myPageGet(`volunteers/${params.id}`);
+			setMent(result.volunteer.volunteerStatus);
 		};
 		fetchData();
 	}, [params.id]);
@@ -97,7 +101,12 @@ export default function VolunteerComment() {
 			<Comment>
 				<div className="answer-input-container">
 					<FaUserCircle size={40} />
-					<input placeholder="봉사 후기를 남겨주세요." value={comment} onChange={handleComment} />
+					<input
+						placeholder="봉사 후기를 남겨주세요."
+						value={comment}
+						onChange={handleComment}
+						{ment === "VOLUNTEER_AFTER" ? disabled : null}
+					/>
 					<Button
 						onClick={handleCommentPost}
 						value="등록하기"
