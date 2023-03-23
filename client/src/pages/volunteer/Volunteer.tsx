@@ -15,45 +15,11 @@ import SvgIcon from "@mui/material/SvgIcon";
 import { useNavigate } from "react-router-dom";
 import Address from "../../components/Address";
 import Paginations from "../../components/Pagination";
+import Button from "../../components/Button";
 
-const Bar = styled.div`
+const StyledAreaContainer = styled.div`
 	display: flex;
-
-	height: 100%;
-	margin-bottom: 20px;
-	padding-bottom: 5px;
-	align-items: center;
-`;
-const Sbar = styled.div`
-	display: flex;
-	height: 100%;
-	flex-direction: row;
-	justify-content: flex-start;
-	width: auto;
-	border-bottom: 2px solid gray;
-	margin-bottom: 20px;
-	padding-bottom: 5px;
-
-	select {
-		cursor: pointer;
-		box-shadow: rgba(0, 0, 0, 0.24) 0px 1px 3px, rgba(0, 0, 0, 0.21) 0px 1px 2px;
-		border: 2px solid whitesmoke;
-		padding: 5px;
-		font-weight: bold;
-		border-radius: 10px;
-		font-size: 1rem;
-		margin-top: 5px;
-	}
-	span {
-		margin-top: 5px;
-		text-align: left;
-		white-space: nowrap;
-		padding: 5px;
-		font-weight: bold;
-		font-size: 1.2rem;
-		margin-right: 10px;
-		margin-left: 10px;
-	}
+	flex-direction: column;
 `;
 
 const StyledContainerDiv = styled.div`
@@ -77,6 +43,45 @@ const StyledCardContainerDiv = styled.div`
 	}
 `;
 
+const SearchContainerDiv = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
+`;
+
+const FilterContainerDiv = styled.div`
+	display: flex;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	border-bottom: 3px solid black;
+	align-items: center;
+	select {
+		border: 1px solid gray;
+		border-radius: 5px;
+		height: 45px;
+		width: 200px;
+		text-align: center;
+		padding: 10px;
+	}
+`;
+
+const ResetButton = styled.button`
+	width: 200px;
+	height: 45px;
+	border-radius: 10px;
+	margin-left: 10px;
+	cursor: pointer;
+	background-color: #000000;
+	color: white;
+	border: none;
+	:hover {
+		color: black;
+		background-color: white;
+		transition: all 0.3s;
+		border: 1px solid gray;
+	}
+`;
+
 const optionArr = [
 	"기본순",
 	"찜 많은순",
@@ -94,6 +99,8 @@ export default function Volunteer() {
 	const [selectedSubArea, setSelectedSubArea] = useState("");
 	const [volunData, setVolunData] = useState([]);
 	const [selectedOption, setSelectedOption] = useState("기본순");
+	const [searchValue, setSearchValue] = useState(null);
+	const [searchCategory, setSearchCategory] = useState("volunteer");
 	const navigate = useNavigate();
 
 	const handleClick = (id: number) => {
@@ -108,6 +115,10 @@ export default function Volunteer() {
 	};
 	const handlePageChange = (pageNumber: number) => {
 		setCurrentPage(pageNumber);
+	};
+	const handleResetButton = () => {
+		setSearchValue("");
+		volunteerDataGet("volunteers").then((res) => setVolunData(res.data));
 	};
 
 	useEffect(() => {
@@ -152,19 +163,75 @@ export default function Volunteer() {
 		setSelectedCategory(category);
 	};
 
+	const handleChangeSearchValue = () => {
+		let requestUrl;
+		if (searchCategory === "org") {
+			requestUrl = `volunteers?volunteerName&organizationName=${searchValue}&tagName&province&city&orderBy=volunteerId&sort=DESC&pageNum=${currentPage}`;
+			volunteerDataGet(requestUrl).then((res) => setVolunData(res.data));
+		} else {
+			requestUrl = `volunteers?volunteerName=${searchValue}&organizationName&tagName&province&city&orderBy=volunteerId&sort=DESC&pageNum=${currentPage}`;
+			volunteerDataGet(requestUrl).then((res) => setVolunData(res.data));
+		}
+	};
+
 	return (
 		<>
 			<StyledContainerDiv>
 				<Carousel />
 				<Category onCategoryClick={handleCategoryClick} />
 				<div style={{ margin: "50px" }}>
-					<Sbar>
-						<Bar>
-							<SearchBar
-								placeholder="검색어를 입력해 주세요."
-								width={250}
-								height={45}
-								radius={10}
+					<StyledAreaContainer>
+						<SearchContainerDiv>
+							<div>
+								<input
+									type={"radio"}
+									id="volunteer"
+									value="봉사명"
+									checked={searchCategory === "volunteer"}
+									onClick={() => setSearchCategory("volunteer")}
+								/>
+								<label style={{ marginRight: "10px" }} htmlFor="volunteer">
+									봉사명
+								</label>
+								<input
+									type={"radio"}
+									id="org"
+									value="봉사명"
+									checked={searchCategory === "org"}
+									onClick={() => setSearchCategory("org")}
+								/>
+								<label htmlFor="org">기관명</label>
+							</div>
+							<div
+								style={{
+									display: "flex",
+									alignItems: "center",
+									marginTop: "10px",
+								}}
+							>
+								<SearchBar
+									placeholder="검색어를 입력해 주세요."
+									value={searchValue}
+									onChange={(e) => setSearchValue(e.target.value)}
+									style={{ marginRight: "10px" }}
+								/>
+								<Button
+									width={80}
+									height={45}
+									value={"검색"}
+									bgColor={"#1a994b"}
+									radius={10}
+									onClick={handleChangeSearchValue}
+								/>
+								<ResetButton onClick={handleResetButton}>초기화</ResetButton>
+							</div>
+						</SearchContainerDiv>
+						<FilterContainerDiv>
+							<Address
+								selectedArea={selectedArea}
+								setSelectedArea={setSelectedArea}
+								selectedSubArea={selectedSubArea}
+								setSelectedSubArea={setSelectedSubArea}
 							/>
 							<DropdownMenu
 								onChange={handleOptionChange}
@@ -177,16 +244,9 @@ export default function Volunteer() {
 								boxWidth={200}
 								max_min_width={200}
 							/>
-						</Bar>
-
-						<span>지역 구분 : </span>
-						<Address
-							selectedArea={selectedArea}
-							setSelectedArea={setSelectedArea}
-							selectedSubArea={selectedSubArea}
-							setSelectedSubArea={setSelectedSubArea}
-						/>
-					</Sbar>
+						</FilterContainerDiv>
+					</StyledAreaContainer>
+					<div />
 					<StyledCardContainerDiv>
 						{volunData &&
 							volunData.map((el) => {
@@ -199,6 +259,8 @@ export default function Volunteer() {
 									tagName,
 									title,
 									volunteerImage,
+									organizationName,
+									likeCount,
 								} = el;
 								const categoryItems = {
 									어린이: ChildCareIcon,
@@ -214,6 +276,7 @@ export default function Volunteer() {
 											"https://main014-bucket.s3.ap-northeast-2.amazonaws.com/profile/011e2a77-4a54-4377-8679-6c49c4b86e7f%ED%95%9C%EA%B8%80%EC%9D%B4%EB%A6%84%EC%9D%BC%EB%95%90.png"
 										}
 										title={title}
+										organizationName={organizationName}
 										date={volunteerDate}
 										place={place}
 										person={`${applyCount} / ${applyLimit}`}
@@ -236,6 +299,7 @@ export default function Volunteer() {
 											/>
 										}
 										onClick={() => handleClick(volunteerId)}
+										like={likeCount}
 									/>
 								);
 							})}

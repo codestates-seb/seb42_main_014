@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const Area = styled.div`
-	width: 100%;
+	display: flex;
 	select {
 		font-size: 1rem;
 		margin-right: 5px;

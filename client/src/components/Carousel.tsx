@@ -26,7 +26,7 @@ const Style1 = styled.div`
 		margin-left: 20px;
 		margin-top: 45px;
 		margin-bottom: 20px;
-		width: 800px;
+		width: 100%;
 		height: 500px;
 	}
 	span {
@@ -54,29 +54,28 @@ const NextTo = styled.div`
 	right: 2%;
 	z-index: 3;
 `;
+const settings = {
+	dots: true,
+	fade: true,
+	infinite: true,
+	slidesToShow: 1,
+	slidesToScroll: 1,
+	autoplay: true,
+	speed: 500,
+	autoplaySpeed: 8000,
+	cssEase: "linear",
+	nextArrow: <NextTo></NextTo>,
+	prevArrow: <Pre></Pre>,
+};
 
 export default function Carousel() {
-	const settings = {
-		dots: true,
-		fade: true,
-		infinite: true,
-		slidesToShow: 1,
-		slidesToScroll: 1,
-		autoplay: true,
-		speed: 500,
-		autoplaySpeed: 8000,
-		cssEase: "linear",
-		nextArrow: <NextTo></NextTo>,
-		prevArrow: <Pre></Pre>,
-	};
-
 	return (
 		<Body>
 			<Slider {...settings}>
 				<div>
 					<Style1 color="green">
-						<img src="/images/home/main-img-1.png" alt="1"></img>
-						<span>작은 마음이 모여서 조금 더 나은 내일을 만들어요.</span>
+						<img src="/images/volunteer/volunteer.jpg" alt="1"></img>
+						{/* <span>작은 마음이 모여서 조금 더 나은 내일을 만들어요.</span> */}
 					</Style1>
 				</div>
 				<div>
