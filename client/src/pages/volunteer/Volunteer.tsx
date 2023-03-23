@@ -164,12 +164,7 @@ export default function Volunteer() {
 				<div style={{ margin: "50px" }}>
 					<Sbar>
 						<Bar>
-							<SearchBar
-								placeholder="검색어를 입력해 주세요."
-								width={250}
-								height={45}
-								radius={10}
-							/>
+							<SearchBar placeholder="검색어를 입력해 주세요." />
 							<DropdownMenu
 								onChange={handleOptionChange}
 								setSelectedOption={setSelectedOption}

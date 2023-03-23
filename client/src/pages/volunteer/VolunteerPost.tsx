@@ -198,7 +198,7 @@ const VolunteerPost = () => {
 		if (post === "/register") {
 			try {
 				volunteerDataPost("volunteers", postVolunteerData);
-				navigate("/volunteer");
+				// navigate("/volunteer");
 			} catch (err) {
 				alert("봉사 등록에 실패했어요. 잠시 후 다시 시도해 주세요.");
 			}
