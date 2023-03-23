@@ -10,9 +10,7 @@ export const volunteerDataGet = async (params: string) => {
 			},
 		});
 
-
 		return response.data.body;
-
 	} catch (error) {
 		console.error(error);
 	}
@@ -35,5 +33,7 @@ export const volunteerCommentPost = (params: string, Data: any) => {
 				Authorization: `${localStorage.getItem("accessToken")}`,
 			},
 		})
-		.catch((err) => console.log(err));
+		.catch(() => {
+			alert("봉사기간 이후 작성 가능합니다.");
+		});
 };

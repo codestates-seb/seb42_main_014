@@ -49,7 +49,7 @@ const FlexLi = styled.div`
 const ModalStyle = styled.div`
 	position: fixed;
 	left: 0%;
-	top: 0%;
+	top: 30%;
 `;
 
 export default function OrgVolItem1(props: ItemProps) {

@@ -5,7 +5,6 @@ import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { useLocation, useParams } from "react-router-dom";
 import { BsLink45Deg } from "react-icons/bs";
 import { myPageGet } from "../../api/mypage/MypageGet";
-import { volunteerDetailPost } from "../../api/volunteer/volunteerDetailPost";
 import axios from "axios";
 
 const StyledContainerDiv = styled.div`
@@ -54,11 +53,41 @@ const StyledEmptyLineDiv = styled.div`
 `;
 
 export default function VolunteerInfo() {
-	const [getVolunteerInfoData, setGetVolunteerInfoData] = useState<any>({});
-	const [isLike, setIsLike] = useState(false);
 	const location = useLocation();
 	const params = useParams();
+	const [getVolunteerInfoData, setGetVolunteerInfoData] = useState<any>({});
+	const [isLike, setIsLike] = useState(false);
+
 	const baseUrl = `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com`;
+
+	useEffect(() => {
+		const id = localStorage.getItem(`${params.id}`);
+		if (id) {
+			setIsLike(JSON.parse(id));
+		}
+	}, [params.id]);
+
+	const heartHandler = async () => {
+		try {
+			if (isLike === false) {
+				await axios.post(`http://3.35.252.234:8080/likes/${params.id}`, null, {
+					headers: {
+						Authorization: `${localStorage.getItem("accessToken")}`,
+					},
+				});
+			} else if (isLike === true) {
+				await axios.delete(`http://3.35.252.234:8080/likes/${params.id}`, {
+					headers: {
+						Authorization: `${localStorage.getItem("accessToken")}`,
+					},
+				});
+			}
+			setIsLike((prev) => !prev);
+			localStorage.setItem(`${params.id}`, JSON.stringify(!isLike));
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -67,7 +96,7 @@ export default function VolunteerInfo() {
 			);
 		};
 		fetchData();
-	}, []);
+	}, [params.id]);
 
 	const {
 		title,
@@ -91,47 +120,6 @@ export default function VolunteerInfo() {
 			alert("봉사가 신청되었어요 :)");
 		} catch (err) {
 			alert("이미 신청하셨어요! :(");
-		}
-	};
-
-	const handleLike = async () => {
-		try {
-			await axios.post(`http://3.35.252.234:8080/likes/${params.id}`, null, {
-				headers: {
-					Authorization: `${localStorage.getItem("accessToken")}`,
-				},
-			});
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	const handleDislike = async () => {
-		try {
-			await axios.delete(`http://3.35.252.234:8080/likes/${params.id}`, {
-				headers: {
-					Authorization: `${localStorage.getItem("accessToken")}`,
-				},
-			});
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	const myLikeGet = async () => {
-		try {
-			await axios
-				.get(`http://3.35.252.234:8080/likes/my?pageNum=1`, {
-					headers: {
-						Authorization: `${localStorage.getItem("accessToken")}`,
-					},
-				})
-				.then((res) => {
-					const volunteerName = res.data.body.data[0].volunteerName;
-					return volunteerName;
-				});
-		} catch (err) {
-			console.log(err);
 		}
 	};
 
@@ -176,17 +164,7 @@ export default function VolunteerInfo() {
 						textSize={15}
 					/>
 					<div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
-						<button
-							onClick={() => {
-								console.log(title);
-								const volunteerName = myLikeGet();
-								console.log(volunteerName);
-								volunteerName === title ? handleDislike() : handleLike();
-
-								// handleDislike();
-								// handleLike();
-							}}
-						>
+						<button onClick={heartHandler}>
 							{!isLike ? <FcLikePlaceholder size={40} /> : <FcLike size={40} />}
 						</button>
 						<div

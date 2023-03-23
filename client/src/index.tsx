@@ -14,6 +14,7 @@ import UserEdit from "./pages/Sign/UserEdit";
 import VolunteerDetail from "./pages/volunteer/VolunteerDetail";
 import ErrorPage from "./pages/ErrorPage";
 import CommunityDetail from "./pages/community/CommunityDetail";
+import Test from "./pages/recommend/Test";
 import Token from "./pages/token";
 
 const router = createBrowserRouter([
@@ -75,7 +76,9 @@ const router = createBrowserRouter([
 				element: <VolunteerPost />,
 			},
 			{
-				path: "/token",
+				path: "/test",
+				element: <Test />,
+			path: "/token",
 				element: <Token />,
 			},
 		],

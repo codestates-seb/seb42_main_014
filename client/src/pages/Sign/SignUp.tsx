@@ -123,6 +123,11 @@ const CheckBox = styled.div`
 		background-color: #242424;
 	}
 `;
+
+const Modalstyle = styled.div`
+	position: fixed;
+	top: 250px;
+`;
 const Flex = styled.div`
 	display: flex;
 	width: 100%;
@@ -327,6 +332,8 @@ export default function SignUp() {
 						{errors.isCheck && <ErrorMsg>{errors.isCheck.message}</ErrorMsg>}
 					</LoginForm>
 				</StyledContainer>
+			</Body>
+			<Modalstyle>
 				<Modal isOpen={isOpen} toggle={toggle}>
 					<FlexClo>
 						<div>
@@ -339,7 +346,7 @@ export default function SignUp() {
 						<Btn onClick={toggle}>확인</Btn>
 					</FlexClo>
 				</Modal>
-			</Body>
+			</Modalstyle>
 		</form>
 	);
 }
