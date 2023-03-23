@@ -27,11 +27,13 @@ export default function UserVolItem1(props: ItemProps) {
 	const clickHandlr = () => {
 		nav(`/volunteer/${props.id}`);
 	};
+	const date = props.time.split("T")[0];
+
 	return (
 		<>
 			<Container>
 				<div>{props.title}</div>
-				<div>일자 : {props.time} </div>
+				<div>일자 : {date} </div>
 				<div>
 					<button onClick={clickHandlr}>후기작성</button>
 				</div>
