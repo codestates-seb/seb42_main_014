@@ -41,7 +41,7 @@ jobs:
     
         
     - name: Make zip file
-      run: zip -r ./main014-deploy.zip .
+      run: zip -r ./main014-deploy1.zip .
       shell: bash
         
     - name: Configure AWS credentials
