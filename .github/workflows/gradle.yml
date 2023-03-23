@@ -64,4 +64,5 @@ jobs:
         aws deploy create-deployment --application-name main014
         --deployment-config-name CodeDeployDefault.AllAtOnce
         --deployment-group-name main014-group
-        --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=main014-deploy.zip
+        --s3-location bucket=$S3_BUCKET_NAME,bundleType=jar,key=volunteer-0.0.1-SNAPSHOT.jar
+        #--s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=main014-deploy.zip
