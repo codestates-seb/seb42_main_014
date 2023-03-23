@@ -41,7 +41,7 @@ jobs:
     
         
     - name: Make zip file
-      run: zip -r ./main014-deploy1.zip .
+      run: zip -r ./main014-deploy2.zip .
       shell: bash
         
     - name: Configure AWS credentials
@@ -52,11 +52,11 @@ jobs:
         aws-region: ap-northeast-2
         
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./main014-deploy1.zip s3://$S3_BUCKET_NAME/main014-deploy1.zip
+      run: aws s3 cp --region ap-northeast-2 ./main014-deploy2.zip s3://$S3_BUCKET_NAME/main014-deploy2.zip
       
     - name: Code Deploy
       run: >
         aws deploy create-deployment --application-name main014
         --deployment-config-name CodeDeployDefault.AllAtOnce
         --deployment-group-name main014-group
-        --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=main014-deploy.zip
+        --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=main014-deploy2.zip
