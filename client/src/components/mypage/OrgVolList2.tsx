@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { myPageGet } from "../../api/mypage/MypageGet";
+import Paginations from "../Pagination";
 import OrgVolItem2 from "./OrgVolItem2";
 
 const Container = styled.div`
@@ -22,15 +23,22 @@ const Container = styled.div`
 
 export default function OrgVolManage() {
 	const [Vol, setVol] = useState<any[]>([]);
+	const [totalPages, setTotalPages] = useState<number>(0);
+	const [currentPage, setCurrentPage] = useState<number>(1);
+	const handlePageChange = (pageNumber: number) => {
+		setCurrentPage(pageNumber);
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const org = await myPageGet("volunteers/organization");
+			const org = await myPageGet(`volunteers/organization?=pageNum=${currentPage}`);
 			const Vol = org.data;
 			setVol(Vol);
+			const url = await myPageGet("volunteers/organization?pageNum=1");
+			setTotalPages(url.data.length * url.totalPages);
 		};
 		fetchData();
-	}, []);
+	}, [currentPage]);
 	return (
 		<>
 			<Container>
@@ -47,6 +55,14 @@ export default function OrgVolManage() {
 							<p>등록한 게시물이 없습니다.</p>
 						)}
 					</ol>
+					{Vol.length ? (
+						<Paginations
+							totalPages={totalPages}
+							currentPage={currentPage}
+							onPageChange={handlePageChange}
+							itemsCountPerPage={5}
+						/>
+					) : null}
 				</div>
 			</Container>
 		</>

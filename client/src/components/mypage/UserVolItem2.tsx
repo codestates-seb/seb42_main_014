@@ -40,19 +40,6 @@ export default function UserVolItem2(props: ItemProps) {
 		} else {
 			alert("취소합니다.");
 		}
-		// event.preventDefault();
-		// if (window.confirm("이 작업이 수행되면 봉사가 취소됩니다.")) {
-		// 	try {
-		// 		await Volpatch(`apply/3`);
-		// 		console.log("헬로우");
-
-		// 		alert("봉사활동이 취소 되었습니다.");
-		// 	} catch (error) {
-		// 		console.error(error);
-		// 	}
-		// } else {
-		// 	alert("작업을 취소합니다.");
-		// }
 	};
 
 	return (

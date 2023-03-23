@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 interface ItemProps {
 	title: string;
 	time: string;
+	id: number;
 }
 
 const Container = styled.div`
@@ -21,13 +23,17 @@ const Container = styled.div`
 `;
 
 export default function UserVolItem1(props: ItemProps) {
+	const nav = useNavigate();
+	const clickHandlr = () => {
+		nav(`/volunteer/${props.id}`);
+	};
 	return (
 		<>
 			<Container>
 				<div>{props.title}</div>
 				<div>일자 : {props.time} </div>
 				<div>
-					<button>후기작성</button>
+					<button onClick={clickHandlr}>후기작성</button>
 				</div>
 			</Container>
 		</>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { myPageGet } from "../../api/mypage/MypageGet";
+import Paginations from "../Pagination";
 import OrgVolItem1 from "./OrgVolItem1";
 
 const Container = styled.div`
@@ -25,18 +26,22 @@ const Container = styled.div`
 
 export default function OrgVolList() {
 	const [Vol, setVol] = useState<any[]>([]);
+	const [totalPages, setTotalPages] = useState<number>(0);
+	const [currentPage, setCurrentPage] = useState<number>(1);
+	const handlePageChange = (pageNumber: number) => {
+		setCurrentPage(pageNumber);
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const org = await myPageGet("volunteers/organization");
+			const org = await myPageGet(`volunteers/organization?pageNum=${currentPage}`);
 			const Vol = org.data;
 			setVol(Vol);
-
-			// setTitle(JSON.stringify(plan.data[0].volunteerName).replace(/"/g, ""));
-			// setName(JSON.stringify(plan.data[0].organizationName).replace(/"/g, ""));
+			const url = await myPageGet("volunteers/organization?pageNum=1");
+			setTotalPages(url.data.length * url.totalPages);
 		};
 		fetchData();
-	}, []);
+	}, [currentPage]);
 	return (
 		<>
 			<Container>
@@ -49,6 +54,7 @@ export default function OrgVolList() {
 								<li key={v.likeId}>
 									<OrgVolItem1
 										title={v.title}
+										count={v.applyCount}
 										time={v.applyDate}
 										id={v.volunteerId}
 										limit={v.applyLimit}
@@ -60,6 +66,14 @@ export default function OrgVolList() {
 						)}
 					</ol>
 				</div>
+				{Vol.length ? (
+					<Paginations
+						totalPages={totalPages}
+						currentPage={currentPage}
+						onPageChange={handlePageChange}
+						itemsCountPerPage={5}
+					/>
+				) : null}
 			</Container>
 		</>
 	);
