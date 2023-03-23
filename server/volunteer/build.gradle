@@ -33,7 +33,7 @@ repositories {
 ext {
 	set('springCloudVersion', "2021.0.5")
 	set('snippetsDir', file("build/generated-snippets"))
-	set('profile', (!project.hasProperty('profile') || !profile) ? 'dev' : profile)
+	set('profile', (!project.hasProperty('profile') || !profile) ? 'local' : profile)
 }
 
 

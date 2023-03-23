@@ -2,6 +2,7 @@ package com.main.volunteer.domain.volunteer.repository;
 
 import com.main.volunteer.domain.volunteer.entity.Condition;
 import com.main.volunteer.domain.volunteer.entity.Volunteer;
+import com.main.volunteer.domain.volunteer.entity.VolunteerStatus;
 import com.main.volunteer.domain.volunteer.repository.custom.VolunteerRepositoryCustom;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Order;
@@ -35,6 +36,7 @@ public class VolunteerRepositoryImpl extends QuerydslRepositorySupport implement
                 .selectFrom(volunteer)
                 .where(containVolunteerName(condition.getVolunteerName()), containOrganizationName(condition.getOrganizationName()),
                         eqTagName(condition.getTagName()), eqProvince(condition.getProvince()), eqCity(condition.getCity()))
+                .where(volunteer.volunteerStatus.eq(VolunteerStatus.VOLUNTEER_APPLYING))
                 .orderBy(createOrderSpecifier(condition))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -88,6 +90,10 @@ public class VolunteerRepositoryImpl extends QuerydslRepositorySupport implement
     private BooleanExpression eqCity(String city) {
 
         return city == null || city.isEmpty() ? null : volunteer.place.containsIgnoreCase(city);
+    }
+
+    private BooleanExpression eqStatusApplying(VolunteerStatus volunteerStatus){
+        return volunteer.volunteerStatus.eq(VolunteerStatus.VOLUNTEER_APPLYING);
     }
 
 
