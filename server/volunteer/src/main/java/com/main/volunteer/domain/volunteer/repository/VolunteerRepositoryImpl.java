@@ -14,8 +14,6 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 import javax.persistence.EntityManager;
 
-import java.util.List;
-
 import static com.main.volunteer.domain.volunteer.entity.QVolunteer.volunteer;
 
 @Slf4j
@@ -74,7 +72,7 @@ public class VolunteerRepositoryImpl extends QuerydslRepositorySupport implement
 
     private BooleanExpression containOrganizationName(String organizationName) {
 
-        return organizationName == null || organizationName.isEmpty() ? null : volunteer.member.memberName.eq(organizationName);
+        return organizationName == null || organizationName.isEmpty() ? null : volunteer.member.memberName.containsIgnoreCase(organizationName);
     }
 
     private BooleanExpression eqTagName(String tagName) {

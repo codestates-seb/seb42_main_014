@@ -31,6 +31,7 @@ public class ApplyDto {
     @Getter
     public static class Response{
         private Long applyId;
+        private Long volunteerId;
         private String volunteerName;
         private LocalDateTime volunteerDate;
         private LocalDateTime appliedAt;
