@@ -6,7 +6,6 @@ import Dropdown from "../../components/volunteer/Dropdown";
 import TextEdit from "../../components/volunteer/TextEdit";
 import { volunteerDataPost } from "../../api/volunteer/volunteerData";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { imageUploadPost } from "../../api/imgPost";
 
 const Body = styled.div`
