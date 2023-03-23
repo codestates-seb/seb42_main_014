@@ -66,11 +66,11 @@ export default function About() {
 	const members = [
 		{
 			name: "박주혁",
-			avatarUrl: "/images/about/test.png",
+			avatarUrl: "/images/about/박주혁.jpg",
 			position: "FE Developer",
-			githubUrl: `${github}/`,
+			githubUrl: `${github}/Juhyuk-Park`,
 			blogUrl: "",
-			instaUrl: `${insta}/`,
+			instaUrl: `${insta}/effelf`,
 		},
 		{
 			name: "임성은",

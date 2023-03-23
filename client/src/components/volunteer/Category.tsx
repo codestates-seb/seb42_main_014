@@ -38,7 +38,11 @@ const Icon = styled.div`
 	:hover {
 		transition: all 0.7s;
 		transform: scale(1.1);
-		background-color: #fba3a3;
+		background-color: #d7d2f7;
+	}
+	.active {
+		background-color: #d7d2f7;
+		border: 2px solid black;
 	}
 `;
 const Col = styled.div`
@@ -67,7 +71,7 @@ const All = styled.div`
 	:hover {
 		transition: all 0.7s;
 		transform: scale(1.1);
-		background-color: #fba3a3;
+		background-color: #d7d2f7;
 	}
 	span:first-child {
 		font-size: 30px;
@@ -97,8 +101,8 @@ export default function Category({ onCategoryClick }: CategoryProps) {
 					</Icon>
 					<span>어린이</span>
 				</Col>
-				<Col>
-					<Icon onClick={() => handleClick("장애인")}>
+				<Col onClick={() => handleClick("장애인")}>
+					<Icon>
 						<SvgIcon component={AccessibleIcon} inheritViewBox fontSize="inherit" />
 					</Icon>
 					<span>장애인</span>

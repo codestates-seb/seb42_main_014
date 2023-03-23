@@ -3,6 +3,9 @@ import { IoIosSearch } from "react-icons/io";
 
 interface IPropsSearchBar {
 	placeholder: string;
+	value: string;
+	onChange: React.ChangeEventHandler<HTMLInputElement>;
+	style?: React.CSSProperties | undefined;
 }
 
 const StyledSearchBarDiv = styled.div`
@@ -22,12 +25,12 @@ const StyledSearchInput = styled.input`
 	outline: none;
 `;
 
-export default function SearchBar({ placeholder }: IPropsSearchBar) {
+export default function SearchBar({ placeholder, value, onChange, style }: IPropsSearchBar) {
 	return (
 		<>
-			<StyledSearchBarDiv>
+			<StyledSearchBarDiv style={style}>
 				<IoIosSearch style={{ marginLeft: "15px" }} size={24} />
-				<StyledSearchInput placeholder={placeholder} />
+				<StyledSearchInput value={value} placeholder={placeholder} onChange={onChange} />
 			</StyledSearchBarDiv>
 		</>
 	);

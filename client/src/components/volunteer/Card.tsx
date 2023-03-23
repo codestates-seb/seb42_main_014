@@ -1,8 +1,9 @@
+import { FcLike } from "react-icons/fc";
 import styled from "styled-components";
 
 const StyledCardContainer = styled.div`
 	width: 360px;
-	height: 350px;
+	height: 440px;
 	background-color: #ffffff;
 	border-radius: 10px;
 	display: flex;
@@ -42,7 +43,15 @@ const StyledCardPersonDiv = styled.div`
 	width: 20%;
 `;
 
-interface TProps {
+const CardContentDiv = styled.div`
+	padding: 20px;
+	display: flex;
+	div {
+		margin-bottom: 3px;
+	}
+`;
+
+interface IProps {
 	src?: string;
 	title?: string;
 	date?: string;
@@ -50,25 +59,42 @@ interface TProps {
 	person?: string | number;
 	category?: React.ReactElement<any, any> | undefined;
 	onClick?: React.MouseEventHandler<HTMLDivElement>;
+	organizationName?: string;
+	like?: number;
 }
 
-export default function Card({ src, title, date, place, person, category, onClick }: TProps) {
+export default function Card({
+	src,
+	title,
+	date,
+	place,
+	person,
+	category,
+	onClick,
+	organizationName,
+	like,
+}: IProps) {
 	return (
 		<StyledCardContainer onClick={onClick}>
 			<div className="center">
 				<img src={src} alt="카드 이미지" />
 			</div>
-			<div style={{ padding: "20px", display: "flex" }}>
+			<CardContentDiv>
 				<div style={{ width: "80%" }}>
-					<span className="title">{title}</span>
-					<span style={{ justifyContent: "center" }}>{category}</span>
-					<div>{`일시 : ${date}`}</div>
+					<div className="title">{title}</div>
+					<div>기관명 : {organizationName}</div>
+					<div>{`날짜 : ${date.split("T")[0]}`}</div>
 					<div style={{ display: "flex" }}>
 						<span>{`장소 : ${place}`}</span>
 					</div>
+					<div style={{ marginRight: "5px" }}>{category}</div>
+					<div style={{ display: "flex", alignContent: "center" }}>
+						<FcLike size={23} />
+						<span style={{ marginLeft: "5px" }}>{like}</span>
+					</div>
 				</div>
 				<StyledCardPersonDiv>{person}</StyledCardPersonDiv>
-			</div>
+			</CardContentDiv>
 		</StyledCardContainer>
 	);
 }
