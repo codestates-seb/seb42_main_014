@@ -105,7 +105,7 @@ export default function VolunteerComment(disabled: any) {
 						placeholder="봉사 후기를 남겨주세요."
 						value={comment}
 						onChange={handleComment}
-						{ment === "VOLUNTEER_AFTER" ? disabled : null}
+						disabled={ment !== "VOLUNTEER_AFTER"}
 					/>
 					<Button
 						onClick={handleCommentPost}
