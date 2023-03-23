@@ -35,8 +35,8 @@ jobs:
     - name: Change Build Root Directory
       run: cd ./server/volunteer
       
-    - name: Check my path
-      run: pwd
+#    - name: Check my path
+#      run: pwd
       
     - name: Check ls
       run: ls -al
