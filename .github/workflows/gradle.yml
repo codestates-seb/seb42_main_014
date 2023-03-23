@@ -42,10 +42,10 @@ jobs:
       run: ls -al
       
     - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      run: chmod +x ./server/volunteer/gradlew
       
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./server/volunteer/gradlew build
 #    - name: Build with Gradle
 #      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
 #      with:
