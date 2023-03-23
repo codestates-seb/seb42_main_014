@@ -52,12 +52,25 @@ const Comment = styled.div`
 	width: 90%;
 	margin-top: 15px;
 `;
+
+const FilterContainer = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+	input {
+		margin-right: 10px;
+	}
+`;
+
 export default function VolunteerComment(disabled: any) {
 	const params = useParams();
 	const [reviewList, setReviewList] = useState([]);
 	const [comment, setComment] = useState("");
-	const [my, setMy] = useState("");
+	const [myReviewId, setMyReviewId] = useState("");
 	const [ment, setMent] = useState("");
+	const [isFilteredReviewChecked, setIsFilteredReviewChecked] = useState("allReview");
+
+	console.log(myReviewId, reviewList);
 
 	const handleComment = (e: any) => {
 		setComment(e.target.value);
@@ -68,7 +81,7 @@ export default function VolunteerComment(disabled: any) {
 			const result = await myPageGet(`reviews/${params.id}`);
 			const myComment = await myPageGet(`reviews/my/${params.id}`);
 			setReviewList(result.data);
-			setMy(myComment.data.reviewId);
+			setMyReviewId(myComment.data.reviewId);
 		};
 		fetchData();
 	}, [params.id]);
@@ -90,49 +103,78 @@ export default function VolunteerComment(disabled: any) {
 	};
 	const onRemove = async () => {
 		if (window.confirm("이 후기를 삭제 하시겠습니까?")) {
-			CommentDelete(`reviews/${my}`);
+			CommentDelete(`reviews/${myReviewId}`);
 		} else {
 			alert("취소합니다.");
 		}
 	};
 
+	const handleMyReviewClick = () => {
+		setIsFilteredReviewChecked("myReview");
+		setReviewList(reviewList.filter((el) => el.reviewId === myReviewId));
+	};
+
+	const handleAllReviewClick = () => {
+		setIsFilteredReviewChecked("allReview");
+		myPageGet(`reviews/${params.id}`).then((res) => setReviewList(res.data));
+	};
+
 	return (
-		<StyledContainerDiv>
-			<Comment>
-				<div className="answer-input-container">
-					<FaUserCircle size={40} />
-					<input
-						placeholder="봉사 후기를 남겨주세요."
-						value={comment}
-						onChange={handleComment}
-						{ment === "VOLUNTEER_AFTER" ? disabled : null}
-					/>
-					<Button
-						onClick={handleCommentPost}
-						value="등록하기"
-						width={90}
-						height={40}
-						radius={10}
-						textSize={14}
-						bgColor="black"
-						iconName={<AiOutlinePlus style={{ marginLeft: "10px" }} />}
-					/>
-				</div>
-			</Comment>
-			{reviewList.map((user) => (
-				<CommentList
-					key={user.id}
-					id={user.reviewId}
-					time={user.modifiedAt}
-					content={user.content}
-					memberName={user.memberName}
-					onClick={onRemove}
-					myId={my}
-					editComment={function (id: any): void {
-						throw new Error("Function not implemented.");
-					}}
+		<>
+			<FilterContainer>
+				<input
+					type="radio"
+					id="allReview"
+					value={"allReview"}
+					name="allReview"
+					onClick={handleAllReviewClick}
+					checked={isFilteredReviewChecked === "allReview"}
 				/>
-			))}
-		</StyledContainerDiv>
+				<label htmlFor="allReview" style={{ marginRight: "10px" }}>
+					모든 후기 조회
+				</label>
+				<input
+					type="radio"
+					id="myReview"
+					value={"myReview"}
+					name="myReview"
+					onClick={handleMyReviewClick}
+					checked={isFilteredReviewChecked === "myReview"}
+				/>
+				<label htmlFor="myReview">내가 작성한 후기 조회</label>
+			</FilterContainer>
+			<StyledContainerDiv>
+				<Comment>
+					<div className="answer-input-container">
+						<FaUserCircle size={40} />
+						<input placeholder="봉사 후기를 남겨주세요." value={comment} onChange={handleComment} />
+						<Button
+							onClick={handleCommentPost}
+							value="등록하기"
+							width={90}
+							height={40}
+							radius={10}
+							textSize={14}
+							bgColor="black"
+							iconName={<AiOutlinePlus style={{ marginLeft: "10px" }} />}
+						/>
+					</div>
+				</Comment>
+				{reviewList.map((user) => (
+					<CommentList
+						key={user.id}
+						id={user.reviewId}
+						time={user.modifiedAt}
+						content={user.content}
+						memberName={user.memberName}
+						onClick={onRemove}
+						myId={myReviewId}
+						editComment={function (id: any): void {
+							throw new Error("Function not implemented.");
+						}}
+					/>
+				))}
+			</StyledContainerDiv>
+		</>
 	);
 }

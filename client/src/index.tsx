@@ -78,7 +78,9 @@ const router = createBrowserRouter([
 			{
 				path: "/test",
 				element: <Test />,
-			path: "/token",
+			},
+			{
+				path: "/token",
 				element: <Token />,
 			},
 		],

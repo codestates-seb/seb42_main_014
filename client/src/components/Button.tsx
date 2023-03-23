@@ -53,7 +53,7 @@ export default function Button({
 	return (
 		<StyledButtonContainer>
 			{iconName}
-			<button type={type} onClick={onClick} style={style} className="shadow">
+			<button type={type} onClick={onClick} style={style}>
 				{value}
 			</button>
 		</StyledButtonContainer>
