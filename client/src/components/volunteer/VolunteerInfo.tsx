@@ -94,6 +94,47 @@ export default function VolunteerInfo() {
 		}
 	};
 
+	const handleLike = async () => {
+		try {
+			await axios.post(`http://3.35.252.234:8080/likes/${params.id}`, null, {
+				headers: {
+					Authorization: `${localStorage.getItem("accessToken")}`,
+				},
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const handleDislike = async () => {
+		try {
+			await axios.delete(`http://3.35.252.234:8080/likes/${params.id}`, {
+				headers: {
+					Authorization: `${localStorage.getItem("accessToken")}`,
+				},
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const myLikeGet = async () => {
+		try {
+			await axios
+				.get(`http://3.35.252.234:8080/likes/my?pageNum=1`, {
+					headers: {
+						Authorization: `${localStorage.getItem("accessToken")}`,
+					},
+				})
+				.then((res) => {
+					const volunteerName = res.data.body.data[0].volunteerName;
+					return volunteerName;
+				});
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 	const handleCopyClipBoard = async (text: string) => {
 		try {
 			await navigator.clipboard.writeText(text);
@@ -135,7 +176,17 @@ export default function VolunteerInfo() {
 						textSize={15}
 					/>
 					<div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
-						<button onClick={() => setIsLike(!isLike)}>
+						<button
+							onClick={() => {
+								console.log(title);
+								const volunteerName = myLikeGet();
+								console.log(volunteerName);
+								volunteerName === title ? handleDislike() : handleLike();
+
+								// handleDislike();
+								// handleLike();
+							}}
+						>
 							{!isLike ? <FcLikePlaceholder size={40} /> : <FcLike size={40} />}
 						</button>
 						<div
