@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import Button from "../../components/Button";
 import { ReactNode } from "react";
+import { GropPost } from "../../api/community/CommunityPost";
+import { useParams } from "react-router-dom";
+import { group } from "console";
 
 const Container = styled.div`
 	background-color: #ffffff;
@@ -50,6 +53,7 @@ const Flex = styled.div`
 	align-items: flex-end;
 `;
 interface IProps {
+	id: any;
 	src?: string;
 	name?: string;
 	place?: string;
@@ -60,6 +64,7 @@ interface IProps {
 }
 
 export default function CommunityCard({
+	id,
 	src,
 	name,
 	place,
@@ -68,6 +73,18 @@ export default function CommunityCard({
 	category,
 	onClick,
 }: IProps) {
+	const onGroup = () => {
+		if (window.confirm("이 그룹에 가입하시겠습니까?")) {
+			const data = {
+				groupId: id,
+			};
+			GropPost(`member-groups/${id}`, data);
+			alert(`환영합니다!`);
+		} else {
+			alert("취소합니다.");
+		}
+	};
+
 	return (
 		<Container onClick={onClick}>
 			<Flex>
@@ -84,6 +101,7 @@ export default function CommunityCard({
 			</Flex>
 			<ButtonDiv>
 				<Button
+					onClick={onGroup}
 					value="함께하기"
 					width={120}
 					height={40}

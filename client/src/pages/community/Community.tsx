@@ -67,6 +67,7 @@ export default function Community() {
 
 			const result = await myPageGet(`groups?pageNum=${currentPage}`);
 			setGetCommunityData(result.data);
+
 			const url = await myPageGet("groups?pageNum=1");
 			setTotalPages(url.data.length * url.totalPages);
 		};
@@ -135,6 +136,7 @@ export default function Community() {
 							if (tagName === selectedCategory) {
 								return (
 									<CommunityCard
+										id={groupId}
 										key={groupId}
 										src={groupImage}
 										name={groupName}
@@ -166,6 +168,7 @@ export default function Community() {
 								return (
 									<CommunityCard
 										key={groupId}
+										id={groupId}
 										src={groupImage}
 										name={groupName}
 										place={place}
