@@ -23,7 +23,7 @@ else
 fi
 
 
-source ~/.bash_profile
+source ~/.bashrc
 
 DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
 echo "> DEPLOY_JAR 배포"    >> /home/ubuntu/action/deploy.log
