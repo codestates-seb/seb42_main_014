@@ -31,28 +31,15 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-
-    - name: Change Build Root Directory
-      run: cd ./server/volunteer
-      
-#    - name: Check my path
-#      run: pwd
-      
-    - name: Check ls
-      run: ls -al
       
     - name: Grant execute permission for gradlew
       run: chmod +x ./server/volunteer/gradlew
       
     - name: Build with Gradle
-      run: cd ./server/volunteer && ./gradlew build
-#    - name: Build with Gradle
-#      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-#      with:
-#        gradle-version: 6.5
-#        arguments: build
+      run: cd ./server/volunteer && ./gradlew build -Pprofile=dev 
         
-  
+    - name: Copy jar
+      run: cp ./server/volunteer/build/libs/volunteer-0.0.1-SNAPSHOT.jar .
     
         
     - name: Make zip file
@@ -67,11 +54,14 @@ jobs:
         aws-region: ap-northeast-2
         
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./main014-deploy2.zip s3://$S3_BUCKET_NAME/main014-deploy2.zip
+      run: aws s3 cp --region ap-northeast-2 ./main014-deploy.zip s3://$S3_BUCKET_NAME/main014-deploy.zip
+      
+    - name: Upload jar to S3
+      run: aws s3 cp --region ap-northeast-2 ./volunteer-0.0.1-SNAPSHOT.jar s3://$S3_BUCKET_NAME/volunteer-0.0.1-SNAPSHOT.jar
       
     - name: Code Deploy
       run: >
         aws deploy create-deployment --application-name main014
         --deployment-config-name CodeDeployDefault.AllAtOnce
         --deployment-group-name main014-group
-        --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=main014-deploy2.zip
+        --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=main014-deploy.zip
