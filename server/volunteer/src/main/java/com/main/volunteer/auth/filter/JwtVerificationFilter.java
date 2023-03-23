@@ -28,7 +28,11 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        Map<String, Object> claims = verifyJws(request);
+
+        String jws = request.getHeader("Authorization").replace("Bearer","");
+        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
+
+        Map<String, Object> claims = jwtTokenizer.verifySignature(jws, base64EncodedSecretKey);
         setAuthenticationToContext(claims);
 
         filterChain.doFilter(request, response);
@@ -52,7 +56,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     private void setAuthenticationToContext(Map<String, Object> claims){
 
         CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername((String) claims.get("username"));
-        String username = (String) claims.get("username");
         List<GrantedAuthority> authorities = authorityUtils.createAuthorities((List)claims.get("roles"));
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
