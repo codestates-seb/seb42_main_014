@@ -41,12 +41,12 @@ export default function UserVolItem2(props: ItemProps) {
 			alert("취소합니다.");
 		}
 	};
-
+	const date = props.time.split("T")[0];
 	return (
 		<>
 			<Container>
 				<div>{props.title} </div>
-				<div>일자 : {props.time}</div>
+				<div>일자 : {date}</div>
 				<div>
 					<button type="button" onClick={onRemove}>
 						봉사취소
