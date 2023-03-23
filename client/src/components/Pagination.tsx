@@ -4,60 +4,74 @@ import styled from "styled-components";
 interface Props {
 	totalPages: number;
 	currentPage: number;
+	itemsCountPerPage: number;
 	onPageChange: (pageNumber: number) => void;
 }
 
 const Container = styled.div`
-	margin-top: 10px;
-	font-size: large;
 	display: flex;
-	width: 100%;
 	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+	margin-bottom: 5px;
 
-	flex-direction: row;
-	ul {
-		list-style-type: none;
-		background-color: #fffdfd;
-	}
-	ul.pagination li {
-		font-size: 1.2rem;
-		font-weight: bold;
-		float: left;
-		width: 30px;
-		height: 30px;
-		border: 1px solid #d8d8d8;
+	.pagination {
 		display: flex;
-		flex-direction: row;
 		justify-content: center;
 		align-items: center;
-	}
-	ul.pagination li a {
-		text-decoration: none;
-		color: #000000;
-		font-size: 1.2rem;
-	}
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		font-size: 1.1rem;
 
-	ul.pagination li.active a {
-		color: #000000;
-	}
+		li {
+			margin: 0 5px;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			cursor: pointer;
+			transition: all 0.2s ease;
 
-	ul.pagination li.active {
-		background-color: #338ddb;
-	}
+			&:hover {
+				background-color: #d8d8d8;
+			}
 
-	ul.pagination li a:hover,
-	ul.pagination li a.active {
-		color: #04522d;
+			&.active {
+				background-color: #000000;
+				a {
+					color: #ffffff;
+				}
+
+				box-shadow: 0px 0px 5px 0px rgba(223, 223, 223, 0.5);
+			}
+		}
+
+		a {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+			width: 100%;
+			text-decoration: none;
+			color: #000000;
+			transition: all 0.3s ease;
+
+			&:hover,
+			&.active {
+				color: #04522d;
+			}
+		}
 	}
 `;
 
-const Paginations = ({ totalPages, currentPage, onPageChange }: Props) => {
+const Paginations = ({ itemsCountPerPage, totalPages, currentPage, onPageChange }: Props) => {
 	return (
 		<Container>
 			<Pagination
 				activePage={currentPage}
 				totalItemsCount={totalPages}
 				onChange={onPageChange}
+				itemsCountPerPage={itemsCountPerPage}
 				itemClass="page-item"
 				linkClass="page-link"
 			/>

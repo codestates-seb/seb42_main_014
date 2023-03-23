@@ -24,23 +24,20 @@ interface ItemProps {
 
 export default function UserVolItem2(props: ItemProps) {
 	const apiUrl = `http://3.35.252.234:8080/apply/`;
-	const id = 18;
-	console.log(apiUrl);
+	const id = 26;
+
 	const onRemove = async () => {
 		if (window.confirm("이 작업이 수행되면 봉사활동이 취소 됩니다.")) {
-			axios
-				.patch(apiUrl + id, {
+			try {
+				const response = await axios.patch(`${apiUrl}${id}`, null, {
 					headers: {
 						Authorization: `${localStorage.getItem("accessToken")}`,
 					},
-				})
-				.then(() => {
-					alert("삭제되었습니다.");
-				})
-				.catch((error) => {
-					console.error(error);
-					alert("삭제에 실패했습니다.");
 				});
+				return response.data.body;
+			} catch (err) {
+				console.error(err);
+			}
 		} else {
 			alert("취소합니다.");
 		}

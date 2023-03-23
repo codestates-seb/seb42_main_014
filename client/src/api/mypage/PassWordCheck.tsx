@@ -9,7 +9,7 @@ export const Check = async ({ password }: Props) => {
 	try {
 		const response = await axios.get(apiUrl + `members/me/checkPwd?checkPassword=${password}`, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+				Authorization: `${localStorage.getItem("accessToken")}`,
 			},
 		});
 		return response.data;

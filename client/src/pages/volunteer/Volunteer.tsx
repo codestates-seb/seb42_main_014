@@ -16,11 +16,6 @@ import { useNavigate } from "react-router-dom";
 import Address from "../../components/Address";
 import Paginations from "../../components/Pagination";
 
-interface Props {
-	itemsPerPage: number;
-	endpoint: string;
-}
-
 const Bar = styled.div`
 	display: flex;
 
@@ -145,8 +140,9 @@ export default function Volunteer() {
 			let PageUrl = await volunteerDataGet(
 				`volunteers?volunteerName&organizationName&tagName&orderBy=volunteerId&sort=DESC&pageNum=1`,
 			);
-			setTotalPages(PageUrl.length);
-			setVolunData(result);
+			//pageUrl을 따로 하나 더 판 이유는 pageNum이 페이지 넘버로 바뀌면 해당 length가 적용되어 페이지 번호가 사라짐을 예방
+			setTotalPages(PageUrl.data.length * PageUrl.totalPages);
+			setVolunData(result.data);
 		};
 
 		getVolunteerData();
@@ -248,6 +244,7 @@ export default function Volunteer() {
 						totalPages={totalPages}
 						currentPage={currentPage}
 						onPageChange={handlePageChange}
+						itemsCountPerPage={12}
 					/>
 				</div>
 			</StyledContainerDiv>

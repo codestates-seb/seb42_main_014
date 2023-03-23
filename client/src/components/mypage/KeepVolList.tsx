@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Paginations from "../Pagination";
 import KeepVolItem from "./KeepVolItem";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import { useEffect, useState } from "react";
@@ -21,20 +22,28 @@ const Container = styled.div`
 `;
 
 export default function KeepVolList() {
+	const [totalPages, setTotalPages] = useState<number>(0);
+	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [likes, setLikes] = useState<any[]>([]);
+
+	const handlePageChange = (pageNumber: number) => {
+		setCurrentPage(pageNumber);
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const plan = await myPageGet("likes/my");
-			console.log(plan.data);
+			const plan = await myPageGet(`likes/my?pageNum=${currentPage}`);
+			const page = await myPageGet(`likes/my?pageNum=1`);
+
 			const likes = plan.data;
 			setLikes(likes);
+			setTotalPages(page.data.length * plan.totalPages);
 
 			// setTitle(JSON.stringify(plan.data[0].volunteerName).replace(/"/g, ""));
 			// setName(JSON.stringify(plan.data[0].organizationName).replace(/"/g, ""));
 		};
 		fetchData();
-	}, []);
+	}, [currentPage]);
 	return (
 		<>
 			<Container>
@@ -51,10 +60,13 @@ export default function KeepVolList() {
 						) : (
 							<p>찜한 게시물이 없습니다.</p>
 						)}
-						{/* <li>
-							<KeepVolItem />
-						</li> */}
 					</ol>
+					<Paginations
+						totalPages={totalPages}
+						currentPage={currentPage}
+						onPageChange={handlePageChange}
+						itemsCountPerPage={5}
+					/>
 				</div>
 			</Container>
 		</>

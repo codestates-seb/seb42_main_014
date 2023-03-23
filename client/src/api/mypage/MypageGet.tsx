@@ -6,7 +6,7 @@ export const myPageGet = async (params: string) => {
 	try {
 		const response = await axios.get(apiUrl + params, {
 			headers: {
-				Authorization: ` ${localStorage.getItem("accessToken")}`,
+				Authorization: `${localStorage.getItem("accessToken")}`,
 			},
 		});
 		return response.data.body;

@@ -6,7 +6,6 @@ export async function Volpatch(id: string): Promise<void> {
 	const url = `${apiUrl}${id}`;
 	try {
 		const response = await axios.patch(url);
-		console.log(response.data);
 	} catch (error) {
 		console.error(error);
 	}
@@ -15,7 +14,7 @@ export async function Volpatch(id: string): Promise<void> {
 export const userInfoPatch = (path: string, patchData: any) => {
 	axios
 		.patch(`${apiUrl}${path}`, patchData, {
-			headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+			headers: { Authorization: ` ${localStorage.getItem("accessToken")}` },
 		})
 		.catch((err) => console.log(err));
 };
