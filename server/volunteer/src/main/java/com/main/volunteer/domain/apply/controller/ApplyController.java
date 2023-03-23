@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
 @RestController
 @RequestMapping("/apply")
 public class ApplyController {

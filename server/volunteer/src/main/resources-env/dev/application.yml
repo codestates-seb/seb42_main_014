@@ -1,4 +1,4 @@
-running: server
+running: dev
 domain: http://3.35.252.234:8080
 
 spring:
