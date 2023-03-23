@@ -32,6 +32,7 @@ export default function GroupComment(user: Props) {
 		CommentEdit(`comments/${user.commentId}`, data);
 
 		setEdit(false);
+		window.location.reload();
 	};
 	const date = user.time.split(".")[0];
 	return (
