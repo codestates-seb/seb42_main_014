@@ -42,11 +42,6 @@ export default function KakaoLogin() {
 	}, []);
 
 	useEffect(() => {
-		// axios({
-		// 	method: "OPTIONS",
-		// 	url: `http://${IP}/oauth2/authorization/kakao?code=${code}`,
-		// });
-
 		axios({
 			method: "GET",
 			// url: `http://${IP}/login/oauth2/code/kakao?code=${code}`,

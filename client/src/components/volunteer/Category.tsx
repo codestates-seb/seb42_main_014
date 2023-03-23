@@ -28,15 +28,21 @@ const Icon = styled.div`
 	margin-bottom: 10px;
 	font-size: 50px;
 	text-align: center;
-	border: 3px solid rgb(193, 193, 193);
+	border: 1px solid rgb(193, 193, 193);
 	border-radius: 100%;
 	width: 90px;
 	height: 90px;
 	line-height: 100px;
 	cursor: pointer;
-
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.13), 0 1px 2px rgba(0, 0, 0, 0.21);
 	:hover {
-		background-color: #fffffa;
+		transition: all 0.7s;
+		transform: scale(1.1);
+		background-color: #d7d2f7;
+	}
+	.active {
+		background-color: #d7d2f7;
+		border: 2px solid black;
 	}
 `;
 const Col = styled.div`
@@ -51,7 +57,8 @@ const Col = styled.div`
 `;
 const All = styled.div`
 	cursor: pointer;
-	border: 3px solid rgb(193, 193, 193);
+	border: 1px solid rgb(193, 193, 193);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
 	background-color: #ffffff;
 	text-align: center;
 	border-radius: 100%;
@@ -62,7 +69,9 @@ const All = styled.div`
 	display: flex;
 	flex-direction: column;
 	:hover {
-		background-color: #fffffa;
+		transition: all 0.7s;
+		transform: scale(1.1);
+		background-color: #d7d2f7;
 	}
 	span:first-child {
 		font-size: 30px;
@@ -92,8 +101,8 @@ export default function Category({ onCategoryClick }: CategoryProps) {
 					</Icon>
 					<span>어린이</span>
 				</Col>
-				<Col>
-					<Icon onClick={() => handleClick("장애인")}>
+				<Col onClick={() => handleClick("장애인")}>
+					<Icon>
 						<SvgIcon component={AccessibleIcon} inheritViewBox fontSize="inherit" />
 					</Icon>
 					<span>장애인</span>

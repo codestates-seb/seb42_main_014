@@ -66,17 +66,17 @@ export default function About() {
 	const members = [
 		{
 			name: "박주혁",
-			avatarUrl: "/images/about/test.png",
+			avatarUrl: "/images/about/박주혁.jpg",
 			position: "FE Developer",
-			githubUrl: `${github}/`,
+			githubUrl: `${github}/Juhyuk-Park`,
 			blogUrl: "",
-			instaUrl: `${insta}/`,
+			instaUrl: `${insta}/effelf`,
 		},
 		{
 			name: "임성은",
-			avatarUrl: "/images/about/test.png",
+			avatarUrl: "/images/about/임성은.jpg",
 			position: "FE Developer",
-			githubUrl: `${github}/`,
+			githubUrl: `${github}/Limcroco`,
 			blogUrl: "https://velog.io/@se2id",
 			instaUrl: null,
 		},
@@ -106,11 +106,11 @@ export default function About() {
 		},
 		{
 			name: "이우연",
-			avatarUrl: "/images/about/test.png",
+			avatarUrl: "/images/about/이우연.jpg",
 			position: "BE Developer",
 			githubUrl: `${github}/`,
 			blogUrl: "",
-			instaUrl: `${insta}/`,
+			instaUrl: "",
 		},
 	];
 
@@ -179,7 +179,9 @@ export default function About() {
 											target={"_blank"}
 											rel="noreferrer"
 											href={blogUrl}
-											style={{ color: "white", marginRight: "20px" }}
+											style={
+												!blogUrl ? { display: "none" } : { color: "white", marginRight: "20px" }
+											}
 										>
 											<SiVelog className="icon-hover" size={30} />
 										</a>
