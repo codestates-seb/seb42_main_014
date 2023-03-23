@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import Modal from "../Modal";
+import Paginations from "../Pagination";
 import User from "./User";
 
 interface ItemProps {
@@ -9,6 +10,7 @@ interface ItemProps {
 	time: string;
 	id: string;
 	limit: string;
+	count: number;
 }
 
 const Container = styled.div`
@@ -39,9 +41,10 @@ const Flex = styled.div`
 `;
 const FlexLi = styled.div`
 	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
-
 	width: 100%;
+	height: fit-content;
 `;
 const ModalStyle = styled.div`
 	position: fixed;
@@ -51,6 +54,11 @@ const ModalStyle = styled.div`
 
 export default function OrgVolItem1(props: ItemProps) {
 	const [isOpen, setisOpen] = useState(false);
+	const [totalPages, setTotalPages] = useState<number>(0);
+	const [currentPage, setCurrentPage] = useState<number>(1);
+	const handlePageChange = (pageNumber: number) => {
+		setCurrentPage(pageNumber);
+	};
 	const toggle = () => {
 		setisOpen(!isOpen);
 	};
@@ -60,19 +68,19 @@ export default function OrgVolItem1(props: ItemProps) {
 	useEffect(() => {
 		const fetchData = async () => {
 			const org = await myPageGet(`apply/organization/${props.id}`);
-
+			setTotalPages(props.count);
 			const Vol = org.data;
 			setVol(Vol);
 		};
 		fetchData();
-	}, [props.id]);
+	}, [props.count, props.id]);
 	return (
 		<>
 			<Container>
 				<div>{props.title}</div>
 				<div>일자 :{date}</div>
 				<div onClick={toggle}>
-					신청 인원 현황 : {Vol.length}/{props.limit}
+					신청 인원 현황 : {props.count}/{props.limit}
 				</div>
 			</Container>
 			<ModalStyle>
@@ -89,6 +97,12 @@ export default function OrgVolItem1(props: ItemProps) {
 							<p>신청한 인원이 없습니다.</p>
 						)}
 					</FlexLi>
+					<Paginations
+						totalPages={totalPages}
+						currentPage={currentPage}
+						onPageChange={handlePageChange}
+						itemsCountPerPage={5}
+					/>
 
 					<Flex>
 						<button type="button" onClick={toggle}>
