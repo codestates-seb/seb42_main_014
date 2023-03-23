@@ -23,3 +23,16 @@ export const guestGetData = async (params: string) => {
 		console.error(error);
 	}
 };
+
+export const memberDelete = async (params: string) => {
+	try {
+		const response = await axios.delete(apiUrl + params, {
+			headers: {
+				Authorization: `${localStorage.getItem("accessToken")}`,
+			},
+		});
+		return response.data.body;
+	} catch (error) {
+		console.error(error);
+	}
+};

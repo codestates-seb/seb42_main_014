@@ -22,7 +22,7 @@ const StyledContainerDiv = styled.div`
 	}
 
 	div > span {
-		margin-bottom: 20px;
+		margin-bottom: 10px;
 		font-size: 16px;
 	}
 
@@ -57,9 +57,9 @@ export default function VolunteerInfo() {
 	const params = useParams();
 	const [getVolunteerInfoData, setGetVolunteerInfoData] = useState<any>({});
 	const [isLike, setIsLike] = useState(false);
-
 	const baseUrl = `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com`;
 
+	console.log(getVolunteerInfoData);
 	useEffect(() => {
 		const id = localStorage.getItem(`${params.id}`);
 		if (id) {
@@ -108,8 +108,8 @@ export default function VolunteerInfo() {
 		applyCount,
 		place,
 		content,
+		organizationName,
 	} = getVolunteerInfoData;
-
 	const handlePost = async () => {
 		try {
 			await axios.post(`http://3.35.252.234:8080/apply/${params.id}`, null, {
@@ -122,7 +122,6 @@ export default function VolunteerInfo() {
 			alert("이미 신청하셨어요! :(");
 		}
 	};
-
 	const handleCopyClipBoard = async (text: string) => {
 		try {
 			await navigator.clipboard.writeText(text);
@@ -131,6 +130,11 @@ export default function VolunteerInfo() {
 			alert("복사에 실패했어요. 잠시 후 다시 시도해 주세요.");
 		}
 	};
+
+	const startDate = String(applyDate).split("T")[0];
+	const endDate = String(volunteerDate).split("T")[0];
+
+	// const endDateFirst = volunteerDate.split("T")[0].slice(0, 8);
 
 	return (
 		<StyledContainerDiv>
@@ -148,7 +152,9 @@ export default function VolunteerInfo() {
 				/>
 				<div style={{ display: "flex", flexDirection: "column", marginLeft: "40px" }}>
 					<h2>{title}</h2>
-					<span>{/* 모집 기간 : {applyDate.slice(0, 10)} ~ {volunteerDate.slice(0, 10)} */}</span>
+					<span>기관명 : {organizationName}</span>
+					<span>모집 기간 : {startDate} ~ 봉사일 24시간 전까지</span>
+					<span>봉사 일자 : {endDate}</span>
 					<span>봉사 장소 : {place}</span>
 					<span>봉사 시간 : {volunteerTime}시간</span>
 					<span>
