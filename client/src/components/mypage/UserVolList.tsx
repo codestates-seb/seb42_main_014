@@ -69,7 +69,11 @@ export default function UserVolList() {
 							history.map((v) => (
 								<>
 									<li key={v.Id}>
-										<UserVolItem1 title={v.volunteerName} time={v.volunteerDate} />
+										<UserVolItem1
+											title={v.volunteerName}
+											time={v.volunteerDate}
+											id={v.volunteerId}
+										/>
 									</li>
 								</>
 							))

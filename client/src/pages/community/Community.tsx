@@ -11,6 +11,7 @@ import ForestIcon from "@mui/icons-material/Forest";
 import ElderlyIcon from "@mui/icons-material/Elderly";
 import AccessibleIcon from "@mui/icons-material/Accessible";
 import { useNavigate } from "react-router-dom";
+import Paginations from "../../components/Pagination";
 
 const Container = styled.div`
 	height: 100%;
@@ -50,19 +51,27 @@ const ButtonDiv = styled.div`
 	}
 `;
 export default function Community() {
+	const [totalPages, setTotalPages] = useState<number>(0);
+	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [getCommunityData, setGetCommunityData] = useState([]);
 	const [getMyScore, setGetMyScore] = useState<any>(0);
 	const [selectedCategory, setSelectedCategory] = useState("");
 	const navigate = useNavigate();
+	const handlePageChange = (pageNumber: number) => {
+		setCurrentPage(pageNumber);
+	};
 
 	useEffect(() => {
-		myPageGet("members/me")
-			.then((res) => setGetMyScore(res.data))
-			.catch((err) => console.log(err));
-		myPageGet("groups")
-			.then((res) => setGetCommunityData(res.data))
-			.catch((err) => console.log(err));
-	}, []);
+		const fetchData = async () => {
+			myPageGet("members/me").then((res) => setGetMyScore(res.data));
+
+			const result = await myPageGet(`groups?pageNum=${currentPage}`);
+			setGetCommunityData(result.data);
+			const url = await myPageGet("groups?pageNum=1");
+			setTotalPages(url.data.length * url.totalPages);
+		};
+		fetchData();
+	}, [currentPage]);
 
 	const { point } = getMyScore;
 
@@ -186,6 +195,12 @@ export default function Community() {
 							}
 						})}
 				</Container>
+				<Paginations
+					totalPages={totalPages}
+					currentPage={currentPage}
+					onPageChange={handlePageChange}
+					itemsCountPerPage={5}
+				/>
 			</div>
 		</>
 	);
