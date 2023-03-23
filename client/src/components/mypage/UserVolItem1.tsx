@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+interface ItemProps {
+	title: string;
+	time: string;
+}
+
 const Container = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -15,12 +20,12 @@ const Container = styled.div`
 	}
 `;
 
-export default function UserVolItem1() {
+export default function UserVolItem1(props: ItemProps) {
 	return (
 		<>
 			<Container>
-				<div>타이틀</div>
-				<div>일자 : </div>
+				<div>{props.title}</div>
+				<div>일자 : {props.time} </div>
 				<div>
 					<button>후기작성</button>
 				</div>

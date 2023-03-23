@@ -14,7 +14,7 @@ export async function Volpatch(id: string): Promise<void> {
 export const userInfoPatch = (path: string, patchData: any) => {
 	axios
 		.patch(`${apiUrl}${path}`, patchData, {
-			headers: { Authorization: `${localStorage.getItem("accessToken")}` },
+			headers: { Authorization: ` ${localStorage.getItem("accessToken")}` },
 		})
 		.catch((err) => console.log(err));
 };

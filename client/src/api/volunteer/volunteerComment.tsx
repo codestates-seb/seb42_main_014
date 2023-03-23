@@ -5,7 +5,7 @@ export const CommentDelete = (params: string) => {
 	axios
 		.delete(apiUrl + params, {
 			headers: {
-				Authorization: `${localStorage.getItem("accessToken")}`,
+				Authorization: ` ${localStorage.getItem("accessToken")}`,
 			},
 		})
 		.catch((err) => console.log(err));
