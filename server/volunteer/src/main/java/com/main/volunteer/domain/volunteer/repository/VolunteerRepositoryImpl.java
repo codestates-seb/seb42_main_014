@@ -69,7 +69,7 @@ public class VolunteerRepositoryImpl extends QuerydslRepositorySupport implement
 
     private BooleanExpression containVolunteerName(String volunteerName) {
 
-        return volunteerName == null || volunteerName.isEmpty() ? null :volunteer.title.containsIgnoreCase(volunteerName);
+        return volunteerName == null || volunteerName.isEmpty() ? null : volunteer.title.containsIgnoreCase(volunteerName);
     }
 
     private BooleanExpression containOrganizationName(String organizationName) {
