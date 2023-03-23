@@ -81,13 +81,13 @@ public class JwtTokenizer {
         return expiration;
     }
 
-    public void verifySignature(String jws, String base64EncodedSecretKey){
+    public Map<String, Object> verifySignature(String jws, String base64EncodedSecretKey){
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
-        Jwts.parserBuilder()
+        return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
-                .parseClaimsJws(jws);
+                .parseClaimsJws(jws).getBody();
     }
 
     private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey){

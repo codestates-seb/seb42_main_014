@@ -22,7 +22,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         Optional<Member> optionalMember = memberRepository.findByEmail(username);
         Member findMember = optionalMember.orElseThrow(() -> new RuntimeException("MEMBER_NOT_FOUND"));
 
-
         return new CustomUserDetails(findMember);
     }
 }
