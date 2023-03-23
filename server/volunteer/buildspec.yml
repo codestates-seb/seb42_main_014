@@ -9,6 +9,7 @@ phases:
       - echo Build Starting on `date`
       - cd server/volunteer
       - chmod +x ./gradlew
+      - ./gradlew test -i
       - ./gradlew build -Pprofile=dev
   post_build:
     commands:
