@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -47,6 +46,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         member.setMemberName(name);
         member.setPassword(password);
         member.setRoles(List.of("USER"));
+        member.setVerifiedEmail(true);
         memberRepository.save(member);
     }
 }

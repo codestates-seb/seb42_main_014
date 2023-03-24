@@ -24,6 +24,7 @@ public interface ApplyMapper {
         Volunteer volunteer = apply.getVolunteer();
 
         Long applyId = apply.getApplyId();
+        Long volunteerId = volunteer.getVolunteerId();
         String volunteerName = volunteer.getTitle();
         LocalDateTime volunteerDate = volunteer.getVolunteerDate();
         LocalDateTime appliedAt = apply.getModifiedAt();
@@ -37,7 +38,7 @@ public interface ApplyMapper {
             }
         }
 
-        return new ApplyDto.Response( applyId, volunteerName, volunteerDate, appliedAt, applyStatus,reviewDone );
+        return new ApplyDto.Response( applyId,volunteerId, volunteerName, volunteerDate, appliedAt, applyStatus,reviewDone );
     }
 
     default ApplyDto.ResponseToORG applyToResponseToORG(Apply apply){

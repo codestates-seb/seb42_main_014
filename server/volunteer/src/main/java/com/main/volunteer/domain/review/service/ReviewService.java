@@ -104,9 +104,9 @@ public class ReviewService {
 
         review.setVolunteer(volunteer);
 
-//        if (!(volunteer.getVolunteerStatus()== VolunteerStatus.VOLUNTEER_AFTER)) {
-//            throw new BusinessException(ExceptionCode.NOT_AFTER_VOLUNTEER_DATE);
-//        }
+        if (!(volunteer.getVolunteerStatus()== VolunteerStatus.VOLUNTEER_AFTER)) {
+            throw new BusinessException(ExceptionCode.NOT_AFTER_VOLUNTEER_DATE);
+        }
 
         return volunteer;
     }
