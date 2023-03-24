@@ -12,6 +12,7 @@ import javax.validation.constraints.*;
 public class GroupDto {
     @Setter
     @Getter
+    @AllArgsConstructor
     public static class Post {
         @NotBlank(message = "그룹이름을 입력해주세요.")
         private String groupName;
@@ -25,6 +26,7 @@ public class GroupDto {
     }
     @Setter
     @Getter
+    @AllArgsConstructor
     public static class Patch {
         private long groupId;
         private String groupName;
@@ -46,5 +48,6 @@ public class GroupDto {
         private String content;
         private long tagId;
         private String tagName;
+        private boolean groupMember;
     }
 }
