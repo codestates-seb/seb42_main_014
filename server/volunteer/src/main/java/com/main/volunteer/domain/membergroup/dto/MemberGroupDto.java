@@ -38,5 +38,8 @@ public class MemberGroupDto {
         private String memberName;
         @JsonProperty("point_count")
         private int pointCount;
+
+        private String profileImage;
+
     }
 }
