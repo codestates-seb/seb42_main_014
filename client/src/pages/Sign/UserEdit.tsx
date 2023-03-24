@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import ImgUpload from "../../components/ImgUpload";
 import Modal from "../../components/Modal";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { userInfoPatch } from "../../api/mypage/VolunteerPatch";
+import { imageUploadPost } from "../../api/imgPost";
 
 const Body = styled.body`
 	height: 100vh;
@@ -81,14 +82,14 @@ const Profile = styled.div`
 	}
 	img {
 		cursor: pointer;
-		width: 130px;
-		height: 130px;
+		width: 150px;
+		height: 150px;
 		border: 2px solid gray;
 		border-radius: 50%;
-		margin-right: 30px;
 		margin-bottom: 30px;
 	}
 `;
+
 const Header = styled.h1`
 	font-size: 3rem;
 `;
@@ -101,6 +102,9 @@ const ImgView = styled.div`
 const LabelFlex = styled.div`
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	/* align-items: center; */
+	margin-left: 30px;
 `;
 
 const ErrorMsg = styled.div`
@@ -112,21 +116,24 @@ const ErrorMsg = styled.div`
 export default function UserEdit() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isImage, setIsImage] = useState<boolean | any>(false);
-	const [file, setFile] = useState<string>("");
 	const [confirmPassword, setConfirmPassword] = useState("");
+	const [file, setFile] = useState<string>("");
+	const [fileSrc, setFileSrc] = useState<any>("");
+	const [imageUrl, setImageUrl] = useState<any>("");
 	const imgSrc = isImage.src;
 	const toggle = (event: any) => {
 		setIsOpen(!isOpen);
 		click(event);
 	};
+	console.log(imageUrl);
 	const click = (event: { currentTarget: any }) => {
 		let clickImg = event.currentTarget;
 		setIsImage(clickImg);
 	};
 	const location = useLocation();
-	const { email, name, orgInfo } = location.state;
 	const apiUrl = "http://3.35.252.234:8080/";
 	const navigate = useNavigate();
+	const fileInput = useRef<HTMLLabelElement>(null);
 
 	const {
 		register,
@@ -139,13 +146,32 @@ export default function UserEdit() {
 
 	const submitData = (data: any) => {
 		const newPatchMemberData = {
-			profileImage: file || null,
+			profileImage: imageUrl || null,
 			memberName: data.memberName || null,
 			password: data.password || null,
 		};
 		userInfoPatch("members/me", newPatchMemberData);
 		navigate("/mypage");
 	};
+
+	const onChangeHandler = () => {
+		if (fileInput.current) {
+			fileInput.current.click();
+		}
+	};
+
+	const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (event.target.files !== null) {
+			const selectedFiles = (await event.target.files) as FileList;
+			setFile(URL.createObjectURL(selectedFiles?.[0])); // 이미지 미리보기를 위한 state
+			setFileSrc(selectedFiles[0]); // 이미지를 s3로 보내기 위한 Src를 저장하는 state
+		}
+	};
+	useEffect(() => {
+		if (fileSrc) {
+			imageUploadPost(fileSrc, setImageUrl); // 이미지를 s3로 보내는 POST 요청
+		}
+	}, [fileSrc]);
 
 	return (
 		<Body>
@@ -154,7 +180,7 @@ export default function UserEdit() {
 					<EditForm>
 						<Header>EDIT</Header>
 						<Profile>
-							<ImgUpload
+							{/* <ImgUpload
 								modal={toggle}
 								onImageChange={function (src: string): void {
 									throw new Error("Function not implemented.");
@@ -163,7 +189,17 @@ export default function UserEdit() {
 							<LabelFlex>
 								<label htmlFor="profileImg">이미지 업로드</label>
 								<label htmlFor="deleteImg">이미지 삭제</label>
-							</LabelFlex>
+							</LabelFlex> */}
+							<div onClick={onChangeHandler} style={{ display: "flex" }}>
+								<input id="profileImg" type="file" onChange={handleChange} />
+								<img src={file ? file : "/images/mypage/profile-user.png"} alt="" />
+								<LabelFlex>
+									<label htmlFor="profileImg" ref={fileInput}>
+										이미지 업로드
+									</label>
+									<label htmlFor="deleteImg">이미지 삭제</label>
+								</LabelFlex>
+							</div>
 						</Profile>
 						{/* <Login className="readOnly" placeholder="이메일" value={email} readOnly /> */}
 						<Login

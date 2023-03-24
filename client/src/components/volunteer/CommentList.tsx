@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import styled from "styled-components";
 import { CommentEdit } from "../../api/volunteer/volunteerCommentEdit ";
+import { StyledProfileImgContainer } from "../community/GroupComment";
 
 interface Iprops {
 	content: string;
@@ -11,6 +12,7 @@ interface Iprops {
 	id: any;
 	myId: any;
 	editComment: (id: any) => void;
+	profileImage?: string;
 }
 const Comment = styled.div`
 	span {
@@ -38,7 +40,13 @@ export default function VolunteerComment(user: Iprops) {
 	return (
 		<>
 			<div className="answer-read-container">
-				<FaUserCircle size={40} />
+				<StyledProfileImgContainer>
+					{user.profileImage ? (
+						<img src={user.profileImage} alt="프로필사진" />
+					) : (
+						<FaUserCircle size={50} />
+					)}
+				</StyledProfileImgContainer>
 				<div
 					style={{
 						display: "flex",

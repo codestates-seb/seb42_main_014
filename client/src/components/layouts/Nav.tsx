@@ -4,46 +4,47 @@ import styled from "styled-components";
 import DropDown from "./NavDropDown";
 import { TbUserCircle } from "react-icons/tb";
 
+const StyledNav = styled.nav`
+	display: flex;
+	width: 100vw;
+	background-color: #383838;
+	height: 80px;
+	color: white;
+	list-style: none;
+	font-weight: 700;
+	align-items: center;
+	justify-content: space-evenly;
+	font-size: 16px;
+	cursor: pointer;
+`;
+const StyledLogo = styled.img`
+	width: 60px;
+	height: 60px;
+`;
+const StyledNavItemList = styled.li`
+	margin: 20px;
+	:hover {
+		color: #f58686;
+		transition: all 0.3s;
+	}
+`;
+const StyledDropDownModal = styled.div`
+	height: max-content;
+	position: absolute;
+	top: 60px;
+	width: max-content;
+	right: -42px;
+	color: black;
+	background-color: white;
+	border: 1px solid gray;
+	z-index: 1;
+`;
 export default function Nav() {
-	const StyledNav = styled.nav`
-		display: flex;
-		width: 100vw;
-		background-color: #383838;
-		height: 80px;
-		color: white;
-		list-style: none;
-		font-weight: 700;
-		align-items: center;
-		justify-content: space-evenly;
-		font-size: 16px;
-		cursor: pointer;
-	`;
-	const StyledLogo = styled.img`
-		width: 60px;
-		height: 60px;
-	`;
-	const StyledNavItemList = styled.li`
-		margin: 20px;
-		:hover {
-			color: #f58686;
-			transition: all 0.3s;
-		}
-	`;
-	const StyledDropDownModal = styled.div`
-		height: max-content;
-		position: absolute;
-		top: 60px;
-		width: max-content;
-		right: -42px;
-		color: black;
-		background-color: white;
-		border: 1px solid gray;
-		z-index: 1;
-	`;
 	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
 	const navItem = ["Home", "봉사활동", "커뮤니티", "About"];
 	const navItemRoutingPath = ["/", "/volunteer", "/community", "/about"];
+	if (window.location.pathname === "/token") return null;
 
 	return (
 		<StyledNav>

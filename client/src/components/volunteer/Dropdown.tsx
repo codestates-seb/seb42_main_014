@@ -34,7 +34,7 @@ const DropdownContent = styled.div`
 	}
 `;
 
-interface TPropsDropDown {
+interface IPropsDropDown {
 	option?: string[];
 	onChange?: any;
 	placeholder?: string;
@@ -59,7 +59,7 @@ const DropdownMenu = ({
 	max_min_width,
 	setSelectedOption,
 	selectedOption,
-}: TPropsDropDown) => {
+}: IPropsDropDown) => {
 	const DropdownButton = styled.button`
 		background-color: #072e00;
 		width: ${width ? width : 100}%;

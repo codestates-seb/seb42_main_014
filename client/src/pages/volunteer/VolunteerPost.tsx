@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Address from "../../components/Address";
 import { useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import TextEdit from "../../components/volunteer/TextEdit";
 import { volunteerDataPost } from "../../api/volunteer/volunteerData";
 import { useNavigate } from "react-router-dom";
 import { imageUploadPost } from "../../api/imgPost";
+import dayjs from "dayjs";
 
 const Body = styled.div`
 	margin-top: 20px;
@@ -126,13 +127,7 @@ const VolunteerPost = () => {
 		groupName?: string;
 		volunteerTime: number;
 	}
-	const { register, handleSubmit } = useForm<IPostData>({ mode: "onChange" });
-	const fileInput = useRef<HTMLLabelElement>(null);
-	const onChangeHandler = () => {
-		if (fileInput.current) {
-			fileInput.current.click();
-		}
-	};
+
 	const [file, setFile] = useState<any>("");
 	const [value, setValue] = useState("");
 	const [selectedOption, setSelectedOption] = useState("");
@@ -140,27 +135,41 @@ const VolunteerPost = () => {
 	const [selectedSubArea, setSelectedSubArea] = useState("");
 	const [fileSrc, setFileSrc] = useState<any>("");
 	const [imageUrl, setImageUrl] = useState<any>("");
-
-	const post = window.location.pathname;
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (event.target.files !== null) {
-			const selectedFiles = event.target.files as FileList;
-			setFile(URL.createObjectURL(selectedFiles?.[0]));
-			setFileSrc(selectedFiles[0]);
-			imageUploadPost(fileSrc, setImageUrl);
+	const { register, handleSubmit } = useForm<IPostData>({ mode: "onChange" });
+	const fileInput = useRef<HTMLLabelElement>(null);
+	const onChangeHandler = () => {
+		if (fileInput.current) {
+			fileInput.current.click();
 		}
 	};
-	console.log(imageUrl);
-	const optionArr = ["어린이", "노인", "장애인", "환경", "동물"];
-	const navigate = useNavigate();
 
-	const today = new Date();
-	const hour = `${today.getHours()}:${today.getMinutes()}`;
+	const date = dayjs();
+
+	const optionArr = ["어린이", "노인", "장애인", "환경", "동물"];
+	const post = window.location.pathname;
+
+	const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (event.target.files !== null) {
+			const selectedFiles = (await event.target.files) as FileList;
+			setFile(URL.createObjectURL(selectedFiles?.[0])); // 이미지 미리보기를 위한 state
+			setFileSrc(selectedFiles[0]); // 이미지를 s3로 보내기 위한 Src를 저장하는 state
+		}
+	};
+
+	useEffect(() => {
+		if (fileSrc) {
+			imageUploadPost(fileSrc, setImageUrl); // 이미지를 s3로 보내는 POST 요청
+		}
+	}, [fileSrc]);
+
+	console.log(imageUrl);
+
+	const navigate = useNavigate();
 
 	const TextChange = (content: string) => {
 		setValue(content);
 	};
-
+	const hour = date.format("HH:mm");
 	const onSubmit = (data: IPostData) => {
 		const {
 			title,
@@ -197,7 +206,7 @@ const VolunteerPost = () => {
 		if (post === "/register") {
 			try {
 				volunteerDataPost("volunteers", postVolunteerData);
-				// navigate("/volunteer");
+				navigate("/volunteer");
 			} catch (err) {
 				alert("봉사 등록에 실패했어요. 잠시 후 다시 시도해 주세요.");
 			}
@@ -236,6 +245,7 @@ const VolunteerPost = () => {
 									selectedOption={selectedOption}
 									placeholder="분야를 선택해주세요"
 									option={optionArr}
+									width={145}
 								/>
 							</Select>
 							<Select>

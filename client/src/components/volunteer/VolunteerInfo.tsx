@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import Button from "../../components/Button";
-import { MouseEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { useLocation, useParams } from "react-router-dom";
 import { BsLink45Deg } from "react-icons/bs";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import axios from "axios";
+import dayjs from "dayjs";
 
 const StyledContainerDiv = styled.div`
 	width: 100%;
@@ -59,7 +60,6 @@ export default function VolunteerInfo() {
 	const [isLike, setIsLike] = useState(false);
 	const baseUrl = `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com`;
 
-	console.log(getVolunteerInfoData);
 	useEffect(() => {
 		const id = localStorage.getItem(`${params.id}`);
 		if (id) {
@@ -131,10 +131,9 @@ export default function VolunteerInfo() {
 		}
 	};
 
-	const startDate = String(applyDate).split("T")[0];
-	const endDate = String(volunteerDate).split("T")[0];
-
-	// const endDateFirst = volunteerDate.split("T")[0].slice(0, 8);
+	const startDate = dayjs(applyDate).format("YYYY-MM-DD");
+	const endDate = dayjs(volunteerDate).subtract(1, "day").format("YYYY-MM-DD");
+	const volunDate = dayjs(volunteerDate).format("YYYY-MM-DD");
 
 	return (
 		<StyledContainerDiv>
@@ -153,8 +152,10 @@ export default function VolunteerInfo() {
 				<div style={{ display: "flex", flexDirection: "column", marginLeft: "40px" }}>
 					<h2>{title}</h2>
 					<span>기관명 : {organizationName}</span>
-					<span>모집 기간 : {startDate} ~ 봉사일 24시간 전까지</span>
-					<span>봉사 일자 : {endDate}</span>
+					<span>
+						모집 기간 : {startDate} ~ {endDate}
+					</span>
+					<span>봉사 일자 : {volunDate}</span>
 					<span>봉사 장소 : {place}</span>
 					<span>봉사 시간 : {volunteerTime}시간</span>
 					<span>

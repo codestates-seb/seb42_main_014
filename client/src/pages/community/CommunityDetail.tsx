@@ -37,7 +37,6 @@ export default function CommunityDetail() {
 		};
 		getGroupDetailData();
 	}, []);
-
 	return (
 		<StyledGroupDetailContainer>
 			<GroupInfo groupData={groupData} />

@@ -83,6 +83,10 @@ const router = createBrowserRouter([
 				path: "/token",
 				element: <Token />,
 			},
+			{
+				path: "/loading",
+				element: <Token />,
+			},
 		],
 		errorElement: <ErrorPage />,
 	},
