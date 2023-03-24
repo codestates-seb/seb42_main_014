@@ -16,6 +16,7 @@ import ErrorPage from "./pages/ErrorPage";
 import CommunityDetail from "./pages/community/CommunityDetail";
 import Test from "./pages/recommend/Test";
 import Token from "./pages/token";
+import Recommend from "./pages/recommend/Recommend";
 
 const router = createBrowserRouter([
 	{
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
 			{
 				path: "/test",
 				element: <Test />,
+			},
+			{
+				path: "/recommend",
+				element: <Recommend />,
 			},
 			{
 				path: "/token",
