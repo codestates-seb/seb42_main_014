@@ -6,10 +6,10 @@ files:
     overwrite: yes
 
 permissions:
-  - object: /
+  - object: /home/ubuntu/action
     pattern: "**"
-    owner: ubuntu
-    group: ubuntu
+    owner: ssm-user
+    group: ssm-user
 
 hooks:
   ApplicationStart:
