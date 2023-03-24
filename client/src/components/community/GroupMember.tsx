@@ -3,6 +3,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { MdGroup } from "react-icons/md";
 import styled from "styled-components";
 import { myPageGet } from "../../api/mypage/MypageGet";
+import { StyledProfileImgContainer } from "./GroupComment";
 
 const StyledContainerDiv = styled.div`
 	display: flex;
@@ -46,6 +47,7 @@ export default function GroupMember({ groupId, groupData }: any) {
 		};
 		getGroupDetailData();
 	}, []);
+	console.log(getGroupMemberData);
 
 	return (
 		<StyledContainerDiv>
@@ -57,10 +59,16 @@ export default function GroupMember({ groupId, groupData }: any) {
 
 				{getGroupMemberData &&
 					getGroupMemberData.map((el) => {
-						const { member_id, member_name, point_count } = el;
+						const { member_id, member_name, point_count, profileImage } = el;
 						return (
 							<GroupMemberContainer key={member_id}>
-								<FaUserCircle size={35} />
+								<StyledProfileImgContainer>
+									{profileImage ? (
+										<img src={profileImage} alt="프로필사진" />
+									) : (
+										<FaUserCircle size={50} />
+									)}
+								</StyledProfileImgContainer>
 								<div style={{ marginLeft: "10px", display: "flex", flexDirection: "column" }}>
 									{member_name}
 									<span style={{ color: "red", fontWeight: "700", fontSize: "13px" }}>

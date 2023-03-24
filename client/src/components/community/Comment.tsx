@@ -20,7 +20,6 @@ const StyledContainerDiv = styled.div`
 	section {
 		margin: 10px;
 		width: 100%;
-
 		min-width: 500px;
 	}
 	.layout {
@@ -40,11 +39,13 @@ const StyledContainerDiv = styled.div`
 	.answer-read-container {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		border: 1px solid gray;
-		width: 90%;
+		/* width: 90%; */
 		border-radius: 20px;
 		padding: 5px 20px 5px 20px;
-		margin: 20px;
+		/* margin: 10px; */
+		margin: 5px 15px 5px 15px;
 		min-width: 400px;
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.11);
 	}

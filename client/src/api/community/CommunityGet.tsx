@@ -4,7 +4,7 @@ const apiUrl = "http://3.35.252.234:8080/";
 
 export const CommunityGet = async () => {
 	try {
-		const response = await axios.get(apiUrl + "groups'", {
+		const response = await axios.get(apiUrl + "groups", {
 			headers: {
 				Authorization: `${localStorage.getItem("accessToken")}`,
 			},

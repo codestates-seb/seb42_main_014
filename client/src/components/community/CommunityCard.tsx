@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Button from "../../components/Button";
 import { ReactNode, useEffect, useState } from "react";
-import { GropPost } from "../../api/community/CommunityPost";
+import { GroupPost } from "../../api/community/CommunityPost";
 import { useParams } from "react-router-dom";
 import { group } from "console";
 import { myPageGet } from "../../api/mypage/MypageGet";
@@ -56,7 +56,7 @@ const Flex = styled.div`
 interface IProps {
 	member: boolean;
 	disabled?: boolean;
-	id: any;
+	id: number;
 	src?: string;
 	name?: string;
 	place?: string;
@@ -71,7 +71,6 @@ export default function CommunityCard({
 	src,
 	name,
 	place,
-
 	intro,
 	hashtag,
 	category,
@@ -94,7 +93,7 @@ export default function CommunityCard({
 				const data = {
 					groupId: id,
 				};
-				GropPost(`member-groups/${id}`, data);
+				GroupPost(`member-groups/${id}`, data);
 				alert(`환영합니다!`);
 			}
 		}
