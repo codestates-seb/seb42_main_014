@@ -6,7 +6,7 @@
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
 name: Java CI with Gradle
- 
+
 on:
   push:
     branches: [ "dev" ]
@@ -31,19 +31,26 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-      
     - name: Grant execute permission for gradlew
-      run: chmod +x ./server/volunteer/gradlew
-      
+      run: chmod +x gradlew
+      working-directory: ./server/volunteer/
+    - name: Build clean with Gradle
+      run : ./gradlew clean
+      working-directory: ./server/volunteer/
     - name: Build with Gradle
-      run: cd ./server/volunteer && ./gradlew build -Pprofile=dev 
+      run : ./gradlew build -Pprofile=dev --exclude-task test
+      working-directory: ./server/volunteer/
+#       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+#       with:
+#         gradle-version: 6.5
+#         arguments: build
         
-    - name: Copy jar
-      run: cp ./server/volunteer/build/libs/volunteer-0.0.1-SNAPSHOT.jar .
+        
+  
     
         
     - name: Make zip file
-      run: zip main014-deploy.zip -r .
+      run: zip -r ./main014-deploy.zip .
       shell: bash
         
     - name: Configure AWS credentials
