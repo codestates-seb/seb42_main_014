@@ -32,6 +32,7 @@ public class CommentDto {
         private long groupId;
         private String memberName;
         private String content;
+        private String profileImage;
         private LocalDateTime createdAt;
     }
 }

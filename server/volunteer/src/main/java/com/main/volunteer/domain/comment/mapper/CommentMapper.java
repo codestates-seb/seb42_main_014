@@ -17,6 +17,7 @@ public interface CommentMapper {
     @Mapping(source = "member.memberId", target = "memberId")
     @Mapping(source = "group.groupId", target = "groupId")
     @Mapping(source = "member.memberName", target = "memberName")
+    @Mapping(source = "member.profileImage", target = "profileImage")
     CommentDto.Response commentToCommentResponseDto(Comment comment);
 
     @IterableMapping(qualifiedByName = "commentToCommentResponseDto")
