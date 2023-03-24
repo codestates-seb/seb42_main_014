@@ -67,7 +67,7 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/volunteers").permitAll()
                         .antMatchers(HttpMethod.GET, "/volunteers/*").permitAll()
                         .antMatchers("/apply/organization/*").hasRole("ORG")
-                        .antMatchers("/apply/**").authenticated()
+                        .antMatchers("/apply/**").hasRole("USER")
                         .antMatchers(HttpMethod.GET, "/reviews/my/**").authenticated()
                         .antMatchers(HttpMethod.GET,"/reviews/**").permitAll()
                         .antMatchers("/reviews/**").authenticated()
