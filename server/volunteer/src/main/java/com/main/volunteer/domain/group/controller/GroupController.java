@@ -45,16 +45,22 @@ public class GroupController {
         Group createGroup = groupService.createGroup(group);
         URI uri = UriUtil.createUri(DEFAULT_URI, group.getGroupId());
 
-        return ResponseEntity.created(uri).body(ApiResponse.created("data", mapper.groupToGroupResponseDto(createGroup)));
+        return ResponseEntity.created(uri).body(ApiResponse.created("data", mapper.groupToGroupResponseDto(createGroup, true)));
     }
 
 
     @GetMapping("/{group-id}")
-    public ResponseEntity<?> getGroup(@PathVariable("group-id") long groupId) {
+    public ResponseEntity<?> getGroup(@PathVariable("group-id") long groupId, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         Group group = groupService.findGroup(groupId);
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.groupToGroupResponseDto(group)));
+        boolean groupMember = false;
+        if (userDetails != null) {
+            long memberId = userDetails.getMemberId();
+            groupMember = group.getMemberGroups().stream()
+                    .anyMatch(memberGroup -> memberGroup.getMember().getMemberId() == memberId);
+        }
+        return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.groupToGroupResponseDto(group, groupMember)));
     }
     @GetMapping
     public ResponseEntity<?> getGroups(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum) {
@@ -70,7 +76,7 @@ public class GroupController {
 
         Group group = groupService.updateGroup(mapper.groupPatchDtoToGroup(patchDto), memberService.verifiedMember(userDetails.getMemberId()));
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data" ,mapper.groupToGroupResponseDto(group)));
+        return ResponseEntity.ok().body(ApiResponse.ok("data" ,mapper.groupToGroupResponseDto(group, true)));
     }
 
     @DeleteMapping("/{group-id}")
