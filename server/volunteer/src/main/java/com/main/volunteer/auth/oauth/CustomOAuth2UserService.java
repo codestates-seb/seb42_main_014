@@ -34,17 +34,18 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName,oAuth2User.getAttributes());
 
         if(memberRepository.findByEmail(attributes.getEmail()).isEmpty()) {
-            saveMember(attributes.getEmail(), attributes.getName(), registrationId);
+            saveMember(attributes.getEmail(), attributes.getName(), attributes.getPicture(), registrationId);
         }
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("USER")),
                 attributes.getAttributes(), attributes.getNameAttributeKey());
     }
 
-    private void saveMember(String email, String name, String password){
+    private void saveMember(String email, String name, String profile, String password){
         Member member = new Member();
         member.setEmail(email);
         member.setMemberName(name);
         member.setPassword(password);
+        member.setProfileImage(profile);
         member.setRoles(List.of("USER"));
         member.setVerifiedEmail(true);
         memberRepository.save(member);
