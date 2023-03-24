@@ -17,13 +17,11 @@ export const volunteerDataGet = async (params: string) => {
 };
 
 export const volunteerDataPost = (url: string, loginData: any) => {
-	axios
-		.post(`${apiUrl}${url}`, loginData, {
-			headers: {
-				Authorization: `${localStorage.getItem("accessToken")}`,
-			},
-		})
-		.catch((err) => console.log(err));
+	axios.post(`${apiUrl}${url}`, loginData, {
+		headers: {
+			Authorization: `${localStorage.getItem("accessToken")}`,
+		},
+	});
 };
 
 export const volunteerCommentPost = (params: string, Data: any) => {

@@ -50,8 +50,8 @@ const Flex = styled.div`
 `;
 const MedalSpan = styled.span`
 	position: absolute;
-	width: 90px;
-	height: 64px;
+	/* width: 90px; */
+	/* height: 64px; */
 	display: flex;
 	justify-content: flex-end;
 	align-items: flex-end;
@@ -65,6 +65,15 @@ const InfoDiv = styled.div`
 	justify-content: center;
 	& > div {
 		font-size: 1.2rem;
+	}
+`;
+
+const ProfileImageContainer = styled.div`
+	border-radius: 50%;
+	img {
+		width: 130px;
+		border-radius: 50%;
+		height: 130px;
 	}
 `;
 const Login = styled.input`
@@ -87,10 +96,8 @@ export default function Usercard() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [message, setMessage] = useState("");
 	const [password, isPassword] = useState("");
+	const [getAllData, setGetAllData] = useState<any>({});
 
-	const [email, setEmail] = useState("");
-	const [name, setName] = useState("");
-	const [point, setPoint] = useState("");
 	const toggle = () => {
 		setIsOpen(!isOpen);
 	};
@@ -103,7 +110,7 @@ export default function Usercard() {
 				state: {
 					password,
 					email,
-					name,
+					memberName,
 				},
 			});
 		} else {
@@ -114,12 +121,17 @@ export default function Usercard() {
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await myPageGet("members/me");
-			setEmail(result.data.email);
-			setName(result.data.memberName);
-			setPoint(result.data.point);
+			setGetAllData(result.data);
+			// setEmail(result.data.email);
+			// setName(result.data.memberName);
+			// setPoint(result.data.point);
 		};
 		fetchData();
 	}, []);
+
+	console.log(getAllData);
+
+	const { email, memberName, point, profileImage } = getAllData;
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setMessage("");
@@ -131,10 +143,13 @@ export default function Usercard() {
 			<Container>
 				<ImgDiv>
 					{/* 프로필이미지와 수정버튼 */}
-					<div>
+					<ProfileImageContainer>
 						{/* 프로필이미지 */}
-						<img src="/images/mypage/user.png" alt="프로필이미지" />
-					</div>
+						<img
+							src={profileImage ? profileImage : "/images/mypage/profile-user.png"}
+							alt="프로필이미지"
+						/>
+					</ProfileImageContainer>
 					<button type="button" onClick={toggle}>
 						수정하기
 					</button>
@@ -144,16 +159,14 @@ export default function Usercard() {
 				</MedalSpan>
 				<InfoDiv>
 					{/* 프로필 정보 */}
-					<div>이름 : {name}</div>
+					<div>이름 : {memberName}</div>
 					<div>이메일 : {email}</div>
 					<div>봉사점수 : {point}</div>
 				</InfoDiv>
 			</Container>
 			<Modal isOpen={isOpen} toggle={toggle}>
 				<h1>패스워드 확인</h1>
-
-				<Login type="password" onChange={handleInputChange} placeholder="패스워드"></Login>
-
+				<Login type="password" onChange={handleInputChange} placeholder="패스워드" />
 				{message}
 				<Flex>
 					<button type="button" onClick={check}>

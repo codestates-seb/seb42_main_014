@@ -68,6 +68,8 @@ export default function Comment() {
 		setMent(e.target.value);
 	};
 
+	console.log("커뮤니티댓글", reviewList);
+
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await myPageGet(`comments/group/${parms.id}`);
@@ -78,19 +80,21 @@ export default function Comment() {
 		fetchData();
 	}, [parms.id]);
 
-	const handleCommentPost = () => {
+	const handleCommentPost = async (event: any) => {
+		event.preventDefault();
 		const data = {
 			groupId: parms.id,
 			content: ment,
 		};
-
-		volunteerCommentPost("comments", data);
+		await volunteerCommentPost("comments", data);
+		// await myPageGet(`comments/group/${parms.id}`);
 		window.location.reload();
 	};
 	const onRemove = async (commentId: string) => {
 		if (window.confirm("이 댓글을 삭제 하시겠습니까?")) {
 			CommentDelete(`comments/${commentId}`);
 			window.location.reload();
+			// myPageGet(`comments/group/${parms.id}`);
 		} else {
 			alert("취소합니다.");
 		}
@@ -122,6 +126,7 @@ export default function Comment() {
 						content={user.content}
 						onClick={() => onRemove(user.commentId)}
 						myId={my}
+						profileImage={user.profileImage}
 					/>
 				))}
 			</StyledContainerDiv>

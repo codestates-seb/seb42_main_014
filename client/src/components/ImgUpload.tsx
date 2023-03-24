@@ -3,9 +3,10 @@ import React, { useState } from "react";
 interface Iprops {
 	modal: any;
 	onImageChange: (src: string) => void;
+	onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-function UploadFile({ modal, onImageChange }: Iprops) {
+function UploadFile({ modal, onImageChange, onChange }: Iprops) {
 	const [file, setFile] = useState<string>("");
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,10 +20,8 @@ function UploadFile({ modal, onImageChange }: Iprops) {
 	};
 
 	const onImageRemove = (): void => {
-		// URL.revokeObjectURL(file);
 		setFile("https://www.pngarts.com/files/10/Default-Profile-Picture-PNG-Download-Image.png");
 		onImageChange("");
-		// 렌더링 이미지 기본값으로 변경
 	};
 
 	return (

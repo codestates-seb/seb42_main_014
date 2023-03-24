@@ -60,6 +60,7 @@ const FilterContainer = styled.div`
 	input {
 		margin-right: 10px;
 	}
+	min-width: 1000px;
 `;
 
 export default function VolunteerComment(disabled: any) {
@@ -69,8 +70,7 @@ export default function VolunteerComment(disabled: any) {
 	const [myReviewId, setMyReviewId] = useState("");
 	const [ment, setMent] = useState("");
 	const [isFilteredReviewChecked, setIsFilteredReviewChecked] = useState("allReview");
-
-	console.log(myReviewId, reviewList);
+	console.log(reviewList);
 
 	const handleComment = (e: any) => {
 		setComment(e.target.value);
@@ -147,7 +147,11 @@ export default function VolunteerComment(disabled: any) {
 				<Comment>
 					<div className="answer-input-container">
 						<FaUserCircle size={40} />
-						<input placeholder="봉사 후기를 남겨주세요." value={comment} onChange={handleComment} />
+						<input
+							placeholder="봉사 후기는 봉사활동이 끝난 뒤 한번만 등록이 가능해요."
+							value={comment}
+							onChange={handleComment}
+						/>
 						<Button
 							onClick={handleCommentPost}
 							value="등록하기"
@@ -172,6 +176,7 @@ export default function VolunteerComment(disabled: any) {
 						editComment={function (id: any): void {
 							throw new Error("Function not implemented.");
 						}}
+						profileImage={user.profileImage}
 					/>
 				))}
 			</StyledContainerDiv>

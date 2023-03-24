@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { FaUserCircle } from "react-icons/fa";
 import { CommentEdit } from "../../api/volunteer/volunteerCommentEdit ";
+import dayjs from "dayjs";
 
 interface Props {
 	content: string;
@@ -11,10 +12,20 @@ interface Props {
 	myId: any;
 	name: string;
 	time: string;
+	profileImage: string;
 }
 const Comment = styled.div`
 	span {
 		cursor: pointer;
+	}
+`;
+
+export const StyledProfileImgContainer = styled.div`
+	display: flex;
+	img {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
 	}
 `;
 
@@ -33,11 +44,21 @@ export default function GroupComment(user: Props) {
 
 		setEdit(false);
 	};
-	const date = user.time.split(".")[0];
+	// const date = user.time.split(".")[0];
+
+	// console.log(user.time);
+	const date = dayjs(user.time).format("YYYY.MM.DD HH:mm");
+
 	return (
 		<section>
 			<div className="answer-read-container">
-				<FaUserCircle size={40} />
+				<StyledProfileImgContainer>
+					{user.profileImage ? (
+						<img src={user.profileImage} alt="프로필사진" />
+					) : (
+						<FaUserCircle size={50} />
+					)}
+				</StyledProfileImgContainer>
 				<div
 					style={{
 						display: "flex",
