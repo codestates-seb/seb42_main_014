@@ -2,6 +2,7 @@ package com.main.volunteer.domain.group.mapper;
 
 import com.main.volunteer.domain.group.dto.GroupDto;
 import com.main.volunteer.domain.group.entity.Group;
+import com.main.volunteer.domain.membergroup.entity.MemberGroup;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface GroupMapper {
     Group groupPostDtoToGroup(GroupDto.Post postDto);
     Group groupPatchDtoToGroup(GroupDto.Patch patchDto);
     @Mapping(source = "member.memberId", target = "groupZangId")
-   default GroupDto.Response groupToGroupResponseDto(Group group) {
+   default GroupDto.Response groupToGroupResponseDto(Group group, boolean groupMember) {
 
        long groupId = group.getGroupId();
        String groupName = group.getGroupName();
@@ -24,7 +25,7 @@ public interface GroupMapper {
        long tagId = group.getTag().getTagId();
        String tagName = group.getTag().getTagName();
 
-       return new GroupDto.Response(groupId, groupName, groupImage, groupZangId, applyLimit, place, content,tagId,tagName);
+       return new GroupDto.Response(groupId, groupName, groupImage, groupZangId, applyLimit, place, content,tagId,tagName, groupMember);
    }
 
     List<GroupDto.Response> GroupsToGroupResponseDtos(List<Group> groups);
