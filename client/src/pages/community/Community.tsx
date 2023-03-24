@@ -56,6 +56,8 @@ export default function Community() {
 	const [getCommunityData, setGetCommunityData] = useState([]);
 	const [getMyScore, setGetMyScore] = useState<any>(0);
 	const [selectedCategory, setSelectedCategory] = useState("");
+	const [member, setIsMember] = useState<boolean | null>(null);
+
 	const navigate = useNavigate();
 	const handlePageChange = (pageNumber: number) => {
 		setCurrentPage(pageNumber);
@@ -67,7 +69,6 @@ export default function Community() {
 
 			const result = await myPageGet(`groups?pageNum=${currentPage}`);
 			setGetCommunityData(result.data);
-
 			const url = await myPageGet("groups?pageNum=1");
 			setTotalPages(url.data.length * url.totalPages);
 		};
@@ -76,14 +77,23 @@ export default function Community() {
 
 	const { point } = getMyScore;
 
-	const handleGroupClick = (id: number) => {
-		navigate(`/community/${id}`, {
-			state: id,
-		});
-		window.scrollTo({
-			top: 0,
-			behavior: "smooth",
-		});
+	const handleGroupClick = async (id: number) => {
+		const response = await myPageGet(`groups/${id}`);
+		const { groupMember } = response.data;
+
+		if (groupMember === true) {
+			setIsMember(true);
+			navigate(`/community/${id}`, {
+				state: id,
+			});
+			window.scrollTo({
+				top: 0,
+				behavior: "smooth",
+			});
+		} else if (groupMember === false) {
+			setIsMember(false);
+			alert("멤버만 입장 가능 합니다! 가입을 원하시면 함께하기 를 눌러주세요");
+		}
 	};
 
 	const handleGroupAddClick = () => {
@@ -136,6 +146,7 @@ export default function Community() {
 							if (tagName === selectedCategory) {
 								return (
 									<CommunityCard
+										member={member}
 										id={groupId}
 										key={groupId}
 										src={groupImage}
@@ -167,6 +178,7 @@ export default function Community() {
 							} else if (selectedCategory === "") {
 								return (
 									<CommunityCard
+										member={member}
 										key={groupId}
 										id={groupId}
 										src={groupImage}

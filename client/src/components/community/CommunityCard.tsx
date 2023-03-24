@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import Button from "../../components/Button";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { GropPost } from "../../api/community/CommunityPost";
 import { useParams } from "react-router-dom";
 import { group } from "console";
+import { myPageGet } from "../../api/mypage/MypageGet";
 
 const Container = styled.div`
 	background-color: #ffffff;
@@ -53,6 +54,8 @@ const Flex = styled.div`
 	align-items: flex-end;
 `;
 interface IProps {
+	member: boolean;
+	disabled?: boolean;
 	id: any;
 	src?: string;
 	name?: string;
@@ -68,20 +71,32 @@ export default function CommunityCard({
 	src,
 	name,
 	place,
+
 	intro,
 	hashtag,
 	category,
 	onClick,
 }: IProps) {
+	const [member, setIsMember] = useState<boolean | null>(null);
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await myPageGet(`groups/${id}`);
+			setIsMember(result.data.groupMember);
+		};
+		fetchData();
+	}, [id]);
+
 	const onGroup = () => {
-		if (window.confirm("이 그룹에 가입하시겠습니까?")) {
-			const data = {
-				groupId: id,
-			};
-			GropPost(`member-groups/${id}`, data);
-			alert(`환영합니다!`);
-		} else {
-			alert("취소합니다.");
+		if (member) {
+			alert("이미 가입된 사용자 입니다.");
+		} else if (member === false) {
+			if (window.confirm("이 그룹에 가입하시겠습니까?")) {
+				const data = {
+					groupId: id,
+				};
+				GropPost(`member-groups/${id}`, data);
+				alert(`환영합니다!`);
+			}
 		}
 	};
 
