@@ -48,5 +48,6 @@ public class GroupDto {
         private String content;
         private long tagId;
         private String tagName;
+        private boolean groupMember;
     }
 }
