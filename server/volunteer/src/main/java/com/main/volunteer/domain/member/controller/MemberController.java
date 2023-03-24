@@ -38,7 +38,7 @@ public class MemberController {
         member.setPoint(new Point());
 
         if(memberPostDto.isCheckOrg()){
-            memberPostDto.setRoles(List.of("ORG", "USER"));
+            memberPostDto.setRoles(List.of("ORG"));
         }
         else{
             memberPostDto.setRoles(List.of("USER"));
