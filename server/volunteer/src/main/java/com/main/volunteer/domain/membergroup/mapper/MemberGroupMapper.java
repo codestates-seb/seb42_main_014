@@ -34,7 +34,8 @@ public interface MemberGroupMapper {
                 member -> new MemberGroupDto.MemberDetails(
                         member.getMemberId(),
                         member.getMemberName(),
-                        member.getPoint().getPointCount()
+                        member.getPoint().getPointCount(),
+                        member.getProfileImage()
                 )
         ).collect(Collectors.toList());
     }
