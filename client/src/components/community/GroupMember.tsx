@@ -39,8 +39,6 @@ const GroupMemberContainer = styled.div`
 export default function GroupMember({ groupId, groupData }: any) {
 	const [getGroupMemberData, setGetGroupMemberData] = useState([]);
 
-	console.log(getGroupMemberData);
-
 	useEffect(() => {
 		const getGroupDetailData = async () => {
 			const result = await myPageGet(`member-groups/${groupId}/details`);
