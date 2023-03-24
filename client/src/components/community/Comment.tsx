@@ -69,8 +69,6 @@ export default function Comment() {
 		setMent(e.target.value);
 	};
 
-	console.log("커뮤니티댓글", reviewList);
-
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await myPageGet(`comments/group/${parms.id}`);

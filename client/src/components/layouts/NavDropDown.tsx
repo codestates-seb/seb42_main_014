@@ -7,27 +7,28 @@ interface TDropDownProps {
 	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	isOpen: boolean;
 }
+const StyledDropDownMenu = styled.span`
+	text-align: center;
+	:hover {
+		background-color: #f1f0f0;
+		transition: all 0.3s;
+	}
+	padding: 10px;
+`;
+const StyledDropDownContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin: 5px;
+`;
+const StyledAdminDropDownItems = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
 
 export default function DropDown({ setIsOpen, isOpen }: TDropDownProps) {
 	const isLogin = localStorage.getItem("accessToken");
 	const [isAdmin, setIsAdmin] = useState(true);
-	const StyledDropDownMenu = styled.span`
-		text-align: center;
-		:hover {
-			background-color: #f1f0f0;
-			transition: all 0.3s;
-		}
-		padding: 10px;
-	`;
-	const StyledDropDownContainer = styled.div`
-		display: flex;
-		flex-direction: column;
-		margin: 5px;
-	`;
-	const StyledAdminDropDownItems = styled.div`
-		display: flex;
-		flex-direction: column;
-	`;
+
 	const handleDropdownClick = () => {
 		setIsOpen(!isOpen);
 	};
