@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Card from "../../components/volunteer/Card";
 import { FaEnvira } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 
 const Body = styled.div`
 	width: 100%;
@@ -79,6 +80,7 @@ export default function Recommend() {
 			<Container>
 				<TitleDiv>
 					{/* 제목 */}
+
 					<h1>당신의 봉사 유형은 "동물수호가" 입니다.</h1>
 				</TitleDiv>
 				<ContentDiv>
