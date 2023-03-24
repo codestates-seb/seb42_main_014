@@ -19,7 +19,6 @@ const Comment = styled.div`
 		cursor: pointer;
 	}
 `;
-
 export const StyledProfileImgContainer = styled.div`
 	display: flex;
 	img {
@@ -44,9 +43,6 @@ export default function GroupComment(user: Props) {
 
 		setEdit(false);
 	};
-	// const date = user.time.split(".")[0];
-
-	// console.log(user.time);
 	const date = dayjs(user.time).format("YYYY.MM.DD HH:mm");
 
 	return (

@@ -12,17 +12,14 @@ const StyledGroupDetailContainer = styled.div`
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
+	min-width: 800px;
 
 	.layout-child {
 		display: flex;
-		flex-direction: row;
-		margin-top: 20px;
-		width: 50%;
-		justify-content: space-between;
 	}
 	.cmt {
 		width: 90%;
-		padding-left: 5%;
+		padding-left: 10px;
 	}
 `;
 

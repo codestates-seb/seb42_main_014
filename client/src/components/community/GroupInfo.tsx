@@ -17,11 +17,12 @@ const StyledContainerDiv = styled.div`
 	justify-content: center;
 	min-width: 800px;
 	width: 100%;
+	max-width: 800px;
 	section {
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
 		width: 50%;
 		margin: 10px;
-		min-width: 800px;
+		min-width: 850px;
 	}
 	h1 {
 		text-align: center;
@@ -54,8 +55,8 @@ export default function GroupInfo({ groupData }: any) {
 	return (
 		<StyledContainerDiv>
 			<Link to={"/community"}>
-				<div style={{ width: "50%", margin: "10px", cursor: "pointer", minWidth: "800px" }}>
-					<FaArrowLeft size={40} />
+				<div style={{ width: "50%", margin: "10px", cursor: "pointer", minWidth: "850px" }}>
+					<FaArrowLeft size={45} />
 				</div>
 			</Link>
 			<section>
