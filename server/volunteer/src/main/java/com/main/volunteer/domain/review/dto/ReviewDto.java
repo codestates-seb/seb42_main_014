@@ -30,6 +30,7 @@ public class ReviewDto {
         private Long reviewId;
         private Long volunteerId;
         private String memberName;
+        private String profileImage;
         private String content;
         private LocalDateTime modifiedAt;
 
