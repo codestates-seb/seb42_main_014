@@ -42,6 +42,7 @@ export default function GroupComment(user: Props) {
 		CommentEdit(`comments/${user.commentId}`, data);
 
 		setEdit(false);
+		window.location.reload();
 	};
 	const date = dayjs(user.time).format("YYYY.MM.DD HH:mm");
 

@@ -41,14 +41,14 @@ const ButtonDiv = styled.div`
 export default function Community() {
 	return (
 		<>
-			<CommunityCard
+			{/* <CommunityCard
 				src="https://img.animalplanet.co.kr/news/2020/05/20/700/i1p635cwwv69537o1q86.jpg"
 				name="유기견 팀"
 				place="서울시 광진구"
 				intro="매주 주말 즐거운 유기견 봉사 함께하실 분!"
 				hashtag="#유기견 #주말봉사"
 				category={<SvgIcon component={PetsIcon} style={{ marginTop: "5px" }} />}
-			/>
+			/> */}
 		</>
 	);
 }

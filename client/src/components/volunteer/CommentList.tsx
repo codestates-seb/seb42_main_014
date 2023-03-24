@@ -34,6 +34,7 @@ export default function VolunteerComment(user: Iprops) {
 		};
 		CommentEdit(`reviews/${user.myId}`, data);
 		setEdit(false);
+		window.location.reload();
 	};
 	const date = user.time.split(".")[0];
 	return (
