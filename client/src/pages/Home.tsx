@@ -25,7 +25,6 @@ const StyledMainImgBgContainer3 = styled.section`
 	height: 500px;
 	position: relative;
 	justify-content: center;
-	margin-bottom: 80px;
 `;
 const StyledEmptyLine = styled.div`
 	width: 100vw;

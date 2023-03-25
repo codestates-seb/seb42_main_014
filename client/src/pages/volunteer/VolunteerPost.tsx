@@ -101,9 +101,7 @@ const Btn = styled.button`
 	font-size: 20px;
 	background-color: #a50000;
 	color: white;
-	text-align: center;
 	height: 50px;
-	line-height: 50px;
 	margin-bottom: 120px;
 `;
 const Content = styled.div`
