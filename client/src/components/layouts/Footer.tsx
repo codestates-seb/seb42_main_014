@@ -11,7 +11,7 @@ const StyledNav = styled.footer`
 	list-style: none;
 	font-weight: 700;
 	align-items: center;
-	position: fixed;
+	/* position: fixed; */
 	justify-content: space-evenly;
 	font-size: 16px;
 	bottom: 0;

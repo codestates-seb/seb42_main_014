@@ -115,12 +115,10 @@ export default function Recommend() {
 
 	useEffect(() => {
 		setTag(location.state);
-		let URL = `volunteers?volunteerName&organizationName&tagName=${tag}&orderBy=volunteerId&sort=DESC&pageNum=1`;
+		let URL = `volunteers?volunteerName&organizationName&tagName=${location.state}&orderBy=volunteerId&sort=DESC&pageNum=1`;
 		const getVolunteerData = async () => {
 			const result = await volunteerDataGet(URL);
 			setVolunData(result.data);
-			//! 어떨 땐 필터가 되고, 어떨 땐 안 됩니다ㅠ
-			//! 콘솔로 찍으면 result.data가 두 번 찍히는데 그거랑 관련있을까요?
 		};
 
 		if (tag === "동물") {

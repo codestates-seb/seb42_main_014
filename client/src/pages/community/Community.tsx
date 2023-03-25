@@ -70,7 +70,9 @@ export default function Community() {
 			const result = await myPageGet(`groups?pageNum=${currentPage}`);
 			setGetCommunityData(result.data);
 			const url = await myPageGet("groups?pageNum=1");
-			setTotalPages(url.data.length * url.totalPages);
+			setTotalPages(url.data.length * result.totalPages);
+
+			// setTotalPages(url.data.length * result.totalPages);
 		};
 		fetchData();
 	}, [currentPage]);
@@ -145,35 +147,37 @@ export default function Community() {
 
 							if (tagName === selectedCategory) {
 								return (
-									<CommunityCard
-										member={member}
-										id={groupId}
-										key={groupId}
-										src={groupImage}
-										name={groupName}
-										place={place}
-										intro={content}
-										hashtag={`#${tagName}`}
-										category={
-											<SvgIcon
-												component={
-													tagName === "어린이"
-														? categoryItems["어린이"]
-														: tagName === "장애인"
-														? categoryItems["장애인"]
-														: tagName === "노인"
-														? categoryItems["노인"]
-														: tagName === "동물"
-														? categoryItems["동물"]
-														: tagName === "환경"
-														? categoryItems["환경"]
-														: null
-												}
-												inheritViewBox
-											/>
-										}
-										onClick={() => handleGroupClick(groupId)}
-									/>
+									<>
+										<CommunityCard
+											member={member}
+											id={groupId}
+											key={groupId}
+											src={groupImage}
+											name={groupName}
+											place={place}
+											intro={content}
+											hashtag={`#${tagName}`}
+											category={
+												<SvgIcon
+													component={
+														tagName === "어린이"
+															? categoryItems["어린이"]
+															: tagName === "장애인"
+															? categoryItems["장애인"]
+															: tagName === "노인"
+															? categoryItems["노인"]
+															: tagName === "동물"
+															? categoryItems["동물"]
+															: tagName === "환경"
+															? categoryItems["환경"]
+															: null
+													}
+													inheritViewBox
+												/>
+											}
+											onClick={() => handleGroupClick(groupId)}
+										/>
+									</>
 								);
 							} else if (selectedCategory === "") {
 								return (
@@ -209,13 +213,13 @@ export default function Community() {
 								);
 							}
 						})}
+					<Paginations
+						totalPages={totalPages}
+						currentPage={currentPage}
+						onPageChange={handlePageChange}
+						itemsCountPerPage={5}
+					/>
 				</Container>
-				<Paginations
-					totalPages={totalPages}
-					currentPage={currentPage}
-					onPageChange={handlePageChange}
-					itemsCountPerPage={5}
-				/>
 			</div>
 		</>
 	);
