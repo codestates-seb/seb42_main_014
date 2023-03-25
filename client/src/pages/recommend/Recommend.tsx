@@ -69,7 +69,7 @@ const WordDiv = styled.div`
 	align-items: center;
 	padding: 20px;
 	line-height: 200%;
-	text-align: left;
+	text-align: center;
 	font-size: 1.6rem;
 	@media (max-width: 1550px) {
 		font-size: 1.2rem;
@@ -100,6 +100,7 @@ const StyledCardContainerDiv = styled.div`
 export default function Recommend() {
 	const [title, setTitle] = useState("");
 	const [saying, setSaying] = useState(<span>파이팅!</span>);
+	const [img, setImg] = useState("");
 	const [volunData, setVolunData] = useState([]);
 	const [tag, setTag] = useState("");
 	const navigate = useNavigate();
@@ -123,26 +124,26 @@ export default function Recommend() {
 
 		if (tag === "동물") {
 			setTitle("동물수호가");
+			setImg("/images/recommend/test_animal.jpg");
 			setSaying(
 				<span>
 					모든 사람이 강아지만큼 <br />
 					무조건 사랑하는 능력이 있다면 <br />
-					이 세상은 더 좋은 곳이 <br />
-					될 것입니다. <br /> - M. K. Clinton
+					이 세상은 더 좋은 곳이 될 것입니다. <br /> - M. K. Clinton
 				</span>,
 			);
 		} else if (tag === "환경") {
 			setTitle("지구지킴이");
+			setImg("/images/recommend/test_environment.jpg");
 			setSaying(
 				<span>
-					자연과 가까울수록 <br />
-					병은 멀어지고 <br />
-					자연과 멀수록 <br />
-					병은 가까워진다. <br /> - Johann Wolfgang von Goethe
+					자연과 가까울수록 병은 멀어지고 <br />
+					자연과 멀수록 병은 가까워진다. <br /> - Johann Wolfgang von Goethe
 				</span>,
 			);
 		} else if (tag === "어르신") {
 			setTitle("오늘부터 손주");
+			setImg("/images/recommend/test_elderly.jpg");
 			setSaying(
 				<span>
 					노인을 공경하지 않는 <br />
@@ -152,6 +153,7 @@ export default function Recommend() {
 			);
 		} else if (tag === "장애인") {
 			setTitle("함께하는 친구");
+			setImg("/images/recommend/test_handicapped.jpg");
 			setSaying(
 				<span>
 					행복의 한 쪽 문이 닫히면 <br />
@@ -162,6 +164,7 @@ export default function Recommend() {
 			);
 		} else if (tag === "어린이") {
 			setTitle("키다리 아저씨");
+			setImg("/images/recommend/test_child.jpg");
 			setSaying(
 				<span>
 					세상에 태어난 아기는 <br />
@@ -184,10 +187,7 @@ export default function Recommend() {
 						{/* 사진과 명언 */}
 						<ImgDiv>
 							{/* 멍멍이 이미지 */}
-							<img
-								src="https://post-phinf.pstatic.net/MjAxNzA2MjlfMjk4/MDAxNDk4Njk4OTYzMTIz.RC7_Z7bSDD0noFihxaBGb5axQwFltnhYJnfXhCOlDu4g.ksRlpD9YhJQAwRFH0iw5qQvuZYkuAFDO5uoDZrHsfhcg.PNG/20170517_130400.png?type=w1200"
-								alt="강아지"
-							/>
+							<img src={img} alt="강아지" />
 						</ImgDiv>
 						<WordDiv>{saying}</WordDiv>
 					</ContentDiv>
