@@ -85,7 +85,6 @@ public class GroupController {
 
     @GetMapping
     public ResponseEntity<?> getGroups(@AuthenticationPrincipal CustomUserDetails userDetails) {
-
         List<MemberGroup> myMemberGroup = null;
         if(userDetails != null){
             Long memberId = userDetails.getMemberId();
