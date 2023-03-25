@@ -44,7 +44,7 @@ export default function GroupComment(user: Props) {
 		setEdit(false);
 		window.location.reload();
 	};
-	const date = dayjs(user.time).format("YYYY.MM.DD HH:mm");
+	const date = dayjs(user.time).format("YYYY-MM-DD HH:mm");
 
 	return (
 		<section>

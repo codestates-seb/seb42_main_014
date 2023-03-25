@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import styled from "styled-components";
 import { CommentEdit } from "../../api/volunteer/volunteerCommentEdit ";
 import { StyledProfileImgContainer } from "../community/GroupComment";
+import { VolunteerCommentContext } from "./VolunteerComment";
 
 interface Iprops {
 	content: string;
@@ -20,7 +21,8 @@ const Comment = styled.div`
 	}
 `;
 
-export default function VolunteerComment(user: Iprops) {
+export default function ReviewItem(user: Iprops) {
+	const context = useContext(VolunteerCommentContext);
 	const [edit, setEdit] = useState(false);
 	const [updateComment, setUpdateComment] = useState(user.content);
 
@@ -28,13 +30,13 @@ export default function VolunteerComment(user: Iprops) {
 		setEdit(true);
 	};
 
-	const handleCommentUpdate = () => {
+	const handleCommentUpdate = async () => {
 		const data = {
 			content: updateComment,
 		};
-		CommentEdit(`reviews/${user.myId}`, data);
+		await CommentEdit(`reviews/${user.myId}`, data);
 		setEdit(false);
-		window.location.reload();
+		context?.refreshReviews();
 	};
 	const date = user.time.split(".")[0];
 	return (

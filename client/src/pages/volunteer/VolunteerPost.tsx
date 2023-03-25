@@ -168,7 +168,7 @@ const VolunteerPost = () => {
 		setValue(content);
 	};
 	const hour = date.format("HH:mm");
-	const onSubmit = (data: IPostData) => {
+	const onSubmit = async (data: IPostData) => {
 		const {
 			title,
 			applyDate,
@@ -203,7 +203,7 @@ const VolunteerPost = () => {
 
 		if (post === "/register") {
 			try {
-				volunteerDataPost("volunteers", postVolunteerData);
+				await volunteerDataPost("volunteers", postVolunteerData);
 				navigate("/volunteer");
 			} catch (err) {
 				alert("봉사 등록에 실패했어요. 잠시 후 다시 시도해 주세요.");
