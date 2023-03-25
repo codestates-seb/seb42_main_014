@@ -66,9 +66,25 @@ public class GroupController {
         }
         return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.groupToGroupResponseDto(group, groupMember)));
     }
-    @GetMapping
-    public ResponseEntity<?> getGroups(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum, @AuthenticationPrincipal CustomUserDetails userDetails) {
+//    @GetMapping
+//    public ResponseEntity<?> getGroups(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum, @AuthenticationPrincipal CustomUserDetails userDetails) {
+//
+//        List<MemberGroup> myMemberGroup = null;
+//        if(userDetails != null){
+//            Long memberId = userDetails.getMemberId();
+//            if(memberId != null){
+//                myMemberGroup = memberGroupService.findMemberGroupListByMemberId(memberId);
+//            }
+//        }
+//
+//        Page<Group> groupPage = groupService.findGroups(pageNum - 1);
+//        List<Group> groupList = groupPage.getContent();
+//
+//        return ResponseEntity.ok().body(ApiResponse.ok("data",mapper.GroupsToGroupResponseDtos(groupList, myMemberGroup), "totalPages", groupPage.getTotalPages()));
+//    }
 
+    @GetMapping
+    public ResponseEntity<?> getGroups(@AuthenticationPrincipal CustomUserDetails userDetails) {
         List<MemberGroup> myMemberGroup = null;
         if(userDetails != null){
             Long memberId = userDetails.getMemberId();
@@ -77,10 +93,9 @@ public class GroupController {
             }
         }
 
-        Page<Group> groupPage = groupService.findGroups(pageNum - 1);
-        List<Group> groupList = groupPage.getContent();
+        List<Group> groupList = groupService.findGroups();
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data",mapper.GroupsToGroupResponseDtos(groupList, myMemberGroup), "totalPages", groupPage.getTotalPages()));
+        return ResponseEntity.ok().body(ApiResponse.ok("data",mapper.GroupsToGroupResponseDtos(groupList, myMemberGroup)));
     }
     @PatchMapping("/{group-id}")
     @PreAuthorize("hasRole('ROLE_GROUPZANG')")
