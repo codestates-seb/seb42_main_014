@@ -7,6 +7,8 @@ import com.main.volunteer.domain.group.mapper.GroupMapper;
 import com.main.volunteer.domain.group.service.GroupService;
 import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.service.MemberService;
+import com.main.volunteer.domain.membergroup.entity.MemberGroup;
+import com.main.volunteer.domain.membergroup.service.MemberGroupService;
 import com.main.volunteer.domain.tag.entity.Tag;
 import com.main.volunteer.domain.tag.service.TagService;
 import com.main.volunteer.response.ApiResponse;
@@ -32,6 +34,8 @@ public class GroupController {
     private final GroupMapper mapper;
     private final TagService tagService;
     private final MemberService memberService;
+
+    private final MemberGroupService memberGroupService;
     public static final String DEFAULT_URI = "/groups";
 
 
@@ -63,12 +67,20 @@ public class GroupController {
         return ResponseEntity.ok().body(ApiResponse.ok("data", mapper.groupToGroupResponseDto(group, groupMember)));
     }
     @GetMapping
-    public ResponseEntity<?> getGroups(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum) {
+    public ResponseEntity<?> getGroups(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum, @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        List<MemberGroup> myMemberGroup = null;
+        if(userDetails != null){
+            Long memberId = userDetails.getMemberId();
+            if(memberId != null){
+                myMemberGroup = memberGroupService.findMemberGroupListByMemberId(memberId);
+            }
+        }
 
         Page<Group> groupPage = groupService.findGroups(pageNum - 1);
         List<Group> groupList = groupPage.getContent();
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data",mapper.GroupsToGroupResponseDtos(groupList), "totalPages", groupPage.getTotalPages()));
+        return ResponseEntity.ok().body(ApiResponse.ok("data",mapper.GroupsToGroupResponseDtos(groupList, myMemberGroup), "totalPages", groupPage.getTotalPages()));
     }
     @PatchMapping("/{group-id}")
     @PreAuthorize("hasRole('ROLE_GROUPZANG')")
@@ -76,7 +88,14 @@ public class GroupController {
 
         Group group = groupService.updateGroup(mapper.groupPatchDtoToGroup(patchDto), memberService.verifiedMember(userDetails.getMemberId()));
 
-        return ResponseEntity.ok().body(ApiResponse.ok("data" ,mapper.groupToGroupResponseDto(group, true)));
+        boolean groupMember = false;
+        if (userDetails != null) {
+            long memberId = userDetails.getMemberId();
+            groupMember = group.getMemberGroups().stream()
+                    .anyMatch(memberGroup -> memberGroup.getMember().getMemberId() == memberId);
+        }
+
+        return ResponseEntity.ok().body(ApiResponse.ok("data" ,mapper.groupToGroupResponseDto(group, groupMember)));
     }
 
     @DeleteMapping("/{group-id}")
