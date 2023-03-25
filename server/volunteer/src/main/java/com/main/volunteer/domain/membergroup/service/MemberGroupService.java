@@ -45,6 +45,13 @@ public class MemberGroupService {
         return memberGroups;
     }
 
+    public List<MemberGroup> findMemberGroupListByMemberId(long memberId) {
+
+        Member member = memberService.verifiedMember(memberId);
+        List<MemberGroup> memberGroups = memberGroupRepository.findByMember(member);
+        return memberGroups;
+    }
+
     private boolean verifyExistMemberGroup(long memberId, long groupId) {
 
         Member member = memberService.verifiedMember(memberId);
