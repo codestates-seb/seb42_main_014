@@ -91,7 +91,7 @@ public class GroupController {
             if(memberId != null){
                 myMemberGroup = memberGroupService.findMemberGroupListByMemberId(memberId);
             }
-        }  
+        }
 
         List<Group> groupList = groupService.findGroups();
 
