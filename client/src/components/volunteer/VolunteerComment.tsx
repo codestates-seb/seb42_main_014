@@ -8,6 +8,7 @@ import { myPageGet } from "../../api/mypage/MypageGet";
 import { useParams } from "react-router-dom";
 import { volunteerCommentPost } from "../../api/volunteer/volunteerData";
 import { CommentDelete } from "../../api/volunteer/volunteerComment";
+import dayjs from "dayjs";
 
 const StyledContainerDiv = styled.div`
 	width: 100%;
@@ -70,7 +71,6 @@ export default function VolunteerComment(disabled: any) {
 	const [myReviewId, setMyReviewId] = useState("");
 	const [ment, setMent] = useState("");
 	const [isFilteredReviewChecked, setIsFilteredReviewChecked] = useState("allReview");
-	console.log(reviewList);
 
 	const handleComment = (e: any) => {
 		setComment(e.target.value);
@@ -94,18 +94,21 @@ export default function VolunteerComment(disabled: any) {
 		fetchData();
 	}, [params.id]);
 
-	const handleCommentPost = () => {
+	const handleCommentPost = async () => {
 		const data = {
 			content: comment,
 		};
-		volunteerCommentPost(`reviews/${params.id}`, data);
-		window.location.reload();
+		await volunteerCommentPost(`reviews/${params.id}`, data);
+		const newReviewList = await myPageGet(`reviews/${params.id}`);
+		setReviewList(newReviewList.data);
+		const newMyReviewId = await myPageGet(`reviews/my/${params.id}`);
+		setMyReviewId(newMyReviewId.data.reviewId);
+		setComment("");
 	};
 	const onRemove = async () => {
 		if (window.confirm("이 후기를 삭제 하시겠습니까?")) {
-			CommentDelete(`reviews/${myReviewId}`);
-		} else {
-			alert("취소합니다.");
+			const res = await CommentDelete(`reviews/${myReviewId}`);
+			myPageGet(`reviews/${params.id}`).then((res) => setReviewList(res.data));
 		}
 	};
 
@@ -164,21 +167,24 @@ export default function VolunteerComment(disabled: any) {
 						/>
 					</div>
 				</Comment>
-				{reviewList.map((user) => (
-					<CommentList
-						key={user.id}
-						id={user.reviewId}
-						time={user.modifiedAt}
-						content={user.content}
-						memberName={user.memberName}
-						onClick={onRemove}
-						myId={myReviewId}
-						editComment={function (id: any): void {
-							throw new Error("Function not implemented.");
-						}}
-						profileImage={user.profileImage}
-					/>
-				))}
+				{reviewList.map((user) => {
+					const commentCreatedAt = dayjs(user.modifiedAt).format("YYYY-MM-DD HH:mm");
+					return (
+						<CommentList
+							key={user.id}
+							id={user.reviewId}
+							time={commentCreatedAt}
+							content={user.content}
+							memberName={user.memberName}
+							onClick={onRemove}
+							myId={myReviewId}
+							editComment={function (id: any): void {
+								throw new Error("Function not implemented.");
+							}}
+							profileImage={user.profileImage}
+						/>
+					);
+				})}
 			</StyledContainerDiv>
 		</>
 	);

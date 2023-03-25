@@ -16,16 +16,16 @@ export const volunteerDataGet = async (params: string) => {
 	}
 };
 
-export const volunteerDataPost = (url: string, loginData: any) => {
-	axios.post(`${apiUrl}${url}`, loginData, {
+export const volunteerDataPost = async (url: string, loginData: any) => {
+	await axios.post(`${apiUrl}${url}`, loginData, {
 		headers: {
 			Authorization: `${localStorage.getItem("accessToken")}`,
 		},
 	});
 };
 
-export const volunteerCommentPost = (params: string, Data: any) => {
-	axios
+export const volunteerCommentPost = async (params: string, Data: any) => {
+	await axios
 		.post(apiUrl + params, Data, {
 			headers: {
 				Authorization: `${localStorage.getItem("accessToken")}`,
