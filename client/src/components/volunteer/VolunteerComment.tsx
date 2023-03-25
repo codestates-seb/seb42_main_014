@@ -3,12 +3,13 @@ import { FaUserCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import Button from "../Button";
-import CommentList from "./CommentList";
+import ReviewItem from "./ReviewItem";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import { useParams } from "react-router-dom";
 import { volunteerCommentPost } from "../../api/volunteer/volunteerData";
 import { CommentDelete } from "../../api/volunteer/volunteerComment";
 import dayjs from "dayjs";
+import React from "react";
 
 const StyledContainerDiv = styled.div`
 	width: 100%;
@@ -64,8 +65,11 @@ const FilterContainer = styled.div`
 	min-width: 1000px;
 `;
 
+export const VolunteerCommentContext = React.createContext<{ refreshReviews?: Function }>({});
+
 export default function VolunteerComment(disabled: any) {
 	const params = useParams();
+	const [volunteerId, setVolunteerId] = useState(params.id);
 	const [reviewList, setReviewList] = useState([]);
 	const [comment, setComment] = useState("");
 	const [myReviewId, setMyReviewId] = useState("");
@@ -74,6 +78,13 @@ export default function VolunteerComment(disabled: any) {
 
 	const handleComment = (e: any) => {
 		setComment(e.target.value);
+	};
+
+	const fetchData = async () => {
+		const result = await myPageGet(`reviews/${volunteerId}`);
+		const myComment = await myPageGet(`reviews/my/${volunteerId}`);
+		setReviewList(result.data);
+		setMyReviewId(myComment.data.reviewId);
 	};
 
 	useEffect(() => {
@@ -98,6 +109,10 @@ export default function VolunteerComment(disabled: any) {
 		const data = {
 			content: comment,
 		};
+		if (reviewList.map((el) => el.reviewId === myReviewId)) {
+			alert("이미 후기를 등록하셨어요. 후기는 한번만 등록 가능해요.");
+			return;
+		}
 		await volunteerCommentPost(`reviews/${params.id}`, data);
 		const newReviewList = await myPageGet(`reviews/${params.id}`);
 		setReviewList(newReviewList.data);
@@ -123,7 +138,7 @@ export default function VolunteerComment(disabled: any) {
 	};
 
 	return (
-		<>
+		<VolunteerCommentContext.Provider value={{ refreshReviews: fetchData }}>
 			<FilterContainer>
 				<input
 					type="radio"
@@ -170,7 +185,7 @@ export default function VolunteerComment(disabled: any) {
 				{reviewList.map((user) => {
 					const commentCreatedAt = dayjs(user.modifiedAt).format("YYYY-MM-DD HH:mm");
 					return (
-						<CommentList
+						<ReviewItem
 							key={user.id}
 							id={user.reviewId}
 							time={commentCreatedAt}
@@ -186,6 +201,6 @@ export default function VolunteerComment(disabled: any) {
 					);
 				})}
 			</StyledContainerDiv>
-		</>
+		</VolunteerCommentContext.Provider>
 	);
 }
