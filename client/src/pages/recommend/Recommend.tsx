@@ -16,7 +16,7 @@ const StyledContainerDiv = styled.div`
 
 const StyledAreaContainer = styled.div`
 	display: flex;
-	width: 90%;
+	width: 60%;
 	margin: 0 auto;
 	flex-direction: column;
 `;
@@ -25,7 +25,7 @@ const TitleDiv = styled.div`
 	background-color: #ffa9a9;
 	display: flex;
 	border-radius: 10px;
-	padding: 20px 40px;
+	padding: 10px 20px;
 	margin: 2rem auto 1rem auto;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
 	color: #ffffff;
@@ -33,42 +33,48 @@ const TitleDiv = styled.div`
 	max-width: 1233px;
 	justify-content: center;
 	font-weight: bold;
-	font-size: 1.3rem;
+	font-size: 1rem;
 `;
 
 const ContentDiv = styled.div`
 	background-color: #ffa9a9;
 	display: flex;
+	justify-content: space-around;
 	border-radius: 10px;
-	padding: 20px 40px;
+	padding: 20px 20px;
 	margin: 0 auto;
 	margin-bottom: 10px;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
 	color: #ffffff;
-	height: 600px;
+	height: 350px;
+	width: 100%;
+	max-width: 1233px;
 `;
 
 const ImgDiv = styled.div`
 	display: flex;
-	width: 100%;
+	width: 40%;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
+	border-radius: 10px;
 	img {
 		width: 100%;
-		border-radius: 10px;
-		filter: brightness(50%);
+		border-radius: inherit;
+		/* filter: brightness(50%); */
 	}
 `;
 
 const WordDiv = styled.div`
-	position: absolute;
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	/* width: 1036px; */
-	height: 560px;
-	font-size: 2rem;
 	padding: 20px;
 	line-height: 200%;
 	text-align: left;
+	font-size: 1.6rem;
+	@media (max-width: 1550px) {
+		font-size: 1.2rem;
+		line-height: 200%;
+	}
 `;
 
 const StyledCardContainerDiv = styled.div`
@@ -93,6 +99,7 @@ const StyledCardContainerDiv = styled.div`
 
 export default function Recommend() {
 	const [title, setTitle] = useState("");
+	const [saying, setSaying] = useState(<span>파이팅!</span>);
 	const [volunData, setVolunData] = useState([]);
 	const [tag, setTag] = useState("");
 	const navigate = useNavigate();
@@ -112,20 +119,58 @@ export default function Recommend() {
 		const getVolunteerData = async () => {
 			const result = await volunteerDataGet(URL);
 			setVolunData(result.data);
+			//! 어떨 땐 필터가 되고, 어떨 땐 안 됩니다ㅠ
+			//! 콘솔로 찍으면 result.data가 두 번 찍히는데 그거랑 관련있을까요?
 		};
 
 		if (tag === "동물") {
 			setTitle("동물수호가");
+			setSaying(
+				<span>
+					모든 사람이 강아지만큼 <br />
+					무조건 사랑하는 능력이 있다면 <br />
+					이 세상은 더 좋은 곳이 <br />
+					될 것입니다. <br /> - M. K. Clinton
+				</span>,
+			);
 		} else if (tag === "환경") {
 			setTitle("지구지킴이");
+			setSaying(
+				<span>
+					자연과 가까울수록 <br />
+					병은 멀어지고 <br />
+					자연과 멀수록 <br />
+					병은 가까워진다. <br /> - Johann Wolfgang von Goethe
+				</span>,
+			);
 		} else if (tag === "어르신") {
 			setTitle("오늘부터 손주");
+			setSaying(
+				<span>
+					노인을 공경하지 않는 <br />
+					젊은이의 노후는 <br />
+					결코 행복할 수 없다. <br /> - 탈무드
+				</span>,
+			);
 		} else if (tag === "장애인") {
 			setTitle("함께하는 친구");
+			setSaying(
+				<span>
+					행복의 한 쪽 문이 닫히면 <br />
+					다른 쪽 문이 열린다. 그러나 흔히 우리는 <br />
+					닫혀진 문을 오랫동안 보기 때문에 <br />
+					우리를 위해 열려 있는 문을 보지 못한다. <br /> - Helen Adams Keller
+				</span>,
+			);
 		} else if (tag === "어린이") {
 			setTitle("키다리 아저씨");
+			setSaying(
+				<span>
+					세상에 태어난 아기는 <br />
+					누구나 가치가 있다. <br /> - Charles Dickens
+				</span>,
+			);
 		}
-
 		getVolunteerData();
 	}, [location.state, tag]);
 
@@ -146,20 +191,13 @@ export default function Recommend() {
 								alt="강아지"
 							/>
 						</ImgDiv>
-						<WordDiv>
-							<span>
-								모든 사람이 강아지만큼 <br />
-								무조건 사랑하는 능력이 있다면 <br />
-								이 세상은 더 좋은 곳이 <br />
-								될 것입니다. <br /> - M. K. Clinton
-							</span>
-						</WordDiv>
+						<WordDiv>{saying}</WordDiv>
 					</ContentDiv>
 				</StyledAreaContainer>
 				<StyledCardContainerDiv>
 					{/* 추천 봉사 리스트 */}
 					{volunData &&
-						volunData.slice(0, 8).map((el) => {
+						volunData.map((el): JSX.Element => {
 							const {
 								applyCount,
 								applyLimit,
@@ -181,6 +219,7 @@ export default function Recommend() {
 							};
 							return (
 								<Card
+									key={volunteerId}
 									src={
 										volunteerImage ||
 										"https://main014-bucket.s3.ap-northeast-2.amazonaws.com/profile/011e2a77-4a54-4377-8679-6c49c4b86e7f%ED%95%9C%EA%B8%80%EC%9D%B4%EB%A6%84%EC%9D%BC%EB%95%90.png"
