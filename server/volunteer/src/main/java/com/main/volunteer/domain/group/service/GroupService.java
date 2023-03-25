@@ -51,10 +51,12 @@ public class GroupService {
     }
 
     // 그룹 목록
-    public Page<Group> findGroups(int pageNum){
-        return groupRepository.findAll(PageRequest.of(pageNum , 5));
+//    public Page<Group> findGroups(int pageNum){
+//        return groupRepository.findAll(PageRequest.of(pageNum , 5));
+//    }
+    public List<Group> findGroups(){
+        return groupRepository.findAll();
     }
-
     // 그룹 수정
     public Group updateGroup(Group group, Member member) {
 
