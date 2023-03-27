@@ -328,7 +328,12 @@ const VolunteerPost = () => {
 							<Right>
 								<Select>
 									<span>활동명</span>
-									<input {...register("title", { required: true })} type="text" />
+									<input
+										maxLength={5}
+										placeholder="15자 이하로 작성해주세요."
+										{...register("title", { required: true })}
+										type="text"
+									/>
 								</Select>
 								<Select>
 									<span>봉사분야</span>
@@ -343,7 +348,10 @@ const VolunteerPost = () => {
 								<Select>
 									<span>모집기간</span>
 									<span>
-										<CalendarMonthIcon onClick={() => datePickerRef.current.setOpen(true)} />
+										<CalendarMonthIcon
+											style={{ fontSize: "30px" }}
+											onClick={() => datePickerRef.current.setOpen(true)}
+										/>
 									</span>
 									<Controller
 										name="applyDate"
@@ -356,6 +364,7 @@ const VolunteerPost = () => {
 													<StyledDatePicker
 														ref={datePickerRef}
 														dateFormat="yyyy-MM-dd"
+														placeholderText="클릭하여 날짜를 선택하여 주세요"
 														dateFormatCalendar="yyyy년 MM월"
 														selected={applyDate ? new Date(applyDate) : null}
 														onChange={(date: any) => {
@@ -377,7 +386,10 @@ const VolunteerPost = () => {
 								<Select>
 									<span>봉사일시</span>
 									<span>
-										<CalendarMonthIcon onClick={() => datePickerRef2.current.setOpen(true)} />
+										<CalendarMonthIcon
+											style={{ fontSize: "30px" }}
+											onClick={() => datePickerRef2.current.setOpen(true)}
+										/>
 									</span>
 									<Controller
 										name="volunteerDate"
