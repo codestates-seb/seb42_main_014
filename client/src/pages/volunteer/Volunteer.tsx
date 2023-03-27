@@ -1,6 +1,6 @@
 import Carousel from "../../components/Carousel";
 import Card from "../../components/volunteer/Card";
-
+import ReplayIcon from "@mui/icons-material/Replay";
 import Category from "../../components/volunteer/Category";
 import SearchBar from "../../components/volunteer/SearchBar";
 import styled from "styled-components";
@@ -58,6 +58,7 @@ const SearchContainerDiv = styled.div`
 
 const FilterContainerDiv = styled.div`
 	display: flex;
+	justify-content: space-between;
 	margin-bottom: 20px;
 	padding-bottom: 20px;
 	border-bottom: 3px solid black;
