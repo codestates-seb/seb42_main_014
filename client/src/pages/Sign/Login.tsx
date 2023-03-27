@@ -8,6 +8,7 @@ import { KAKAO_AUTH_URL } from "../../data/KakaoLoginData";
 
 const Body = styled.body`
 	height: 100vh;
+	margin-top: -80px;
 	width: 100%;
 `;
 const StyledContainer = styled.div`

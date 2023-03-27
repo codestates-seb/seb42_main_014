@@ -13,6 +13,7 @@ const StyledGroupDetailContainer = styled.div`
 	align-items: center;
 	width: 100%;
 	height: 100vh;
+	margin-bottom: 100px;
 	min-width: 800px;
 
 	.layout-child {

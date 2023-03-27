@@ -57,10 +57,21 @@ const StyledInputContainerDiv = styled.div`
 	margin: 20px;
 `;
 const ReviewList = styled.div`
-	height: 500px;
-	overflow: scroll;
+	height: 300px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+
 	::-webkit-scrollbar {
-		display: none;
+		width: 10px; /* 스크롤바의 너비 */
+	}
+
+	::-webkit-scrollbar-thumb {
+		height: 30%;
+		background: #131313;
+		border-radius: 10px;
+	}
+	::-webkit-scrollbar-track {
+		background: rgba(93, 93, 93, 0.1);
 	}
 `;
 export default function Comment() {
