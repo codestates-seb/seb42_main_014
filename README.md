@@ -1,19 +1,15 @@
-# 좀나세 (조금 더 나은 세상) :sparkles:
-<br/>
+# :sparkles: 좀나세(조금 더 나은 세상) :sparkles: 
 
+**`팀 이름` :**  구현동화 : 소중한 거북이와 악어 🐢🐊<br/>
+**`프로젝트 기간` :** 2023.03.03. - 2023.03.29<br/>
 
-</br>
-
-- **`팀 이름` :** 🐢🐊 구현동화 : 소중한 거북이와 악어 🐢🐊
-- **`프로젝트 명` :** 좀나세 (조금 더 나은 세상)
-- **`프로젝트 기간` :** 2023.03.03. - 2023.03.29.
-- **`팀원` :** 김민소(팀장), 임성은(부팀장), 강은서, 박주혁, 이우연, 장지우
-- **`배포 링크` :** [🌎 jomnasae.site]()
-
+프로젝트 소개 어쩌구 저쩌구~  <br/>
+[배포 링크 - 🌎 jomnasae.site]() <br/>
+[서비스 메뉴얼 보러가기]  <br/>
+[기술 발표 영상]  <br/>
 <br/>
 
 ## 🧑‍💻 Member
-
 
 | [김민소<br>(BE, 팀장)](https://github.com/kms310272) | [강은서<br>(BE)](https://github.com/kdmstj) | [이우연<br>(BE)](https://github.com/2uyyn2) | [박주혁<br>(FE)](https://github.com/Juhyuk-Park) | [임성은<br>(FE, 부팀장)](https://github.com/Limcroco) | [장지우<br>(FE)](https://github.com/Juhyuk-Park) |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -23,7 +19,7 @@
 
 <br/>
 
-### <span style=""> ⚙️ **Tools** </span>
+## <span style=""> ⚙️ **Tools** </span>
 | Github | Discord |Notion|ZEP|
 | :---: | :---: |:---:|:---:|
 | <img alt="github logo" src="https://techstack-generator.vercel.app/github-icon.svg" width="65" height="65"> | <img alt="Discord logo" src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/62595384e89d1d54d704ece7_3437c10597c1526c3dbd98c737c2bcae.svg" height="65" width="65"> |<img alt="Notion logo" src="https://www.notion.so/cdn-cgi/image/format=auto,width=640,quality=100/front-static/shared/icons/notion-app-icon-3d.png" height="65" width="65">|<img alt="ZEP logo" src="https://yt3.googleusercontent.com/jCFZ68VFF9Eb-8pGlSnPz9vspShDQbplbp7S049fR4c8bfYxmlTEmBq9TOboJMuCLoFdmxJY=s176-c-k-c0x00ffffff-no-rj" height="65" width="65">|
@@ -45,40 +41,23 @@
 <br/>
 
 
-<br/>
-
-
-
-
-
-
 
 
 
 <br/>
 
-## :notebook: 사용자 요구사항 정의서
+## :notebook: Documentation
 [사용자 요구사항 정의서](https://docs.google.com/spreadsheets/d/1a2mPp-aHX2ZtKxpZODTXdB32jx8wEgU-qwEKKoZK96E/edit?usp=sharing)
 
-<br/>
-## :notebook: 화면 정의서
 [화면 정의서](https://docs.google.com/spreadsheets/d/1a2mPp-aHX2ZtKxpZODTXdB32jx8wEgU-qwEKKoZK96E/edit?usp=sharing)
 
-<br/>
-## :notebook: 테이블 명세서
-[화면 정의서](https://docs.google.com/spreadsheets/d/1a2mPp-aHX2ZtKxpZODTXdB32jx8wEgU-qwEKKoZK96E/edit?usp=sharing)
+[테이블 병세서](https://docs.google.com/spreadsheets/d/1a2mPp-aHX2ZtKxpZODTXdB32jx8wEgU-qwEKKoZK96E/edit?usp=sharing)
 
-<br/>
-## :notebook: ERD
-[화면 정의서](https://docs.google.com/spreadsheets/d/1a2mPp-aHX2ZtKxpZODTXdB32jx8wEgU-qwEKKoZK96E/edit?usp=sharing)
+[ERD]()
 
-<br/>
-## :notebook: API 명세서
-[화면 정의서](https://docs.google.com/spreadsheets/d/1a2mPp-aHX2ZtKxpZODTXdB32jx8wEgU-qwEKKoZK96E/edit?usp=sharing)
+[API 명세서](https://docs.google.com/spreadsheets/d/1a2mPp-aHX2ZtKxpZODTXdB32jx8wEgU-qwEKKoZK96E/edit?usp=sharing)
 
-<br/>
-## :notebook: 개발자 테스트 체크 리스트
-[화면 정의서](https://docs.google.com/spreadsheets/d/1a2mPp-aHX2ZtKxpZODTXdB32jx8wEgU-qwEKKoZK96E/edit?usp=sharing)
+[개발자 테스트 체크 리스트](https://docs.google.com/spreadsheets/d/1a2mPp-aHX2ZtKxpZODTXdB32jx8wEgU-qwEKKoZK96E/edit?usp=sharing)
 
 <br/>
 
