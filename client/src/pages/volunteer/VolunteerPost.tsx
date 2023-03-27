@@ -16,7 +16,7 @@ import "react-datepicker/dist/react-datepicker.css";
 const StyledDatePicker = styled(DatePicker)`
 	width: 160px;
 	border: none;
-	background-color: #f7f7f7;
+	/* background-color: #f7f7f7; */
 	color: #333;
 	padding: 8px;
 	border-radius: 4px;
@@ -198,7 +198,7 @@ const Content = styled.div`
 `;
 
 const DatePickerContainer = styled.div`
-	background-color: #f7f7f7;
+	/* background-color: #f7f7f7; */
 	display: flex;
 	width: 100%;
 	align-items: center;
