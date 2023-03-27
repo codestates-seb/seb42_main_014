@@ -22,7 +22,7 @@ const Container = styled.div`
 
 export default function GroupItem(props: KeepVolItemProps) {
 	const nav = useNavigate();
-	const clickHandlr = () => {
+	const clickHandler = () => {
 		nav(`/community/${props.id}`, { state: props.id });
 	};
 	return (
@@ -30,7 +30,7 @@ export default function GroupItem(props: KeepVolItemProps) {
 			<Container>
 				<div>{props.title} </div>
 				<div>
-					<button onClick={clickHandlr}>내 그룹 가기</button>
+					<button onClick={clickHandler}>내 그룹 가기</button>
 				</div>
 			</Container>
 		</>

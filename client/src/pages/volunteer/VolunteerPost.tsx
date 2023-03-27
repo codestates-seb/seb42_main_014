@@ -12,11 +12,11 @@ import { imageUploadPost } from "../../api/imgPost";
 import dayjs from "dayjs";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { theme } from "../../utils/theme";
 
 const StyledDatePicker = styled(DatePicker)`
 	width: 160px;
 	border: none;
-	/* background-color: #f7f7f7; */
 	color: #333;
 	padding: 8px;
 	border-radius: 4px;
@@ -179,10 +179,10 @@ const Bar = styled.div`
 	font-weight: 900;
 `;
 const Btn = styled.button`
-	/* 기존 */
 	cursor: pointer;
 	font-size: 1.35rem;
-	background-color: #a50000;
+	background-color: ${theme.primary};
+	border: none;
 	color: white;
 	height: max-content;
 	margin-bottom: 120px;
@@ -198,7 +198,6 @@ const Content = styled.div`
 `;
 
 const DatePickerContainer = styled.div`
-	/* background-color: #f7f7f7; */
 	display: flex;
 	width: 100%;
 	align-items: center;
@@ -267,7 +266,6 @@ const VolunteerPost = () => {
 			title,
 			applyDate,
 			volunteerDate,
-
 			placeDetail,
 			memberCount,
 			volunteerTime,
@@ -343,7 +341,7 @@ const VolunteerPost = () => {
 										selectedOption={selectedOption}
 										placeholder="분야를 선택해주세요"
 										option={optionArr}
-										width={145}
+										width={123}
 									/>
 								</Select>
 								<Select>
@@ -483,6 +481,7 @@ const VolunteerPost = () => {
 									<span>봉사분야</span>
 
 									<Dropdown
+										width={123}
 										option={optionArr}
 										setSelectedOption={setSelectedOption}
 										selectedOption={selectedOption}

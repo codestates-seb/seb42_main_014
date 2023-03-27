@@ -2,6 +2,7 @@ import { SetStateAction, useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import styled from "styled-components";
+import { theme } from "../../utils/theme";
 
 const DropdownContainer = styled.div`
 	position: relative;
@@ -28,7 +29,6 @@ const DropdownContent = styled.div`
 	border: 2px solid #eaeaea;
 	border-top: none;
 	width: 200px;
-
 	button {
 		background-color: inherit;
 		color: black;
@@ -36,9 +36,7 @@ const DropdownContent = styled.div`
 		border: none;
 		cursor: pointer;
 		width: 100%;
-
 		text-align: left;
-
 		&:hover {
 			background-color: #ddd;
 		}
@@ -72,14 +70,15 @@ const DropdownMenu = ({
 	selectedOption,
 }: IPropsDropDown) => {
 	const DropdownButton = styled.button`
-		background-color: #072e00;
+		background-color: ${theme.primary};
 		width: ${width ? width : 100}%;
 		font-weight: 700;
 		color: #ffffff;
 		padding: 12px;
-		border: 3px solid #ececec;
+		border: none;
 		cursor: pointer;
-		border-radius: ${radius ? radius : 0}px;
+		width: 200px;
+		border-radius: ${radius ? radius : 10}px;
 		height: ${height ? height : null}px;
 		max-width: ${max_min_width}px;
 		min-width: ${max_min_width}px;

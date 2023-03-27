@@ -2,6 +2,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
+import Lottie from "lottie-react";
+import testLottie from "../lottie.json";
+import { useNavigate } from "react-router-dom";
+import { theme } from "../utils/theme";
 
 const Body = styled.div`
 	.slick-dots {
@@ -21,20 +25,28 @@ const Style1 = styled.div`
 	justify-content: center;
 	background-color: ${(props) => props.color};
 	display: flex;
-	align-items: flex-end;
+	align-items: center;
+	padding: 20px;
+	width: 100%;
 	img {
-		margin-left: 20px;
-		margin-top: 45px;
-		margin-bottom: 20px;
-		width: 100%;
-		height: 500px;
+		width: 23%;
 	}
-	span {
-		color: white;
-		margin-left: 20px;
-		font-size: 1.6rem;
-		margin-bottom: 10px;
-		font-weight: 700;
+	.title {
+		font-size: 30px;
+		font-weight: 900;
+	}
+`;
+const Style2 = styled.div`
+	justify-content: center;
+	background-color: ${(props) => props.color};
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	.title {
+		font-size: 30px;
+		font-weight: 900;
+		margin-bottom: 15px;
 	}
 `;
 
@@ -48,7 +60,6 @@ const Pre = styled.div`
 
 const NextTo = styled.div`
 	width: 50px;
-
 	height: 50px;
 	position: absolute;
 	right: 2%;
@@ -60,7 +71,6 @@ const settings = {
 	infinite: true,
 	slidesToShow: 1,
 	slidesToScroll: 1,
-	autoplay: true,
 	speed: 500,
 	autoplaySpeed: 3000,
 	cssEase: "linear",
@@ -68,27 +78,36 @@ const settings = {
 	prevArrow: <Pre></Pre>,
 };
 
+const MoveToTestButton = styled.button`
+	background-color: ${theme.primary};
+	border: none;
+	width: 250px;
+	height: 50px;
+	border-radius: 10px;
+	color: white;
+	font-size: 17px;
+	font-weight: 900;
+	cursor: pointer;
+	margin-top: 20px;
+`;
+
 export default function Carousel() {
+	const navigate = useNavigate();
 	return (
 		<Body>
 			<Slider {...settings}>
 				<div>
-					<Style1 color="green">
-						<img src="/images/volunteer/volunteer.jpg" alt="1"></img>
-						{/* <span>작은 마음이 모여서 조금 더 나은 내일을 만들어요.</span> */}
-					</Style1>
-				</div>
-				<div>
-					<Style1 color="#898D55">
-						<img src="/images/home/main-img-2.png" alt="2"></img>
-						<span>작은 마음이 모여서 조금 더 나은 내일을 만들어요.</span>
-					</Style1>
-				</div>
-				<div>
-					<Style1 color="#767EC6">
-						<img src="/images/home/main-img-3.png" alt="3"></img>
-						<span>작은 마음이 모여서 조금 더 나은 내일을 만들어요.</span>
-					</Style1>
+					<Style2 color="white">
+						<Lottie animationData={testLottie} />
+						<div>
+							<div className="title">봉사 자동매칭 서비스</div>
+							<div>
+								간단한 테스트로 내 봉사 성향을 알아보고,
+								<br /> 자동으로 그에 맞는 봉사만 추천받을 수 있어요.
+							</div>
+							<MoveToTestButton onClick={() => navigate("/test")}>테스트 하러가기</MoveToTestButton>
+						</div>
+					</Style2>
 				</div>
 			</Slider>
 		</Body>
