@@ -2,6 +2,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
+import Lottie from "lottie-react";
+import testLottie from "../lottie.json";
+import { useNavigate } from "react-router-dom";
 
 const Body = styled.div`
 	.slick-dots {
@@ -21,10 +24,28 @@ const Style1 = styled.div`
 	justify-content: center;
 	background-color: ${(props) => props.color};
 	display: flex;
-	/* flex-direction: column; */
-	/* align-items: flex-end; */
+	align-items: center;
+	padding: 20px;
+	width: 100%;
 	img {
-		width: 30%;
+		width: 23%;
+	}
+	.title {
+		font-size: 30px;
+		font-weight: 900;
+	}
+`;
+const Style2 = styled.div`
+	justify-content: center;
+	background-color: ${(props) => props.color};
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	.title {
+		font-size: 30px;
+		font-weight: 900;
+		margin-bottom: 15px;
 	}
 `;
 
@@ -57,29 +78,56 @@ const settings = {
 	prevArrow: <Pre></Pre>,
 };
 
+const MoveToTestButton = styled.button`
+	background-color: #0fa50f;
+	border: none;
+	width: 250px;
+	height: 50px;
+	border-radius: 20px;
+	color: white;
+	font-size: 17px;
+	font-weight: 900;
+	cursor: pointer;
+	margin-top: 20px;
+`;
+
 export default function Carousel() {
+	const navigate = useNavigate();
 	return (
 		<Body>
 			<Slider {...settings}>
-				<div>
-					<Style1 color="#b3dffe">
+				{/* <div>
+					<Style1 color="#cfebff">
 						<img src="/images/carousel/carousel1.png" alt="1"></img>
-						<div>작은 마음이 모여서 조금 더 나은 내일을 만들어요.</div>
-						<div>작은 마음이 모여서 조금 더 나은 내일을 만들어요.</div>
+						<div>
+							<div className="title">봉사 성향 테스트</div>
+							<div>
+								간단한 테스트로 내 봉사 성향을 알아보고,
+								<br /> 자동으로 그에 맞는 봉사만 추천받을 수 있어요.
+							</div>
+							<div>테스트 하러가기</div>
+						</div>
 					</Style1>
-				</div>
+				</div> */}
 				<div>
-					<Style1 color="#898D55">
-						<img src="/images/home/main-img-2.png" alt="2"></img>
-						<span>작은 마음이 모여서 조금 더 나은 내일을 만들어요.</span>
-					</Style1>
+					<Style2 color="white">
+						<Lottie animationData={testLottie} />
+						<div>
+							<div className="title">봉사 성향 테스트</div>
+							<div>
+								간단한 테스트로 내 봉사 성향을 알아보고,
+								<br /> 자동으로 그에 맞는 봉사만 추천받을 수 있어요.
+							</div>
+							<MoveToTestButton onClick={() => navigate("/test")}>테스트 하러가기</MoveToTestButton>
+						</div>
+					</Style2>
 				</div>
-				<div>
+				{/* <div>
 					<Style1 color="#767EC6">
 						<img src="/images/home/main-img-3.png" alt="3"></img>
 						<span>작은 마음이 모여서 조금 더 나은 내일을 만들어요.</span>
 					</Style1>
-				</div>
+				</div> */}
 			</Slider>
 		</Body>
 	);
