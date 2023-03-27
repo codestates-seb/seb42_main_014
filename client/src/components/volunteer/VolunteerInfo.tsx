@@ -161,15 +161,7 @@ export default function VolunteerInfo() {
 					<span>
 						모집 인원 : {applyCount} / {applyLimit}
 					</span>
-					<Button
-						onClick={handlePost}
-						value="나도 할래!"
-						width={350}
-						height={50}
-						radius={0}
-						bgColor="#b30f0fb9"
-						textSize={15}
-					/>
+					<Button onClick={handlePost} value="나도 할래!" width={350} height={50} textSize={15} />
 					<div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
 						<button onClick={heartHandler}>
 							{!isLike ? <FcLikePlaceholder size={40} /> : <FcLike size={40} />}
@@ -182,9 +174,9 @@ export default function VolunteerInfo() {
 								value={"너도 할래?"}
 								width={200}
 								height={50}
-								bgColor="white"
 								textColor="black"
 								textSize={15}
+								bgColor={"white"}
 							/>
 							<BsLink45Deg size={30} style={{ borderLeft: "1px solid gray", width: "200px" }} />
 						</div>

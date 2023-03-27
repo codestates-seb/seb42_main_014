@@ -14,14 +14,12 @@ const StyledContainerDiv = styled.div`
 	height: fit-content;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
 	min-width: 300px;
-
 	section {
 		margin: 10px;
 		width: 100%;
 		height: 400px;
 		min-width: 300px;
 	}
-
 	.layout {
 		display: flex;
 		align-items: center;
@@ -29,14 +27,19 @@ const StyledContainerDiv = styled.div`
 		min-width: 300px;
 	}
 `;
-
 const GroupMemberContainer = styled.div`
 	display: flex;
 	padding: 10px;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
+	margin-left: 10px;
 `;
-
+const GroupMemberInfo = styled.div`
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	margin-right: 15px;
+`;
 export default function GroupMember({ groupId, groupData }: any) {
 	const [getGroupMemberData, setGetGroupMemberData] = useState([]);
 
@@ -47,7 +50,6 @@ export default function GroupMember({ groupId, groupData }: any) {
 		};
 		getGroupDetailData();
 	}, []);
-	console.log(getGroupMemberData);
 
 	return (
 		<StyledContainerDiv>
@@ -69,20 +71,15 @@ export default function GroupMember({ groupId, groupData }: any) {
 										<FaUserCircle size={50} />
 									)}
 								</StyledProfileImgContainer>
-								<div style={{ marginLeft: "10px", display: "flex", flexDirection: "column" }}>
-									{member_name}
-									<span style={{ color: "red", fontWeight: "700", fontSize: "13px" }}>
-										{member_id === groupData.groupZangId ? "(그룹장)" : null}
-									</span>
-								</div>
-								<div
-									style={{
-										width: "55%",
-										textAlign: "end",
-									}}
-								>
-									{point_count}점
-								</div>
+								<GroupMemberInfo>
+									<div style={{ marginLeft: "10px", display: "flex", flexDirection: "column" }}>
+										{member_name}
+										<span style={{ color: "red", fontWeight: "700", fontSize: "13px" }}>
+											{member_id === groupData.groupZangId ? "(그룹장)" : null}
+										</span>
+									</div>
+									<div>{point_count}점</div>
+								</GroupMemberInfo>
 							</GroupMemberContainer>
 						);
 					})}

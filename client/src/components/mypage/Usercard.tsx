@@ -50,8 +50,6 @@ const Flex = styled.div`
 `;
 const MedalSpan = styled.span`
 	position: absolute;
-	/* width: 90px; */
-	/* height: 64px; */
 	display: flex;
 	justify-content: flex-end;
 	align-items: flex-end;
@@ -126,8 +124,6 @@ export default function Usercard() {
 		fetchData();
 	}, []);
 
-	console.log(getAllData);
-
 	const { email, memberName, point, profileImage } = getAllData;
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -139,9 +135,7 @@ export default function Usercard() {
 		<>
 			<Container>
 				<ImgDiv>
-					{/* 프로필이미지와 수정버튼 */}
 					<ProfileImageContainer>
-						{/* 프로필이미지 */}
 						<img
 							src={profileImage ? profileImage : "/images/mypage/profile-user.png"}
 							alt="프로필이미지"
@@ -155,7 +149,6 @@ export default function Usercard() {
 					<img src="/images/mypage/medal.png" alt="봉사 뱃지" />
 				</MedalSpan>
 				<InfoDiv>
-					{/* 프로필 정보 */}
 					<div>이름 : {memberName}</div>
 					<div>이메일 : {email}</div>
 					<div>봉사점수 : {point}</div>

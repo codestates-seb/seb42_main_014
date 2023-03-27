@@ -80,6 +80,7 @@ export default function Comment() {
 
 	const [reviewList, setReviewList] = useState([]);
 	const [ment, setMent] = useState("");
+	console.log(reviewList);
 
 	const handleMent = (e: any) => {
 		setMent(e.target.value);
@@ -102,16 +103,16 @@ export default function Comment() {
 			content: ment,
 		};
 		await volunteerCommentPost("comments", data);
-		// await myPageGet(`comments/group/${parms.id}`);
-		window.location.reload();
+		const newCommentList = await myPageGet(`comments/group/${parms.id}`);
+		setReviewList(newCommentList.data);
+		setMent("");
 	};
+
 	const onRemove = async (commentId: string) => {
 		if (window.confirm("이 댓글을 삭제 하시겠습니까?")) {
-			CommentDelete(`comments/${commentId}`);
-			window.location.reload();
-			// myPageGet(`comments/group/${parms.id}`);
-		} else {
-			alert("취소합니다.");
+			await CommentDelete(`comments/${commentId}`);
+			const newCommentList = await myPageGet(`comments/group/${parms.id}`);
+			setReviewList(newCommentList.data);
 		}
 	};
 
@@ -128,7 +129,6 @@ export default function Comment() {
 						height={40}
 						radius={10}
 						textSize={14}
-						bgColor="black"
 					/>
 				</StyledInputContainerDiv>
 				<ReviewList>
@@ -143,6 +143,7 @@ export default function Comment() {
 							onClick={() => onRemove(user.commentId)}
 							myId={my}
 							profileImage={user.profileImage}
+							setReviewList={setReviewList}
 						/>
 					))}
 				</ReviewList>

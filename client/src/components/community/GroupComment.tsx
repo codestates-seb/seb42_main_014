@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { FaUserCircle } from "react-icons/fa";
 import { CommentEdit } from "../../api/volunteer/volunteerCommentEdit ";
 import dayjs from "dayjs";
+import { myPageGet } from "../../api/mypage/MypageGet";
+import { useParams } from "react-router-dom";
 
 interface Props {
 	content: string;
@@ -13,6 +15,7 @@ interface Props {
 	name: string;
 	time: string;
 	profileImage: string;
+	setReviewList: React.Dispatch<React.SetStateAction<any[]>>;
 }
 const Comment = styled.div`
 	span {
@@ -31,18 +34,18 @@ export const StyledProfileImgContainer = styled.div`
 export default function GroupComment(user: Props) {
 	const [ment, setMent] = useState(user.content);
 	const [edit, setEdit] = useState(false);
-
+	const params = useParams();
 	const handleEditClick = () => {
 		setEdit(true);
 	};
-	const handleCommentUpdate = () => {
+	const handleCommentUpdate = async () => {
 		const data = {
 			content: ment,
 		};
-		CommentEdit(`comments/${user.commentId}`, data);
-
+		await CommentEdit(`comments/${user.commentId}`, data);
+		const newCommentList = await myPageGet(`comments/group/${params.id}`);
+		user.setReviewList(newCommentList.data);
 		setEdit(false);
-		window.location.reload();
 	};
 	const date = dayjs(user.time).format("YYYY-MM-DD HH:mm");
 

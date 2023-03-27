@@ -101,7 +101,6 @@ const optionArr = [
 export default function Volunteer() {
 	const [selectedCategory, setSelectedCategory] = useState("");
 	const [totalPages, setTotalPages] = useState<number>(0);
-
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [selectedArea, setSelectedArea] = useState("");
 	const [selectedSubArea, setSelectedSubArea] = useState("");
@@ -159,8 +158,6 @@ export default function Volunteer() {
 
 		const getVolunteerData = async () => {
 			const result = await volunteerDataGet(URL);
-
-			// setTotalPages(result.data.length * PageUrl.totalPages);
 			setTotalPages(result.totalPages);
 			setVolunData(result.data);
 		};
@@ -233,7 +230,6 @@ export default function Volunteer() {
 									width={80}
 									height={45}
 									value={"검색"}
-									bgColor={"#1a994b"}
 									radius={10}
 									onClick={handleChangeSearchValue}
 								/>

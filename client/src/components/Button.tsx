@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import styled from "styled-components";
+import { theme } from "../utils/theme";
 
 interface TPropsButton {
 	value: string;
@@ -32,7 +33,7 @@ export default function Button({
 		width: ${width}px;
 		height: ${height}px;
 		border-radius: ${radius}px;
-		background-color: ${bgColor};
+		background-color: ${theme.primary};
 		color: white;
 		display: flex;
 		align-items: center;
@@ -43,7 +44,7 @@ export default function Button({
 			width: ${width}px;
 			height: ${height}px;
 			font-size: ${textSize}px;
-			background-color: ${bgColor};
+			background-color: ${bgColor ? bgColor : theme.primary};
 			border-radius: ${radius}px;
 			border: none;
 			color: ${textColor ? textColor : "white"};
