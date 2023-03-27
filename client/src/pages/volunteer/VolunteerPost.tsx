@@ -75,12 +75,17 @@ const Body = styled.div`
 `;
 const Container = styled.div`
 	display: flex;
-	flex-direction: row;
-
+	flex-direction: column;
+	justify-content: center;
 	align-items: center;
 	width: 100%;
+	& > div:first-child {
+		display: flex;
+		align-items: center;
+	}
 `;
 const Left = styled.div`
+	background-color: green;
 	box-sizing: content-box;
 	cursor: pointer;
 	input {
@@ -98,7 +103,7 @@ const Left = styled.div`
 	}
 `;
 const Right = styled.div`
-	padding: 15px;
+	padding: 20px 0px 15px 15px;
 	display: flex;
 	margin-left: 20px;
 	margin-bottom: 20px;
@@ -148,28 +153,30 @@ const Select = styled.div`
 	}
 `;
 const Bar = styled.div`
-	margin-top: 20px;
+	margin-bottom: 20px;
+	border-bottom: 3px solid black;
 	line-height: 50px;
-	margin-bottom: 30px;
-	color: white;
-	background-color: #000000;
+	color: #000000;
 	width: 100%;
-	height: 50px;
+	height: max-content;
 	text-align: center;
-	font-size: 20px;
-	font-weight: bold;
+	font-size: 1.35rem;
+	font-weight: 900;
 `;
 const Btn = styled.button`
+	/* 기존 */
 	cursor: pointer;
-	font-size: 20px;
+	font-size: 1.35rem;
 	background-color: #a50000;
 	color: white;
-	height: 50px;
+	height: max-content;
 	margin-bottom: 120px;
+	padding: 10px 0;
+	border-radius: 10px;
+	width: 100%;
 `;
+
 const Content = styled.div`
-	border-top: 3px solid black;
-	width: 50%;
 	min-width: 970px;
 	display: flex;
 	flex-direction: column;
@@ -232,7 +239,7 @@ const VolunteerPost = () => {
 		setValue(content);
 	};
 	const hour = date.format("HH:mm");
-	const onSubmit = async (data: IPostData) => {
+	const onSubmit = (data: IPostData) => {
 		const {
 			title,
 			applyDate,
@@ -268,7 +275,7 @@ const VolunteerPost = () => {
 
 		if (post === "/register") {
 			try {
-				await volunteerDataPost("volunteers", postVolunteerData);
+				volunteerDataPost("volunteers", postVolunteerData);
 				navigate("/volunteer");
 			} catch (err) {
 				alert("봉사 등록에 실패했어요. 잠시 후 다시 시도해 주세요.");
@@ -449,9 +456,10 @@ const VolunteerPost = () => {
 							</Select>
 						</Right>
 					)}
+
+					<Bar>활동정보</Bar>
 				</Container>
 				<Content>
-					<Bar>활동정보</Bar>
 					<TextEdit onChange={TextChange} value={value} />
 					<Btn>등록완료</Btn>
 				</Content>

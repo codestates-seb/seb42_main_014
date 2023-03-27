@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const Area = styled.div`
@@ -332,7 +332,7 @@ const SelectArea = ({
 	return (
 		<Area>
 			<select value={selectedArea} onChange={handleAreaChange}>
-				<option value="">지역을 선택해주세요</option>
+				<option value="">도, 시를 선택해주세요</option>
 				{areas.map((area) => (
 					<option key={area.name} value={area.name}>
 						{area.name}
