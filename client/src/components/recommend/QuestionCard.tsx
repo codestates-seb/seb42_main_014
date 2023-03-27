@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Button from "../../components/Button";
-import QuestionCard2 from "./QuestionCard2";
+import QuestionCard2 from "../recommend/QuestionCard2";
 
 const Container = styled.div`
 	margin-top: 50px;

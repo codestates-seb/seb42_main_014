@@ -141,7 +141,7 @@ export default function Recommend() {
 					자연과 멀수록 병은 가까워진다. <br /> - Johann Wolfgang von Goethe
 				</span>,
 			);
-		} else if (tag === "어르신") {
+		} else if (tag === "노인") {
 			setTitle("오늘부터 손주");
 			setImg("/images/recommend/test_elderly.jpg");
 			setSaying(
@@ -211,7 +211,7 @@ export default function Recommend() {
 							const categoryItems = {
 								어린이: ChildCareIcon,
 								장애인: AccessibleIcon,
-								어르신: ElderlyIcon,
+								노인: ElderlyIcon,
 								동물: PetsIcon,
 								환경: ForestIcon,
 							};
@@ -234,8 +234,8 @@ export default function Recommend() {
 													? categoryItems["어린이"]
 													: tagName === "장애인"
 													? categoryItems["장애인"]
-													: tagName === "어르신"
-													? categoryItems["어르신"]
+													: tagName === "노인"
+													? categoryItems["노인"]
 													: tagName === "동물"
 													? categoryItems["동물"]
 													: tagName === "환경"

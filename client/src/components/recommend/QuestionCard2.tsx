@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
-import Button from "../../components/Button";
+import Button from "../Button";
 
 interface Iprop {
 	data: number;
@@ -68,7 +68,7 @@ const Result = styled.div`
 
 export default function QuestionCard(props: Iprop) {
 	const [point, setPoint] = useState({ 환경: 0, 동물: 0 }); // 환경: 0, 동물: 0 기본 셋
-	const [point2, setPoint2] = useState({ 장애인: 0, 어린이: 0, 어르신: 0 }); // 장애인: 0, 어린이: 0 노인:0기본 셋
+	const [point2, setPoint2] = useState({ 장애인: 0, 어린이: 0, 노인: 0 }); // 장애인: 0, 어린이: 0 노인:0기본 셋
 	const [questionNumber, setQuestionNumber] = useState(1); // 현재 질문 번호를 나타냄.
 
 	//질문의 기준은 첫번째 값으로 함.
@@ -117,20 +117,20 @@ export default function QuestionCard(props: Iprop) {
 				setPoint2((prev) => ({ ...prev, 장애인: prev.장애인 + 1 }));
 				setPoint2((prev) => ({ ...prev, 어린이: prev.어린이 + 1 }));
 			} else {
-				setPoint2((prev) => ({ ...prev, 어르신: prev.어르신 + 1 }));
+				setPoint2((prev) => ({ ...prev, 노인: prev.노인 + 1 }));
 			}
 			setQuestionNumber(2);
 		} else if (questionNumber === 2) {
 			if (answer === "아니요") {
 				setPoint2((prev) => ({ ...prev, 어린이: prev.어린이 + 1 }));
 			} else {
-				setPoint2((prev) => ({ ...prev, 어르신: prev.어르신 + 1 }));
+				setPoint2((prev) => ({ ...prev, 노인: prev.노인 + 1 }));
 				setPoint2((prev) => ({ ...prev, 장애인: prev.장애인 + 1 }));
 			}
 			setQuestionNumber(3);
 		} else if (questionNumber === 3) {
 			if (answer === "네") {
-				setPoint2((prev) => ({ ...prev, 어르신: prev.어르신 + 1 }));
+				setPoint2((prev) => ({ ...prev, 노인: prev.노인 + 1 }));
 			} else {
 				setPoint2((prev) => ({ ...prev, 장애인: prev.장애인 + 1 }));
 				setPoint2((prev) => ({ ...prev, 어린이: prev.어린이 + 1 }));
@@ -141,7 +141,7 @@ export default function QuestionCard(props: Iprop) {
 				setPoint2((prev) => ({ ...prev, 어린이: prev.어린이 + 1 }));
 			} else {
 				setPoint2((prev) => ({ ...prev, 장애인: prev.장애인 + 1 }));
-				setPoint2((prev) => ({ ...prev, 어르신: prev.어르신 + 1 }));
+				setPoint2((prev) => ({ ...prev, 노인: prev.노인 + 1 }));
 			}
 			setQuestionNumber(5);
 		} else if (questionNumber === 5) {
@@ -149,7 +149,7 @@ export default function QuestionCard(props: Iprop) {
 				setPoint2((prev) => ({ ...prev, 어린이: prev.어린이 + 1 }));
 			} else {
 				setPoint2((prev) => ({ ...prev, 장애인: prev.장애인 + 1.1 }));
-				setPoint2((prev) => ({ ...prev, 어르신: prev.어르신 + 1 }));
+				setPoint2((prev) => ({ ...prev, 노인: prev.노인 + 1 }));
 			}
 			setQuestionNumber(6);
 		} else if (questionNumber === 6) {
