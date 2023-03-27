@@ -7,12 +7,13 @@ import Modal from "../../components/Modal";
 
 const Body = styled.body`
 	width: 100%;
-	position: fixed;
+	/* position: fixed; */
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	top: 17%;
+	margin-top: -80px;
 `;
 const StyledContainer = styled.div`
 	/* position: absolute; */
@@ -84,7 +85,7 @@ const Radio = styled.div`
 
 	[type="radio"]:focus-visible {
 		outline-offset: max(5px, 1em);
-		outline: max(5px, 1em) dotted tomato;
+		outline: max(5px, 1em) dotted;
 	}
 
 	[type="radio"]:hover {

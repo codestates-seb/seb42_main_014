@@ -9,7 +9,6 @@ const Container = styled.div`
 const StyledNav = styled.footer`
 	display: flex;
 	width: 100vw;
-
 	background-color: #383838;
 	height: 80px;
 	color: white;
