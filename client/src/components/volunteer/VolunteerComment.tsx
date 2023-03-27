@@ -75,7 +75,7 @@ export default function VolunteerComment(disabled: any) {
 	const [myReviewId, setMyReviewId] = useState("");
 	const [ment, setMent] = useState("");
 	const [isFilteredReviewChecked, setIsFilteredReviewChecked] = useState("allReview");
-
+	console.log("마이리뷰아이디", myReviewId, reviewList);
 	const handleComment = (e: any) => {
 		setComment(e.target.value);
 	};
@@ -109,10 +109,9 @@ export default function VolunteerComment(disabled: any) {
 		const data = {
 			content: comment,
 		};
-		if (reviewList.map((el) => el.reviewId === myReviewId)) {
-			alert("이미 후기를 등록하셨어요. 후기는 한번만 등록 가능해요.");
-			return;
-		}
+		// if (reviewList.map((el) => el.reviewId === myReviewId)) {
+		// 	alert("이미 후기를 등록하셨어요. 후기는 한번만 등록 가능해요.");
+		// } else {
 		await volunteerCommentPost(`reviews/${params.id}`, data);
 		const newReviewList = await myPageGet(`reviews/${params.id}`);
 		setReviewList(newReviewList.data);
@@ -144,7 +143,7 @@ export default function VolunteerComment(disabled: any) {
 					type="radio"
 					id="allReview"
 					value={"allReview"}
-					name="allReview"
+					name="Review"
 					onClick={handleAllReviewClick}
 					checked={isFilteredReviewChecked === "allReview"}
 				/>
@@ -155,7 +154,7 @@ export default function VolunteerComment(disabled: any) {
 					type="radio"
 					id="myReview"
 					value={"myReview"}
-					name="myReview"
+					name="Review"
 					onClick={handleMyReviewClick}
 					checked={isFilteredReviewChecked === "myReview"}
 				/>

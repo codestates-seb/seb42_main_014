@@ -21,20 +21,10 @@ const Style1 = styled.div`
 	justify-content: center;
 	background-color: ${(props) => props.color};
 	display: flex;
-	align-items: flex-end;
+	/* flex-direction: column; */
+	/* align-items: flex-end; */
 	img {
-		margin-left: 20px;
-		margin-top: 45px;
-		margin-bottom: 20px;
-		width: 100%;
-		height: 500px;
-	}
-	span {
-		color: white;
-		margin-left: 20px;
-		font-size: 1.6rem;
-		margin-bottom: 10px;
-		font-weight: 700;
+		width: 30%;
 	}
 `;
 
@@ -48,7 +38,6 @@ const Pre = styled.div`
 
 const NextTo = styled.div`
 	width: 50px;
-
 	height: 50px;
 	position: absolute;
 	right: 2%;
@@ -60,7 +49,7 @@ const settings = {
 	infinite: true,
 	slidesToShow: 1,
 	slidesToScroll: 1,
-	autoplay: true,
+	// autoplay: true,
 	speed: 500,
 	autoplaySpeed: 8000,
 	cssEase: "linear",
@@ -73,9 +62,10 @@ export default function Carousel() {
 		<Body>
 			<Slider {...settings}>
 				<div>
-					<Style1 color="green">
-						<img src="/images/volunteer/volunteer.jpg" alt="1"></img>
-						{/* <span>작은 마음이 모여서 조금 더 나은 내일을 만들어요.</span> */}
+					<Style1 color="#b3dffe">
+						<img src="/images/carousel/carousel1.png" alt="1"></img>
+						<div>작은 마음이 모여서 조금 더 나은 내일을 만들어요.</div>
+						<div>작은 마음이 모여서 조금 더 나은 내일을 만들어요.</div>
 					</Style1>
 				</div>
 				<div>
