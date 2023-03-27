@@ -1,9 +1,6 @@
 # 좀나세 (조금 더 나은 세상) :sparkles:
 <br/>
 
-<div  align="center">
-  <img width="80%" src="https://content.presspage.com/uploads/2658/c1920_logo-stackoverflow-banner.jpg?64224" alt="roobits">
-</div>
 
 </br>
 
