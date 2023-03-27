@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import { Check } from "../../api/mypage/PassWordCheck";
-import Modal from "../Modal";
+import Modal from "../MypageModal";
 
 const Container = styled.div`
 	background-color: #ffffff;
@@ -50,8 +50,6 @@ const Flex = styled.div`
 `;
 const MedalSpan = styled.span`
 	position: absolute;
-	/* width: 90px; */
-	/* height: 64px; */
 	display: flex;
 	justify-content: flex-end;
 	align-items: flex-end;

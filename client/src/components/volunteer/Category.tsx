@@ -35,6 +35,7 @@ const Icon = styled.div`
 	border-radius: 50%;
 	width: 90px;
 	height: 90px;
+	color: #000000;
 	cursor: pointer;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.13), 0 1px 2px rgba(0, 0, 0, 0.21);
 	:hover {

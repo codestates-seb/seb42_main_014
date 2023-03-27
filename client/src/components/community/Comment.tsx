@@ -16,7 +16,7 @@ const StyledContainerDiv = styled.div`
 	width: 100%;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
 	min-width: 500px;
-
+	height: fit-content;
 	section {
 		margin: 10px;
 		width: 100%;
@@ -41,10 +41,8 @@ const StyledContainerDiv = styled.div`
 		align-items: center;
 		justify-content: center;
 		border: 1px solid gray;
-		/* width: 90%; */
 		border-radius: 20px;
 		padding: 5px 20px 5px 20px;
-		/* margin: 10px; */
 		margin: 5px 15px 5px 15px;
 		min-width: 400px;
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.11);
@@ -57,6 +55,13 @@ const StyledInputContainerDiv = styled.div`
 	border-bottom: 1px solid gray;
 	width: 100%;
 	margin: 20px;
+`;
+const ReviewList = styled.div`
+	height: 500px;
+	overflow: scroll;
+	::-webkit-scrollbar {
+		display: none;
+	}
 `;
 export default function Comment() {
 	const parms = useParams();
@@ -115,20 +120,22 @@ export default function Comment() {
 						textSize={14}
 					/>
 				</StyledInputContainerDiv>
-				{reviewList.map((user) => (
-					<GroupComment
-						key={user.id}
-						id={user.memberId}
-						name={user.memberName}
-						time={user.createdAt}
-						commentId={user.commentId}
-						content={user.content}
-						onClick={() => onRemove(user.commentId)}
-						myId={my}
-						profileImage={user.profileImage}
-						setReviewList={setReviewList}
-					/>
-				))}
+				<ReviewList>
+					{reviewList.map((user) => (
+						<GroupComment
+							key={user.id}
+							id={user.memberId}
+							name={user.memberName}
+							time={user.createdAt}
+							commentId={user.commentId}
+							content={user.content}
+							onClick={() => onRemove(user.commentId)}
+							myId={my}
+							profileImage={user.profileImage}
+							setReviewList={setReviewList}
+						/>
+					))}
+				</ReviewList>
 			</StyledContainerDiv>
 		</div>
 	);

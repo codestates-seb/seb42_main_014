@@ -12,11 +12,11 @@ import { imageUploadPost } from "../../api/imgPost";
 import dayjs from "dayjs";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { theme } from "../../utils/theme";
 
 const StyledDatePicker = styled(DatePicker)`
 	width: 160px;
 	border: none;
-	/* background-color: #f7f7f7; */
 	color: #333;
 	padding: 8px;
 	border-radius: 4px;
@@ -179,10 +179,10 @@ const Bar = styled.div`
 	font-weight: 900;
 `;
 const Btn = styled.button`
-	/* 기존 */
 	cursor: pointer;
 	font-size: 1.35rem;
-	background-color: #a50000;
+	background-color: ${theme.primary};
+	border: none;
 	color: white;
 	height: max-content;
 	margin-bottom: 120px;
@@ -198,7 +198,6 @@ const Content = styled.div`
 `;
 
 const DatePickerContainer = styled.div`
-	/* background-color: #f7f7f7; */
 	display: flex;
 	width: 100%;
 	align-items: center;
@@ -329,7 +328,7 @@ const VolunteerPost = () => {
 								<Select>
 									<span>활동명</span>
 									<input
-										maxLength={5}
+										maxLength={15}
 										placeholder="15자 이하로 작성해주세요."
 										{...register("title", { required: true })}
 										type="text"

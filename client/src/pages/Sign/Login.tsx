@@ -9,7 +9,6 @@ import { KAKAO_AUTH_URL } from "../../data/KakaoLoginData";
 const Body = styled.body`
 	height: 100vh;
 	width: 100%;
-	position: fixed;
 `;
 const StyledContainer = styled.div`
 	position: absolute;
@@ -156,9 +155,7 @@ export default function LoginPage() {
 							<Link to="/signup">회원가입</Link>
 						</Flex>
 					</LoginForm>
-					{/* <a href={KAKAO_AUTH_URL}> */}
 					<KakaoBtn onClick={kakaoHandler} src="/images/kakao_login_medium.png" alt="main-logo" />
-					{/* </a> */}
 				</StyledContainer>
 			</form>
 		</Body>

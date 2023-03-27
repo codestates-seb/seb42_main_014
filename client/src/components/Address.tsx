@@ -4,12 +4,8 @@ import styled from "styled-components";
 const Area = styled.div`
 	display: flex;
 	select {
-		font-size: 1rem;
 		margin-right: 5px;
-		border: 0px;
-	}
-	option {
-		font-size: 1rem;
+		border: 1px solid gray;
 	}
 `;
 
