@@ -253,30 +253,29 @@ export default function Volunteer() {
 						</FilterContainerDiv>
 					</StyledAreaContainer>
 					<div />
-
 					{volunData.length ? (
-						volunData.map((el) => {
-							const {
-								applyCount,
-								applyLimit,
-								place,
-								volunteerId,
-								volunteerDate,
-								tagName,
-								title,
-								volunteerImage,
-								organizationName,
-								likeCount,
-							} = el;
-							const categoryItems = {
-								어린이: ChildCareIcon,
-								장애인: AccessibleIcon,
-								노인: ElderlyIcon,
-								동물: PetsIcon,
-								환경: ForestIcon,
-							};
-							return (
-								<StyledCardContainerDiv>
+						<StyledCardContainerDiv>
+							{volunData.map((el) => {
+								const {
+									applyCount,
+									applyLimit,
+									place,
+									volunteerId,
+									volunteerDate,
+									tagName,
+									title,
+									volunteerImage,
+									organizationName,
+									likeCount,
+								} = el;
+								const categoryItems = {
+									어린이: ChildCareIcon,
+									장애인: AccessibleIcon,
+									노인: ElderlyIcon,
+									동물: PetsIcon,
+									환경: ForestIcon,
+								};
+								return (
 									<Card
 										src={
 											volunteerImage ||
@@ -308,9 +307,9 @@ export default function Volunteer() {
 										onClick={() => handleClick(volunteerId)}
 										like={likeCount}
 									/>
-								</StyledCardContainerDiv>
-							);
-						})
+								);
+							})}
+						</StyledCardContainerDiv>
 					) : (
 						<H1>해당 게시글이 존재하지 않습니다.</H1>
 					)}
