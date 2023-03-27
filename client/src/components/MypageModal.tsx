@@ -10,7 +10,7 @@ interface ModalType {
 const ModalOverlay = styled.div`
 	z-index: 9999;
 	width: 100vw;
-
+	position: absolute;
 	display: flex;
 	justify-content: center;
 `;
