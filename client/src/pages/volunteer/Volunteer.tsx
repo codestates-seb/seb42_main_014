@@ -262,6 +262,7 @@ export default function Volunteer() {
 									place,
 									volunteerId,
 									volunteerDate,
+									volunteerTime,
 									tagName,
 									title,
 									volunteerImage,
@@ -284,8 +285,9 @@ export default function Volunteer() {
 										title={title}
 										organizationName={organizationName}
 										date={volunteerDate}
+										time={volunteerTime}
 										place={place}
-										person={`${applyCount} / ${applyLimit}`}
+										person={`${applyCount}명 / ${applyLimit}명`}
 										category={
 											<SvgIcon
 												component={
