@@ -10,11 +10,9 @@ interface ModalType {
 const ModalOverlay = styled.div`
 	z-index: 9999;
 	width: 100vw;
-	/* height: 100vh; */
 	position: absolute;
 	display: flex;
 	justify-content: center;
-	/* align-items: center; */
 `;
 const ModalBox = styled.div`
 	display: flex;

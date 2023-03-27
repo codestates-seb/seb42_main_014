@@ -330,7 +330,7 @@ const VolunteerPost = () => {
 								<Select>
 									<span>활동명</span>
 									<input
-										maxLength={5}
+										maxLength={15}
 										placeholder="15자 이하로 작성해주세요."
 										{...register("title", { required: true })}
 										type="text"

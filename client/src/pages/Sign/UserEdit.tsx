@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import ImgUpload from "../../components/ImgUpload";
 import Modal from "../../components/Modal";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { userInfoPatch } from "../../api/mypage/VolunteerPatch";
 import { imageUploadPost } from "../../api/imgPost";
@@ -10,7 +9,6 @@ import { imageUploadPost } from "../../api/imgPost";
 const Body = styled.body`
 	height: 100vh;
 	width: 100%;
-	position: fixed;
 `;
 const StyledContainer = styled.div`
 	position: absolute;
@@ -130,8 +128,7 @@ export default function UserEdit() {
 		let clickImg = event.currentTarget;
 		setIsImage(clickImg);
 	};
-	const location = useLocation();
-	const apiUrl = "http://3.35.252.234:8080/";
+
 	const navigate = useNavigate();
 	const fileInput = useRef<HTMLLabelElement>(null);
 

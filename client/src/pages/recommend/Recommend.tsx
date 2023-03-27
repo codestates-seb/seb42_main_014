@@ -11,11 +11,12 @@ import ElderlyIcon from "@mui/icons-material/Elderly";
 import AccessibleIcon from "@mui/icons-material/Accessible";
 
 const StyledContainerDiv = styled.div`
-	margin-bottom: 100px;
+	height: 100%;
 `;
 
 const StyledAreaContainer = styled.div`
 	display: flex;
+	height: 100%;
 	width: 60%;
 	margin: 0 auto;
 	flex-direction: column;
@@ -80,6 +81,8 @@ const WordDiv = styled.div`
 const StyledCardContainerDiv = styled.div`
 	margin-top: 2rem;
 	padding-top: 2rem;
+	height: 100vh;
+	margin-bottom: 200px;
 	border-top: 3px solid #383838;
 	display: grid;
 	place-items: center;

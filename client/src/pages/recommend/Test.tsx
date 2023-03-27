@@ -3,7 +3,7 @@ import QuestionCard from "../../components/recommend/QuestionCard";
 
 const Body = styled.div`
 	width: 100%;
-	height: 100%;
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
