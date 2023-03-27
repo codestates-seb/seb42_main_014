@@ -85,7 +85,6 @@ const Container = styled.div`
 	}
 `;
 const Left = styled.div`
-	background-color: green;
 	box-sizing: content-box;
 	cursor: pointer;
 	input {
@@ -94,21 +93,20 @@ const Left = styled.div`
 	background-color: #ffffff;
 	height: fit-content;
 	border: 3px solid black;
-	width: 500px;
-	height: 400px;
+	width: 520px;
+	height: 415px;
 	margin-bottom: 10px;
 	img {
-		width: 500px;
-		height: 400px;
+		width: 520px;
+		height: 415px;
 	}
 `;
 const Right = styled.div`
+	width: 520px;
 	padding: 20px 0px 15px 15px;
 	display: flex;
 	margin-left: 20px;
 	margin-bottom: 20px;
-	max-width: 44%;
-	width: 100%;
 	justify-content: center;
 	flex-direction: column;
 `;
@@ -138,6 +136,7 @@ const Select = styled.div`
 		white-space: nowrap;
 		font-weight: 900;
 		margin-right: 15px;
+		font-size: 1.35rem;
 	}
 	span:nth-child(3) {
 		font-weight: 700;
@@ -147,8 +146,14 @@ const Select = styled.div`
 	}
 	input {
 		border: none;
+		font-size: 1rem;
+		width: 100%;
 		:focus {
 			outline: none;
+		}
+		::-webkit-calendar-picker-indicator {
+			cursor: pointer;
+			font-size: 20px;
 		}
 	}
 `;
@@ -294,169 +299,170 @@ const VolunteerPost = () => {
 		<Body>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Container>
-					<Left onClick={onChangeHandler}>
-						<input id="profileImg" type="file" onChange={handleChange} />
-						<img
-							src={file ? file : "https://www.namepros.com/attachments/empty-png.89209/"}
-							alt=""
-						/>
-						<label htmlFor="profileImg" ref={fileInput}></label>
-					</Left>
-					{post !== "/grouppost" ? (
-						<Right>
-							<Select>
-								<span>활동명</span>
-								<input {...register("title", { required: true })} type="text" />
-							</Select>
-							<Select>
-								<span>봉사분야</span>
-								<Dropdown
-									setSelectedOption={setSelectedOption}
-									selectedOption={selectedOption}
-									placeholder="분야를 선택해주세요"
-									option={optionArr}
-									width={145}
-								/>
-							</Select>
-							<Select>
-								<span>모집기간</span>
-								<Controller
-									name="applyDate"
-									control={control}
-									render={({ field }) => {
-										const { onChange } = field;
+					<div>
+						<Left onClick={onChangeHandler}>
+							<input id="profileImg" type="file" onChange={handleChange} />
+							<img
+								src={file ? file : "https://www.namepros.com/attachments/empty-png.89209/"}
+								alt=""
+							/>
+							<label htmlFor="profileImg" ref={fileInput}></label>
+						</Left>
+						{post !== "/grouppost" ? (
+							<Right>
+								<Select>
+									<span>활동명</span>
+									<input {...register("title", { required: true })} type="text" />
+								</Select>
+								<Select>
+									<span>봉사분야</span>
+									<Dropdown
+										setSelectedOption={setSelectedOption}
+										selectedOption={selectedOption}
+										placeholder="분야를 선택해주세요"
+										option={optionArr}
+										width={145}
+									/>
+								</Select>
+								<Select>
+									<span>모집기간</span>
+									<Controller
+										name="applyDate"
+										control={control}
+										render={({ field }) => {
+											const { onChange } = field;
 
-										return (
-											<StyledDatePicker
-												dateFormat="yyyy년 MM월 dd일"
-												dateFormatCalendar="yyyy년 MM월"
-												selected={applyDate ? new Date(applyDate) : null}
-												onChange={(date: any) => {
-													const formattedDate = dayjs(date).format("YYYY-MM-DD");
-													setApplyDate(formattedDate);
-													onChange(formattedDate);
-												}}
-												minDate={new Date()}
-												required
-											/>
-										);
-									}}
-								/>
-							</Select>
-							<Select>
-								<span>봉사일시</span>
-								<Controller
-									name="volunteerDate"
-									control={control}
-									render={({ field }) => {
-										const { onChange } = field;
+											return (
+												<StyledDatePicker
+													dateFormat="yyyy년 MM월 dd일"
+													dateFormatCalendar="yyyy년 MM월"
+													selected={applyDate ? new Date(applyDate) : null}
+													onChange={(date: any) => {
+														const formattedDate = dayjs(date).format("YYYY-MM-DD");
+														setApplyDate(formattedDate);
+														onChange(formattedDate);
+													}}
+													minDate={new Date()}
+													required
+												/>
+											);
+										}}
+									/>
+								</Select>
+								<Select>
+									<span>봉사일시</span>
+									<Controller
+										name="volunteerDate"
+										control={control}
+										render={({ field }) => {
+											const { onChange } = field;
 
-										return (
-											<StyledDatePicker
-												dateFormat="yyyy년 MM월 dd일"
-												dateFormatCalendar="yyyy년 MM월"
-												showTimeSelect
-												selected={volunteerDate ? new Date(volunteerDate) : null}
-												onChange={(date: any) => {
-													const formattedDate = dayjs(date).format("YYYY-MM-DDTHH:mm");
-													setVolunteerDate(formattedDate);
-													onChange(formattedDate);
-													console.log(formattedDate);
-													setTime(
-														date.toLocaleTimeString([], {
-															hour: "2-digit",
-															minute: "2-digit",
-														}),
-													);
-												}}
-												minDate={new Date()}
-												required
-											/>
-										);
-									}}
-								/>
-								{/* <span>시간</span>
+											return (
+												<StyledDatePicker
+													dateFormat="yyyy년 MM월 dd일"
+													dateFormatCalendar="yyyy년 MM월"
+													showTimeSelect
+													selected={volunteerDate ? new Date(volunteerDate) : null}
+													onChange={(date: any) => {
+														const formattedDate = dayjs(date).format("YYYY-MM-DDTHH:mm");
+														setVolunteerDate(formattedDate);
+														onChange(formattedDate);
+														console.log(formattedDate);
+														setTime(
+															date.toLocaleTimeString([], {
+																hour: "2-digit",
+																minute: "2-digit",
+															}),
+														);
+													}}
+													minDate={new Date()}
+													required
+												/>
+											);
+										}}
+									/>
+									{/* <span>시간</span>
 								<input {...register("volunteerHour", { required: true })} type="time" /> */}
 
-								<div className="time">
-									{time !== "" ? <span>시간</span> : null} <input value={time} />
-								</div>
-							</Select>
+									<div className="time">
+										{time !== "" ? <span>시간</span> : null} <input value={time} />
+									</div>
+								</Select>
 
-							<Select>
-								<span>활동시간</span>
-								<input
-									{...register("volunteerTime", { required: true })}
-									style={{ width: "60px", backgroundColor: "#f7f7f7", fontSize: "1rem" }}
-									type="number"
-								/>
-								시간
-							</Select>
-							<Select style={{ borderBottom: "3px solid black" }}>
-								<span>봉사장소</span>
-								<Address
-									selectedArea={selectedArea}
-									setSelectedArea={setSelectedArea}
-									selectedSubArea={selectedSubArea}
-									setSelectedSubArea={setSelectedSubArea}
-								/>
-							</Select>
-							<Select>
-								<span>상세주소</span>
-								<input
-									{...register("placeDetail", { required: true })}
-									style={{ backgroundColor: "#f7f7f7" }}
-									type="text"
-									placeholder="상세 주소를 작성해주세요."
-								/>
-							</Select>
-							<Select>
-								<span>모집인원</span>
-								<input
-									{...register("memberCount", { required: true })}
-									style={{ width: "60px", backgroundColor: "#f7f7f7", fontSize: "1rem" }}
-									type="number"
-								/>
-								명
-							</Select>
-						</Right>
-					) : (
-						<Right>
-							<Select>
-								<span>그룹명</span>
-								<input {...register("groupName", { required: true })} type="text" />
-							</Select>
-							<Select>
-								<span>봉사분야</span>
+								<Select>
+									<span>활동시간</span>
+									<input
+										{...register("volunteerTime", { required: true })}
+										style={{ width: "60px", backgroundColor: "#f7f7f7", fontSize: "1rem" }}
+										type="number"
+									/>
+									시간
+								</Select>
+								<Select style={{ borderBottom: "3px solid black" }}>
+									<span>봉사장소</span>
+									<Address
+										selectedArea={selectedArea}
+										setSelectedArea={setSelectedArea}
+										selectedSubArea={selectedSubArea}
+										setSelectedSubArea={setSelectedSubArea}
+									/>
+								</Select>
+								<Select>
+									<span>상세주소</span>
+									<input
+										{...register("placeDetail", { required: true })}
+										style={{ backgroundColor: "#f7f7f7" }}
+										type="text"
+										placeholder="상세 주소를 작성해주세요."
+									/>
+								</Select>
+								<Select>
+									<span>모집인원</span>
+									<input
+										{...register("memberCount", { required: true })}
+										style={{ width: "60px", backgroundColor: "#f7f7f7", fontSize: "1rem" }}
+										type="number"
+									/>
+									명
+								</Select>
+							</Right>
+						) : (
+							<Right>
+								<Select>
+									<span>그룹명</span>
+									<input {...register("groupName", { required: true })} type="text" />
+								</Select>
+								<Select>
+									<span>봉사분야</span>
 
-								<Dropdown
-									option={optionArr}
-									setSelectedOption={setSelectedOption}
-									selectedOption={selectedOption}
-									placeholder="분야를 선택해주세요"
-								/>
-							</Select>
-							<Select style={{ borderBottom: "3px solid black" }}>
-								<span>활동 지역</span>
-								<Address
-									selectedArea={selectedArea}
-									setSelectedArea={setSelectedArea}
-									selectedSubArea={selectedSubArea}
-									setSelectedSubArea={setSelectedSubArea}
-								/>
-							</Select>
-							<Select>
-								<span>최대 인원</span>
-								<input
-									{...register("applyLimit", { required: true })}
-									style={{ width: "60px" }}
-									type="number"
-								/>
-								명
-							</Select>
-						</Right>
-					)}
-
+									<Dropdown
+										option={optionArr}
+										setSelectedOption={setSelectedOption}
+										selectedOption={selectedOption}
+										placeholder="분야를 선택해주세요"
+									/>
+								</Select>
+								<Select style={{ borderBottom: "3px solid black" }}>
+									<span>활동 지역</span>
+									<Address
+										selectedArea={selectedArea}
+										setSelectedArea={setSelectedArea}
+										selectedSubArea={selectedSubArea}
+										setSelectedSubArea={setSelectedSubArea}
+									/>
+								</Select>
+								<Select>
+									<span>최대 인원</span>
+									<input
+										{...register("applyLimit", { required: true })}
+										style={{ width: "60px" }}
+										type="number"
+									/>
+									명
+								</Select>
+							</Right>
+						)}
+					</div>
 					<Bar>활동정보</Bar>
 				</Container>
 				<Content>
