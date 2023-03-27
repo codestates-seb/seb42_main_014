@@ -15,7 +15,7 @@ const StyledCardContainer = styled.div`
 
 	.title {
 		font-weight: bold;
-		font-size: 21px;
+		font-size: 20px;
 		margin-right: 10px;
 	}
 
@@ -44,7 +44,7 @@ const StyledCardPersonDiv = styled.div`
 `;
 
 const CardContentDiv = styled.div`
-	padding: 20px;
+	padding: 0px 20px;
 	display: flex;
 	div {
 		margin-bottom: 3px;
@@ -53,6 +53,9 @@ const CardContentDiv = styled.div`
 
 const NameDiv = styled.div`
 	display: flex;
+	margin-top: 10px;
+	margin-left: 20px;
+	justify-content: flex-start;
 	& > div:first-child {
 		display: flex;
 		align-items: center;
@@ -86,15 +89,19 @@ export default function Card({
 }: IProps) {
 	return (
 		<StyledCardContainer onClick={onClick}>
+			{/* <NameDiv>
+				<div style={{ marginRight: "5px" }}>{category}</div>
+				<div className="title">{title}</div>
+			</NameDiv> */}
 			<div className="center">
 				<img src={src} alt="카드 이미지" />
 			</div>
+			<NameDiv>
+				<div style={{ marginRight: "5px" }}>{category}</div>
+				<div className="title">{title}</div>
+			</NameDiv>
 			<CardContentDiv>
 				<div style={{ width: "80%" }}>
-					<NameDiv>
-						<div style={{ marginRight: "5px" }}>{category}</div>
-						<div className="title">{title}</div>
-					</NameDiv>
 					<div>기관명 : {organizationName}</div>
 					<div>{`날짜 : ${date.split("T")[0]}`}</div>
 					<div>{`봉사시간 : ${time}시간`}</div>
