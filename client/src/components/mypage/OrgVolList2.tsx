@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { myPageGet } from "../../api/mypage/MypageGet";
+import { myPageGet2 } from "../../api/mypage/MypageGet";
 import Paginations from "../Pagination";
 import OrgVolItem2 from "./OrgVolItem2";
 
@@ -31,10 +31,10 @@ export default function OrgVolManage() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const org = await myPageGet(`volunteers/organization?=pageNum=${currentPage}`);
+			const org = await myPageGet2(`volunteers/organization?pageNum=${currentPage}`);
 			const Vol = org.data;
 			setVol(Vol);
-			const url = await myPageGet("volunteers/organization?pageNum=1");
+			const url = await myPageGet2("volunteers/organization?pageNum=1");
 			setTotalPages(url.data.length * url.totalPages);
 		};
 		fetchData();
@@ -46,24 +46,24 @@ export default function OrgVolManage() {
 					<h2>내 게시물 관리</h2>
 					<ol>
 						{Vol.length ? (
-							Vol.map((v) => (
-								<li key={v.likeId}>
-									<OrgVolItem2 title={v.title} time={v.applyDate} id={v.volunteerId} />
+							Vol.map((item) => (
+								<li key={item.Id}>
+									<OrgVolItem2 title={item.title} time={item.applyDate} id={item.volunteerId} />
 								</li>
 							))
 						) : (
 							<p>등록한 게시물이 없습니다.</p>
 						)}
 					</ol>
-					{Vol.length ? (
-						<Paginations
-							totalPages={totalPages}
-							currentPage={currentPage}
-							onPageChange={handlePageChange}
-							itemsCountPerPage={5}
-						/>
-					) : null}
 				</div>
+				{Vol.length ? (
+					<Paginations
+						totalPages={totalPages}
+						currentPage={currentPage}
+						onPageChange={handlePageChange}
+						itemsCountPerPage={5}
+					/>
+				) : null}
 			</Container>
 		</>
 	);

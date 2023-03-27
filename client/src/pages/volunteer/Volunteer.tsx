@@ -14,8 +14,9 @@ import AccessibleIcon from "@mui/icons-material/Accessible";
 import SvgIcon from "@mui/material/SvgIcon";
 import { useNavigate } from "react-router-dom";
 import Address from "../../components/Address";
-import Paginations from "../../components/Pagination";
+
 import Button from "../../components/Button";
+import Paginations from "../../components/VolPagination ";
 
 const StyledAreaContainer = styled.div`
 	display: flex;
@@ -30,6 +31,7 @@ const StyledCardContainerDiv = styled.div`
 	display: grid;
 	place-items: center;
 	grid-template-columns: repeat(4, 400px);
+
 	row-gap: 30px;
 	justify-content: center;
 	@media (max-width: 1550px) {
@@ -43,6 +45,11 @@ const StyledCardContainerDiv = styled.div`
 	}
 `;
 
+const H1 = styled.h1`
+	display: block;
+	text-align: center;
+	margin: 20%;
+`;
 const SearchContainerDiv = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -148,11 +155,9 @@ export default function Volunteer() {
 
 		const getVolunteerData = async () => {
 			const result = await volunteerDataGet(URL);
-			let PageUrl = await volunteerDataGet(
-				`volunteers?volunteerName&organizationName&tagName&orderBy=volunteerId&sort=DESC&pageNum=1`,
-			);
-			//pageUrl을 따로 하나 더 판 이유는 pageNum이 페이지 넘버로 바뀌면 해당 length가 적용되어 페이지 번호가 사라짐을 예방
-			setTotalPages(PageUrl.data.length * PageUrl.totalPages);
+
+			// setTotalPages(result.data.length * PageUrl.totalPages);
+			setTotalPages(result.totalPages);
 			setVolunData(result.data);
 		};
 
@@ -161,6 +166,7 @@ export default function Volunteer() {
 
 	const handleCategoryClick = (category: string) => {
 		setSelectedCategory(category);
+		setCurrentPage(1);
 	};
 
 	const handleChangeSearchValue = () => {
@@ -247,29 +253,30 @@ export default function Volunteer() {
 						</FilterContainerDiv>
 					</StyledAreaContainer>
 					<div />
-					<StyledCardContainerDiv>
-						{volunData &&
-							volunData.map((el) => {
-								const {
-									applyCount,
-									applyLimit,
-									place,
-									volunteerId,
-									volunteerDate,
-									tagName,
-									title,
-									volunteerImage,
-									organizationName,
-									likeCount,
-								} = el;
-								const categoryItems = {
-									어린이: ChildCareIcon,
-									장애인: AccessibleIcon,
-									노인: ElderlyIcon,
-									동물: PetsIcon,
-									환경: ForestIcon,
-								};
-								return (
+
+					{volunData.length ? (
+						volunData.map((el) => {
+							const {
+								applyCount,
+								applyLimit,
+								place,
+								volunteerId,
+								volunteerDate,
+								tagName,
+								title,
+								volunteerImage,
+								organizationName,
+								likeCount,
+							} = el;
+							const categoryItems = {
+								어린이: ChildCareIcon,
+								장애인: AccessibleIcon,
+								노인: ElderlyIcon,
+								동물: PetsIcon,
+								환경: ForestIcon,
+							};
+							return (
+								<StyledCardContainerDiv>
 									<Card
 										src={
 											volunteerImage ||
@@ -301,15 +308,21 @@ export default function Volunteer() {
 										onClick={() => handleClick(volunteerId)}
 										like={likeCount}
 									/>
-								);
-							})}
-					</StyledCardContainerDiv>
-					<Paginations
-						totalPages={totalPages}
-						currentPage={currentPage}
-						onPageChange={handlePageChange}
-						itemsCountPerPage={12}
-					/>
+								</StyledCardContainerDiv>
+							);
+						})
+					) : (
+						<H1>해당 게시글이 존재하지 않습니다.</H1>
+					)}
+
+					{volunData.length ? (
+						<Paginations
+							totalItemsCount={totalPages === 1 ? totalPages : totalPages * 12}
+							activePage={currentPage}
+							onPageChange={handlePageChange}
+							itemsCountPerPage={12}
+						/>
+					) : null}
 				</div>
 			</StyledContainerDiv>
 		</>

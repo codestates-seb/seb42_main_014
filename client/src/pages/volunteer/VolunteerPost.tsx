@@ -1,26 +1,82 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Address from "../../components/Address";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import Dropdown from "../../components/volunteer/Dropdown";
 import TextEdit from "../../components/volunteer/TextEdit";
 import { volunteerDataPost } from "../../api/volunteer/volunteerData";
 import { useNavigate } from "react-router-dom";
 import { imageUploadPost } from "../../api/imgPost";
 import dayjs from "dayjs";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+const StyledDatePicker = styled(DatePicker)`
+	width: 160px;
+	border: none;
+	background-color: #f7f7f7;
+	color: #333;
+	padding: 8px;
+	border-radius: 4px;
+	font-size: 16px;
+	outline: none;
+	.react-datepicker__time-container {
+		border: none;
+		box-shadow: none;
+		margin-top: 8px;
+		font-size: 16px;
+	}
+	.react-datepicker__time-box {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		padding: 10px;
+		border-radius: 4px;
+		background-color: #f7f7f7;
+		border: none;
+		box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+	}
+	.react-datepicker__time-list {
+		width: 100%;
+		max-height: 200px;
+		overflow: auto;
+		text-align: center;
+	}
+	.react-datepicker__time-list-item {
+		display: inline-block;
+		cursor: pointer;
+		width: 50px;
+		height: 50px;
+		line-height: 50px;
+		margin: 5px;
+		border-radius: 50%;
+		background-color: white;
+		border: 1px solid #ccc;
+		color: #333;
+	}
+	.react-datepicker__time-list-item:hover {
+		background-color: #f7f7f7;
+	}
+
+	&::placeholder {
+		color: #b9b9b9;
+	}
+`;
 
 const Body = styled.div`
 	margin-top: 20px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
 	width: 100%;
 	flex-direction: column;
 `;
 const Container = styled.div`
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
+
 	align-items: center;
 	width: 100%;
 `;
@@ -46,9 +102,12 @@ const Right = styled.div`
 	display: flex;
 	margin-left: 20px;
 	margin-bottom: 20px;
+	max-width: 44%;
+	width: 100%;
 	justify-content: center;
 	flex-direction: column;
 `;
+
 const Select = styled.div`
 	display: flex;
 	align-items: center;
@@ -58,12 +117,22 @@ const Select = styled.div`
 	border-bottom: 3px solid black;
 	height: max-content;
 	width: 100%;
+	.time {
+		position: relative;
+		margin-left: 5px;
+		display: flex;
+		flex-direction: row;
+		input {
+			color: blue;
+			font-size: 1rem;
+			font-weight: bold;
+		}
+	}
 
 	span {
 		white-space: nowrap;
 		font-weight: 900;
 		margin-right: 15px;
-		font-size: 1.35rem;
 	}
 	span:nth-child(3) {
 		font-weight: 700;
@@ -73,14 +142,8 @@ const Select = styled.div`
 	}
 	input {
 		border: none;
-		font-size: 1rem;
-		width: 100%;
 		:focus {
 			outline: none;
-		}
-		::-webkit-calendar-picker-indicator {
-			cursor: pointer;
-			font-size: 20px;
 		}
 	}
 `;
@@ -133,7 +196,10 @@ const VolunteerPost = () => {
 	const [selectedSubArea, setSelectedSubArea] = useState("");
 	const [fileSrc, setFileSrc] = useState<any>("");
 	const [imageUrl, setImageUrl] = useState<any>("");
-	const { register, handleSubmit } = useForm<IPostData>({ mode: "onChange" });
+	const [applyDate, setApplyDate] = useState("");
+	const [volunteerDate, setVolunteerDate] = useState("");
+	const { register, handleSubmit, control } = useForm<IPostData>({ mode: "onChange" });
+	const [time, setTime] = useState("");
 	const fileInput = useRef<HTMLLabelElement>(null);
 	const onChangeHandler = () => {
 		if (fileInput.current) {
@@ -160,8 +226,6 @@ const VolunteerPost = () => {
 		}
 	}, [fileSrc]);
 
-	console.log(imageUrl);
-
 	const navigate = useNavigate();
 
 	const TextChange = (content: string) => {
@@ -173,7 +237,7 @@ const VolunteerPost = () => {
 			title,
 			applyDate,
 			volunteerDate,
-			volunteerHour,
+
 			placeDetail,
 			memberCount,
 			volunteerTime,
@@ -184,13 +248,14 @@ const VolunteerPost = () => {
 			title,
 			volunteerImage: imageUrl,
 			applyDate: `${applyDate}T${hour}`,
-			volunteerDate: `${volunteerDate}T${volunteerHour}`,
+			volunteerDate: `${volunteerDate}`,
 			volunteerTime: Number(volunteerTime),
 			place: `${selectedArea} ${selectedSubArea} ${placeDetail}`,
 			content: value,
 			applyLimit: Number(memberCount),
 			tagName: selectedOption,
 		};
+		console.log(postVolunteerData);
 
 		const postGroupData = {
 			groupName,
@@ -248,19 +313,74 @@ const VolunteerPost = () => {
 							</Select>
 							<Select>
 								<span>모집기간</span>
-								<input type="date" {...register("applyDate", { required: true })} />
+								<Controller
+									name="applyDate"
+									control={control}
+									render={({ field }) => {
+										const { onChange } = field;
+
+										return (
+											<StyledDatePicker
+												dateFormat="yyyy년 MM월 dd일"
+												dateFormatCalendar="yyyy년 MM월"
+												selected={applyDate ? new Date(applyDate) : null}
+												onChange={(date: any) => {
+													const formattedDate = dayjs(date).format("YYYY-MM-DD");
+													setApplyDate(formattedDate);
+													onChange(formattedDate);
+												}}
+												minDate={new Date()}
+												required
+											/>
+										);
+									}}
+								/>
 							</Select>
 							<Select>
 								<span>봉사일시</span>
-								<input type="date" {...register("volunteerDate", { required: true })} />
-								<span>시간</span>
-								<input {...register("volunteerHour", { required: true })} type="time" />
+								<Controller
+									name="volunteerDate"
+									control={control}
+									render={({ field }) => {
+										const { onChange } = field;
+
+										return (
+											<StyledDatePicker
+												dateFormat="yyyy년 MM월 dd일"
+												dateFormatCalendar="yyyy년 MM월"
+												showTimeSelect
+												selected={volunteerDate ? new Date(volunteerDate) : null}
+												onChange={(date: any) => {
+													const formattedDate = dayjs(date).format("YYYY-MM-DDTHH:mm");
+													setVolunteerDate(formattedDate);
+													onChange(formattedDate);
+													console.log(formattedDate);
+													setTime(
+														date.toLocaleTimeString([], {
+															hour: "2-digit",
+															minute: "2-digit",
+														}),
+													);
+												}}
+												minDate={new Date()}
+												required
+											/>
+										);
+									}}
+								/>
+								{/* <span>시간</span>
+								<input {...register("volunteerHour", { required: true })} type="time" /> */}
+
+								<div className="time">
+									{time !== "" ? <span>시간</span> : null} <input value={time} />
+								</div>
 							</Select>
+
 							<Select>
 								<span>활동시간</span>
 								<input
 									{...register("volunteerTime", { required: true })}
-									style={{ width: "60px" }}
+									style={{ width: "60px", backgroundColor: "#f7f7f7", fontSize: "1rem" }}
 									type="number"
 								/>
 								시간
@@ -278,7 +398,7 @@ const VolunteerPost = () => {
 								<span>상세주소</span>
 								<input
 									{...register("placeDetail", { required: true })}
-									style={{ backgroundColor: "#f9f9f9" }}
+									style={{ backgroundColor: "#f7f7f7" }}
 									type="text"
 									placeholder="상세 주소를 작성해주세요."
 								/>
@@ -287,7 +407,7 @@ const VolunteerPost = () => {
 								<span>모집인원</span>
 								<input
 									{...register("memberCount", { required: true })}
-									style={{ width: "60px" }}
+									style={{ width: "60px", backgroundColor: "#f7f7f7", fontSize: "1rem" }}
 									type="number"
 								/>
 								명
