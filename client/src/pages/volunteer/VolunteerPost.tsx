@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import styled from "styled-components";
 import Address from "../../components/Address";
 import { useForm, Controller } from "react-hook-form";
@@ -14,7 +16,7 @@ import "react-datepicker/dist/react-datepicker.css";
 const StyledDatePicker = styled(DatePicker)`
 	width: 160px;
 	border: none;
-	background-color: #f7f7f7;
+	/* background-color: #f7f7f7; */
 	color: #333;
 	padding: 8px;
 	border-radius: 4px;
@@ -120,6 +122,7 @@ const Select = styled.div`
 	border-bottom: 3px solid black;
 	height: max-content;
 	width: 100%;
+
 	.time {
 		position: relative;
 		margin-left: 5px;
@@ -138,6 +141,12 @@ const Select = styled.div`
 		margin-right: 15px;
 		font-size: 1.35rem;
 	}
+	span:nth-child(2) {
+		margin-right: 5px;
+		cursor: pointer;
+		font-size: large;
+		margin-top: auto;
+	}
 	span:nth-child(3) {
 		font-weight: 700;
 		margin-right: 15px;
@@ -148,6 +157,7 @@ const Select = styled.div`
 		border: none;
 		font-size: 1rem;
 		width: 100%;
+
 		:focus {
 			outline: none;
 		}
@@ -187,6 +197,13 @@ const Content = styled.div`
 	flex-direction: column;
 `;
 
+const DatePickerContainer = styled.div`
+	/* background-color: #f7f7f7; */
+	display: flex;
+	width: 100%;
+	align-items: center;
+`;
+
 const VolunteerPost = () => {
 	interface IPostData {
 		title?: string;
@@ -220,7 +237,8 @@ const VolunteerPost = () => {
 	};
 
 	const date = dayjs();
-
+	const datePickerRef = useRef(null);
+	const datePickerRef2 = useRef(null);
 	const optionArr = ["어린이", "노인", "장애인", "환경", "동물"];
 	const post = window.location.pathname;
 
@@ -266,7 +284,6 @@ const VolunteerPost = () => {
 			applyLimit: Number(memberCount),
 			tagName: selectedOption,
 		};
-		console.log(postVolunteerData);
 
 		const postGroupData = {
 			groupName,
@@ -325,6 +342,9 @@ const VolunteerPost = () => {
 								</Select>
 								<Select>
 									<span>모집기간</span>
+									<span>
+										<CalendarMonthIcon onClick={() => datePickerRef.current.setOpen(true)} />
+									</span>
 									<Controller
 										name="applyDate"
 										control={control}
@@ -332,24 +352,33 @@ const VolunteerPost = () => {
 											const { onChange } = field;
 
 											return (
-												<StyledDatePicker
-													dateFormat="yyyy년 MM월 dd일"
-													dateFormatCalendar="yyyy년 MM월"
-													selected={applyDate ? new Date(applyDate) : null}
-													onChange={(date: any) => {
-														const formattedDate = dayjs(date).format("YYYY-MM-DD");
-														setApplyDate(formattedDate);
-														onChange(formattedDate);
-													}}
-													minDate={new Date()}
-													required
-												/>
+												<DatePickerContainer>
+													<StyledDatePicker
+														ref={datePickerRef}
+														dateFormat="yyyy-MM-dd"
+														dateFormatCalendar="yyyy년 MM월"
+														selected={applyDate ? new Date(applyDate) : null}
+														onChange={(date: any) => {
+															const formattedDate = dayjs(date).format("YYYY-MM-DD");
+															setApplyDate(formattedDate);
+															onChange(formattedDate);
+														}}
+														minDate={new Date()}
+														required
+													/>
+													<KeyboardArrowDownIcon
+														onClick={() => datePickerRef.current.setOpen(true)}
+													/>
+												</DatePickerContainer>
 											);
 										}}
 									/>
 								</Select>
 								<Select>
 									<span>봉사일시</span>
+									<span>
+										<CalendarMonthIcon onClick={() => datePickerRef2.current.setOpen(true)} />
+									</span>
 									<Controller
 										name="volunteerDate"
 										control={control}
@@ -357,26 +386,32 @@ const VolunteerPost = () => {
 											const { onChange } = field;
 
 											return (
-												<StyledDatePicker
-													dateFormat="yyyy년 MM월 dd일"
-													dateFormatCalendar="yyyy년 MM월"
-													showTimeSelect
-													selected={volunteerDate ? new Date(volunteerDate) : null}
-													onChange={(date: any) => {
-														const formattedDate = dayjs(date).format("YYYY-MM-DDTHH:mm");
-														setVolunteerDate(formattedDate);
-														onChange(formattedDate);
-														console.log(formattedDate);
-														setTime(
-															date.toLocaleTimeString([], {
-																hour: "2-digit",
-																minute: "2-digit",
-															}),
-														);
-													}}
-													minDate={new Date()}
-													required
-												/>
+												<DatePickerContainer style={{ width: "auto" }}>
+													<StyledDatePicker
+														ref={datePickerRef2}
+														dateFormat="yyyy년 MM월 dd일"
+														dateFormatCalendar="yyyy년 MM월"
+														showTimeSelect
+														selected={volunteerDate ? new Date(volunteerDate) : null}
+														onChange={(date: any) => {
+															const formattedDate = dayjs(date).format("YYYY-MM-DDTHH:mm");
+															setVolunteerDate(formattedDate);
+															onChange(formattedDate);
+															console.log(formattedDate);
+															setTime(
+																date.toLocaleTimeString([], {
+																	hour: "2-digit",
+																	minute: "2-digit",
+																}),
+															);
+														}}
+														minDate={new Date()}
+														required
+													/>
+													<KeyboardArrowDownIcon
+														onClick={() => datePickerRef2.current.setOpen(true)}
+													/>
+												</DatePickerContainer>
 											);
 										}}
 									/>

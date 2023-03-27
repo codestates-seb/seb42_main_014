@@ -36,11 +36,11 @@ const StyledCardContainer = styled.div`
 `;
 
 const StyledCardPersonDiv = styled.div`
-	font-size: 20px;
+	font-size: 16px;
 	display: flex;
 	justify-content: flex-end;
 	align-items: flex-end;
-	width: 20%;
+	width: 30%;
 `;
 
 const CardContentDiv = styled.div`
@@ -51,10 +51,19 @@ const CardContentDiv = styled.div`
 	}
 `;
 
+const NameDiv = styled.div`
+	display: flex;
+	& > div:first-child {
+		display: flex;
+		align-items: center;
+	}
+`;
+
 interface IProps {
 	src?: string;
 	title?: string;
 	date?: string;
+	time?: number;
 	place?: string;
 	person?: string | number;
 	category?: React.ReactElement<any, any> | undefined;
@@ -67,6 +76,7 @@ export default function Card({
 	src,
 	title,
 	date,
+	time,
 	place,
 	person,
 	category,
@@ -81,13 +91,17 @@ export default function Card({
 			</div>
 			<CardContentDiv>
 				<div style={{ width: "80%" }}>
-					<div className="title">{title}</div>
+					<NameDiv>
+						<div style={{ marginRight: "5px" }}>{category}</div>
+						<div className="title">{title}</div>
+					</NameDiv>
 					<div>기관명 : {organizationName}</div>
 					<div>{`날짜 : ${date.split("T")[0]}`}</div>
+					<div>{`봉사시간 : ${time}시간`}</div>
 					<div style={{ display: "flex" }}>
 						<span>{`장소 : ${place}`}</span>
 					</div>
-					<div style={{ marginRight: "5px" }}>{category}</div>
+					{/* <div style={{ marginRight: "5px" }}>{category}</div> */}
 					<div style={{ display: "flex", alignContent: "center" }}>
 						<FcLike size={23} />
 						<span style={{ marginLeft: "5px" }}>{like}</span>
