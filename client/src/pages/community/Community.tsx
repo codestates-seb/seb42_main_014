@@ -15,6 +15,7 @@ import Paginations from "../../components/community/CommunityPagination ";
 
 const Container = styled.div`
 	height: 100%;
+	min-height: 1300px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -39,6 +40,11 @@ const ExplainDiv = styled.div`
 		padding-left: 10px;
 		font-weight: bold;
 	}
+`;
+const H1 = styled.h1`
+	display: block;
+	text-align: center;
+	margin: 20%;
 `;
 
 const ButtonDiv = styled.div`
@@ -148,7 +154,7 @@ export default function Community() {
 							/>
 						</ButtonDiv>
 					</ExplainDiv>
-					{displayedItems &&
+					{displayedItems.length ? (
 						displayedItems.map((el) => {
 							const { groupImage, groupName, place, content, tagName, groupId } = el;
 
@@ -227,14 +233,19 @@ export default function Community() {
 									/>
 								);
 							}
-						})}
-					<Paginations
-						activePage={activePage}
-						itemsCountPerPage={ITEMS_COUNT_PER_PAGE}
-						totalItemsCount={totalItemsCount}
-						pageRangeDisplayed={PAGE_RANGE_DISPLAYED}
-						onChange={handlePageChange}
-					/>
+						})
+					) : (
+						<H1>해당 게시글이 존재하지 않습니다.</H1>
+					)}
+					{totalItemsCount >= 4 ? (
+						<Paginations
+							activePage={activePage}
+							itemsCountPerPage={ITEMS_COUNT_PER_PAGE}
+							totalItemsCount={totalItemsCount}
+							pageRangeDisplayed={PAGE_RANGE_DISPLAYED}
+							onChange={handlePageChange}
+						/>
+					) : null}
 				</Container>
 			</div>
 		</>

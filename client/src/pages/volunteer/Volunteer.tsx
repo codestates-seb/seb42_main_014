@@ -74,7 +74,7 @@ const FilterContainerDiv = styled.div`
 `;
 
 const ResetButton = styled.button`
-	width: 200px;
+	width: 54px;
 	height: 45px;
 	border-radius: 10px;
 	margin-left: 10px;
@@ -102,6 +102,7 @@ const optionArr = [
 export default function Volunteer() {
 	const [selectedCategory, setSelectedCategory] = useState("");
 	const [totalPages, setTotalPages] = useState<number>(0);
+
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [selectedArea, setSelectedArea] = useState("");
 	const [selectedSubArea, setSelectedSubArea] = useState("");
@@ -109,6 +110,7 @@ export default function Volunteer() {
 	const [selectedOption, setSelectedOption] = useState("기본순");
 	const [searchValue, setSearchValue] = useState(null);
 	const [searchCategory, setSearchCategory] = useState("volunteer");
+	const [hover, setHover] = useState(false);
 	const navigate = useNavigate();
 
 	const handleClick = (id: number) => {
@@ -126,6 +128,8 @@ export default function Volunteer() {
 	};
 	const handleResetButton = () => {
 		setSearchValue("");
+		setSelectedArea("");
+		setSelectedSubArea("");
 		volunteerDataGet("volunteers").then((res) => setVolunData(res.data));
 	};
 
@@ -217,7 +221,11 @@ export default function Volunteer() {
 								}}
 							>
 								<SearchBar
-									placeholder="검색어를 입력해 주세요."
+									placeholder={
+										searchCategory === "volunteer"
+											? "봉사명을 입력해 주세요."
+											: "기관명을 입력해주세요"
+									}
 									value={searchValue}
 									onChange={(e) => setSearchValue(e.target.value)}
 									style={{ marginRight: "10px" }}
@@ -230,7 +238,13 @@ export default function Volunteer() {
 									radius={10}
 									onClick={handleChangeSearchValue}
 								/>
-								<ResetButton onClick={handleResetButton}>초기화</ResetButton>
+								<ResetButton
+									onMouseEnter={() => setHover(true)}
+									onMouseLeave={() => setHover(false)}
+									onClick={handleResetButton}
+								>
+									{hover ? <ReplayIcon /> : "초기화"}
+								</ResetButton>
 							</div>
 						</SearchContainerDiv>
 						<FilterContainerDiv>

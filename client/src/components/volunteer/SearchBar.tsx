@@ -20,7 +20,7 @@ const StyledSearchBarDiv = styled.div`
 const StyledSearchInput = styled.input`
 	border: none;
 	margin: 10px;
-	width: 235px;
+	width: 100%;
 	height: 30px;
 	outline: none;
 `;
