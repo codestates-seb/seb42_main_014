@@ -23,6 +23,7 @@ const StyledMainImgBgContainer3 = styled.section`
 	background-color: #8629fe;
 	width: 100vw;
 	height: 500px;
+	margin-bottom: 80px;
 	position: relative;
 	justify-content: center;
 `;

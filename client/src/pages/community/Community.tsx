@@ -11,7 +11,7 @@ import ForestIcon from "@mui/icons-material/Forest";
 import ElderlyIcon from "@mui/icons-material/Elderly";
 import AccessibleIcon from "@mui/icons-material/Accessible";
 import { useNavigate } from "react-router-dom";
-import Paginations from "../../components/Pagination";
+import Paginations from "../../components/community/CommunityPagination ";
 
 const Container = styled.div`
 	height: 100%;
@@ -50,9 +50,13 @@ const ButtonDiv = styled.div`
 		transform: scale(1.1);
 	}
 `;
+const PAGE_RANGE_DISPLAYED = 5;
+const ITEMS_COUNT_PER_PAGE = 5;
 export default function Community() {
-	const [totalPages, setTotalPages] = useState<number>(0);
-	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [activePage, setActivePage] = useState(1);
+	const [items, setItems] = useState([]);
+	const [totalItemsCount, setTotalItemsCount] = useState(0);
+	const [AllCount, setAllCount] = useState(0);
 	const [getCommunityData, setGetCommunityData] = useState([]);
 	const [getMyScore, setGetMyScore] = useState<any>(0);
 	const [selectedCategory, setSelectedCategory] = useState("");
@@ -60,22 +64,24 @@ export default function Community() {
 
 	const navigate = useNavigate();
 	const handlePageChange = (pageNumber: number) => {
-		setCurrentPage(pageNumber);
+		setActivePage(pageNumber);
 	};
 
 	useEffect(() => {
 		const fetchData = async () => {
 			myPageGet("members/me").then((res) => setGetMyScore(res.data));
 
-			const result = await myPageGet(`groups?pageNum=${currentPage}`);
+			const result = await myPageGet(`groups?`);
 			setGetCommunityData(result.data);
-			const url = await myPageGet("groups?pageNum=1");
-			setTotalPages(url.data.length * result.totalPages);
-
-			// setTotalPages(url.data.length * result.totalPages);
+			setItems(result.data);
+			setTotalItemsCount(result.data.length);
+			setAllCount(result.data.length);
 		};
 		fetchData();
-	}, [currentPage]);
+	}, []);
+	const startIndex = (activePage - 1) * ITEMS_COUNT_PER_PAGE;
+	const endIndex = startIndex + ITEMS_COUNT_PER_PAGE;
+	const displayedItems = items.slice(startIndex, endIndex);
 
 	const { point } = getMyScore;
 
@@ -107,6 +113,15 @@ export default function Community() {
 	};
 	const handleCategoryClick = (category: string) => {
 		setSelectedCategory(category);
+		const filteredData = getCommunityData.filter((el) => el.tagName === category);
+		setItems(filteredData);
+		setActivePage(1);
+		if (category === "") {
+			setTotalItemsCount(AllCount);
+			setItems(getCommunityData);
+		} else {
+			setTotalItemsCount(filteredData.length);
+		}
 	};
 
 	return (
@@ -133,8 +148,8 @@ export default function Community() {
 							/>
 						</ButtonDiv>
 					</ExplainDiv>
-					{getCommunityData &&
-						getCommunityData.map((el) => {
+					{displayedItems &&
+						displayedItems.map((el) => {
 							const { groupImage, groupName, place, content, tagName, groupId } = el;
 
 							const categoryItems = {
@@ -214,10 +229,11 @@ export default function Community() {
 							}
 						})}
 					<Paginations
-						totalPages={totalPages}
-						currentPage={currentPage}
-						onPageChange={handlePageChange}
-						itemsCountPerPage={5}
+						activePage={activePage}
+						itemsCountPerPage={ITEMS_COUNT_PER_PAGE}
+						totalItemsCount={totalItemsCount}
+						pageRangeDisplayed={PAGE_RANGE_DISPLAYED}
+						onChange={handlePageChange}
 					/>
 				</Container>
 			</div>

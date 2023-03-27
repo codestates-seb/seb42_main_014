@@ -48,7 +48,6 @@ export default function OrgVolList() {
 				<div>
 					<h2>봉사 활동 신청인 현황</h2>
 					<ol>
-						{/* 신청 받고있는 봉사 활동 리스트 */}
 						{Vol.length ? (
 							Vol.map((v) => (
 								<li key={v.likeId}>

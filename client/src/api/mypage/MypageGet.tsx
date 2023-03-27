@@ -14,6 +14,18 @@ export const myPageGet = async (params: string) => {
 		console.error(error);
 	}
 };
+export const myPageGet2 = async (params: string) => {
+	try {
+		const response = await axios.get(apiUrl + params, {
+			headers: {
+				Authorization: `${localStorage.getItem("accessToken")}`,
+			},
+		});
+		return response.data.body;
+	} catch (error) {
+		console.error(error);
+	}
+};
 
 export const guestGetData = async (params: string) => {
 	try {
