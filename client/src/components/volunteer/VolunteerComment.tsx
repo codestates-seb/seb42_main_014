@@ -3,11 +3,13 @@ import { FaUserCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import Button from "../Button";
-import CommentList from "./CommentList";
+import ReviewItem from "./ReviewItem";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import { useParams } from "react-router-dom";
 import { volunteerCommentPost } from "../../api/volunteer/volunteerData";
 import { CommentDelete } from "../../api/volunteer/volunteerComment";
+import dayjs from "dayjs";
+import React from "react";
 
 const StyledContainerDiv = styled.div`
 	width: 100%;
@@ -63,17 +65,26 @@ const FilterContainer = styled.div`
 	min-width: 1000px;
 `;
 
+export const VolunteerCommentContext = React.createContext<{ refreshReviews?: Function }>({});
+
 export default function VolunteerComment(disabled: any) {
 	const params = useParams();
+	const [volunteerId, setVolunteerId] = useState(params.id);
 	const [reviewList, setReviewList] = useState([]);
 	const [comment, setComment] = useState("");
 	const [myReviewId, setMyReviewId] = useState("");
 	const [ment, setMent] = useState("");
 	const [isFilteredReviewChecked, setIsFilteredReviewChecked] = useState("allReview");
-	console.log(reviewList);
 
 	const handleComment = (e: any) => {
 		setComment(e.target.value);
+	};
+
+	const fetchData = async () => {
+		const result = await myPageGet(`reviews/${volunteerId}`);
+		const myComment = await myPageGet(`reviews/my/${volunteerId}`);
+		setReviewList(result.data);
+		setMyReviewId(myComment.data.reviewId);
 	};
 
 	useEffect(() => {
@@ -94,18 +105,25 @@ export default function VolunteerComment(disabled: any) {
 		fetchData();
 	}, [params.id]);
 
-	const handleCommentPost = () => {
+	const handleCommentPost = async () => {
 		const data = {
 			content: comment,
 		};
-		volunteerCommentPost(`reviews/${params.id}`, data);
-		window.location.reload();
+		if (reviewList.map((el) => el.reviewId === myReviewId)) {
+			alert("이미 후기를 등록하셨어요. 후기는 한번만 등록 가능해요.");
+			return;
+		}
+		await volunteerCommentPost(`reviews/${params.id}`, data);
+		const newReviewList = await myPageGet(`reviews/${params.id}`);
+		setReviewList(newReviewList.data);
+		const newMyReviewId = await myPageGet(`reviews/my/${params.id}`);
+		setMyReviewId(newMyReviewId.data.reviewId);
+		setComment("");
 	};
 	const onRemove = async () => {
 		if (window.confirm("이 후기를 삭제 하시겠습니까?")) {
-			CommentDelete(`reviews/${myReviewId}`);
-		} else {
-			alert("취소합니다.");
+			const res = await CommentDelete(`reviews/${myReviewId}`);
+			myPageGet(`reviews/${params.id}`).then((res) => setReviewList(res.data));
 		}
 	};
 
@@ -120,7 +138,7 @@ export default function VolunteerComment(disabled: any) {
 	};
 
 	return (
-		<>
+		<VolunteerCommentContext.Provider value={{ refreshReviews: fetchData }}>
 			<FilterContainer>
 				<input
 					type="radio"
@@ -164,22 +182,25 @@ export default function VolunteerComment(disabled: any) {
 						/>
 					</div>
 				</Comment>
-				{reviewList.map((user) => (
-					<CommentList
-						key={user.id}
-						id={user.reviewId}
-						time={user.modifiedAt}
-						content={user.content}
-						memberName={user.memberName}
-						onClick={onRemove}
-						myId={myReviewId}
-						editComment={function (id: any): void {
-							throw new Error("Function not implemented.");
-						}}
-						profileImage={user.profileImage}
-					/>
-				))}
+				{reviewList.map((user) => {
+					const commentCreatedAt = dayjs(user.modifiedAt).format("YYYY-MM-DD HH:mm");
+					return (
+						<ReviewItem
+							key={user.id}
+							id={user.reviewId}
+							time={commentCreatedAt}
+							content={user.content}
+							memberName={user.memberName}
+							onClick={onRemove}
+							myId={myReviewId}
+							editComment={function (id: any): void {
+								throw new Error("Function not implemented.");
+							}}
+							profileImage={user.profileImage}
+						/>
+					);
+				})}
 			</StyledContainerDiv>
-		</>
+		</VolunteerCommentContext.Provider>
 	);
 }

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { myPageGet } from "../../api/mypage/MypageGet";
@@ -59,6 +60,24 @@ export default function UserVolList() {
 		};
 		fetchData();
 	}, [currentPage1]);
+
+	const deleteItem = async (id: number) => {
+		try {
+			const response = await axios.patch(`http://3.35.252.234:8080/apply/${id}`, null, {
+				headers: {
+					Authorization: `${localStorage.getItem("accessToken")}`,
+				},
+			});
+
+			const plan = await myPageGet(`apply/member/plan?pageNum=${currentPage}`);
+			const pageUrl = await myPageGet(`apply/member/plan?pageNum=1`);
+			setTotalPages(pageUrl.data.length * plan.totalPages);
+			setVol(plan.data);
+		} catch (err) {
+			alert("봉사 취소에 실패했어요. 잠시 후 다시 시도해 주세요.");
+		}
+	};
+
 	return (
 		<>
 			<Container>
@@ -94,7 +113,12 @@ export default function UserVolList() {
 						{Vol.length ? (
 							Vol.map((v) => (
 								<li key={v.likeId}>
-									<UserVolItem2 title={v.volunteerName} time={v.volunteerDate} />
+									<UserVolItem2
+										deleteItem={deleteItem}
+										id={v.volunteerId}
+										title={v.volunteerName}
+										time={v.volunteerDate}
+									/>
 								</li>
 							))
 						) : (
