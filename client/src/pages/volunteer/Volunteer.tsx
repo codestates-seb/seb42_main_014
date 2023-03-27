@@ -1,5 +1,6 @@
 import Carousel from "../../components/Carousel";
 import Card from "../../components/volunteer/Card";
+
 import Category from "../../components/volunteer/Category";
 import SearchBar from "../../components/volunteer/SearchBar";
 import styled from "styled-components";
@@ -30,9 +31,8 @@ const StyledContainerDiv = styled.div`
 const StyledCardContainerDiv = styled.div`
 	display: grid;
 	place-items: center;
-	grid-template-columns: repeat(4, 400px);
-
-	row-gap: 30px;
+	grid-template-columns: repeat(4, 430px);
+	row-gap: 50px;
 	justify-content: center;
 	@media (max-width: 1550px) {
 		grid-template-columns: repeat(3, 400px);
