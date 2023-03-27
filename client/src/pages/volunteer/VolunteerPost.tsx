@@ -19,12 +19,17 @@ const Body = styled.div`
 `;
 const Container = styled.div`
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
+	& > div:first-child {
+		display: flex;
+		align-items: center;
+	}
 `;
 const Left = styled.div`
+	background-color: green;
 	box-sizing: content-box;
 	cursor: pointer;
 	input {
@@ -42,7 +47,7 @@ const Left = styled.div`
 	}
 `;
 const Right = styled.div`
-	padding: 15px;
+	padding: 20px 0px 15px 15px;
 	display: flex;
 	margin-left: 20px;
 	margin-bottom: 20px;
@@ -85,28 +90,30 @@ const Select = styled.div`
 	}
 `;
 const Bar = styled.div`
-	margin-top: 20px;
+	margin-bottom: 20px;
+	border-bottom: 3px solid black;
 	line-height: 50px;
-	margin-bottom: 30px;
-	color: white;
-	background-color: #000000;
+	color: #000000;
 	width: 100%;
-	height: 50px;
+	height: max-content;
 	text-align: center;
-	font-size: 20px;
-	font-weight: bold;
+	font-size: 1.35rem;
+	font-weight: 900;
 `;
 const Btn = styled.button`
+	/* 기존 */
 	cursor: pointer;
-	font-size: 20px;
+	font-size: 1.35rem;
 	background-color: #a50000;
 	color: white;
-	height: 50px;
+	height: max-content;
 	margin-bottom: 120px;
+	padding: 10px 0;
+	border-radius: 10px;
+	width: 100%;
 `;
+
 const Content = styled.div`
-	border-top: 3px solid black;
-	width: 50%;
 	min-width: 970px;
 	display: flex;
 	flex-direction: column;
@@ -160,7 +167,7 @@ const VolunteerPost = () => {
 		}
 	}, [fileSrc]);
 
-	console.log(imageUrl);
+	// console.log(imageUrl);
 
 	const navigate = useNavigate();
 
@@ -168,7 +175,7 @@ const VolunteerPost = () => {
 		setValue(content);
 	};
 	const hour = date.format("HH:mm");
-	const onSubmit = async (data: IPostData) => {
+	const onSubmit = (data: IPostData) => {
 		const {
 			title,
 			applyDate,
@@ -203,7 +210,7 @@ const VolunteerPost = () => {
 
 		if (post === "/register") {
 			try {
-				await volunteerDataPost("volunteers", postVolunteerData);
+				volunteerDataPost("volunteers", postVolunteerData);
 				navigate("/volunteer");
 			} catch (err) {
 				alert("봉사 등록에 실패했어요. 잠시 후 다시 시도해 주세요.");
@@ -222,116 +229,118 @@ const VolunteerPost = () => {
 		<Body>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Container>
-					<Left onClick={onChangeHandler}>
-						<input id="profileImg" type="file" onChange={handleChange} />
-						<img
-							src={file ? file : "https://www.namepros.com/attachments/empty-png.89209/"}
-							alt=""
-						/>
-						<label htmlFor="profileImg" ref={fileInput}></label>
-					</Left>
-					{post !== "/grouppost" ? (
-						<Right>
-							<Select>
-								<span>활동명</span>
-								<input {...register("title", { required: true })} type="text" />
-							</Select>
-							<Select>
-								<span>봉사분야</span>
-								<Dropdown
-									setSelectedOption={setSelectedOption}
-									selectedOption={selectedOption}
-									placeholder="분야를 선택해주세요"
-									option={optionArr}
-									width={145}
-								/>
-							</Select>
-							<Select>
-								<span>모집기간</span>
-								<input type="date" {...register("applyDate", { required: true })} />
-							</Select>
-							<Select>
-								<span>봉사일시</span>
-								<input type="date" {...register("volunteerDate", { required: true })} />
-								<span>시간</span>
-								<input {...register("volunteerHour", { required: true })} type="time" />
-							</Select>
-							<Select>
-								<span>활동시간</span>
-								<input
-									{...register("volunteerTime", { required: true })}
-									style={{ width: "60px" }}
-									type="number"
-								/>
-								시간
-							</Select>
-							<Select style={{ borderBottom: "3px solid black" }}>
-								<span>봉사장소</span>
-								<Address
-									selectedArea={selectedArea}
-									setSelectedArea={setSelectedArea}
-									selectedSubArea={selectedSubArea}
-									setSelectedSubArea={setSelectedSubArea}
-								/>
-							</Select>
-							<Select>
-								<span>상세주소</span>
-								<input
-									{...register("placeDetail", { required: true })}
-									style={{ backgroundColor: "#f9f9f9" }}
-									type="text"
-									placeholder="상세 주소를 작성해주세요."
-								/>
-							</Select>
-							<Select>
-								<span>모집인원</span>
-								<input
-									{...register("memberCount", { required: true })}
-									style={{ width: "60px" }}
-									type="number"
-								/>
-								명
-							</Select>
-						</Right>
-					) : (
-						<Right>
-							<Select>
-								<span>그룹명</span>
-								<input {...register("groupName", { required: true })} type="text" />
-							</Select>
-							<Select>
-								<span>봉사분야</span>
+					<div>
+						<Left onClick={onChangeHandler}>
+							<input id="profileImg" type="file" onChange={handleChange} />
+							<img
+								src={file ? file : "https://www.namepros.com/attachments/empty-png.89209/"}
+								alt=""
+							/>
+							<label htmlFor="profileImg" ref={fileInput}></label>
+						</Left>
+						{post !== "/grouppost" ? (
+							<Right>
+								<Select>
+									<span>활동명</span>
+									<input {...register("title", { required: true })} type="text" />
+								</Select>
+								<Select>
+									<span>봉사분야</span>
+									<Dropdown
+										setSelectedOption={setSelectedOption}
+										selectedOption={selectedOption}
+										placeholder="분야를 선택해주세요"
+										option={optionArr}
+										width={145}
+									/>
+								</Select>
+								<Select>
+									<span>모집기간</span>
+									<input type="date" {...register("applyDate", { required: true })} />
+								</Select>
+								<Select>
+									<span>봉사일시</span>
+									<input type="date" {...register("volunteerDate", { required: true })} />
+									<span>시간</span>
+									<input {...register("volunteerHour", { required: true })} type="time" />
+								</Select>
+								<Select>
+									<span>활동시간</span>
+									<input
+										{...register("volunteerTime", { required: true })}
+										style={{ width: "60px" }}
+										type="number"
+									/>
+									시간
+								</Select>
+								<Select style={{ borderBottom: "3px solid black" }}>
+									<span>봉사장소</span>
+									<Address
+										selectedArea={selectedArea}
+										setSelectedArea={setSelectedArea}
+										selectedSubArea={selectedSubArea}
+										setSelectedSubArea={setSelectedSubArea}
+									/>
+								</Select>
+								<Select>
+									<span>상세주소</span>
+									<input
+										{...register("placeDetail", { required: true })}
+										style={{ backgroundColor: "#f9f9f9" }}
+										type="text"
+										placeholder="상세 주소를 작성해주세요."
+									/>
+								</Select>
+								<Select>
+									<span>모집인원</span>
+									<input
+										{...register("memberCount", { required: true })}
+										style={{ width: "60px" }}
+										type="number"
+									/>
+									명
+								</Select>
+							</Right>
+						) : (
+							<Right>
+								<Select>
+									<span>그룹명</span>
+									<input {...register("groupName", { required: true })} type="text" />
+								</Select>
+								<Select>
+									<span>봉사분야</span>
 
-								<Dropdown
-									option={optionArr}
-									setSelectedOption={setSelectedOption}
-									selectedOption={selectedOption}
-									placeholder="분야를 선택해주세요"
-								/>
-							</Select>
-							<Select style={{ borderBottom: "3px solid black" }}>
-								<span>활동 지역</span>
-								<Address
-									selectedArea={selectedArea}
-									setSelectedArea={setSelectedArea}
-									selectedSubArea={selectedSubArea}
-									setSelectedSubArea={setSelectedSubArea}
-								/>
-							</Select>
-							<Select>
-								<span>최대 인원</span>
-								<input
-									{...register("applyLimit", { required: true })}
-									style={{ width: "60px" }}
-									type="number"
-								/>
-								명
-							</Select>
-						</Right>
-					)}
+									<Dropdown
+										option={optionArr}
+										setSelectedOption={setSelectedOption}
+										selectedOption={selectedOption}
+										placeholder="분야를 선택해주세요"
+									/>
+								</Select>
+								<Select style={{ borderBottom: "3px solid black" }}>
+									<span>활동 지역</span>
+									<Address
+										selectedArea={selectedArea}
+										setSelectedArea={setSelectedArea}
+										selectedSubArea={selectedSubArea}
+										setSelectedSubArea={setSelectedSubArea}
+									/>
+								</Select>
+								<Select>
+									<span>최대 인원</span>
+									<input
+										{...register("applyLimit", { required: true })}
+										style={{ width: "60px" }}
+										type="number"
+									/>
+									명
+								</Select>
+							</Right>
+						)}
+					</div>
+					<Bar>활동정보</Bar>
 				</Container>
 				<Content>
-					<Bar>활동정보</Bar>
 					<TextEdit onChange={TextChange} value={value} />
 					<Btn>등록완료</Btn>
 				</Content>
