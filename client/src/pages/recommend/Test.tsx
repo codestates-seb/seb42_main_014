@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import QuestionCard from "./QuestionCard";
+import QuestionCard from "../../components/recommend/QuestionCard";
 
 const Body = styled.div`
 	width: 100%;
