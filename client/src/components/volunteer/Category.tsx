@@ -6,6 +6,7 @@ import AccessibleIcon from "@mui/icons-material/Accessible";
 import SvgIcon from "@mui/material/SvgIcon";
 import styled from "styled-components";
 import { useState } from "react";
+import { theme } from "../../utils/theme";
 
 interface CategoryProps {
 	onCategoryClick: (category: string) => void;
@@ -37,11 +38,13 @@ const Icon = styled.div`
 	cursor: pointer;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.13), 0 1px 2px rgba(0, 0, 0, 0.21);
 	:hover {
-		background-color: #d7d2f7;
+		background-color: #b3e2c6;
+		color: white;
 	}
 	&.active {
-		background-color: #c2bbfe;
+		background-color: ${theme.primary};
 		border: 1px solid gray;
+		color: white;
 	}
 `;
 const Col = styled.div`

@@ -15,7 +15,6 @@ const Container = styled.div`
 	margin-bottom: 30px;
 	justify-content: space-between;
 	& > div {
-		/* ImgDiv, InfoDiv 공통 */
 		display: flex;
 		flex-direction: column;
 	}
@@ -34,21 +33,7 @@ const ImgDiv = styled.div`
 		width: 64px;
 	}
 `;
-// const LikeSpan = styled.span`
-// 	width: 85px;
-// 	display: flex;
-// 	justify-content: space-between;
-// 	align-items: center;
 
-// 	img {
-// 		width: 32px;
-// 		height: 32px;
-// 	}
-
-// 	span {
-// 		font-weight: bold;
-// 	}
-// `;
 const Login = styled.input`
 	align-items: center;
 	width: fit-content;
@@ -94,7 +79,7 @@ export default function Orgcard() {
 	const [password, isPassword] = useState("");
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState("");
-	const [orgInfo, setOrgInfo] = useState("");
+	const [orgInfo, setOrgInfo] = useState<any>({});
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -134,7 +119,10 @@ export default function Orgcard() {
 			<Container>
 				<ImgDiv>
 					<div>
-						<img src="/images/mypage/user.png" alt="프로필이미지" />
+						<img
+							src={orgInfo.profileImage ? orgInfo.profileImage : "/images/mypage/profile-user.png"}
+							alt="프로필이미지"
+						/>
 					</div>
 					<button type="button" onClick={toggle}>
 						수정하기

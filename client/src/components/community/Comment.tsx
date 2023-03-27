@@ -113,7 +113,6 @@ export default function Comment() {
 						height={40}
 						radius={10}
 						textSize={14}
-						bgColor="black"
 					/>
 				</StyledInputContainerDiv>
 				{reviewList.map((user) => (

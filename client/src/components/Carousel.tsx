@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Lottie from "lottie-react";
 import testLottie from "../lottie.json";
 import { useNavigate } from "react-router-dom";
+import { theme } from "../utils/theme";
 
 const Body = styled.div`
 	.slick-dots {
@@ -70,7 +71,6 @@ const settings = {
 	infinite: true,
 	slidesToShow: 1,
 	slidesToScroll: 1,
-	// autoplay: true,
 	speed: 500,
 	autoplaySpeed: 3000,
 	cssEase: "linear",
@@ -79,11 +79,11 @@ const settings = {
 };
 
 const MoveToTestButton = styled.button`
-	background-color: #0fa50f;
+	background-color: ${theme.primary};
 	border: none;
 	width: 250px;
 	height: 50px;
-	border-radius: 20px;
+	border-radius: 10px;
 	color: white;
 	font-size: 17px;
 	font-weight: 900;
@@ -96,24 +96,11 @@ export default function Carousel() {
 	return (
 		<Body>
 			<Slider {...settings}>
-				{/* <div>
-					<Style1 color="#cfebff">
-						<img src="/images/carousel/carousel1.png" alt="1"></img>
-						<div>
-							<div className="title">봉사 성향 테스트</div>
-							<div>
-								간단한 테스트로 내 봉사 성향을 알아보고,
-								<br /> 자동으로 그에 맞는 봉사만 추천받을 수 있어요.
-							</div>
-							<div>테스트 하러가기</div>
-						</div>
-					</Style1>
-				</div> */}
 				<div>
 					<Style2 color="white">
 						<Lottie animationData={testLottie} />
 						<div>
-							<div className="title">봉사 성향 테스트</div>
+							<div className="title">봉사 자동매칭 서비스</div>
 							<div>
 								간단한 테스트로 내 봉사 성향을 알아보고,
 								<br /> 자동으로 그에 맞는 봉사만 추천받을 수 있어요.
@@ -122,12 +109,6 @@ export default function Carousel() {
 						</div>
 					</Style2>
 				</div>
-				{/* <div>
-					<Style1 color="#767EC6">
-						<img src="/images/home/main-img-3.png" alt="3"></img>
-						<span>작은 마음이 모여서 조금 더 나은 내일을 만들어요.</span>
-					</Style1>
-				</div> */}
 			</Slider>
 		</Body>
 	);

@@ -167,7 +167,6 @@ export default function VolunteerInfo() {
 						width={350}
 						height={50}
 						radius={0}
-						bgColor="#b30f0fb9"
 						textSize={15}
 					/>
 					<div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
@@ -182,7 +181,6 @@ export default function VolunteerInfo() {
 								value={"너도 할래?"}
 								width={200}
 								height={50}
-								bgColor="white"
 								textColor="black"
 								textSize={15}
 							/>

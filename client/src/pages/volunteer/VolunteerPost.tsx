@@ -297,7 +297,7 @@ const VolunteerPost = () => {
 		if (post === "/register") {
 			try {
 				volunteerDataPost("volunteers", postVolunteerData);
-				// navigate("/volunteer");
+				navigate("/volunteer");
 			} catch (err) {
 				alert("봉사 등록에 실패했어요. 잠시 후 다시 시도해 주세요.");
 			}
@@ -342,7 +342,7 @@ const VolunteerPost = () => {
 										selectedOption={selectedOption}
 										placeholder="분야를 선택해주세요"
 										option={optionArr}
-										width={145}
+										width={123}
 									/>
 								</Select>
 								<Select>
@@ -482,6 +482,7 @@ const VolunteerPost = () => {
 									<span>봉사분야</span>
 
 									<Dropdown
+										width={123}
 										option={optionArr}
 										setSelectedOption={setSelectedOption}
 										selectedOption={selectedOption}

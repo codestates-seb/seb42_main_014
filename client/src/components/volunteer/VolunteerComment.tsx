@@ -176,7 +176,6 @@ export default function VolunteerComment(disabled: any) {
 							height={40}
 							radius={10}
 							textSize={14}
-							bgColor="black"
 							iconName={<AiOutlinePlus style={{ marginLeft: "10px" }} />}
 						/>
 					</div>
