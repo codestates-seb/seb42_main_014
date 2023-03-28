@@ -27,17 +27,18 @@ const StyledAdminDropDownItems = styled.div`
 
 export default function DropDown({ setIsOpen, isOpen }: TDropDownProps) {
 	const isLogin = localStorage.getItem("accessToken");
-	const [isAdmin, setIsAdmin] = useState(true);
 
 	const handleDropdownClick = () => {
 		setIsOpen(!isOpen);
 	};
 	const navigate = useNavigate();
 	const [id, setId] = useState("");
+	const [number, setNumber] = useState("");
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await myPageGet("members/me");
 			setId(result.data.id);
+			setNumber(result.data.orgNumber);
 		};
 		fetchData();
 	}, []);
@@ -67,9 +68,11 @@ export default function DropDown({ setIsOpen, isOpen }: TDropDownProps) {
 				</StyledDropDownMenu>
 				{isLogin && (
 					<StyledAdminDropDownItems>
-						<StyledDropDownMenu onClick={() => navigate("/register")}>
-							봉사활동 등록
-						</StyledDropDownMenu>
+						{number ? (
+							<StyledDropDownMenu onClick={() => navigate("/register")}>
+								봉사활동 등록
+							</StyledDropDownMenu>
+						) : null}
 					</StyledAdminDropDownItems>
 				)}
 			</StyledDropDownContainer>

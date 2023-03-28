@@ -30,7 +30,7 @@ const StyledMainImgBgContainer3 = styled.section`
 const StyledEmptyLine = styled.div`
 	width: 100vw;
 	height: 30px;
-	background-color: black;
+	background-color: #383838;
 `;
 const StyledTitleFontSpan1 = styled.span`
 	font-family: "Permanent Marker", cursive;

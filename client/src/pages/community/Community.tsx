@@ -83,6 +83,7 @@ export default function Community() {
 	const startIndex = (activePage - 1) * ITEMS_COUNT_PER_PAGE;
 	const endIndex = startIndex + ITEMS_COUNT_PER_PAGE;
 	const displayedItems = items.slice(startIndex, endIndex);
+	console.log(items);
 
 	const { point } = getMyScore;
 
