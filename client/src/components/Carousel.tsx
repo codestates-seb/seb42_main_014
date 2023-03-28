@@ -78,6 +78,14 @@ const MoveToTestButton = styled.button`
 
 export default function Carousel() {
 	const navigate = useNavigate();
+
+	const handleClick = () => {
+		if (localStorage.getItem("accessToken")) {
+			navigate("/test");
+		}
+		alert("로그인 후 이용해주세요");
+		navigate("/login");
+	};
 	return (
 		<Body>
 			<Slider {...settings}>
@@ -90,7 +98,7 @@ export default function Carousel() {
 								간단한 테스트로 내 봉사 성향을 알아보고,
 								<br /> 자동으로 그에 맞는 봉사만 추천받을 수 있어요.
 							</div>
-							<MoveToTestButton onClick={() => navigate("/test")}>테스트 하러가기</MoveToTestButton>
+							<MoveToTestButton onClick={handleClick}>테스트 하러가기</MoveToTestButton>
 						</div>
 					</Style2>
 				</div>
