@@ -213,7 +213,7 @@ export default function Recommend() {
 						</ImgDiv>
 						<WordDiv>{saying}</WordDiv>
 					</ContentDiv>
-					<RecommendDiv>{`당신에게 추천하는 봉사는 ${tag} 봉사입니다.`}</RecommendDiv>
+					<RecommendDiv>{`당신에게 추천하는 봉사는 '${tag} 봉사'입니다.`}</RecommendDiv>
 				</StyledAreaContainer>
 				{volunData.length ? (
 					<StyledCardContainerDiv>
