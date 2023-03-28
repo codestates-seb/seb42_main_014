@@ -26,7 +26,7 @@ export const KakaoShareButton = ({ getVolunteerInfoData }) => {
 			if (window.Kakao) {
 				const kakao = window.Kakao;
 				if (!kakao.isInitialized()) {
-					kakao.init("9efb2f5feb72e551ae1d71ef75b35ad3");
+					kakao.init(process.env.REACT_APP_KAKAO_SHARE_KEY);
 				}
 				kakao.Share.createDefaultButton({
 					container: "#kakaotalk-sharing-btn",
@@ -36,7 +36,7 @@ export const KakaoShareButton = ({ getVolunteerInfoData }) => {
 						imageUrl: volunteerImage,
 						description: "봉사 같이 할래? 좀나세에서 다양한 봉사를 신청해보세요.",
 						link: {
-							webUrl: `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com/volunteer/${volunteerId}`,
+							webUrl: `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com`,
 						},
 					},
 					buttons: [
