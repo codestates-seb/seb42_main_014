@@ -1,4 +1,22 @@
 import { useEffect } from "react";
+import styled from "styled-components";
+
+const KakaoButton = styled.div`
+	img {
+		width: 45px;
+		margin-right: 10px;
+	}
+	width: 310px;
+	background-color: #fae100;
+	margin-right: 5px;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 5px;
+	font-weight: 900;
+	height: 50px;
+`;
 
 export const KakaoShareButton = ({ getVolunteerInfoData }) => {
 	useEffect(() => {
@@ -36,10 +54,13 @@ export const KakaoShareButton = ({ getVolunteerInfoData }) => {
 	}, []);
 	return (
 		<a id="kakaotalk-sharing-btn" href="javascript:;">
-			<img
-				src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-				alt="카카오톡 공유 보내기 버튼"
-			/>
+			<KakaoButton>
+				<img
+					src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+					alt="카카오톡 공유 보내기 버튼"
+				/>
+				너도 할래? 친구에게 공유하기
+			</KakaoButton>
 		</a>
 	);
 };

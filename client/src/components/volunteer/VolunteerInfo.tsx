@@ -31,6 +31,7 @@ const StyledContainerDiv = styled.div`
 		background-color: white;
 		border: 1px solid gray;
 		cursor: pointer;
+		border-radius: 5px;
 	}
 
 	.button-container {
@@ -54,9 +55,9 @@ const StyledEmptyLineDiv = styled.div`
 `;
 
 const StyledShareContainer = styled.div`
-	/* style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }} */
 	display: flex;
-	align-items: center;
+	flex-direction: column;
+	align-items: flex-start;
 `;
 
 export default function VolunteerInfo() {
@@ -178,18 +179,20 @@ export default function VolunteerInfo() {
 					<span>
 						모집 인원 : {applyCount} / {applyLimit}
 					</span>
-					{/* <Button onClick={handlePost} value="나도 할래!" width={350} height={50} textSize={15} />
 					<StyledShareContainer>
-						<button onClick={heartHandler}>
-							{!isLike ? <FcLikePlaceholder size={40} /> : <FcLike size={40} />}
-						</button>
-						{shareButton && <KakaoShareButton getVolunteerInfoData={getVolunteerInfoData} />}
-					</StyledShareContainer> */}
-					<StyledShareContainer>
-						<Button onClick={handlePost} value="나도 할래!" width={250} height={50} textSize={15} />
-						<button onClick={heartHandler}>
-							{!isLike ? <FcLikePlaceholder size={40} /> : <FcLike size={40} />}
-						</button>
+						<div style={{ display: "flex", alignContent: "center" }}>
+							<Button
+								onClick={handlePost}
+								value="나도 할래!"
+								width={250}
+								height={50}
+								textSize={15}
+								radius={5}
+							/>
+							<button onClick={heartHandler} style={{ margin: "0px 5px 0px 5px" }}>
+								{!isLike ? <FcLikePlaceholder size={40} /> : <FcLike size={40} />}
+							</button>
+						</div>
 						{shareButton && <KakaoShareButton getVolunteerInfoData={getVolunteerInfoData} />}
 					</StyledShareContainer>
 				</div>
