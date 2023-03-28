@@ -108,11 +108,16 @@ export default function Volunteer() {
 	const navigate = useNavigate();
 
 	const handleClick = (id: number) => {
-		navigate(`/volunteer/${id}`);
-		window.scrollTo({
-			top: 0,
-			behavior: "smooth",
-		});
+		if (localStorage.getItem("accessToken")) {
+			navigate(`/volunteer/${id}`);
+			window.scrollTo({
+				top: 0,
+				behavior: "smooth",
+			});
+		} else {
+			alert("로그인 후 이용해주세요");
+			navigate("/login");
+		}
 	};
 	const handleOptionChange = async (selectedOption: SetStateAction<string | any>) => {
 		setSelectedOption(selectedOption);
@@ -253,8 +258,8 @@ export default function Volunteer() {
 								option={optionArr}
 								radius={10}
 								height={50}
-								boxWidth={200}
-								max_min_width={200}
+								boxWidth={150}
+								max_min_width={150}
 							/>
 						</FilterContainerDiv>
 					</StyledAreaContainer>

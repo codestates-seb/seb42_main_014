@@ -173,7 +173,7 @@ export default function VolunteerInfo() {
 						모집 기간 : {startDate} ~ {endDate}
 					</span>
 					<span>봉사 일자 : {volunDate}</span>
-					<span>봉사 장소 : {place}</span>
+					<span style={{ width: "350px" }}>봉사 장소 : {place}</span>
 					<span>봉사 시간 : {volunteerTime}시간</span>
 					<span>
 						모집 인원 : {applyCount} / {applyLimit}

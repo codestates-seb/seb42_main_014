@@ -19,6 +19,20 @@ const StyledContainerDiv = styled.div`
 		width: 100%;
 		height: 400px;
 		min-width: 300px;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		::-webkit-scrollbar {
+			width: 10px;
+		}
+
+		::-webkit-scrollbar-thumb {
+			height: 30%;
+			background: #131313;
+			border-radius: 10px;
+		}
+		::-webkit-scrollbar-track {
+			background: rgba(93, 93, 93, 0.1);
+		}
 	}
 	.layout {
 		display: flex;

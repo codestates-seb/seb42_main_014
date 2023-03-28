@@ -22,7 +22,7 @@ const StyledContainerDiv = styled.div`
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
 		width: 50%;
 		margin: 10px;
-		min-width: 870px;
+		min-width: 839px;
 	}
 	h1 {
 		text-align: center;
@@ -40,6 +40,11 @@ const StyledContainerDiv = styled.div`
 		}
 		margin-bottom: 5px;
 	}
+`;
+const Flex = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 export default function GroupInfo({ groupData }: any) {
@@ -60,7 +65,27 @@ export default function GroupInfo({ groupData }: any) {
 				</div>
 			</Link>
 			<section>
-				<h1>{groupName}</h1>
+				<Flex>
+					<div style={{ marginRight: "10px" }}>
+						<SvgIcon
+							component={
+								tagName === "어린이"
+									? categoryItems["어린이"]
+									: tagName === "장애인"
+									? categoryItems["장애인"]
+									: tagName === "노인"
+									? categoryItems["노인"]
+									: tagName === "동물"
+									? categoryItems["동물"]
+									: tagName === "환경"
+									? categoryItems["환경"]
+									: null
+							}
+							inheritViewBox
+						/>
+					</div>
+					<h1>{groupName}</h1>
+				</Flex>
 			</section>
 			<section style={{ display: "flex", padding: "20px" }}>
 				<img
@@ -92,24 +117,6 @@ export default function GroupInfo({ groupData }: any) {
 							<span>활동 지역</span>
 						</div>
 						<div>{place}</div>
-					</div>
-					<div style={{ marginLeft: "20px" }}>
-						<SvgIcon
-							component={
-								tagName === "어린이"
-									? categoryItems["어린이"]
-									: tagName === "장애인"
-									? categoryItems["장애인"]
-									: tagName === "노인"
-									? categoryItems["노인"]
-									: tagName === "동물"
-									? categoryItems["동물"]
-									: tagName === "환경"
-									? categoryItems["환경"]
-									: null
-							}
-							inheritViewBox
-						/>
 					</div>
 				</div>
 			</section>

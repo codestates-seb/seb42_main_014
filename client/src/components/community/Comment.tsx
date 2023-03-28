@@ -45,7 +45,9 @@ const StyledContainerDiv = styled.div`
 		border-radius: 20px;
 		padding: 5px 20px 5px 20px;
 		margin: 5px 15px 5px 15px;
-		min-width: 400px;
+		width: 500px;
+		height: 100%;
+		min-width: 300px;
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.11);
 	}
 `;
@@ -68,7 +70,7 @@ const ReviewList = styled.div`
 	padding-right: 10px;
 
 	::-webkit-scrollbar {
-		width: 10px; /* 스크롤바의 너비 */
+		width: 10px;
 	}
 
 	::-webkit-scrollbar-thumb {

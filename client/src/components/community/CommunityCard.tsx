@@ -2,8 +2,6 @@ import styled from "styled-components";
 import Button from "../../components/Button";
 import { ReactNode, useEffect, useState } from "react";
 import { GroupPost } from "../../api/community/CommunityPost";
-import { useParams } from "react-router-dom";
-import { group } from "console";
 import { myPageGet } from "../../api/mypage/MypageGet";
 
 const Container = styled.div`
@@ -112,11 +110,14 @@ export default function CommunityCard({
 					/>
 				</ImgDiv>
 				<ContentDiv>
-					<span style={{ fontSize: "1.8rem", fontWeight: "bold" }}>{name}</span>
-					<span style={{ fontWeight: "bold" }}>{place}</span>
-					<span dangerouslySetInnerHTML={{ __html: intro }}></span>
+					<div>
+						<span style={{ marginRight: "10px" }}>{category}</span>
+						<span style={{ fontSize: "1.8rem", fontWeight: "bold" }}>{name}</span>
+					</div>
+
+					<span style={{ fontWeight: "bold" }} dangerouslySetInnerHTML={{ __html: intro }}></span>
+					<span>{place}</span>
 					<span>{hashtag}</span>
-					<span>{category}</span>
 				</ContentDiv>
 			</Flex>
 			<ButtonDiv>
