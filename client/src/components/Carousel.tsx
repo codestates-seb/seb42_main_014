@@ -82,9 +82,10 @@ export default function Carousel() {
 	const handleClick = () => {
 		if (localStorage.getItem("accessToken")) {
 			navigate("/test");
+		} else {
+			alert("로그인 후 이용해주세요");
+			navigate("/login");
 		}
-		alert("로그인 후 이용해주세요");
-		navigate("/login");
 	};
 	return (
 		<Body>
