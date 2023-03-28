@@ -89,10 +89,6 @@ export default function Card({
 }: IProps) {
 	return (
 		<StyledCardContainer onClick={onClick}>
-			{/* <NameDiv>
-				<div style={{ marginRight: "5px" }}>{category}</div>
-				<div className="title">{title}</div>
-			</NameDiv> */}
 			<div className="center">
 				<img src={src} alt="카드 이미지" />
 			</div>
@@ -108,7 +104,6 @@ export default function Card({
 					<div style={{ display: "flex" }}>
 						<span>{`장소 : ${place}`}</span>
 					</div>
-					{/* <div style={{ marginRight: "5px" }}>{category}</div> */}
 					<div style={{ display: "flex", alignContent: "center" }}>
 						<FcLike size={23} />
 						<span style={{ marginLeft: "5px" }}>{like}</span>

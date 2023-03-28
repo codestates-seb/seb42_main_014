@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import { volunteerCommentPost } from "../../api/volunteer/volunteerData";
 import { CommentDelete } from "../../api/volunteer/volunteerComment";
+import { EmptyContent } from "../../EmptyContent";
 
 const StyledContainerDiv = styled.div`
 	display: flex;
@@ -57,10 +58,14 @@ const StyledInputContainerDiv = styled.div`
 	margin: 20px;
 `;
 const ReviewList = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	height: 300px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	width: 100%;
+	padding-right: 10px;
 
 	::-webkit-scrollbar {
 		width: 10px; /* 스크롤바의 너비 */
@@ -133,20 +138,24 @@ export default function Comment() {
 					/>
 				</StyledInputContainerDiv>
 				<ReviewList>
-					{reviewList.map((user) => (
-						<GroupComment
-							key={user.id}
-							id={user.memberId}
-							name={user.memberName}
-							time={user.createdAt}
-							commentId={user.commentId}
-							content={user.content}
-							onClick={() => onRemove(user.commentId)}
-							myId={my}
-							profileImage={user.profileImage}
-							setReviewList={setReviewList}
-						/>
-					))}
+					{reviewList.length ? (
+						reviewList.map((user) => (
+							<GroupComment
+								key={user.id}
+								id={user.memberId}
+								name={user.memberName}
+								time={user.createdAt}
+								commentId={user.commentId}
+								content={user.content}
+								onClick={() => onRemove(user.commentId)}
+								myId={my}
+								profileImage={user.profileImage}
+								setReviewList={setReviewList}
+							/>
+						))
+					) : (
+						<EmptyContent content="아직 등록된 댓글이 없어요." />
+					)}
 				</ReviewList>
 			</StyledContainerDiv>
 		</div>

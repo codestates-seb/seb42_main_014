@@ -3,7 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
 import Lottie from "lottie-react";
-import testLottie from "../lottie.json";
+import volunteerTest from "../volunteerTest.json";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../utils/theme";
 
@@ -19,21 +19,6 @@ const Body = styled.div`
 		opacity: 1;
 		color: #000000;
 		-webkit-font-smoothing: antialiased;
-	}
-`;
-const Style1 = styled.div`
-	justify-content: center;
-	background-color: ${(props) => props.color};
-	display: flex;
-	align-items: center;
-	padding: 20px;
-	width: 100%;
-	img {
-		width: 23%;
-	}
-	.title {
-		font-size: 30px;
-		font-weight: 900;
 	}
 `;
 const Style2 = styled.div`
@@ -98,7 +83,7 @@ export default function Carousel() {
 			<Slider {...settings}>
 				<div>
 					<Style2 color="white">
-						<Lottie animationData={testLottie} />
+						<Lottie animationData={volunteerTest} />
 						<div>
 							<div className="title">봉사 자동매칭 서비스</div>
 							<div>

@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import Address from "../../components/Address";
 import Button from "../../components/Button";
 import Paginations from "../../components/VolPagination ";
+import { EmptyContent } from "../../EmptyContent";
 
 const StyledAreaContainer = styled.div`
 	display: flex;
@@ -323,7 +324,7 @@ export default function Volunteer() {
 							})}
 						</StyledCardContainerDiv>
 					) : (
-						<H1>해당 게시글이 존재하지 않습니다.</H1>
+						<EmptyContent content="아직 해당하는 봉사가 없어요." />
 					)}
 
 					{volunData.length ? (
