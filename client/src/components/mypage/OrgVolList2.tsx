@@ -16,8 +16,8 @@ const Container = styled.div`
 	h2 {
 		font-size: 1.3rem;
 	}
-	ol {
-		padding-left: 30px;
+	li {
+		list-style-type: none;
 	}
 `;
 
@@ -44,7 +44,7 @@ export default function OrgVolManage() {
 			<Container>
 				<div>
 					<h2>내 게시물 관리</h2>
-					<ol>
+					<div>
 						{Vol.length ? (
 							Vol.map((item) => (
 								<li key={item.Id}>
@@ -54,7 +54,7 @@ export default function OrgVolManage() {
 						) : (
 							<p>등록한 게시물이 없습니다.</p>
 						)}
-					</ol>
+					</div>
 				</div>
 				{Vol.length ? (
 					<Paginations

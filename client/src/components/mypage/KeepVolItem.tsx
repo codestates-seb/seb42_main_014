@@ -1,12 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import TextTruncate from "../TextCut";
 
 interface KeepVolItemProps {
 	title: string;
 	name: string;
+	id: number;
 }
 
 const Container = styled.div`
 	display: flex;
+	cursor: pointer;
 	justify-content: space-between;
 	margin-bottom: 5px;
 	& > div:first-child {
@@ -21,10 +25,20 @@ const Container = styled.div`
 `;
 
 export default function KeepVolItem(props: KeepVolItemProps) {
+	const nav = useNavigate();
+	const clickHandlr = () => {
+		nav(`/volunteer/${props.id}`);
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
+	};
 	return (
 		<>
 			<Container>
-				<div>{props.title} </div>
+				<div onClick={clickHandlr}>
+					<TextTruncate text={props.title} limit={10} />
+				</div>
 				<div>{props.name}</div>
 			</Container>
 		</>

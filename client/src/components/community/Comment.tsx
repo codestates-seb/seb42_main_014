@@ -64,6 +64,7 @@ const ReviewList = styled.div`
 	height: 300px;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	width: 100%;
 	padding-right: 10px;
 
 	::-webkit-scrollbar {

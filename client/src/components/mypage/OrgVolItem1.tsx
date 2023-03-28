@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import Modal from "../Modal";
 import Paginations from "../Pagination";
+import TextTruncate from "../TextCut";
 import User from "./User";
 
 interface ItemProps {
@@ -74,10 +76,21 @@ export default function OrgVolItem1(props: ItemProps) {
 		};
 		fetchData();
 	}, [props.count, props.id]);
+
+	const nav = useNavigate();
+	const clickHandlr = () => {
+		nav(`/volunteer/${props.id}`);
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
+	};
 	return (
 		<>
 			<Container>
-				<div>{props.title}</div>
+				<div onClick={clickHandlr} style={{ cursor: "pointer" }}>
+					<TextTruncate text={props.title} limit={10} />
+				</div>
 				<div>일자 :{date}</div>
 				<div onClick={toggle}>
 					신청 인원 현황 : {props.count}/{props.limit}

@@ -16,8 +16,8 @@ const Container = styled.div`
 	h2 {
 		font-size: 1.3rem;
 	}
-	ol {
-		padding-left: 30px;
+	li {
+		list-style-type: none;
 	}
 `;
 
@@ -50,7 +50,7 @@ export default function GroupList() {
 			<Container>
 				<div>
 					<h2>내가 속한 그룹</h2>
-					<ol>
+					<div>
 						{itemsToShow.length ? (
 							itemsToShow.map((g) => (
 								<li key={g.likeId}>
@@ -60,7 +60,7 @@ export default function GroupList() {
 						) : (
 							<p>해당 페이지에 아이템이 없습니다.</p>
 						)}
-					</ol>
+					</div>
 					<Pagination
 						totalPages={totalPages}
 						currentPage={currentPage}
