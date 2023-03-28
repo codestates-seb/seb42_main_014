@@ -85,10 +85,10 @@ export default function Carousel() {
 					<Style2 color="white">
 						<Lottie animationData={volunteerTest} />
 						<div>
-							<div className="title">봉사 자동매칭 서비스</div>
+							<div className="title">봉사 매칭 서비스</div>
 							<div>
 								간단한 테스트로 내 봉사 성향을 알아보고,
-								<br /> 자동으로 그에 맞는 봉사만 추천받을 수 있어요.
+								<br /> 그에 맞는 봉사만 추천받을 수 있어요.
 							</div>
 							<MoveToTestButton onClick={() => navigate("/test")}>테스트 하러가기</MoveToTestButton>
 						</div>

@@ -12,6 +12,7 @@ import ElderlyIcon from "@mui/icons-material/Elderly";
 import AccessibleIcon from "@mui/icons-material/Accessible";
 import { useNavigate } from "react-router-dom";
 import Paginations from "../../components/community/CommunityPagination ";
+import { EmptyContent } from "../../EmptyContent";
 
 const Container = styled.div`
 	height: 100%;
@@ -40,11 +41,6 @@ const ExplainDiv = styled.div`
 		padding-left: 10px;
 		font-weight: bold;
 	}
-`;
-const H1 = styled.h1`
-	display: block;
-	text-align: center;
-	margin: 20%;
 `;
 
 const ButtonDiv = styled.div`
@@ -233,7 +229,7 @@ export default function Community() {
 							}
 						})
 					) : (
-						<H1>해당 게시글이 존재하지 않습니다.</H1>
+						<EmptyContent content="아직 해당하는 그룹이 없어요." />
 					)}
 					{totalItemsCount >= 4 ? (
 						<Paginations

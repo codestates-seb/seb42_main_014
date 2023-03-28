@@ -16,7 +16,7 @@ const StyledContainerDiv = styled.div`
 	justify-content: center;
 	width: 100%;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
-	min-width: 500px;
+	min-width: 530px;
 	height: fit-content;
 	section {
 		margin: 10px;

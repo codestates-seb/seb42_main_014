@@ -13,7 +13,7 @@ const StyledContainerDiv = styled.div`
 	width: 20%;
 	height: fit-content;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
-	min-width: 300px;
+	min-width: 320px;
 	section {
 		margin: 10px;
 		width: 100%;

@@ -45,11 +45,6 @@ const StyledCardContainerDiv = styled.div`
 	}
 `;
 
-const H1 = styled.h1`
-	display: block;
-	text-align: center;
-	margin: 20%;
-`;
 const SearchContainerDiv = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -291,7 +286,7 @@ export default function Volunteer() {
 									<Card
 										src={
 											volunteerImage ||
-											"https://main014-bucket.s3.ap-northeast-2.amazonaws.com/profile/011e2a77-4a54-4377-8679-6c49c4b86e7f%ED%95%9C%EA%B8%80%EC%9D%B4%EB%A6%84%EC%9D%BC%EB%95%90.png"
+											"https://main014-bucket.s3.ap-northeast-2.amazonaws.com/profile/pexels-min-an-853168.jpg"
 										}
 										title={title}
 										organizationName={organizationName}

@@ -46,7 +46,7 @@ export default function OrgVolList() {
 		<>
 			<Container>
 				<div>
-					<h2>봉사 활동 신청인 현황</h2>
+					<h2>봉사 활동 신청 인원 현황</h2>
 					<div>
 						{Vol.length ? (
 							Vol.map((v) => (
