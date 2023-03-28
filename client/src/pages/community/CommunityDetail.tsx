@@ -32,7 +32,6 @@ export default function CommunityDetail() {
 		const getGroupDetailData = async () => {
 			const result = await myPageGet(`groups/${location.state}`);
 			setGroupData(result.data);
-			console.log(result.data);
 		};
 		getGroupDetailData();
 	}, [location.state]);

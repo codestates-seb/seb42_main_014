@@ -82,7 +82,6 @@ const Login = styled.input`
 		outline: none;
 	}
 	border-bottom: 3px solid black;
-
 	::placeholder {
 		color: black;
 		font-weight: 900;
@@ -130,6 +129,12 @@ export default function Usercard() {
 		setMessage("");
 		isPassword(event.target.value);
 	};
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+		if (event.key === "Enter") {
+			event.preventDefault();
+			check();
+		}
+	};
 
 	return (
 		<>
@@ -156,7 +161,12 @@ export default function Usercard() {
 			</Container>
 			<Modal isOpen={isOpen} toggle={toggle}>
 				<h1>패스워드 확인</h1>
-				<Login type="password" onChange={handleInputChange} placeholder="패스워드" />
+				<Login
+					type="password"
+					onChange={handleInputChange}
+					placeholder="패스워드"
+					onKeyDown={handleKeyDown}
+				/>
 				{message}
 				<Flex>
 					<button type="button" onClick={check}>

@@ -4,8 +4,14 @@ import styled from "styled-components";
 const Area = styled.div`
 	display: flex;
 	select {
-		margin-right: 5px;
+		appearance: none;
+		margin-right: 8px;
 		border: 1px solid gray;
+		background-image: url("../images/volunteer/DownArrowPNGHD.png");
+		background-repeat: no-repeat;
+		background-size: 13px;
+		background-position: right 10px center;
+		padding-right: 20px;
 	}
 `;
 
@@ -335,9 +341,11 @@ const SelectArea = ({
 					</option>
 				))}
 			</select>
+
 			{
 				<select value={selectedSubArea} onChange={handleSubAreaChange}>
 					<option value="">시,군,구를 선택해주세요</option>
+
 					{subAreas.map((subArea) => (
 						<option key={subArea} value={subArea}>
 							{subArea}

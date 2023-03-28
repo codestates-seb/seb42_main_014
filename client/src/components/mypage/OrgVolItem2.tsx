@@ -13,6 +13,7 @@ const Container = styled.div`
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 5px;
+	align-items: center;
 
 	& > div:first-child {
 		width: 140px;

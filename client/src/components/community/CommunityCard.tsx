@@ -3,6 +3,7 @@ import Button from "../../components/Button";
 import { ReactNode, useEffect, useState } from "react";
 import { GroupPost } from "../../api/community/CommunityPost";
 import { myPageGet } from "../../api/mypage/MypageGet";
+import { FiCornerDownLeft } from "react-icons/fi";
 
 const Container = styled.div`
 	background-color: #ffffff;
@@ -30,6 +31,7 @@ const Container = styled.div`
 `;
 const ImgDiv = styled.div`
 	margin-right: 10px;
+	margin-top: 5px;
 `;
 const ContentDiv = styled.div`
 	white-space: nowrap;
@@ -49,7 +51,7 @@ const ButtonDiv = styled.div`
 `;
 const Flex = styled.div`
 	display: flex;
-	align-items: flex-end;
+	align-items: center;
 `;
 interface IProps {
 	member: boolean;
@@ -75,10 +77,15 @@ export default function CommunityCard({
 	onClick,
 }: IProps) {
 	const [member, setIsMember] = useState<boolean | null>(null);
+	const [memberNum, setIsMemberNum] = useState(null);
+	const [applyLimit, setIApplyLimit] = useState(null);
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await myPageGet(`groups/${id}`);
+			const member = await myPageGet(`member-groups/${id}`);
 			setIsMember(result.data.groupMember);
+			setIApplyLimit(result.data.applyLimit);
+			setIsMemberNum(member.data.length);
 		};
 		fetchData();
 	}, [id]);
@@ -110,7 +117,10 @@ export default function CommunityCard({
 
 					<span style={{ fontWeight: "bold" }} dangerouslySetInnerHTML={{ __html: intro }}></span>
 					<span>{place}</span>
-					<span>{hashtag}</span>
+					<span style={{ fontSize: "1.2rem", fontWeight: "bold" }}>
+						{memberNum}명 / {applyLimit}명
+					</span>
+					{/* <span>{hashtag}</span> */}
 				</ContentDiv>
 			</Flex>
 			<ButtonDiv>
