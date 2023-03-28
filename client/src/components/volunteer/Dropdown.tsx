@@ -24,11 +24,11 @@ const DropdownContent = styled.div`
 	left: 0;
 	z-index: 1;
 	background-color: #ffffff;
-	min-width: 160px;
+	min-width: 150px;
 	overflow: auto;
 	border: 2px solid #eaeaea;
 	border-top: none;
-	width: 200px;
+	width: 150px;
 	button {
 		background-color: inherit;
 		color: black;

@@ -263,8 +263,8 @@ export default function Volunteer() {
 								option={optionArr}
 								radius={10}
 								height={50}
-								boxWidth={200}
-								max_min_width={200}
+								boxWidth={150}
+								max_min_width={150}
 							/>
 						</FilterContainerDiv>
 					</StyledAreaContainer>

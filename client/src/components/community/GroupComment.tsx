@@ -30,6 +30,11 @@ export const StyledProfileImgContainer = styled.div`
 		border-radius: 50%;
 	}
 `;
+const Content = styled.div`
+	width: 330px;
+	word-break: break-all;
+	height: 100%;
+`;
 
 export default function GroupComment(user: Props) {
 	const [ment, setMent] = useState(user.content);
@@ -95,7 +100,7 @@ export default function GroupComment(user: Props) {
 							placeholder="수정글 입력"
 						></input>
 					) : (
-						<span>{user.content}</span>
+						<Content>{user.content}</Content>
 					)}
 				</div>
 			</div>

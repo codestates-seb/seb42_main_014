@@ -339,9 +339,10 @@ const VolunteerPost = () => {
 									<Dropdown
 										setSelectedOption={setSelectedOption}
 										selectedOption={selectedOption}
-										placeholder="분야를 선택해주세요"
+										placeholder="분야 선택"
 										option={optionArr}
-										width={123}
+										boxWidth={150}
+										max_min_width={150}
 									/>
 								</Select>
 								<Select>
@@ -440,6 +441,7 @@ const VolunteerPost = () => {
 										{...register("volunteerTime", { required: true })}
 										style={{ width: "60px", backgroundColor: "#f7f7f7", fontSize: "1rem" }}
 										type="number"
+										min="0"
 									/>
 									시간
 								</Select>
@@ -467,6 +469,7 @@ const VolunteerPost = () => {
 										{...register("memberCount", { required: true })}
 										style={{ width: "60px", backgroundColor: "#f7f7f7", fontSize: "1rem" }}
 										type="number"
+										min="0"
 									/>
 									명
 								</Select>
