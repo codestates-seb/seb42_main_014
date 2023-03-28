@@ -113,11 +113,15 @@ export default function Volunteer() {
 	const navigate = useNavigate();
 
 	const handleClick = (id: number) => {
-		navigate(`/volunteer/${id}`);
-		window.scrollTo({
-			top: 0,
-			behavior: "smooth",
-		});
+		if (localStorage.getItem("accessToken")) {
+			navigate(`/volunteer/${id}`);
+			window.scrollTo({
+				top: 0,
+				behavior: "smooth",
+			});
+		}
+		alert("로그인 후 이용해주세요");
+		navigate("/login");
 	};
 	const handleOptionChange = async (selectedOption: SetStateAction<string | any>) => {
 		setSelectedOption(selectedOption);
