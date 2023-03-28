@@ -122,6 +122,7 @@ public class GroupService {
     public boolean checkGroupLeaderPoint(long memberId) {
 
         Member member = memberService.verifiedMember(memberId);
+        
         if(adminMailAddress.equals(member.getEmail())) return true;
         else if(member.getPoint().getPointCount() >= 15){
             member.setRoles(List.of("GROUPZANG", "USER"));
