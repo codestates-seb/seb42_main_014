@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import TextTruncate from "../TextCut";
 
 interface KeepVolItemProps {
 	title: string;
@@ -25,10 +26,11 @@ export default function GroupItem(props: KeepVolItemProps) {
 	const clickHandler = () => {
 		nav(`/community/${props.id}`, { state: props.id });
 	};
+
 	return (
 		<>
 			<Container>
-				<div>{props.title} </div>
+				<TextTruncate text={props.title} limit={10} />
 				<div>
 					<button onClick={clickHandler}>내 그룹 가기</button>
 				</div>

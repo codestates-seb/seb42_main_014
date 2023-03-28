@@ -60,6 +60,7 @@ const ReviewList = styled.div`
 	height: 300px;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	width: 100%;
 
 	::-webkit-scrollbar {
 		width: 10px; /* 스크롤바의 너비 */

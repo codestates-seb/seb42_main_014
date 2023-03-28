@@ -106,7 +106,7 @@ export default function Community() {
 			});
 		} else if (groupMember === false) {
 			setIsMember(false);
-			alert("멤버만 입장 가능 합니다! 가입을 원하시면 함께하기 를 눌러주세요");
+			alert("멤버만 입장 가능 합니다!");
 		}
 	};
 
