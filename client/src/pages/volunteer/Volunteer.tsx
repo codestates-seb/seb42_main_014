@@ -119,9 +119,10 @@ export default function Volunteer() {
 				top: 0,
 				behavior: "smooth",
 			});
+		} else {
+			alert("로그인 후 이용해주세요");
+			navigate("/login");
 		}
-		alert("로그인 후 이용해주세요");
-		navigate("/login");
 	};
 	const handleOptionChange = async (selectedOption: SetStateAction<string | any>) => {
 		setSelectedOption(selectedOption);
