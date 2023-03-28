@@ -9,47 +9,47 @@ import ForestIcon from "@mui/icons-material/Forest";
 import PetsIcon from "@mui/icons-material/Pets";
 import ElderlyIcon from "@mui/icons-material/Elderly";
 import AccessibleIcon from "@mui/icons-material/Accessible";
+import Paginations from "../../components/VolPagination ";
+import { EmptyContent } from "../../EmptyContent";
 
 const StyledContainerDiv = styled.div`
 	height: 100%;
+	margin-bottom: 100px;
 `;
 
 const StyledAreaContainer = styled.div`
 	display: flex;
 	height: 100%;
-	width: 60%;
 	margin: 0 auto;
 	flex-direction: column;
 `;
 
 const TitleDiv = styled.div`
 	background-color: #ffa9a9;
-	display: flex;
+	color: #ffffff;
 	border-radius: 10px;
+	display: flex;
+	width: 100%;
 	padding: 10px 20px;
 	margin: 2rem auto 1rem auto;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
-	color: #ffffff;
-	width: 100%;
-	max-width: 1233px;
 	justify-content: center;
 	font-weight: bold;
-	font-size: 1rem;
+	font-size: 1.2rem;
 `;
 
 const ContentDiv = styled.div`
 	background-color: #ffa9a9;
+	color: #ffffff;
 	display: flex;
-	justify-content: space-around;
 	border-radius: 10px;
+	width: 100%;
+	justify-content: space-around;
 	padding: 20px 20px;
 	margin: 0 auto;
-	margin-bottom: 10px;
+	margin-bottom: 1rem;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
-	color: #ffffff;
-	height: 350px;
-	width: 100%;
-	max-width: 1233px;
+	height: 500px;
 `;
 
 const ImgDiv = styled.div`
@@ -60,7 +60,6 @@ const ImgDiv = styled.div`
 	img {
 		width: 100%;
 		border-radius: inherit;
-		/* filter: brightness(50%); */
 	}
 `;
 
@@ -71,19 +70,30 @@ const WordDiv = styled.div`
 	padding: 20px;
 	line-height: 200%;
 	text-align: center;
-	font-size: 1.6rem;
+	font-size: 2rem;
 	@media (max-width: 1550px) {
-		font-size: 1.2rem;
+		font-size: 1.5rem;
 		line-height: 200%;
+	}
+`;
+
+const RecommendDiv = styled.div`
+	background-color: #ffa9a9;
+	color: #ffffff;
+	display: flex;
+	justify-content: center;
+	border-radius: 10px;
+	width: 100%;
+	font-size: 2rem;
+	padding: 10px 20px;
+	@media (max-width: 1550px) {
+		font-size: 1.5rem;
 	}
 `;
 
 const StyledCardContainerDiv = styled.div`
 	margin-top: 2rem;
 	padding-top: 2rem;
-	height: 100vh;
-	margin-bottom: 200px;
-	border-top: 3px solid #383838;
 	display: grid;
 	place-items: center;
 	grid-template-columns: repeat(4, 430px);
@@ -104,24 +114,36 @@ export default function Recommend() {
 	const [title, setTitle] = useState("");
 	const [saying, setSaying] = useState(<span>파이팅!</span>);
 	const [img, setImg] = useState("");
+	const [totalPages, setTotalPages] = useState<number>(0);
+	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [volunData, setVolunData] = useState([]);
 	const [tag, setTag] = useState("");
 	const navigate = useNavigate();
 	const location = useLocation();
 
 	const handleClick = (id: number) => {
-		navigate(`/volunteer/${id}`);
-		window.scrollTo({
-			top: 0,
-			behavior: "smooth",
-		});
+		if (localStorage.getItem("accessToken")) {
+			navigate(`/volunteer/${id}`);
+			window.scrollTo({
+				top: 0,
+				behavior: "smooth",
+			});
+		} else {
+			alert("로그인 후 이용해주세요");
+			navigate("/login");
+		}
+	};
+
+	const handlePageChange = (pageNumber: number) => {
+		setCurrentPage(pageNumber);
 	};
 
 	useEffect(() => {
 		setTag(location.state);
-		let URL = `volunteers?volunteerName&organizationName&tagName=${location.state}&orderBy=volunteerId&sort=DESC&pageNum=1`;
+		let URL = `volunteers?volunteerName&organizationName&tagName=${location.state}&orderBy=volunteerId&sort=DESC&pageNum=${currentPage}`;
 		const getVolunteerData = async () => {
 			const result = await volunteerDataGet(URL);
+			setTotalPages(result.totalPages);
 			setVolunData(result.data);
 		};
 
@@ -176,29 +198,26 @@ export default function Recommend() {
 			);
 		}
 		getVolunteerData();
-	}, [location.state, tag]);
+	}, [location.state, tag, currentPage]);
 
 	return (
 		<>
 			<StyledContainerDiv>
 				<StyledAreaContainer>
 					<TitleDiv>
-						{/* 제목 */}
 						<h1>{`당신의 봉사 유형은 "${title}" 입니다.`}</h1>
 					</TitleDiv>
 					<ContentDiv>
-						{/* 사진과 명언 */}
 						<ImgDiv>
-							{/* 멍멍이 이미지 */}
 							<img src={img} alt="강아지" />
 						</ImgDiv>
 						<WordDiv>{saying}</WordDiv>
 					</ContentDiv>
+					<RecommendDiv>{`당신에게 추천하는 봉사는 ${tag} 봉사입니다.`}</RecommendDiv>
 				</StyledAreaContainer>
-				<StyledCardContainerDiv>
-					{/* 추천 봉사 리스트 */}
-					{volunData &&
-						volunData.slice(0, 8).map((el): JSX.Element => {
+				{volunData.length ? (
+					<StyledCardContainerDiv>
+						{volunData.map((el): JSX.Element => {
 							const {
 								applyCount,
 								applyLimit,
@@ -255,7 +274,19 @@ export default function Recommend() {
 								/>
 							);
 						})}
-				</StyledCardContainerDiv>
+					</StyledCardContainerDiv>
+				) : (
+					<EmptyContent content="아직 해당하는 봉사가 없어요." />
+				)}
+
+				{volunData.length ? (
+					<Paginations
+						totalItemsCount={totalPages === 1 ? totalPages : totalPages * 12}
+						activePage={currentPage}
+						onPageChange={handlePageChange}
+						itemsCountPerPage={12}
+					/>
+				) : null}
 			</StyledContainerDiv>
 		</>
 	);
