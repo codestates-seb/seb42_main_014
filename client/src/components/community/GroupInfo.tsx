@@ -88,7 +88,14 @@ export default function GroupInfo({ groupData }: any) {
 				</Flex>
 			</section>
 			<section style={{ display: "flex", padding: "20px" }}>
-				<img src={groupImage} alt="그룹 사진" />
+				<img
+					src={
+						groupImage
+							? groupImage
+							: "https://main014-bucket.s3.ap-northeast-2.amazonaws.com/images/volunteer/volunteer.jpg"
+					}
+					alt="그룹 사진"
+				/>
 				<div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
 					<div style={{ marginLeft: "20px" }}>
 						<div className="layout">

@@ -28,9 +28,11 @@ const StyledLogo = styled.img`
 `;
 const StyledList = styled.li`
 	margin: 20px;
-	:hover {
-		color: #f58686;
-		transition: all 0.2s;
+	:hover,
+	&.active {
+		text-decoration: underline;
+		transition: all 0.3s;
+		text-underline-offset: 10px;
 	}
 `;
 export default function Footer() {

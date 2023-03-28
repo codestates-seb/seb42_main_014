@@ -84,7 +84,7 @@ export default function Category({ onCategoryClick }: CategoryProps) {
 				{categoryItems?.map((el) => {
 					return (
 						<>
-							<Col onClick={() => handleClick(el.key)}>
+							<Col className={isClicked !== "" ? "" : "active"} onClick={() => handleClick(el.key)}>
 								<Icon className={isClicked === el.name ? "active" : ""}>
 									{typeof el.icon === "string" ? (
 										<AllCategoryDiv>{el.icon}</AllCategoryDiv>
