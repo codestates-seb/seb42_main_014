@@ -198,7 +198,7 @@ export default function Recommend() {
 				<StyledCardContainerDiv>
 					{/* 추천 봉사 리스트 */}
 					{volunData &&
-						volunData.map((el): JSX.Element => {
+						volunData.slice(0, 8).map((el): JSX.Element => {
 							const {
 								applyCount,
 								applyLimit,
