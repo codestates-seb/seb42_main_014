@@ -6,6 +6,7 @@ import com.main.volunteer.domain.point.repository.PointRepository;
 import org.springframework.stereotype.Service;
 
 @Service
+
 public class PointService {
 
     private final PointRepository pointRepository;

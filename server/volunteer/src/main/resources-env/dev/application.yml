@@ -73,5 +73,3 @@ cloud:
 mail:
   address:
     admin: admin@gmail.com
-awsParameterStorePropertySource:
-  enabled: true

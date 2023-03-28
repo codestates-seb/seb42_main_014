@@ -14,5 +14,6 @@ public class LikeDto {
         private Long likeId;
         private String volunteerName;
         private String organizationName;
+        private Long volunteerId;
     }
 }

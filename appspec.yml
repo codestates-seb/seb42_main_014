@@ -1,0 +1,18 @@
+version: 0.0
+os: linux
+files:
+  - source:  /
+    destination: /home/ubuntu/action
+    overwrite: yes
+
+permissions:
+  - object: /home/ubuntu/action
+    pattern: "**"
+    owner: ssm-user
+    group: ssm-user
+
+hooks:
+  ApplicationStart:
+    - location: scripts/deploy.sh
+      timeout: 60
+      runas: ubuntu
