@@ -12,9 +12,10 @@ public interface LikeMapper {
 
         Long likeId = like.getLikeId();
         String volunteerName = like.getVolunteer().getTitle();
+        Long volunteerId = like.getVolunteer().getVolunteerId();
         String organizationName = like.getVolunteer().getMember().getMemberName();
 
-        return new LikeDto.Response(likeId, volunteerName, organizationName);
+        return new LikeDto.Response(likeId, volunteerName, organizationName, volunteerId);
     }
 
     List<LikeDto.Response> likeListToResponseList(List<Like> myLikeList);
