@@ -85,7 +85,6 @@ export default function Comment() {
 
 	const [reviewList, setReviewList] = useState([]);
 	const [ment, setMent] = useState("");
-	console.log(reviewList);
 
 	const handleMent = (e: any) => {
 		setMent(e.target.value);

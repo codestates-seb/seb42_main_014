@@ -76,7 +76,6 @@ export default function Community() {
 	useEffect(() => {
 		const fetchData = async () => {
 			myPageGet("members/me").then((res) => setGetMyScore(res.data));
-
 			const result = await myPageGet(`groups?`);
 			setGetCommunityData(result.data);
 			setItems(result.data);
@@ -106,7 +105,7 @@ export default function Community() {
 			});
 		} else if (groupMember === false) {
 			setIsMember(false);
-			alert("멤버만 입장 가능 합니다! 가입을 원하시면 함께하기 를 눌러주세요");
+			alert("멤버만 입장 가능 합니다!");
 		}
 	};
 
@@ -157,7 +156,6 @@ export default function Community() {
 					{displayedItems.length ? (
 						displayedItems.map((el) => {
 							const { groupImage, groupName, place, content, tagName, groupId } = el;
-
 							const categoryItems = {
 								어린이: ChildCareIcon,
 								장애인: AccessibleIcon,

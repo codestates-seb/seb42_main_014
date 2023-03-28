@@ -94,7 +94,6 @@ export default function CommunityCard({
 					groupId: id,
 				};
 				GroupPost(`member-groups/${id}`, data);
-				alert(`환영합니다!`);
 			}
 		}
 	};
@@ -103,7 +102,14 @@ export default function CommunityCard({
 		<Container onClick={onClick}>
 			<Flex>
 				<ImgDiv>
-					<img src={src} alt="그룹 이미지" />
+					<img
+						src={
+							src
+								? src
+								: "https://main014-bucket.s3.ap-northeast-2.amazonaws.com/images/volunteer/volunteer.jpg"
+						}
+						alt="그룹 이미지"
+					/>
 				</ImgDiv>
 				<ContentDiv>
 					<span style={{ fontSize: "1.8rem", fontWeight: "bold" }}>{name}</span>
