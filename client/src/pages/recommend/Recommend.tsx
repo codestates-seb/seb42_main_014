@@ -86,8 +86,8 @@ const StyledCardContainerDiv = styled.div`
 	border-top: 3px solid #383838;
 	display: grid;
 	place-items: center;
-	grid-template-columns: repeat(4, 400px);
-	row-gap: 30px;
+	grid-template-columns: repeat(4, 430px);
+	row-gap: 50px;
 	justify-content: center;
 	@media (max-width: 1550px) {
 		grid-template-columns: repeat(3, 400px);
