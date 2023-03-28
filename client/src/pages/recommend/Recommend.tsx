@@ -86,8 +86,8 @@ const StyledCardContainerDiv = styled.div`
 	border-top: 3px solid #383838;
 	display: grid;
 	place-items: center;
-	grid-template-columns: repeat(4, 400px);
-	row-gap: 30px;
+	grid-template-columns: repeat(4, 430px);
+	row-gap: 50px;
 	justify-content: center;
 	@media (max-width: 1550px) {
 		grid-template-columns: repeat(3, 400px);
@@ -198,13 +198,14 @@ export default function Recommend() {
 				<StyledCardContainerDiv>
 					{/* 추천 봉사 리스트 */}
 					{volunData &&
-						volunData.map((el): JSX.Element => {
+						volunData.slice(0, 8).map((el): JSX.Element => {
 							const {
 								applyCount,
 								applyLimit,
 								place,
 								volunteerId,
 								volunteerDate,
+								volunteerTime,
 								tagName,
 								title,
 								volunteerImage,
@@ -228,8 +229,9 @@ export default function Recommend() {
 									title={title}
 									organizationName={organizationName}
 									date={volunteerDate}
+									time={volunteerTime}
 									place={place}
-									person={`${applyCount} / ${applyLimit}`}
+									person={`${applyCount}명 / ${applyLimit}명`}
 									category={
 										<SvgIcon
 											component={

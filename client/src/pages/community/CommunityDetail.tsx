@@ -7,7 +7,6 @@ import { myPageGet } from "../../api/mypage/MypageGet";
 import { useLocation } from "react-router-dom";
 
 const StyledGroupDetailContainer = styled.div`
-	margin-bottom: 100px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
