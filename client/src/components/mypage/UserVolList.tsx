@@ -18,8 +18,8 @@ const Container = styled.div`
 	h2 {
 		font-size: 1.3rem;
 	}
-	ol {
-		padding-left: 30px;
+	li {
+		list-style-type: none;
 	}
 	& > div:first-child {
 		border-bottom: 1px solid #000000;
@@ -68,7 +68,6 @@ export default function UserVolList() {
 					Authorization: `${localStorage.getItem("accessToken")}`,
 				},
 			});
-
 			const plan = await myPageGet(`apply/member/plan?pageNum=${currentPage}`);
 			const pageUrl = await myPageGet(`apply/member/plan?pageNum=1`);
 			setTotalPages(pageUrl.data.length * plan.totalPages);
@@ -83,7 +82,7 @@ export default function UserVolList() {
 			<Container>
 				<div>
 					<h2>나의 봉사 활동 내역</h2>
-					<ol>
+					<div>
 						{history.length ? (
 							history.map((v) => (
 								<>
@@ -99,7 +98,7 @@ export default function UserVolList() {
 						) : (
 							<p>신청한 봉사가 없습니다.</p>
 						)}
-					</ol>
+					</div>
 					<Paginations
 						totalPages={totalPages1}
 						currentPage={currentPage1}
@@ -109,7 +108,7 @@ export default function UserVolList() {
 				</div>
 				<div>
 					<h2>봉사 활동 신청 현황</h2>
-					<ol>
+					<div>
 						{Vol.length ? (
 							Vol.map((v) => (
 								<li key={v.likeId}>
@@ -124,7 +123,7 @@ export default function UserVolList() {
 						) : (
 							<p>신청한 봉사가 없습니다.</p>
 						)}
-					</ol>
+					</div>
 				</div>
 				<Paginations
 					totalPages={totalPages}

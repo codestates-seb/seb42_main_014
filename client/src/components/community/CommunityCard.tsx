@@ -94,7 +94,6 @@ export default function CommunityCard({
 					groupId: id,
 				};
 				GroupPost(`member-groups/${id}`, data);
-				alert(`환영합니다!`);
 			}
 		}
 	};

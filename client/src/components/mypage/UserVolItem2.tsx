@@ -1,6 +1,6 @@
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Volpatch } from "../../api/mypage/VolunteerPatch";
+import TextTruncate from "../TextCut";
 
 const Container = styled.div`
 	display: flex;
@@ -25,27 +25,26 @@ interface ItemProps {
 }
 
 export default function UserVolItem2(props: ItemProps) {
-	const apiUrl = `http://3.35.252.234:8080/apply/`;
+	const nav = useNavigate();
 	const onRemove = async () => {
 		if (window.confirm("이 작업이 수행되면 봉사활동이 취소 됩니다.")) {
-			// try {
-			// 	const response = await axios.patch(`${apiUrl}${props.id}`, null, {
-			// 		headers: {
-			// 			Authorization: `${localStorage.getItem("accessToken")}`,
-			// 		},
-			// 	});
-			// 	return response.data.body;
-			// } catch (err) {
-			// 	alert("봉사 취소에 실패했어요. 잠시 후 다시 시도해 주세요.");
-			// }
 			props.deleteItem(props.id);
 		}
+	};
+	const clickHandlr = () => {
+		nav(`/volunteer/${props.id}`);
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
 	};
 	const date = props.time.split("T")[0];
 	return (
 		<>
 			<Container>
-				<div>{props.title} </div>
+				<div onClick={clickHandlr} style={{ cursor: "pointer" }}>
+					<TextTruncate text={props.title} limit={10} />
+				</div>
 				<div>일자 : {date}</div>
 				<div>
 					<button type="button" onClick={onRemove}>

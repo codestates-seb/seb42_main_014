@@ -186,7 +186,7 @@ export default function QuestionCard(props: Iprop) {
 				<Container>
 					{questionNumber === 1 && (
 						<div>
-							<h1>Q1.텀블러를 평소에 자주 사용하시나요?</h1>
+							<h1>Q4.텀블러를 평소에 자주 사용하시나요?</h1>
 							<ButtonDiv>
 								<Button
 									value="네"
@@ -212,7 +212,7 @@ export default function QuestionCard(props: Iprop) {
 
 					{questionNumber === 2 && (
 						<div>
-							<h1>Q2. 동물들과 잘 어울리시나요?</h1>
+							<h1>Q5. 동물들과 잘 어울리시나요?</h1>
 							<ButtonDiv>
 								<Button
 									value="네"
@@ -238,7 +238,7 @@ export default function QuestionCard(props: Iprop) {
 
 					{questionNumber === 3 && (
 						<div>
-							<h1>Q3. 미니멀 라이프에 대해 관심이 있으신가요?</h1>
+							<h1>Q6. 미니멀 라이프에 대해 관심이 있으신가요?</h1>
 							<ButtonDiv>
 								<Button
 									value="네"
@@ -263,7 +263,7 @@ export default function QuestionCard(props: Iprop) {
 					)}
 					{questionNumber === 4 && (
 						<div>
-							<h1>Q4. 장볼 때 장바구니를 들고 다니시나요? </h1>
+							<h1>Q7. 장볼 때 장바구니를 들고 다니시나요? </h1>
 							<ButtonDiv>
 								<Button
 									value="네"
@@ -288,7 +288,7 @@ export default function QuestionCard(props: Iprop) {
 					)}
 					{questionNumber === 5 && (
 						<div>
-							<h1>Q5. 동물 관련된 알러지가 있으신가요? </h1>
+							<h1>Q8. 동물 관련된 알러지가 있으신가요? </h1>
 							<ButtonDiv>
 								<Button
 									value="네"
@@ -322,7 +322,7 @@ export default function QuestionCard(props: Iprop) {
 				<Container>
 					{questionNumber === 1 && (
 						<div>
-							<h1>Q1.신세대 용어를 잘 아시나요?</h1>
+							<h1>Q4.신세대 용어를 잘 아시나요?</h1>
 							<ButtonDiv>
 								<Button
 									value="네"
@@ -348,7 +348,7 @@ export default function QuestionCard(props: Iprop) {
 
 					{questionNumber === 2 && (
 						<div>
-							<h1>Q2. 평소에 배려석에 자리가 있더라도 비워두어야 한다고 생각하시나요?</h1>
+							<h1>Q5. 평소에 배려석에 자리가 있더라도 비워두어야 한다고 생각하시나요?</h1>
 							<ButtonDiv>
 								<Button
 									value="네"
@@ -374,7 +374,7 @@ export default function QuestionCard(props: Iprop) {
 
 					{questionNumber === 3 && (
 						<div>
-							<h1>Q3. 고령화 문제에 대해 깊게 생각해보신적이 있으신가요?</h1>
+							<h1>Q6. 고령화 문제에 대해 깊게 생각해보신적이 있으신가요?</h1>
 							<ButtonDiv>
 								<Button
 									value="네"
@@ -399,7 +399,7 @@ export default function QuestionCard(props: Iprop) {
 					)}
 					{questionNumber === 4 && (
 						<div>
-							<h1>Q4.다음 세대를 위해서 투자를 해야한다고 생각하시나요? </h1>
+							<h1>Q7.다음 세대를 위해서 투자를 해야한다고 생각하시나요? </h1>
 							<ButtonDiv>
 								<Button
 									value="네"
@@ -424,7 +424,7 @@ export default function QuestionCard(props: Iprop) {
 					)}
 					{questionNumber === 5 && (
 						<div>
-							<h1>Q5.활동적인걸 좋아하시나요? </h1>
+							<h1>Q8.활동적인걸 좋아하시나요? </h1>
 							<ButtonDiv>
 								<Button
 									value="네"

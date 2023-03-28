@@ -16,8 +16,8 @@ const Container = styled.div`
 	h2 {
 		font-size: 1.3rem;
 	}
-	ol {
-		padding-left: 30px;
+	li {
+		list-style-type: none;
 	}
 	& > div:first-child {
 		/* border-bottom: 1px solid #000000; */
@@ -47,7 +47,7 @@ export default function OrgVolList() {
 			<Container>
 				<div>
 					<h2>봉사 활동 신청인 현황</h2>
-					<ol>
+					<div>
 						{Vol.length ? (
 							Vol.map((v) => (
 								<li key={v.likeId}>
@@ -63,7 +63,7 @@ export default function OrgVolList() {
 						) : (
 							<p>등록한 게시물이 없습니다.</p>
 						)}
-					</ol>
+					</div>
 				</div>
 				{Vol.length ? (
 					<Paginations

@@ -16,8 +16,8 @@ const Container = styled.div`
 	h2 {
 		font-size: 1.3rem;
 	}
-	ol {
-		padding-left: 30px;
+	li {
+		list-style-type: none;
 	}
 `;
 
@@ -32,12 +32,10 @@ export default function KeepVolList() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-
 			const plan = await myPageGet(`likes/my?pageNum=${currentPage}`);
 			const page = await myPageGet(`likes/my?pageNum=1`);
-
-
 			const likes = plan.data;
+			console.log(likes);
 			setLikes(likes);
 			setTotalPages(page.data.length * plan.totalPages);
 
@@ -51,18 +49,22 @@ export default function KeepVolList() {
 			<Container>
 				<div>
 					<h2>찜한 봉사 목록</h2>
-					<ol>
+					<div>
 						{/* 찜한 봉사 리스트 */}
 						{likes.length ? (
 							likes.map((like) => (
 								<li key={like.likeId}>
-									<KeepVolItem title={like.volunteerName} name={like.organizationName} />
+									<KeepVolItem
+										title={like.volunteerName}
+										name={like.organizationName}
+										id={like.volunteerId}
+									/>
 								</li>
 							))
 						) : (
 							<p>찜한 게시물이 없습니다.</p>
 						)}
-					</ol>
+					</div>
 					<Paginations
 						totalPages={totalPages}
 						currentPage={currentPage}
