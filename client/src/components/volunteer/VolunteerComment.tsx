@@ -75,7 +75,7 @@ export default function VolunteerComment(disabled: any) {
 	const [myReviewId, setMyReviewId] = useState("");
 	const [ment, setMent] = useState("");
 	const [isFilteredReviewChecked, setIsFilteredReviewChecked] = useState("allReview");
-	console.log("마이리뷰아이디", myReviewId, reviewList);
+	// console.log("마이리뷰아이디", myReviewId, reviewList);
 	const handleComment = (e: any) => {
 		setComment(e.target.value);
 	};
@@ -168,6 +168,7 @@ export default function VolunteerComment(disabled: any) {
 							placeholder="봉사 후기는 봉사활동이 끝난 뒤 한번만 등록이 가능해요."
 							value={comment}
 							onChange={handleComment}
+							disabled={ment === "VOLUNTEER_AFTER" ? false : true}
 						/>
 						<Button
 							onClick={handleCommentPost}
