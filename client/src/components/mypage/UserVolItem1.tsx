@@ -10,7 +10,7 @@ interface ItemProps {
 
 const Container = styled.div`
 	display: flex;
-
+	align-items: center;
 	justify-content: space-between;
 	margin-bottom: 5px;
 	& > div:first-child {

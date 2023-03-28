@@ -5,6 +5,14 @@ import { myPageGet } from "../../api/mypage/MypageGet";
 import { useNavigate } from "react-router-dom";
 import { Check } from "../../api/mypage/PassWordCheck";
 
+const ProfileImageContainer = styled.div`
+	border-radius: 50%;
+	img {
+		width: 130px;
+		border-radius: 50%;
+		height: 130px;
+	}
+`;
 const Container = styled.div`
 	background-color: #ffffff;
 	display: flex;
@@ -13,7 +21,7 @@ const Container = styled.div`
 	border-radius: 10px;
 	padding: 20px 40px;
 	margin-bottom: 30px;
-	justify-content: space-between;
+	justify-content: center;
 	& > div {
 		display: flex;
 		flex-direction: column;
@@ -27,10 +35,6 @@ const ImgDiv = styled.div`
 		background-color: #000000;
 		border-radius: 30px;
 		padding: 5px 30px;
-	}
-
-	img {
-		width: 64px;
 	}
 `;
 
@@ -54,6 +58,7 @@ const Flex = styled.div`
 	flex-direction: column;
 	justify-content: space-around;
 	width: 100%;
+
 	align-items: center;
 	button {
 		color: #ffffff;
@@ -66,8 +71,11 @@ const Flex = styled.div`
 
 const InfoDiv = styled.div`
 	display: flex;
+	margin-left: 50px;
 	flex-direction: column;
-	justify-content: center;
+	margin-top: 30px;
+	height: 70%;
+	justify-content: space-evenly;
 	div {
 		font-size: 1.2rem;
 	}
@@ -113,17 +121,23 @@ export default function Orgcard() {
 		setMessage("");
 		isPassword(event.target.value);
 	};
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+		if (event.key === "Enter") {
+			event.preventDefault();
+			check();
+		}
+	};
 
 	return (
 		<>
 			<Container>
 				<ImgDiv>
-					<div>
+					<ProfileImageContainer>
 						<img
 							src={orgInfo.profileImage ? orgInfo.profileImage : "/images/mypage/profile-user.png"}
 							alt="프로필이미지"
 						/>
-					</div>
+					</ProfileImageContainer>
 					<button type="button" onClick={toggle}>
 						수정하기
 					</button>
@@ -137,7 +151,12 @@ export default function Orgcard() {
 			</Container>
 			<Modal isOpen={isOpen} toggle={toggle}>
 				<h1>패스워드 확인</h1>
-				<Login type="password" onChange={handleInputChange} placeholder="패스워드"></Login>
+				<Login
+					type="password"
+					onChange={handleInputChange}
+					placeholder="패스워드"
+					onKeyDown={handleKeyDown}
+				></Login>
 				{message}
 				<Flex>
 					<button type="button" onClick={check}>
