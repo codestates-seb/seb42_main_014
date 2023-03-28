@@ -10,6 +10,7 @@ import { volunteerCommentPost } from "../../api/volunteer/volunteerData";
 import { CommentDelete } from "../../api/volunteer/volunteerComment";
 import dayjs from "dayjs";
 import React from "react";
+import { EmptyContent } from "../../EmptyContent";
 
 const StyledContainerDiv = styled.div`
 	width: 100%;
@@ -75,7 +76,6 @@ export default function VolunteerComment(disabled: any) {
 	const [myReviewId, setMyReviewId] = useState("");
 	const [ment, setMent] = useState("");
 	const [isFilteredReviewChecked, setIsFilteredReviewChecked] = useState("allReview");
-	// console.log("마이리뷰아이디", myReviewId, reviewList);
 	const handleComment = (e: any) => {
 		setComment(e.target.value);
 	};
@@ -181,24 +181,28 @@ export default function VolunteerComment(disabled: any) {
 						/>
 					</div>
 				</Comment>
-				{reviewList.map((user) => {
-					const commentCreatedAt = dayjs(user.modifiedAt).format("YYYY-MM-DD HH:mm");
-					return (
-						<ReviewItem
-							key={user.id}
-							id={user.reviewId}
-							time={commentCreatedAt}
-							content={user.content}
-							memberName={user.memberName}
-							onClick={onRemove}
-							myId={myReviewId}
-							editComment={function (id: any): void {
-								throw new Error("Function not implemented.");
-							}}
-							profileImage={user.profileImage}
-						/>
-					);
-				})}
+				{reviewList.length ? (
+					reviewList.map((user) => {
+						const commentCreatedAt = dayjs(user.modifiedAt).format("YYYY-MM-DD HH:mm");
+						return (
+							<ReviewItem
+								key={user.id}
+								id={user.reviewId}
+								time={commentCreatedAt}
+								content={user.content}
+								memberName={user.memberName}
+								onClick={onRemove}
+								myId={myReviewId}
+								editComment={function (id: any): void {
+									throw new Error("Function not implemented.");
+								}}
+								profileImage={user.profileImage}
+							/>
+						);
+					})
+				) : (
+					<EmptyContent content="아직 등록된 후기가 없어요." />
+				)}
 			</StyledContainerDiv>
 		</VolunteerCommentContext.Provider>
 	);

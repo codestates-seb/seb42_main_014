@@ -118,6 +118,9 @@ export default function VolunteerInfo() {
 				},
 			});
 			alert("봉사가 신청되었어요 :)");
+			await myPageGet(`volunteers/${params.id}`).then((res) =>
+				setGetVolunteerInfoData(res.volunteer),
+			);
 		} catch (err) {
 			alert("이미 신청하셨어요! :(");
 		}
