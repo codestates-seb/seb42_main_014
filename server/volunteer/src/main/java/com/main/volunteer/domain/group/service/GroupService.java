@@ -9,6 +9,7 @@ import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,10 @@ import java.util.Optional;
 public class GroupService {
     private final GroupRepository groupRepository;
     private final MemberService memberService;
+
+    @Value("${mail.address.admin}")
+    private String adminMailAddress;
+
 
     // 그룹 생성
 
@@ -117,7 +122,8 @@ public class GroupService {
     public boolean checkGroupLeaderPoint(long memberId) {
 
         Member member = memberService.verifiedMember(memberId);
-        if("admin".equals(member.getMemberName())) return true;
+        
+        if(adminMailAddress.equals(member.getEmail())) return true;
         else if(member.getPoint().getPointCount() >= 15){
             member.setRoles(List.of("GROUPZANG", "USER"));
             return true;
