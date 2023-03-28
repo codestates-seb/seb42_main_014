@@ -1,6 +1,8 @@
-aws:
-  paramstore:
-    enabled: true
-    prefix: /spring-boot-aws
-    profile-separator: _
-    name: main014
+#aws:
+#  paramstore:
+#    enabled: true
+#    prefix: /spring-boot-aws
+#    name: main014
+#    profile-separator: _
+
+

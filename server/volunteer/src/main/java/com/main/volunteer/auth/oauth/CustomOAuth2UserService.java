@@ -2,6 +2,7 @@ package com.main.volunteer.auth.oauth;
 
 import com.main.volunteer.domain.member.entity.Member;
 import com.main.volunteer.domain.member.repository.MemberRepository;
+import com.main.volunteer.domain.point.entity.Point;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -42,6 +43,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private void saveMember(String email, String name, String profile, String password){
         Member member = new Member();
+        member.setPoint(new Point());
         member.setEmail(email);
         member.setMemberName(name);
         member.setPassword(password);
