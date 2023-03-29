@@ -10,21 +10,19 @@ interface Iprop {
 const Container = styled.div`
 	margin-top: 50px;
 	background-color: #ffffff;
-	display: flex;
-	flex-direction: column;
 	border-radius: 10px;
-
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.21);
-	width: 100%;
-	height: 50vh;
+	box-shadow: 0px 1px 5px rgba(10, 10, 10, 0.24);
+	padding: 20px 40px;
+	width: 1300px;
+	height: 400px;
 	margin-bottom: 30px;
 	justify-content: center;
 
 	h1 {
 		text-align: center;
-		font-size: 1.9rem;
+		font-size: 2.2rem;
 		color: #383838;
-		margin-bottom: 200px;
+		margin-bottom: 100px;
 	}
 `;
 
@@ -46,9 +44,21 @@ const Btn = styled.div`
 `;
 
 const ButtonDiv = styled.div`
-	width: 100%;
+	width: 70%;
 	display: flex;
 	justify-content: space-around;
+	.yes {
+		:hover {
+			font-weight: bold;
+			background-color: #3cc05b;
+		}
+	}
+	.no {
+		:hover {
+			font-weight: bold;
+			background-color: #fc5656;
+		}
+	}
 `;
 const fadeIn = keyframes`
   from {
@@ -60,10 +70,21 @@ const fadeIn = keyframes`
   }
 `;
 const Result = styled.div`
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	justify-content: center;
 	h1 {
 		font-size: 2rem;
 		animation: ${fadeIn} 1.3s ease-in-out;
 	}
+`;
+const QnA = styled.div`
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 `;
 
 export default function QuestionCard(props: Iprop) {
@@ -185,11 +206,12 @@ export default function QuestionCard(props: Iprop) {
 			{props.data === 1 || props.data === 0 ? (
 				<Container>
 					{questionNumber === 1 && (
-						<div>
+						<QnA>
 							<h1>Q4. 텀블러를 평소에 자주 사용하시나요?</h1>
 							<ButtonDiv>
 								<Button
 									value="네"
+									className="yes"
 									width={250}
 									height={60}
 									radius={20}
@@ -199,6 +221,7 @@ export default function QuestionCard(props: Iprop) {
 								/>
 								<Button
 									value="아니요"
+									className="no"
 									width={250}
 									height={60}
 									radius={20}
@@ -207,15 +230,16 @@ export default function QuestionCard(props: Iprop) {
 									onClick={() => handleAnswer("아니요")}
 								/>
 							</ButtonDiv>
-						</div>
+						</QnA>
 					)}
 
 					{questionNumber === 2 && (
-						<div>
+						<QnA>
 							<h1>Q5. 동물들과 잘 어울리시나요?</h1>
 							<ButtonDiv>
 								<Button
 									value="네"
+									className="yes"
 									width={250}
 									height={60}
 									radius={20}
@@ -225,6 +249,7 @@ export default function QuestionCard(props: Iprop) {
 								/>
 								<Button
 									value="아니요"
+									className="no"
 									width={250}
 									height={60}
 									radius={20}
@@ -233,15 +258,16 @@ export default function QuestionCard(props: Iprop) {
 									onClick={() => handleAnswer("아니요")}
 								/>
 							</ButtonDiv>
-						</div>
+						</QnA>
 					)}
 
 					{questionNumber === 3 && (
-						<div>
+						<QnA>
 							<h1>Q6. 미니멀 라이프에 대해 관심이 있으신가요?</h1>
 							<ButtonDiv>
 								<Button
 									value="네"
+									className="yes"
 									width={250}
 									height={60}
 									radius={20}
@@ -251,6 +277,7 @@ export default function QuestionCard(props: Iprop) {
 								/>
 								<Button
 									value="아니요"
+									className="no"
 									width={250}
 									height={60}
 									radius={20}
@@ -259,14 +286,15 @@ export default function QuestionCard(props: Iprop) {
 									onClick={() => handleAnswer("아니요")}
 								/>
 							</ButtonDiv>
-						</div>
+						</QnA>
 					)}
 					{questionNumber === 4 && (
-						<div>
+						<QnA>
 							<h1>Q7. 장볼 때 장바구니를 들고 다니시나요? </h1>
 							<ButtonDiv>
 								<Button
 									value="네"
+									className="yes"
 									width={250}
 									height={60}
 									radius={20}
@@ -276,6 +304,7 @@ export default function QuestionCard(props: Iprop) {
 								/>
 								<Button
 									value="아니요"
+									className="no"
 									width={250}
 									height={60}
 									radius={20}
@@ -284,14 +313,15 @@ export default function QuestionCard(props: Iprop) {
 									onClick={() => handleAnswer("아니요")}
 								/>
 							</ButtonDiv>
-						</div>
+						</QnA>
 					)}
 					{questionNumber === 5 && (
-						<div>
+						<QnA>
 							<h1>Q8. 동물 관련된 알러지가 있으신가요? </h1>
 							<ButtonDiv>
 								<Button
 									value="네"
+									className="yes"
 									width={250}
 									height={60}
 									radius={20}
@@ -301,6 +331,7 @@ export default function QuestionCard(props: Iprop) {
 								/>
 								<Button
 									value="아니요"
+									className="no"
 									width={250}
 									height={60}
 									radius={20}
@@ -309,7 +340,7 @@ export default function QuestionCard(props: Iprop) {
 									onClick={() => handleAnswer("아니요")}
 								/>
 							</ButtonDiv>
-						</div>
+						</QnA>
 					)}
 					{questionNumber === 6 && (
 						<Result>
@@ -321,11 +352,12 @@ export default function QuestionCard(props: Iprop) {
 			) : (
 				<Container>
 					{questionNumber === 1 && (
-						<div>
+						<QnA>
 							<h1>Q4. 신세대 용어를 잘 아시나요?</h1>
 							<ButtonDiv>
 								<Button
 									value="네"
+									className="yes"
 									width={250}
 									height={60}
 									radius={20}
@@ -335,6 +367,7 @@ export default function QuestionCard(props: Iprop) {
 								/>
 								<Button
 									value="아니요"
+									className="no"
 									width={250}
 									height={60}
 									radius={20}
@@ -343,15 +376,16 @@ export default function QuestionCard(props: Iprop) {
 									onClick={() => handleAnswer2("아니요")}
 								/>
 							</ButtonDiv>
-						</div>
+						</QnA>
 					)}
 
 					{questionNumber === 2 && (
-						<div>
+						<QnA>
 							<h1>Q5. 평소에 배려석에 자리가 있더라도 비워두어야 한다고 생각하시나요?</h1>
 							<ButtonDiv>
 								<Button
 									value="네"
+									className="yes"
 									width={250}
 									height={60}
 									radius={20}
@@ -361,6 +395,7 @@ export default function QuestionCard(props: Iprop) {
 								/>
 								<Button
 									value="아니요"
+									className="no"
 									width={250}
 									height={60}
 									radius={20}
@@ -369,15 +404,16 @@ export default function QuestionCard(props: Iprop) {
 									onClick={() => handleAnswer2("아니요")}
 								/>
 							</ButtonDiv>
-						</div>
+						</QnA>
 					)}
 
 					{questionNumber === 3 && (
-						<div>
+						<QnA>
 							<h1>Q6. 고령화 문제에 대해 깊게 생각해보신적이 있으신가요?</h1>
 							<ButtonDiv>
 								<Button
 									value="네"
+									className="yes"
 									width={250}
 									height={60}
 									radius={20}
@@ -387,6 +423,7 @@ export default function QuestionCard(props: Iprop) {
 								/>
 								<Button
 									value="아니요"
+									className="no"
 									width={250}
 									height={60}
 									radius={20}
@@ -395,14 +432,15 @@ export default function QuestionCard(props: Iprop) {
 									onClick={() => handleAnswer2("아니요")}
 								/>
 							</ButtonDiv>
-						</div>
+						</QnA>
 					)}
 					{questionNumber === 4 && (
-						<div>
+						<QnA>
 							<h1>Q7. 다음 세대를 위해서 투자를 해야한다고 생각하시나요? </h1>
 							<ButtonDiv>
 								<Button
 									value="네"
+									className="yes"
 									width={250}
 									height={60}
 									radius={20}
@@ -412,6 +450,7 @@ export default function QuestionCard(props: Iprop) {
 								/>
 								<Button
 									value="아니요"
+									className="no"
 									width={250}
 									height={60}
 									radius={20}
@@ -420,14 +459,15 @@ export default function QuestionCard(props: Iprop) {
 									onClick={() => handleAnswer2("아니요")}
 								/>
 							</ButtonDiv>
-						</div>
+						</QnA>
 					)}
 					{questionNumber === 5 && (
-						<div>
+						<QnA>
 							<h1>Q8. 활동적인걸 좋아하시나요? </h1>
 							<ButtonDiv>
 								<Button
 									value="네"
+									className="yes"
 									width={250}
 									height={60}
 									radius={20}
@@ -437,6 +477,7 @@ export default function QuestionCard(props: Iprop) {
 								/>
 								<Button
 									value="아니요"
+									className="no"
 									width={250}
 									height={60}
 									radius={20}
@@ -445,7 +486,7 @@ export default function QuestionCard(props: Iprop) {
 									onClick={() => handleAnswer2("아니요")}
 								/>
 							</ButtonDiv>
-						</div>
+						</QnA>
 					)}
 					{questionNumber === 6 && (
 						<Result>

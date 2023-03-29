@@ -141,6 +141,7 @@ export default function CommunityCard({
 					height={40}
 					radius={10}
 					textSize={17}
+					className={undefined}
 				/>
 			</ButtonDiv>
 		</Container>

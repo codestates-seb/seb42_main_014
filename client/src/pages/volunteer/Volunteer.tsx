@@ -233,6 +233,7 @@ export default function Volunteer() {
 									value={"검색"}
 									radius={10}
 									onClick={handleChangeSearchValue}
+									className={undefined}
 								/>
 								<ResetButton
 									onMouseEnter={() => setHover(true)}
