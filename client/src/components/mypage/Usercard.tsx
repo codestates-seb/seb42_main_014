@@ -151,7 +151,7 @@ export default function Usercard() {
 					</button>
 				</ImgDiv>
 				<MedalSpan>
-					<img src="/images/mypage/medal.png" alt="봉사 뱃지" />
+					{point >= 15 ? <img src="/images/mypage/medal.png" alt="봉사 뱃지" /> : null}
 				</MedalSpan>
 				<InfoDiv>
 					<div>이름 : {memberName}</div>
