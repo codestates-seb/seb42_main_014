@@ -37,7 +37,9 @@ const ContentDiv = styled.div`
 	white-space: pre-wrap;
 	height: fit-content;
 	display: flex;
-	width: 1200px;
+	width: 100%;
+	max-width: 800px;
+	min-width: 800px;
 	flex-direction: column;
 	padding: 0px 10px;
 	span {
