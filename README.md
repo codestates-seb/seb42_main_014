@@ -6,7 +6,9 @@
 **`프로젝트 기간` :** 2023.03.03. - 2023.03.29<br/>
 **`배포 링크`:** [jomnasae.site](http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com/) <br/>
 **`서비스 매뉴얼`:** [좀나세 서비스 메뉴얼 보러가기](https://www.miricanvas.com/v/11w2m9f) <br/>
-**`개인 기술 발표`:** [팀원들의 개인 기술 발표 보러가기](링크추가) <br/>
+**`개인 기술 발표`:** [팀원들의 개인 기술 발표 보러가기](https://youtu.be/NntrXZBIWEA) <br/>
+**`개인 기술 발표 자료`:** [개인 기술 발표 자료 보러가기](https://www.miricanvas.com/v/11w6li8) <br/>
+
 
 
 <br/>
