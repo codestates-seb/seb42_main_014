@@ -34,9 +34,10 @@ const ImgDiv = styled.div`
 	margin-top: 5px;
 `;
 const ContentDiv = styled.div`
-	white-space: nowrap;
+	white-space: pre-wrap;
 	height: fit-content;
 	display: flex;
+	width: 1200px;
 	flex-direction: column;
 	padding: 0px 10px;
 	span {
