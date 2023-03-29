@@ -19,12 +19,21 @@ const StyledContainerDiv = styled.div`
 
 	.volunteerImg {
 		border-radius: 10px;
-		margin: 20px;
+		margin: 50px 20px 20px 20px;
 	}
 
-	div > span {
-		margin-bottom: 10px;
-		font-size: 16px;
+	div {
+		> span {
+			margin-bottom: 10px;
+			font-size: 1.3rem;
+			color: #383838;
+		}
+
+		h2 {
+			color: #383838;
+			font-size: 1.8rem;
+			margin-bottom: 10px;
+		}
 	}
 
 	button {
@@ -45,9 +54,11 @@ const StyledContainerDiv = styled.div`
 `;
 const StyledEmptyLineDiv = styled.div`
 	width: 100%;
-	background-color: black;
 	height: 50px;
-	color: white;
+	border-bottom: 3px solid #383838;
+	color: #383838;
+	font-size: 1.35rem;
+	font-weight: 900;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -177,7 +188,7 @@ export default function VolunteerInfo() {
 					<span style={{ width: "350px" }}>봉사 장소 : {place}</span>
 					<span>봉사 시간 : {volunteerTime}시간</span>
 					<span>
-						모집 인원 : {applyCount} / {applyLimit}
+						모집 인원 : {applyCount}명 / {applyLimit}명
 					</span>
 					<StyledShareContainer>
 						<div style={{ display: "flex", alignContent: "center" }}>
