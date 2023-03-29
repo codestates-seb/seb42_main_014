@@ -56,7 +56,7 @@
 <br/>
 
 ## <span style=""> ⚙️ **Project Architecture** </span>
-프로젝트 아키텍쳐 이미지 추가
+![main (6)](https://user-images.githubusercontent.com/115993576/228537538-d1cca4da-adf1-400e-b8d6-8d57bc37347b.png)
 
 
 
