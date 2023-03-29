@@ -71,10 +71,10 @@ const Body = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
 	width: 100%;
 	flex-direction: column;
 `;
+
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -83,9 +83,12 @@ const Container = styled.div`
 	width: 100%;
 	& > div:first-child {
 		display: flex;
+		justify-content: space-between;
 		align-items: center;
+		width: 100%;
 	}
 `;
+
 const Left = styled.div`
 	box-sizing: content-box;
 	cursor: pointer;
@@ -94,17 +97,18 @@ const Left = styled.div`
 	}
 	background-color: #ffffff;
 	height: fit-content;
-	border: 3px solid black;
-	width: 520px;
-	height: 415px;
+	border: 1px solid black;
+	width: 580px;
+	height: 464px;
 	margin-bottom: 10px;
 	img {
-		width: 520px;
-		height: 415px;
+		width: 580px;
+		height: 464px;
 	}
 `;
+
 const Right = styled.div`
-	width: 520px;
+	width: 580px;
 	padding: 20px 0px 15px 15px;
 	display: flex;
 	margin-left: 20px;
@@ -119,10 +123,10 @@ const Select = styled.div`
 	padding-bottom: 5px;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	border-bottom: 3px solid black;
-	height: max-content;
+	border-bottom: 3px solid #383838;
+	height: 50px;
 	width: 100%;
-
+	color: #383838;
 	.time {
 		position: relative;
 		margin-left: 5px;
@@ -134,7 +138,6 @@ const Select = styled.div`
 			font-weight: bold;
 		}
 	}
-
 	span {
 		white-space: nowrap;
 		font-weight: 900;
@@ -167,17 +170,19 @@ const Select = styled.div`
 		}
 	}
 `;
+
 const Bar = styled.div`
 	margin-bottom: 20px;
-	border-bottom: 3px solid black;
+	border-bottom: 3px solid #383838;
 	line-height: 50px;
-	color: #000000;
+	color: #383838;
 	width: 100%;
 	height: max-content;
 	text-align: center;
 	font-size: 1.35rem;
 	font-weight: 900;
 `;
+
 const Btn = styled.button`
 	cursor: pointer;
 	font-size: 1.35rem;
@@ -296,7 +301,7 @@ const VolunteerPost = () => {
 		if (post === "/register") {
 			try {
 				volunteerDataPost("volunteers", postVolunteerData);
-				navigate("/volunteer");
+				// navigate("/volunteer");
 			} catch (err) {
 				alert("봉사 등록에 실패했어요. 잠시 후 다시 시도해 주세요.");
 			}
@@ -343,6 +348,7 @@ const VolunteerPost = () => {
 										option={optionArr}
 										boxWidth={150}
 										max_min_width={150}
+										height={45}
 									/>
 								</Select>
 								<Select>

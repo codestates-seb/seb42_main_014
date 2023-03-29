@@ -23,9 +23,11 @@ const StyledLogo = styled.img`
 `;
 const StyledNavItemList = styled.li`
 	margin: 20px;
-	:hover {
-		color: #f58686;
+	:hover,
+	&.active {
+		text-decoration: underline;
 		transition: all 0.3s;
+		text-underline-offset: 10px;
 	}
 `;
 const StyledDropDownModal = styled.div`
@@ -40,17 +42,27 @@ const StyledDropDownModal = styled.div`
 	z-index: 1;
 `;
 export default function Nav() {
+	const navItem = ["Home", "봉사활동", "커뮤니티", "About"];
 	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
-	const navItem = ["Home", "봉사활동", "커뮤니티", "About"];
+	const [isClicked, setIsClicked] = useState("Home");
 	const navItemRoutingPath = ["/", "/volunteer", "/community", "/about"];
 	if (window.location.pathname === "/token") return null;
+
+	const handleNavItemClick = (idx: number) => {
+		setIsClicked(navItem[idx]);
+		navigate(navItemRoutingPath[idx]);
+	};
 
 	return (
 		<StyledNav>
 			<StyledLogo src="/images/main-logo.png" alt="main-logo" onClick={() => navigate("/")} />
-			{navItem.map((el, idx) => (
-				<StyledNavItemList key={idx} onClick={() => navigate(navItemRoutingPath[idx])}>
+			{navItem?.map((el, idx) => (
+				<StyledNavItemList
+					key={idx}
+					className={isClicked === navItem[idx] ? "active" : null}
+					onClick={() => handleNavItemClick(idx)}
+				>
 					{el}
 				</StyledNavItemList>
 			))}

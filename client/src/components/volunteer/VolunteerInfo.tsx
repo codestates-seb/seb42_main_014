@@ -2,11 +2,11 @@ import styled from "styled-components";
 import Button from "../../components/Button";
 import { useEffect, useState } from "react";
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
-import { useLocation, useParams } from "react-router-dom";
-import { BsLink45Deg } from "react-icons/bs";
+import { useParams } from "react-router-dom";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import axios from "axios";
 import dayjs from "dayjs";
+import { KakaoShareButton } from "./KakaoShareButton";
 
 const StyledContainerDiv = styled.div`
 	width: 100%;
@@ -17,20 +17,30 @@ const StyledContainerDiv = styled.div`
 	flex-direction: column;
 	min-width: 1035px;
 
-	img {
+	.volunteerImg {
 		border-radius: 10px;
-		margin: 20px;
+		margin: 50px 20px 20px 20px;
 	}
 
-	div > span {
-		margin-bottom: 10px;
-		font-size: 16px;
+	div {
+		> span {
+			margin-bottom: 10px;
+			font-size: 1.3rem;
+			color: #383838;
+		}
+
+		h2 {
+			color: #383838;
+			font-size: 1.8rem;
+			margin-bottom: 10px;
+		}
 	}
 
 	button {
 		background-color: white;
 		border: 1px solid gray;
 		cursor: pointer;
+		border-radius: 5px;
 	}
 
 	.button-container {
@@ -44,22 +54,28 @@ const StyledContainerDiv = styled.div`
 `;
 const StyledEmptyLineDiv = styled.div`
 	width: 100%;
-	background-color: black;
 	height: 50px;
-	color: white;
+	border-bottom: 3px solid #383838;
+	color: #383838;
+	font-size: 1.35rem;
+	font-weight: 900;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	min-width: 1035px;
 `;
 
+const StyledShareContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+`;
+
 export default function VolunteerInfo() {
-	const location = useLocation();
 	const params = useParams();
 	const [getVolunteerInfoData, setGetVolunteerInfoData] = useState<any>({});
 	const [isLike, setIsLike] = useState(false);
-	const baseUrl = `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com`;
-
+	const [shareButton, setShareButton] = useState(false);
 	useEffect(() => {
 		const id = localStorage.getItem(`${params.id}`);
 		if (id) {
@@ -97,7 +113,6 @@ export default function VolunteerInfo() {
 		};
 		fetchData();
 	}, [params.id]);
-
 	const {
 		title,
 		volunteerImage,
@@ -125,14 +140,20 @@ export default function VolunteerInfo() {
 			alert("이미 신청하셨어요! :(");
 		}
 	};
-	const handleCopyClipBoard = async (text: string) => {
-		try {
-			await navigator.clipboard.writeText(text);
-			alert("클립보드에 링크가 복사되었어요.");
-		} catch (err) {
-			alert("복사에 실패했어요. 잠시 후 다시 시도해 주세요.");
-		}
-	};
+
+	useEffect(() => {
+		const script = document.createElement("script");
+		script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+		script.async = true;
+		document.body.appendChild(script);
+
+		script.onload = () => {
+			setShareButton(true);
+		};
+		return () => {
+			document.body.removeChild(script);
+		};
+	}, []);
 
 	const startDate = dayjs(applyDate).format("YYYY-MM-DD");
 	const endDate = dayjs(volunteerDate).subtract(1, "day").format("YYYY-MM-DD");
@@ -148,7 +169,12 @@ export default function VolunteerInfo() {
 				}}
 			>
 				<img
-					src={volunteerImage}
+					className="volunteerImg"
+					src={
+						volunteerImage
+							? volunteerImage
+							: "https://main014-bucket.s3.ap-northeast-2.amazonaws.com/profile/pexels-min-an-853168.jpg"
+					}
 					style={{ width: "500px", height: "400px" }}
 					alt="봉사 타이틀 사진"
 				/>
@@ -162,28 +188,24 @@ export default function VolunteerInfo() {
 					<span style={{ width: "350px" }}>봉사 장소 : {place}</span>
 					<span>봉사 시간 : {volunteerTime}시간</span>
 					<span>
-						모집 인원 : {applyCount} / {applyLimit}
+						모집 인원 : {applyCount}명 / {applyLimit}명
 					</span>
-					<Button onClick={handlePost} value="나도 할래!" width={350} height={50} textSize={15} />
-					<div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
-						<button onClick={heartHandler}>
-							{!isLike ? <FcLikePlaceholder size={40} /> : <FcLike size={40} />}
-						</button>
-						<div
-							className="button-container"
-							onClick={() => handleCopyClipBoard(`${baseUrl}${location.pathname}`)}
-						>
+					<StyledShareContainer>
+						<div style={{ display: "flex", alignContent: "center" }}>
 							<Button
-								value={"너도 할래?"}
-								width={200}
+								onClick={handlePost}
+								value="나도 할래!"
+								width={250}
 								height={50}
-								textColor="black"
 								textSize={15}
-								bgColor={"white"}
+								radius={5}
 							/>
-							<BsLink45Deg size={30} style={{ borderLeft: "1px solid gray", width: "200px" }} />
+							<button onClick={heartHandler} style={{ margin: "0px 5px 0px 5px" }}>
+								{!isLike ? <FcLikePlaceholder size={40} /> : <FcLike size={40} />}
+							</button>
 						</div>
-					</div>
+						{shareButton && <KakaoShareButton getVolunteerInfoData={getVolunteerInfoData} />}
+					</StyledShareContainer>
 				</div>
 			</section>
 			<StyledEmptyLineDiv>활동 정보</StyledEmptyLineDiv>
