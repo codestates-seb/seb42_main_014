@@ -20,7 +20,6 @@ const StyledContainerDiv = styled.div`
 	height: fit-content;
 	section {
 		margin: 10px;
-		width: 100%;
 		min-width: 500px;
 	}
 	.layout {
