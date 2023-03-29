@@ -14,7 +14,8 @@
 ## About JomNaSae
 ![image](https://user-images.githubusercontent.com/62414231/228397430-d645f09c-621b-4ee5-9143-aa39267429e6.png)
 
-메인페이지 gif 추가
+## JomNaSae Main Page
+![main](https://user-images.githubusercontent.com/88031716/228534048-52e7e6cb-755a-404d-9302-15b5d5cb0cfe.gif)
 
 ### 기능별 소개
 
