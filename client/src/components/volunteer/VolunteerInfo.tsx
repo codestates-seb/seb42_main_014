@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import axios from "axios";
 import dayjs from "dayjs";
-import { KakaoShareButton } from "./KakaoShareButton";
+import { KakaoShareButton } from "../../utils/KakaoShareButton";
 
 const StyledContainerDiv = styled.div`
 	width: 100%;
