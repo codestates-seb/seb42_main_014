@@ -6,14 +6,14 @@ import GroupMember from "../../components/community/GroupMember";
 import { myPageGet } from "../../api/mypage/MypageGet";
 import { useLocation } from "react-router-dom";
 
-const StyledGroupDetailContainer = styled.div`
+const Body = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
 	height: 100vh;
-	margin-bottom: 100px;
 	min-width: 800px;
+	margin-bottom: 120px;
 
 	.layout-child {
 		display: flex;
@@ -24,6 +24,11 @@ const StyledGroupDetailContainer = styled.div`
 	}
 `;
 
+const StyledGroupDetailContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`;
 export default function CommunityDetail() {
 	const [groupData, setGroupData] = useState({});
 	const location = useLocation();
@@ -36,14 +41,16 @@ export default function CommunityDetail() {
 		getGroupDetailData();
 	}, [location.state]);
 	return (
-		<StyledGroupDetailContainer>
-			<GroupInfo groupData={groupData} />
-			<div className="layout-child">
-				<GroupMember groupData={groupData} groupId={location.state} />
-				<div className="cmt">
-					<Comment />
+		<Body>
+			<StyledGroupDetailContainer>
+				<GroupInfo groupData={groupData} />
+				<div className="layout-child">
+					<GroupMember groupData={groupData} groupId={location.state} />
+					<div className="cmt">
+						<Comment />
+					</div>
 				</div>
-			</div>
-		</StyledGroupDetailContainer>
+			</StyledGroupDetailContainer>
+		</Body>
 	);
 }
