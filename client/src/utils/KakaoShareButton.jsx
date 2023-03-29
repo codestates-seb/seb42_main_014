@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const KakaoButton = styled.div`
@@ -19,34 +19,38 @@ const KakaoButton = styled.div`
 `;
 
 export const KakaoShareButton = ({ getVolunteerInfoData }) => {
+	const { title, volunteerImage, volunteerId } = getVolunteerInfoData;
 	useEffect(() => {
-		const { title, volunteerImage, volunteerId } = getVolunteerInfoData;
-
 		const createKakaoButton = () => {
 			if (window.Kakao) {
 				const kakao = window.Kakao;
 				if (!kakao.isInitialized()) {
 					kakao.init(process.env.REACT_APP_KAKAO_SHARE_KEY);
 				}
-				kakao.Share.createDefaultButton({
+				// kakao.Share.createDefaultButton({
+				// 	container: "#kakaotalk-sharing-btn",
+				// 	objectType: "feed",
+				// 	content: {
+				// 		title: title,
+				// 		description: "봉사 같이 할래? 좀나세에서 다양한 봉사를 신청해보세요.",
+				// 		imageUrl: volunteerImage,
+				// 		link: {
+				// 			// webUrl: `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com`,
+				// 			webUrl: `http://localhost:3000`,
+				// 		},
+				// 	},
+				// 	buttons: [
+				// 		{
+				// 			title: "웹으로 보기",
+				// 			link: {
+				// 				webUrl: `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com/volunteer/${volunteerId}`,
+				// 			},
+				// 		},
+				// 	],
+				// });
+				kakao.Share.createScrapButton({
 					container: "#kakaotalk-sharing-btn",
-					objectType: "feed",
-					content: {
-						title,
-						imageUrl: volunteerImage,
-						description: "봉사 같이 할래? 좀나세에서 다양한 봉사를 신청해보세요.",
-						link: {
-							webUrl: `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com`,
-						},
-					},
-					buttons: [
-						{
-							title: "웹으로 보기",
-							link: {
-								webUrl: `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com/volunteer/${volunteerId}`,
-							},
-						},
-					],
+					requestUrl: `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com/volunteer/${volunteerId}`,
 				});
 			}
 		};

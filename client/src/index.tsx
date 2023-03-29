@@ -18,6 +18,8 @@ import Test from "./pages/recommend/Test";
 import Token from "./pages/token";
 import Recommend from "./pages/recommend/Recommend";
 
+window.Kakao.init(process.env.REACT_APP_TALK_JAVASCRIPT_KEY);
+
 const router = createBrowserRouter([
 	{
 		path: "/",
