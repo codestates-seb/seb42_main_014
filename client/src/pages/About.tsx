@@ -66,7 +66,8 @@ export default function About() {
 	const members = [
 		{
 			name: "박주혁",
-			avatarUrl: "/images/about/박주혁.jpg",
+			avatarUrl:
+				"https://main014-bucket.s3.ap-northeast-2.amazonaws.com/images/about/%E1%84%87%E1%85%A1%E1%86%A8%E1%84%8C%E1%85%AE%E1%84%92%E1%85%A7%E1%86%A8.jpg",
 			position: "FE Developer",
 			githubUrl: `${github}/Juhyuk-Park`,
 			blogUrl: "",
@@ -74,7 +75,8 @@ export default function About() {
 		},
 		{
 			name: "임성은",
-			avatarUrl: "/images/about/임성은.jpg",
+			avatarUrl:
+				"https://main014-bucket.s3.ap-northeast-2.amazonaws.com/images/about/%E1%84%8B%E1%85%B5%E1%86%B7%E1%84%89%E1%85%A5%E1%86%BC%E1%84%8B%E1%85%B3%E1%86%AB.jpg",
 			position: "FE Developer",
 			githubUrl: `${github}/Limcroco`,
 			blogUrl: "https://velog.io/@se2id",
@@ -82,7 +84,8 @@ export default function About() {
 		},
 		{
 			name: "장지우",
-			avatarUrl: "/images/about/장지우.jpeg",
+			avatarUrl:
+				"https://main014-bucket.s3.ap-northeast-2.amazonaws.com/images/about/%E1%84%8C%E1%85%A1%E1%86%BC%E1%84%8C%E1%85%B5%E1%84%8B%E1%85%AE.jpeg",
 			position: "FE Developer",
 			githubUrl: `${github}/jellyjw`,
 			blogUrl: "https://velog.io/@jellyjw",
@@ -90,7 +93,8 @@ export default function About() {
 		},
 		{
 			name: "강은서",
-			avatarUrl: "/images/about/강은서.jpeg",
+			avatarUrl:
+				"https://main014-bucket.s3.ap-northeast-2.amazonaws.com/images/about/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%89%E1%85%A5.jpeg",
 			position: "BE Developer",
 			githubUrl: `${github}/kdmstj`,
 			blogUrl: "https://kangkangsulae.tistory.com/",
@@ -98,7 +102,8 @@ export default function About() {
 		},
 		{
 			name: "김민소",
-			avatarUrl: "/images/about/김민소.jpg",
+			avatarUrl:
+				"https://main014-bucket.s3.ap-northeast-2.amazonaws.com/images/about/%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A9.jpg",
 			position: "BE Developer",
 			githubUrl: `${github}/kms310272`,
 			blogUrl: "https://minso-dev.tistory.com/",
@@ -106,7 +111,8 @@ export default function About() {
 		},
 		{
 			name: "이우연",
-			avatarUrl: "/images/about/이우연.jpg",
+			avatarUrl:
+				"https://main014-bucket.s3.ap-northeast-2.amazonaws.com/images/about/%E1%84%8B%E1%85%B5%E1%84%8B%E1%85%AE%E1%84%8B%E1%85%A7%E1%86%AB.jpg",
 			position: "BE Developer",
 			githubUrl: `${github}/`,
 			blogUrl: "",

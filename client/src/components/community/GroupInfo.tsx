@@ -92,7 +92,7 @@ export default function GroupInfo({ groupData }: any) {
 					src={
 						groupImage
 							? groupImage
-							: "https://main014-bucket.s3.ap-northeast-2.amazonaws.com/images/volunteer/volunteer.jpg"
+							: "https://main014-bucket.s3.ap-northeast-2.amazonaws.com/profile/pexels-min-an-853168.jpg"
 					}
 					alt="그룹 사진"
 				/>
