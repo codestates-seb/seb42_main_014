@@ -148,6 +148,7 @@ export default function Community() {
 								textSize={17}
 								bgColor="black"
 								style={{ whiteSpace: "nowrap" }}
+								className={undefined}
 							/>
 						</ButtonDiv>
 					</ExplainDiv>
