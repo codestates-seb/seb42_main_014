@@ -35,8 +35,8 @@ export const KakaoShareButton = ({ getVolunteerInfoData }) => {
 				// 		description: "봉사 같이 할래? 좀나세에서 다양한 봉사를 신청해보세요.",
 				// 		imageUrl: volunteerImage,
 				// 		link: {
-				// 			// webUrl: `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com`,
-				// 			webUrl: `http://localhost:3000`,
+				// 			webUrl: `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com`,
+				// 			// webUrl: `http://localhost:3000`,
 				// 		},
 				// 	},
 				// 	buttons: [
@@ -50,7 +50,7 @@ export const KakaoShareButton = ({ getVolunteerInfoData }) => {
 				// });
 				kakao.Share.createScrapButton({
 					container: "#kakaotalk-sharing-btn",
-					requestUrl: `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com/volunteer/${volunteerId}`,
+					requestUrl: `http://main014-bucket.s3-website.ap-northeast-2.amazonaws.com/volunteer`,
 				});
 			}
 		};
