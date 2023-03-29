@@ -31,7 +31,7 @@ const StyledContainerDiv = styled.div`
 			border-radius: 10px;
 		}
 		::-webkit-scrollbar-track {
-			background: rgba(93, 93, 93, 0.1);
+			background: rgba(255, 255, 255, 0.1);
 		}
 	}
 	.layout {

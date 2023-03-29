@@ -61,7 +61,7 @@ export default function GroupInfo({ groupData }: any) {
 	return (
 		<StyledContainerDiv>
 			<Link to={"/community"}>
-				<div style={{ width: "50%", margin: "10px", cursor: "pointer", minWidth: "850px" }}>
+				<div style={{ width: "50%", margin: "10px", cursor: "pointer", minWidth: "913px" }}>
 					<FaArrowLeft size={45} />
 				</div>
 			</Link>
