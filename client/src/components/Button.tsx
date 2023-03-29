@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { theme } from "../utils/theme";
 
 interface TPropsButton {
+	className?: any;
 	value: string;
 	width: number;
 	height: number;
@@ -18,6 +19,7 @@ interface TPropsButton {
 
 export default function Button({
 	value,
+	className,
 	width,
 	height,
 	radius,
@@ -54,7 +56,7 @@ export default function Button({
 	return (
 		<StyledButtonContainer>
 			{iconName}
-			<button type={type} onClick={onClick} style={style}>
+			<button className={className} type={type} onClick={onClick} style={style}>
 				{value}
 			</button>
 		</StyledButtonContainer>
