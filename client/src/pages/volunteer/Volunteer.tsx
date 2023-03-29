@@ -221,7 +221,7 @@ export default function Volunteer() {
 									placeholder={
 										searchCategory === "volunteer"
 											? "봉사명을 입력해 주세요."
-											: "기관명을 입력해주세요"
+											: "기관명을 입력해 주세요."
 									}
 									value={searchValue}
 									onChange={(e) => setSearchValue(e.target.value)}
