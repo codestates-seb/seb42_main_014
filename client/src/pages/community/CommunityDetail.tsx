@@ -17,6 +17,7 @@ const Body = styled.div`
 
 	.layout-child {
 		display: flex;
+		min-width: 910px;
 	}
 	.cmt {
 		width: 90%;
