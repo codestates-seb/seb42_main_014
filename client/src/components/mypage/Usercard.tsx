@@ -13,7 +13,8 @@ const Container = styled.div`
 	border-radius: 10px;
 	padding: 20px 40px;
 	margin-bottom: 30px;
-	justify-content: space-between;
+	justify-content: center;
+	position: relative;
 	& > div {
 		/* ImgDiv, InfoDiv 공통 */
 		display: flex;
@@ -22,7 +23,7 @@ const Container = styled.div`
 `;
 const ImgDiv = styled.div`
 	align-items: center;
-
+	margin-right: 40px;
 	button {
 		color: #ffffff;
 		background-color: #000000;
@@ -53,6 +54,7 @@ const MedalSpan = styled.span`
 	display: flex;
 	justify-content: flex-end;
 	align-items: flex-end;
+	left: 100px;
 
 	img {
 		width: 32px;
@@ -156,7 +158,7 @@ export default function Usercard() {
 				<InfoDiv>
 					<div>이름 : {memberName}</div>
 					<div>이메일 : {email}</div>
-					<div>봉사점수 : {point}</div>
+					<div>봉사점수 : {point}점</div>
 				</InfoDiv>
 			</Container>
 			<Modal isOpen={isOpen} toggle={toggle}>

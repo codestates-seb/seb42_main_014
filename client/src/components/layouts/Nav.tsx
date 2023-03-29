@@ -33,9 +33,9 @@ const StyledNavItemList = styled.li`
 const StyledDropDownModal = styled.div`
 	height: max-content;
 	position: absolute;
-	top: 60px;
-	width: max-content;
-	right: -42px;
+	top: 58px;
+	width: 125px;
+	right: -46px;
 	color: black;
 	background-color: white;
 	border: 1px solid gray;

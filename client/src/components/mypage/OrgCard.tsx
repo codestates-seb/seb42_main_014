@@ -29,7 +29,6 @@ const Container = styled.div`
 `;
 const ImgDiv = styled.div`
 	align-items: center;
-
 	button {
 		color: #ffffff;
 		background-color: #000000;
@@ -73,9 +72,9 @@ const InfoDiv = styled.div`
 	display: flex;
 	margin-left: 50px;
 	flex-direction: column;
-	margin-top: 30px;
-	height: 70%;
-	justify-content: space-evenly;
+	height: 100%;
+	justify-content: center;
+	margin-bottom: 30px;
 	div {
 		font-size: 1.2rem;
 	}
@@ -116,6 +115,7 @@ export default function Orgcard() {
 			setMessage("비밀번호를 확인해주세요.");
 		}
 	};
+	console.log(orgInfo);
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setMessage("");
@@ -134,7 +134,11 @@ export default function Orgcard() {
 				<ImgDiv>
 					<ProfileImageContainer>
 						<img
-							src={orgInfo.profileImage ? orgInfo.profileImage : "/images/mypage/profile-user.png"}
+							src={
+								orgInfo.profileImage
+									? orgInfo.profileImage
+									: "https://main014-bucket.s3.ap-northeast-2.amazonaws.com/images/mypage/profile-user.png"
+							}
 							alt="프로필이미지"
 						/>
 					</ProfileImageContainer>
@@ -144,8 +148,8 @@ export default function Orgcard() {
 				</ImgDiv>
 				<div>
 					<InfoDiv>
-						<div>이름:{name}</div>
-						<div>이메일:{email}</div>
+						<div>기관명 : {name}</div>
+						<div>이메일 : {email}</div>
 					</InfoDiv>
 				</div>
 			</Container>
