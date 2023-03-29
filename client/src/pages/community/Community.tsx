@@ -21,6 +21,7 @@ const Container = styled.div`
 	align-items: center;
 	& > div {
 		width: 80%;
+
 		display: flex;
 	}
 	button {
