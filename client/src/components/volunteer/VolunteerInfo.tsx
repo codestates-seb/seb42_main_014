@@ -144,8 +144,9 @@ export default function VolunteerInfo() {
 			alert("이미 신청하셨어요.");
 		}
 	};
-	console.log(applicationUserList, "테스트다");
-	console.log(params.id, "아이디다");
+	// console.log(applicationUserList, "테스트다");
+	// applicationUserList.map((el: any) => console.log(el.volunteerId));
+	// console.log(params.id, "아이디다");
 
 	useEffect(() => {
 		const script = document.createElement("script");
@@ -198,9 +199,10 @@ export default function VolunteerInfo() {
 					</span>
 					<StyledShareContainer>
 						<div style={{ display: "flex", alignContent: "center" }}>
-							{myInfoData.checkOrg ? (
+							{myInfoData.checkOrg ||
+							applicationUserList.map((el: any) => el.volunteerId === params.id) ? (
 								<Button
-									value={applicationUserList ? "이미 신청하셨어요." : "기업회원은 신청 불가해요!"}
+									value={myInfoData.checkOrg ? "기업회원은 신청 불가해요!" : "이미 신청하셨어요!"}
 									width={250}
 									height={50}
 									textSize={15}

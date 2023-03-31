@@ -12,12 +12,12 @@ const Body = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	justify-content: center;
 	width: 100%;
 	height: 100%;
 	min-height: 1200px;
 	min-width: 800px;
 	margin-bottom: 80px;
-
 	.layout-child {
 		display: flex;
 		min-width: 910px;
