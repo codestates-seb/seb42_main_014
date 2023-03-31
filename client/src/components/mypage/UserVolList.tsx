@@ -99,12 +99,14 @@ export default function UserVolList() {
 							<p>신청한 봉사가 없습니다.</p>
 						)}
 					</div>
-					<Paginations
-						totalPages={totalPages1}
-						currentPage={currentPage1}
-						onPageChange={handlePageChange1}
-						itemsCountPerPage={5}
-					/>
+					{history.length ? (
+						<Paginations
+							totalPages={totalPages1}
+							currentPage={currentPage1}
+							onPageChange={handlePageChange1}
+							itemsCountPerPage={5}
+						/>
+					) : null}
 				</div>
 				<div>
 					<h2>봉사 활동 신청 현황</h2>
@@ -125,12 +127,14 @@ export default function UserVolList() {
 						)}
 					</div>
 				</div>
-				<Paginations
-					totalPages={totalPages}
-					currentPage={currentPage}
-					onPageChange={handlePageChange}
-					itemsCountPerPage={5}
-				/>
+				{Vol.length ? (
+					<Paginations
+						totalPages={totalPages}
+						currentPage={currentPage}
+						onPageChange={handlePageChange}
+						itemsCountPerPage={5}
+					/>
+				) : null}
 			</Container>
 		</>
 	);

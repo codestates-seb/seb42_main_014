@@ -65,12 +65,14 @@ export default function KeepVolList() {
 							<p>찜한 게시물이 없습니다.</p>
 						)}
 					</div>
-					<Paginations
-						totalPages={totalPages}
-						currentPage={currentPage}
-						onPageChange={handlePageChange}
-						itemsCountPerPage={5}
-					/>
+					{likes.length ? (
+						<Paginations
+							totalPages={totalPages}
+							currentPage={currentPage}
+							onPageChange={handlePageChange}
+							itemsCountPerPage={5}
+						/>
+					) : null}
 				</div>
 			</Container>
 		</>
