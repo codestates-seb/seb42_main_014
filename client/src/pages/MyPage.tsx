@@ -80,7 +80,11 @@ export default function MyPage() {
 					)}
 				</Form>
 				<ButtonDiv>
-					<UnregisterButton />
+					<UnregisterButton
+						meg={"정말 탈퇴하시겠어요? 모든 자료는 복구되지 않아요."}
+						quri={"members/me"}
+						name={"회원탈퇴"}
+					/>
 				</ButtonDiv>
 			</Container>
 		</Body>
