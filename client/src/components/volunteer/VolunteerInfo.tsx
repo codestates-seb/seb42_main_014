@@ -76,6 +76,9 @@ export default function VolunteerInfo() {
 	const [getVolunteerInfoData, setGetVolunteerInfoData] = useState<any>({});
 	const [isLike, setIsLike] = useState(false);
 	const [shareButton, setShareButton] = useState(false);
+	const [myInfoData, setMyInfoData] = useState<any>({});
+	const [applicationUserList, setApplicationUserList] = useState<any>({});
+
 	useEffect(() => {
 		const id = localStorage.getItem(`${params.id}`);
 		if (id) {
@@ -107,12 +110,13 @@ export default function VolunteerInfo() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			await myPageGet(`volunteers/${params.id}`).then((res) =>
-				setGetVolunteerInfoData(res.volunteer),
-			);
+			myPageGet(`volunteers/${params.id}`).then((res) => setGetVolunteerInfoData(res.volunteer));
+			myPageGet("members/me").then((res) => setMyInfoData(res.data));
+			myPageGet("apply/member/plan?pageNum=1").then((res) => setApplicationUserList(res.data));
 		};
 		fetchData();
 	}, [params.id]);
+
 	const {
 		title,
 		volunteerImage,
@@ -137,9 +141,11 @@ export default function VolunteerInfo() {
 				setGetVolunteerInfoData(res.volunteer),
 			);
 		} catch (err) {
-			alert("이미 신청하셨어요! :(");
+			alert("이미 신청하셨어요.");
 		}
 	};
+	console.log(applicationUserList, "테스트다");
+	console.log(params.id, "아이디다");
 
 	useEffect(() => {
 		const script = document.createElement("script");
@@ -192,14 +198,26 @@ export default function VolunteerInfo() {
 					</span>
 					<StyledShareContainer>
 						<div style={{ display: "flex", alignContent: "center" }}>
-							<Button
-								onClick={handlePost}
-								value="나도 할래!"
-								width={250}
-								height={50}
-								textSize={15}
-								radius={5}
-							/>
+							{myInfoData.checkOrg ? (
+								<Button
+									value={applicationUserList ? "이미 신청하셨어요." : "기업회원은 신청 불가해요!"}
+									width={250}
+									height={50}
+									textSize={15}
+									radius={5}
+									bgColor={"gray"}
+								/>
+							) : (
+								<Button
+									onClick={handlePost}
+									value="나도 할래!"
+									width={250}
+									height={50}
+									textSize={15}
+									radius={5}
+								/>
+							)}
+
 							<button onClick={heartHandler} style={{ margin: "0px 5px 0px 5px" }}>
 								{!isLike ? <FcLikePlaceholder size={40} /> : <FcLike size={40} />}
 							</button>

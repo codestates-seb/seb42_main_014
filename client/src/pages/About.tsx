@@ -114,7 +114,7 @@ export default function About() {
 			avatarUrl:
 				"https://main014-bucket.s3.ap-northeast-2.amazonaws.com/images/about/%E1%84%8B%E1%85%B5%E1%84%8B%E1%85%AE%E1%84%8B%E1%85%A7%E1%86%AB.jpg",
 			position: "BE Developer",
-			githubUrl: `${github}/`,
+			githubUrl: `${github}/2uyyn2`,
 			blogUrl: "",
 			instaUrl: "",
 		},

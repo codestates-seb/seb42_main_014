@@ -10,11 +10,13 @@ import UnregisterButton from "../../components/community/UnregisterButton";
 const Body = styled.div`
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	align-items: center;
 	width: 100%;
-	height: 100vh;
+	height: 100%;
+	min-height: 1200px;
 	min-width: 800px;
-	margin-bottom: 120px;
+	margin-bottom: 80px;
 
 	.layout-child {
 		display: flex;
