@@ -512,6 +512,7 @@ const VolunteerPost = () => {
 										{...register("applyLimit", { required: true })}
 										style={{ width: "60px" }}
 										type="number"
+										min="0"
 									/>
 									명
 								</Select>
