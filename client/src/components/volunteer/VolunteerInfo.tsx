@@ -77,7 +77,8 @@ export default function VolunteerInfo() {
 	const [isLike, setIsLike] = useState(false);
 	const [shareButton, setShareButton] = useState(false);
 	const [myInfoData, setMyInfoData] = useState<any>({});
-	const [applicationUserList, setApplicationUserList] = useState<any>({});
+	const [applicationUserList, setApplicationUserList] = useState<any>([]);
+	const [isApplied, setIsApplied] = useState(false);
 
 	useEffect(() => {
 		const id = localStorage.getItem(`${params.id}`);
@@ -107,7 +108,6 @@ export default function VolunteerInfo() {
 			console.log(err);
 		}
 	};
-
 	useEffect(() => {
 		const fetchData = async () => {
 			myPageGet(`volunteers/${params.id}`).then((res) => setGetVolunteerInfoData(res.volunteer));
@@ -115,6 +115,9 @@ export default function VolunteerInfo() {
 			myPageGet("apply/member/plan?pageNum=1").then((res) => setApplicationUserList(res.data));
 		};
 		fetchData();
+		if (applicationUserList?.map((el: any) => el.volunteerId === params.id)) {
+			setIsApplied(true);
+		}
 	}, [params.id]);
 
 	const {
@@ -196,8 +199,7 @@ export default function VolunteerInfo() {
 					</span>
 					<StyledShareContainer>
 						<div style={{ display: "flex", alignContent: "center" }}>
-							{myInfoData.checkOrg ||
-							applicationUserList.map((el: any) => el.volunteerId === params.id) ? (
+							{myInfoData.checkOrg || isApplied ? (
 								<Button
 									value={myInfoData.checkOrg ? "기업회원은 신청 불가해요!" : "이미 신청하셨어요!"}
 									width={250}
