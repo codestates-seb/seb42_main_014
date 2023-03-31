@@ -144,9 +144,6 @@ export default function VolunteerInfo() {
 			alert("이미 신청하셨어요.");
 		}
 	};
-	// console.log(applicationUserList, "테스트다");
-	// applicationUserList.map((el: any) => console.log(el.volunteerId));
-	// console.log(params.id, "아이디다");
 
 	useEffect(() => {
 		const script = document.createElement("script");
