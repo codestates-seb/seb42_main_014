@@ -10,6 +10,7 @@ import UnregisterButton from "../../components/community/UnregisterButton";
 const Body = styled.div`
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	align-items: center;
 	justify-content: center;
 	width: 100%;
