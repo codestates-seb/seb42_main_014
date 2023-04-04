@@ -21,7 +21,7 @@ export default function UnregisterButton({ quri, name, meg }: Iprop) {
 	const handleMemberDeleteClick = () => {
 		if (window.confirm(meg)) {
 			memberDelete(quri).then((res) => localStorage.removeItem("accessToken"));
-			navigate("/community");
+			navigate("/");
 		} else {
 			alert("잘 생각하셨어요! 오래오래 저희랑 봉사해요:)");
 		}

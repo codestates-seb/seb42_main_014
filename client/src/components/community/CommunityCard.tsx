@@ -92,10 +92,15 @@ export default function CommunityCard({
 		};
 		fetchData();
 	}, [id]);
+	// useEffect(() => {
+	// 	if (member !== null) {
+	// 		onGroup();
+	// 	}
+	// }, []);
 
 	const onGroup = () => {
 		if (member) {
-			alert("이미 가입된 사용자 입니다.");
+			alert("이미 가입된 사용자입니다.");
 		} else if (member === false) {
 			if (window.confirm("이 그룹에 가입하시겠습니까?")) {
 				const data = {
