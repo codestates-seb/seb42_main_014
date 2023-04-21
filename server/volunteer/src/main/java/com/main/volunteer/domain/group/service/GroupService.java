@@ -9,6 +9,7 @@ import com.main.volunteer.exception.BusinessException;
 import com.main.volunteer.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -24,21 +25,25 @@ public class GroupService {
     private final GroupRepository groupRepository;
     private final MemberService memberService;
 
+    @Value("${mail.address.admin}")
+    private String adminMailAddress;
+
+
     // 그룹 생성
 
     public Group createGroup(Group group) {
         long groupZangId = group.getGroupZangId();
-        Member groupZang = memberService.verifiedMember(groupZangId);
-        group.setMember(groupZang);
+        Member member = memberService.verifiedMember(groupZangId);
+        group.setMember(member);
         group.setGroupZangId(groupZangId);
 
         // 그룹장 포인트 15이상인지 확인
         if(!checkGroupLeaderPoint(group.getGroupZangId())) {
             throw new BusinessException(ExceptionCode.NOT_ENOUGH_POINT);
         }
-        else if(groupZang.getRoles().contains("GROUPZANG")){
-            MemberGroup memberGroup = new MemberGroup(group, groupZang);
-            groupZang.getMemberGroups().add(memberGroup);
+        else if(member.getRoles().contains("GROUPZANG") || member.getRoles().contains("ADMIN")){
+            MemberGroup memberGroup = new MemberGroup(group, member);
+            member.getMemberGroups().add(memberGroup);
         }
         return groupRepository.save(group);
 
@@ -115,10 +120,12 @@ public class GroupService {
     }
 
     public boolean checkGroupLeaderPoint(long memberId) {
+
         Member member = memberService.verifiedMember(memberId);
-        if (member.getPoint().getPointCount() >= 15) {
+        
+        if(adminMailAddress.equals(member.getEmail())) return true;
+        else if(member.getPoint().getPointCount() >= 15){
             member.setRoles(List.of("GROUPZANG", "USER"));
-            MemberGroup memberGroup = new MemberGroup();
             return true;
         }
         return false;
