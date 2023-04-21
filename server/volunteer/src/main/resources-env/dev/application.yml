@@ -1,5 +1,5 @@
 running: dev
-domain: http://3.35.252.234:8080
+domain: http://3.34.75.149:8080
 
 spring:
   profiles:
@@ -22,7 +22,7 @@ spring:
         registration:
           kakao:
             client-id: ${rest_api_key}
-            redirect-uri: "http://3.35.252.234:8080/login/oauth2/code/kakao"
+            redirect-uri: "http://3.34.75.149:8080/login/oauth2/code/kakao"
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             client-name: Kakao
