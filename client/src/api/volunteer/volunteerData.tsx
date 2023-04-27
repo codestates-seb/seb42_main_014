@@ -35,12 +35,3 @@ export const volunteerCommentPost = async (params: string, Data: any) => {
 			alert("봉사기간 이후 작성 가능합니다.");
 		});
 };
-export const volunteerCommentPost = (params: string, Data: any) => {
-	axios
-		.post(apiUrl + params, Data, {
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-			},
-		})
-		.catch((err) => console.log(err));
-};
