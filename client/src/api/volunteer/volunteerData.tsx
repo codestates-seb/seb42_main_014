@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const apiUrl = "http://3.35.252.234:8080/";
+const apiUrl = process.env.REACT_APP_SERVER_URL;
 
 export const volunteerDataGet = async (params: string) => {
 	try {
-		const response = await axios.get(apiUrl + params, {
+		const response = await axios.get(`${apiUrl}/${params}`, {
 			headers: {
 				Authorization: `${localStorage.getItem("accessToken")}`,
 			},
@@ -17,7 +17,7 @@ export const volunteerDataGet = async (params: string) => {
 };
 
 export const volunteerDataPost = async (url: string, loginData: any) => {
-	await axios.post(`${apiUrl}${url}`, loginData, {
+	await axios.post(`${apiUrl}/${url}`, loginData, {
 		headers: {
 			Authorization: `${localStorage.getItem("accessToken")}`,
 		},
@@ -26,7 +26,7 @@ export const volunteerDataPost = async (url: string, loginData: any) => {
 
 export const volunteerCommentPost = async (params: string, Data: any) => {
 	await axios
-		.post(apiUrl + params, Data, {
+		.post(`${apiUrl}/${params}`, Data, {
 			headers: {
 				Authorization: `${localStorage.getItem("accessToken")}`,
 			},

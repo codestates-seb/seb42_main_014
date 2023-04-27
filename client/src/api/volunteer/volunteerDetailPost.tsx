@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const apiUrl = "http://3.35.252.234:8080/";
+const apiUrl = process.env.REACT_APP_SERVER_URL;
 
 export const volunteerDetailPost = async (params: string) => {
 	try {
-		const response = await axios.post(apiUrl + params, {
+		const response = await axios.post(`${apiUrl}/${params}`, {
 			headers: {
 				Authorization: `${localStorage.getItem("accessToken")}`,
 			},

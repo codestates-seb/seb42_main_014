@@ -28,7 +28,7 @@ const Container = styled.div`
 
 export default function OrgVolItem1(props: ItemProps) {
 	const date = props.time.split("T")[0];
-	const apiUrl = `http://3.35.252.234:8080/volunteers/${props.id}`;
+	const apiUrl = `http://3.34.75.149:8080/volunteers/${props.id}`;
 	const nav = useNavigate();
 	const clickHandlr = () => {
 		nav(`/volunteer/${props.id}`);

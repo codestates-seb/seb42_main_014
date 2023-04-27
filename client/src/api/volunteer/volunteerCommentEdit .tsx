@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const apiUrl = "http://3.35.252.234:8080/";
+const apiUrl = process.env.REACT_APP_SERVER_URL;
+
 export const CommentEdit = async (params: string, Data: any) => {
 	await axios
-		.patch(`${apiUrl}${params}`, Data, {
+		.patch(`${apiUrl}/${params}`, Data, {
 			headers: {
 				Authorization: ` ${localStorage.getItem("accessToken")}`,
 			},

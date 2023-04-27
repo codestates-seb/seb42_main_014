@@ -7,7 +7,6 @@ import Modal from "../../components/Modal";
 
 const Body = styled.body`
 	width: 100%;
-	/* position: fixed; */
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
@@ -15,14 +14,7 @@ const Body = styled.body`
 	align-items: center;
 	margin-top: -80px;
 `;
-const StyledContainer = styled.div`
-	/* position: absolute; */
-	/* top: 40%;
-	left: 50%;
-
-	/* display: flex;
-	flex-direction: column; */
-`;
+const StyledContainer = styled.div``;
 const LoginForm = styled.div`
 	display: flex;
 	flex-direction: column;

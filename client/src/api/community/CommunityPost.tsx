@@ -1,7 +1,7 @@
 // import axios from "axios";
 import axios from "../axiosInstance";
 
-const apiUrl = "http://3.35.252.234:8080/";
+const apiUrl = process.env.REACT_APP_SERVER_URL;
 
 interface IGroupPostData {
 	groupId: number;
@@ -9,7 +9,7 @@ interface IGroupPostData {
 
 export const GroupPost = (params: string, data: IGroupPostData) => {
 	axios
-		.post(apiUrl + params, data, {
+		.post(`${apiUrl}/${params}`, data, {
 			headers: {
 				Authorization: `${localStorage.getItem("accessToken")}`,
 			},

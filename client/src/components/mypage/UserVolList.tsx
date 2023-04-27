@@ -63,7 +63,7 @@ export default function UserVolList() {
 
 	const deleteItem = async (id: number) => {
 		try {
-			const response = await axios.patch(`http://3.35.252.234:8080/apply/${id}`, null, {
+			const response = await axios.patch(`http://3.34.75.149:8080/apply/${id}`, null, {
 				headers: {
 					Authorization: `${localStorage.getItem("accessToken")}`,
 				},

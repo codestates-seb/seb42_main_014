@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const apiUrl = "http://3.35.252.234:8080/";
+const apiUrl = process.env.REACT_APP_SERVER_URL;
 
 export const CommunityGet = async () => {
 	try {
-		const response = await axios.get(apiUrl + "groups", {
+		const response = await axios.get(`${apiUrl}/groups`, {
 			headers: {
 				Authorization: `${localStorage.getItem("accessToken")}`,
 			},

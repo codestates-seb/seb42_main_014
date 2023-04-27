@@ -90,13 +90,13 @@ export default function VolunteerInfo() {
 	const heartHandler = async () => {
 		try {
 			if (isLike === false) {
-				await axios.post(`http://3.35.252.234:8080/likes/${params.id}`, null, {
+				await axios.post(`http://3.34.75.149:8080/likes/${params.id}`, null, {
 					headers: {
 						Authorization: `${localStorage.getItem("accessToken")}`,
 					},
 				});
 			} else if (isLike === true) {
-				await axios.delete(`http://3.35.252.234:8080/likes/${params.id}`, {
+				await axios.delete(`http://3.34.75.149:8080/likes/${params.id}`, {
 					headers: {
 						Authorization: `${localStorage.getItem("accessToken")}`,
 					},
@@ -134,7 +134,7 @@ export default function VolunteerInfo() {
 	} = getVolunteerInfoData;
 	const handlePost = async () => {
 		try {
-			await axios.post(`http://3.35.252.234:8080/apply/${params.id}`, null, {
+			await axios.post(`http://3.34.75.149:8080/apply/${params.id}`, null, {
 				headers: {
 					Authorization: `${localStorage.getItem("accessToken")}`,
 				},

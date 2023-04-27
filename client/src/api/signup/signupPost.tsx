@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = "http://3.35.252.234:8080";
+const apiUrl = process.env.REACT_APP_SERVER_URL;
 
 interface ILoginUser {
 	email: string;
