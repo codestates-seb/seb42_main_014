@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const apiUrl = "http://3.35.252.234:8080/";
+const apiUrl = process.env.REACT_APP_SERVER_URL;
 
 export const myPageGet = async (params: string) => {
 	try {
-		const response = await axios.get(apiUrl + params, {
+		const response = await axios.get(`${apiUrl}/${params}`, {
 			headers: {
 				Authorization: `${localStorage.getItem("accessToken")}`,
 			},
@@ -16,7 +16,7 @@ export const myPageGet = async (params: string) => {
 };
 export const myPageGet2 = async (params: string) => {
 	try {
-		const response = await axios.get(apiUrl + params, {
+		const response = await axios.get(`${apiUrl}/${params}`, {
 			headers: {
 				Authorization: `${localStorage.getItem("accessToken")}`,
 			},
@@ -29,7 +29,7 @@ export const myPageGet2 = async (params: string) => {
 
 export const guestGetData = async (params: string) => {
 	try {
-		const response = await axios.get(apiUrl + params);
+		const response = await axios.get(`${apiUrl}/${params}`);
 		return response.data.body;
 	} catch (error) {
 		console.error(error);
@@ -38,7 +38,7 @@ export const guestGetData = async (params: string) => {
 
 export const memberDelete = async (params: string) => {
 	try {
-		const response = await axios.delete(apiUrl + params, {
+		const response = await axios.delete(`${apiUrl}/${params}`, {
 			headers: {
 				Authorization: `${localStorage.getItem("accessToken")}`,
 			},

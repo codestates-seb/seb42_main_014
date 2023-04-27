@@ -10,7 +10,7 @@ export const imageUploadPost = (
 		headers: {
 			"Content-Type": "multipart/form-data",
 		},
-		url: "http://3.35.252.234:8080/images",
+		url: "http://3.34.75.149:8080/images",
 		method: "POST",
 		data: formData,
 	})

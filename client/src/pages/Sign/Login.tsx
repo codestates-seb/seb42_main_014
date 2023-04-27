@@ -83,7 +83,8 @@ const ErrorMsg = styled.div`
 `;
 
 export default function LoginPage() {
-	const apiUrl = "http://3.35.252.234:8080/";
+	const apiUrl = process.env.REACT_APP_SERVER_URL;
+
 	const navigate = useNavigate();
 	const [isError, setIsError] = useState(false);
 	const [user, setUser] = useState(null); // 유저 정보를 담을 상태 변수
@@ -106,7 +107,7 @@ export default function LoginPage() {
 
 	const LoginUserInfoPost = (loginData: ILoginUser) => {
 		axios
-			.post(apiUrl + "login", loginData, {
+			.post(`${apiUrl}/login`, loginData, {
 				withCredentials: true,
 			})
 			.then((res) => {
